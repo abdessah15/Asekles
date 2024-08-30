@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visionnage de Film - Asekles</title>
+    <title>Visionnage de Film - Asekles </title>
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #f1f1f1;
-            overflow-x: hidden;
+            background-color: #121212; /* Fond sombre */
+            color: #f1f1f1; /* Texte clair */
+            overflow-x: hidden; /* Empêche le défilement horizontal */
         }
 
         .header {
-            background-color: #e50914;
+            background-color: #e50914; /* Rouge vif */
             padding: 15px 30px;
             display: flex;
             justify-content: space-between;
@@ -22,29 +22,29 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
-        .header h1 {
-            margin: 0;
-            color: #fff;
-            font-size: 1.5em;
-        }
+            .header h1 {
+                margin: 0;
+                color: #fff;
+                font-size: 1.5em;
+            }
 
-        .header .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-        }
+            .header .nav-links a {
+                color: #fff;
+                text-decoration: none;
+                margin: 0 15px;
+                font-weight: bold;
+            }
 
-        .header .nav-links a:hover {
-            text-decoration: underline;
-        }
+                .header .nav-links a:hover {
+                    text-decoration: underline;
+                }
 
         .container {
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            min-height: 100vh; /* Assure que le conteneur prend toute la hauteur visible */
         }
 
         .film-info {
@@ -58,15 +58,15 @@
             color: #f1f1f1;
         }
 
-        .film-info h2 {
-            margin: 0 0 10px;
-            color: #e50914;
-        }
+            .film-info h2 {
+                margin: 0 0 10px;
+                color: #e50914; /* Rouge vif pour le titre */
+            }
 
-        .film-info p {
-            margin: 10px 0;
-            font-size: 1.1em;
-        }
+            .film-info p {
+                margin: 10px 0;
+                font-size: 1.1em;
+            }
 
         .video-container {
             width: 100%;
@@ -79,43 +79,32 @@
             margin-bottom: 20px;
         }
 
-        /* Le div qui recouvre l'iframe */
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0);
-            cursor: pointer;
-        }
-
-        .video-container iframe {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
+            .video-container video {
+                width: 100%;
+                height: auto;
+                border-radius: 10px;
+            }
 
         .actions-container {
             text-align: center;
         }
 
-        .actions-container button {
-            background-color: #e50914;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 0 10px;
-            transition: background-color 0.3s ease;
-            font-size: 1.1em;
-        }
+            .actions-container button {
+                background-color: #e50914; /* Rouge vif */
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-weight: bold;
+                cursor: pointer;
+                margin: 0 10px;
+                transition: background-color 0.3s ease;
+                font-size: 1.1em;
+            }
 
-        .actions-container button:hover {
-            background-color: #a10000;
-        }
+                .actions-container button:hover {
+                    background-color: #a10000;
+                }
 
         .back-button {
             position: fixed;
@@ -132,12 +121,12 @@
             z-index: 1000;
         }
 
-        .back-button:hover {
-            background-color: #a10000;
-        }
+            .back-button:hover {
+                background-color: #a10000;
+            }
 
         footer {
-            background-color: #333;
+            background-color: #333; /* Gris foncé */
             color: #f1f1f1;
             text-align: center;
             padding: 10px;
@@ -165,15 +154,18 @@
     <div class="container">
         <div class="film-info">
             <h2>Amezruy n tmurt</h2>
-            <p><strong>Genre :</strong> Histoire, les guerres</p>
+            <p><strong>Genre :</strong> Histoire,les guerres</p>
             <p><strong>Date de sortie :</strong> 2020</p>
             <p><strong>Synopsis :</strong> asaru-agi yetmeslayed ɣef wid i ɣurren tamurt mbeɛd lfetna , d imcefren i tiḥekmen , nɣan imdanen yelhan 
             '' ayemma umbeɛd lfetna d tagmat i yemyuččen '' ..</p>
         </div>
 
         <div class="video-container">
-            <div class="overlay" onclick="redirectToVideo()"></div>
-            <iframe src="https://uqload.ws/embed-r8ifp7mm5u26.html" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="640" height="360" allowfullscreen></iframe>
+            <video controls>
+                <source src=
+                <video controls="controls">
+                    <source src="https://dai.ly/x94vkpa">
+            </video>
         </div>
 
         <div class="actions-container">
@@ -200,10 +192,6 @@
             if (comment) {
                 alert('Votre commentaire : ' + comment);
             }
-        }
-
-        function redirectToVideo() {
-            window.location.href = "https://uqload.ws/embed-r8ifp7mm5u26.html"; // Rediriger vers l'URL de la vidéo ou une autre page
         }
     </script>
 
