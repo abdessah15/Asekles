@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asekles</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="Logo2.png" type="image/png">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c; /* Fond sombre */
+            color: #f1f1f1; /* Texte clair */
+            padding-bottom: 60px; /* Espace réservé pour le pied de page */
+        }
+
+        header {
+            background-color: #e50914; /* Rouge vif */
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+            header h1 {
+                margin: 0;
+                font-size: 2.5em;
+                color: #fff;
+            }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background-color: #333; /* Gris foncé */
+        }
+
+            nav a {
+                color: #fff;
+                margin: 0 15px;
+                text-decoration: none;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+                nav a:hover {
+                    text-decoration: underline;
+                }
+
+        .content {
+            padding: 20px;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .movie-item {
+            background-color: #2a2a2a; /* Gris très foncé */
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .movie-item:hover {
+                transform: scale(1.05);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+            }
+
+            .movie-item img {
+                width: 100%;
+                border-radius: 10px;
+            }
+
+            .movie-item h3 {
+                margin-top: 10px;
+                font-size: 1.2em;
+                color: #e50914; /* Rouge vif pour le titre */
+                cursor: pointer;
+            }
+
+                .movie-item h3:hover {
+                    text-decoration: underline;
+                }
+
+        footer {
+            background-color: #333; /* Gris foncé */
+            color: #f1f1f1;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Ajoute un espace pour le pied de page */
+        .footer-space {
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ⵣ Asekles ⵣ</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="films.html">Films</a>
+        <a href="series.html">Séries</a>
+        <a href="new.html">Nouveautés</a>   
+    </nav>
+
+    <div class="content">
+        <h2>Recommandé pour vous</h2>
+        <div class="movie-grid">
+            <!-- Film 1 avec lien vers une nouvelle page -->
+            <div class="movie-item">
+                <a href="film1.html">
+                    <img src="C:\Users\InfoPro\source\repos\WebProject1\WebProject1\NewFolder1\Nezzeh Hd\Sans titre2.jpg" alt="Film 1">
+                    <h3>Cirta</h3>
+                </a>
+            </div>
+            <!-- Film 2 avec lien vers une nouvelle page -->
+            <div class="movie-item">
+                <a href="film2.html">
+                    <img src="C:\Users\InfoPro\source\repos\WebProject1\WebProject1\NewFolder1\Nezzeh Hd\Sans titre.jpg" alt="Film 2">
+                    <h3>Amezruy n tmurt</h3>
+                </a>
+            </div>
+            <!-- Film 3 avec lien vers une nouvelle page -->
+            <div class="movie-item">
+                <a href="film3.html">
+                    <img src="C:\Users\InfoPro\source\repos\WebProject1\WebProject1\NewFolder1\Nezzeh Hd\image akli2.jpg" alt="Film 3">
+                    <h3>Tamacahut n Wakli</h3>
+                </a>
+            </div>
+            <!-- Film 4 avec lien vers une nouvelle page -->
+            <div class="movie-item">
+                <a href="film4.html">
+                    <img src="C:\Users\InfoPro\source\repos\WebProject1\WebProject1\NewFolder1\Nezzeh Hd\Sans titre4.jpg" alt="Film 4">
+                    <h3>Waɛli ak d tzizwit</h3>
+                </a>
+            </div>
+            <!-- Film 5 avec lien vers une nouvelle page -->
+            <div class="movie-item">
+                <a href="film5.html">
+                    <img src="C:\Users\InfoPro\source\repos\WebProject1\WebProject1\NewFolder1\Nezzeh Hd\Sans titre5.jpg" alt="Film 5">
+                    <h3>Zorro</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ajoute un espace pour le pied de page -->
+    <div class="footer-space"></div>
+
+    <footer>
+        <p>&copy; 2024 Asekles.com. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

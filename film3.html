@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visionnage de Film - Asekles </title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212; /* Fond sombre */
+            color: #f1f1f1; /* Texte clair */
+            overflow-x: hidden; /* Empêche le défilement horizontal */
+        }
+
+        .header {
+            background-color: #e50914; /* Rouge vif */
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+            .header h1 {
+                margin: 0;
+                color: #fff;
+                font-size: 1.5em;
+            }
+
+            .header .nav-links a {
+                color: #fff;
+                text-decoration: none;
+                margin: 0 15px;
+                font-weight: bold;
+            }
+
+                .header .nav-links a:hover {
+                    text-decoration: underline;
+                }
+
+        .container {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh; /* Assure que le conteneur prend toute la hauteur visible */
+        }
+
+        .film-info {
+            max-width: 900px;
+            width: 100%;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            color: #f1f1f1;
+        }
+
+            .film-info h2 {
+                margin: 0 0 10px;
+                color: #e50914; /* Rouge vif pour le titre */
+            }
+
+            .film-info p {
+                margin: 10px 0;
+                font-size: 1.1em;
+            }
+
+        .video-container {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+            .video-container video {
+                width: 100%;
+                height: auto;
+                border-radius: 10px;
+            }
+
+        .actions-container {
+            text-align: center;
+        }
+
+            .actions-container button {
+                background-color: #e50914; /* Rouge vif */
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-weight: bold;
+                cursor: pointer;
+                margin: 0 10px;
+                transition: background-color 0.3s ease;
+                font-size: 1.1em;
+            }
+
+                .actions-container button:hover {
+                    background-color: #a10000;
+                }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #e50914;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            z-index: 1000;
+        }
+
+            .back-button:hover {
+                background-color: #a10000;
+            }
+
+        footer {
+            background-color: #333; /* Gris foncé */
+            color: #f1f1f1;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Asekles.com</h1>
+        <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="films.html">Films</a>
+            <a href="series.html">Séries</a>
+            <a href="new.html">Nouveautés</a>
+        </div>
+    </header>
+
+    <button class="back-button" onclick="goBack()">← Retour</button>
+
+    <div class="container">
+        <div class="film-info">
+            <h2>Tamacahut N Wakli</h2>
+            <p><strong>Genre :</strong> Aventure/Drame</p>
+            <p><strong>Date de sortie :</strong> 2023-2024</p>
+            <p>
+                <strong>Synopsis :</strong> Deg 1954 deg Cordoba, deg yidurar n Sierra Morena, ilemẓi Akli yufa-d imanis weḥd-s yerna yettwaɛzel deg udrar,yedder gar wuccanen ugar n 12 n yiseggasen.
+            </p>
+        </div>
+
+        <div class="video-container">
+            <video controls>
+                <source src=
+                <video controls="controls">
+                    <source src="C:\Users\InfoPro\source\repos\WebProject1\WebProject1\NewFolder1\tamacahut n wakli.mp4"
+                </video>"" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="actions-container">
+            <button onclick="likeFilm()">👍 J'aime</button>
+            <button onclick="commentFilm()">💬 Commenter</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Asekles.com. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function likeFilm() {
+            alert('Vous avez aimé ce film.');
+        }
+
+        function commentFilm() {
+            const comment = prompt('Ajoutez votre commentaire :');
+            if (comment) {
+                alert('Votre commentaire : ' + comment);
+            }
+        }
+    </script>
+
+</body>
+</html>
