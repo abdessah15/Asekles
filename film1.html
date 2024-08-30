@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visionnage de Film - Asekles </title>
+    <title>Visionnage de Film - Asekles</title>
     <style>
         body {
             margin: 0;
@@ -61,11 +61,12 @@
             .film-info h2 {
                 margin: 0 0 10px;
                 color: #e50914; /* Rouge vif pour le titre */
+                font-size: 2em; /* Taille du titre plus grande */
             }
 
             .film-info p {
                 margin: 10px 0;
-                font-size: 1.1em;
+                font-size: 1.2em; /* Taille du texte plus grande */
             }
 
         .video-container {
@@ -79,30 +80,31 @@
             margin-bottom: 20px;
         }
 
-            .video-container video {
+            .video-container iframe {
                 width: 100%;
-                height: auto;
-                border-radius: 10px;
+                height: 600px; /* Hauteur fixe pour le lecteur */
+                border: none;
             }
 
-        .actions-container {
+        .suspense-container {
             text-align: center;
+            margin-top: 20px;
         }
 
-            .actions-container button {
+            .suspense-button {
                 background-color: #e50914; /* Rouge vif */
                 color: #fff;
                 border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
+                padding: 15px 30px;
+                border-radius: 10px;
                 font-weight: bold;
                 cursor: pointer;
-                margin: 0 10px;
                 transition: background-color 0.3s ease;
-                font-size: 1.1em;
+                font-size: 1.2em;
+                margin: 10px;
             }
 
-                .actions-container button:hover {
+                .suspense-button:hover {
                     background-color: #a10000;
                 }
 
@@ -153,21 +155,16 @@
     <div class="container">
         <div class="film-info">
             <h2>Cirta</h2>
-            <p><strong>Genre :</strong> Histoire,aventeur </p>
+            <p><strong>Genre :</strong> Histoire, aventure</p>
             <p><strong>Date de sortie :</strong> 2022</p>
-            <p><strong>Synopsis :</strong> Ttkemmilen abrid-nsen Yuba , kusila ,Kahina,  d Massi ttnadint ad seɣlin tagezzant aken ad erren tamurt umaziɣ.</p>
+            <p><strong>Synopsis :</strong> Ttkemmilen abrid-nsen Yuba, kusila, Kahina, d Massi ttnadint ad seɣlin tagezzant aken ad erren tamurt umaziɣ.</p>
         </div>
 
         <div class="video-container">
-            <video controls>
-                <source src="C:/Users/InfoPro/source/repos/WebProject1/WebProject1/NewFolder1/Nezzeh%20Hd/CIRTA1234.mp4" type="video/mp4">
-                Votre navigateur ne prend pas en charge la balise vidéo.
-            </video>
+            <iframe src="https://www.dailymotion.com/embed/video/k4BBTq5TCtgtW1BnJ58" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
         </div>
 
-        <div class="actions-container">
-            <button onclick="likeFilm()">👍 J'aime</button>
-            <button onclick="commentFilm()">💬 Commenter</button>
+        <div class="suspense-container"> 
         </div>
     </div>
 
@@ -180,15 +177,8 @@
             window.history.back();
         }
 
-        function likeFilm() {
-            alert('Vous avez aimé ce film.');
-        }
-
-        function commentFilm() {
-            const comment = prompt('Ajoutez votre commentaire :');
-            if (comment) {
-                alert('Votre commentaire : ' + comment);
-            }
+        function revealMore() {
+            alert('Plus de détails à venir !');
         }
     </script>
 
