@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +9,13 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212; /* Fond sombre */
-            color: #e0e0e0; /* Texte clair */
-            overflow-x: hidden; /* Empêche le défilement horizontal */
+            background-color: #0d0d0d;
+            color: #f5f5f5;
+            overflow-x: hidden;
         }
 
         .header {
-            background-color: #e50914; /* Rouge vif */
+            background-color: #e50914;
             padding: 20px 40px;
             display: flex;
             justify-content: space-between;
@@ -22,31 +23,31 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
         }
 
-            .header h1 {
-                margin: 0;
-                color: #fff;
-                font-size: 2em;
-                letter-spacing: 1px;
-            }
+        .header h1 {
+            margin: 0;
+            color: #fff;
+            font-size: 2em;
+            letter-spacing: 1px;
+        }
 
-            .header .nav-links a {
-                color: #fff;
-                text-decoration: none;
-                margin: 0 20px;
-                font-weight: bold;
-                transition: color 0.3s;
-            }
+        .header .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
 
-                .header .nav-links a:hover {
-                    color: #ffd700; /* Jaune doré pour l'effet hover */
-                }
+        .header .nav-links a:hover {
+            color: #ffd700;
+        }
 
         .container {
             padding: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh; /* Assure que le conteneur prend toute la hauteur visible */
+            min-height: 100vh;
         }
 
         .film-info {
@@ -57,19 +58,20 @@
             border-radius: 15px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
             margin-bottom: 30px;
-            color: #e0e0e0;
+            color: #f5f5f5;
+            position: relative;
         }
 
-            .film-info h2 {
-                margin: 0 0 15px;
-                color: #e50914; /* Rouge vif pour le titre */
-                font-size: 1.8em;
-            }
+        .film-info h2 {
+            margin: 0 0 15px;
+            color: #e50914;
+            font-size: 1.8em;
+        }
 
-            .film-info p {
-                margin: 10px 0;
-                font-size: 1.2em;
-            }
+        .film-info p {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
 
         .video-container {
             width: 100%;
@@ -82,42 +84,13 @@
             margin-bottom: 30px;
         }
 
-            .video-container .cover-image {
-                width: 100%;
-                height: auto;
-                cursor: pointer;
-                border-radius: 15px;
-            }
-
-            .video-container .play-button {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 60px;
-                height: 60px;
-                background: rgba(0, 0, 0, 0.7);
-                border: none;
-                border-radius: 50%;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-                .video-container .play-button::before {
-                    content: '▶';
-                    font-size: 30px;
-                    color: #fff;
-                    line-height: 1;
-                }
-
-            .video-container video {
-                width: 100%;
-                height: auto;
-                border-radius: 15px;
-                display: none; /* Masquer la vidéo par défaut */
-            }
+        .video-container iframe {
+            width: 100%;
+            height: 563px;
+            border-radius: 15px;
+            display: block;
+            border: none;
+        }
 
         .episode-list {
             max-width: 1000px;
@@ -127,7 +100,7 @@
             border-radius: 15px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
             margin-bottom: 30px;
-            color: #e0e0e0;
+            color: #f5f5f5;
         }
 
         .episode-item {
@@ -137,45 +110,61 @@
             border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
+            position: relative;
         }
 
-            .episode-item:hover {
-                background-color: #333;
-                transform: scale(1.02); /* Effet de zoom lors du survol */
-            }
+        .episode-item:hover {
+            background-color: #333;
+            transform: scale(1.02);
+        }
 
-            .episode-item h3 {
-                margin: 0;
-                color: #e50914;
-                font-size: 1.3em;
-            }
+        .episode-item h3 {
+            margin: 0;
+            color: #e50914;
+            font-size: 1.3em;
+        }
 
-            .episode-item .duration {
-                color: #999;
-                font-size: 1em;
-            }
+        .episode-item .duration {
+            color: #999;
+            font-size: 1em;
+        }
+
+        .episode-item::after {
+            content: '⏳';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            color: #ffd700;
+            transition: transform 0.3s;
+        }
+
+        .episode-item:hover::after {
+            transform: translateY(-50%) rotate(360deg);
+        }
 
         .actions-container {
             text-align: center;
         }
 
-            .actions-container button {
-                background-color: #e50914; /* Rouge vif */
-                color: #fff;
-                border: none;
-                padding: 15px 30px;
-                border-radius: 10px;
-                font-weight: bold;
-                cursor: pointer;
-                margin: 0 15px;
-                transition: background-color 0.3s, transform 0.3s;
-                font-size: 1.2em;
-            }
+        .actions-container button {
+            background-color: #e50914;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 15px;
+            transition: background-color 0.3s, transform 0.3s;
+            font-size: 1.2em;
+        }
 
-                .actions-container button:hover {
-                    background-color: #a10000;
-                    transform: scale(1.05); /* Effet de zoom lors du survol */
-                }
+        .actions-container button:hover {
+            background-color: #a10000;
+            transform: scale(1.05);
+        }
 
         .back-button {
             position: fixed;
@@ -192,14 +181,14 @@
             z-index: 1000;
         }
 
-            .back-button:hover {
-                background-color: #a10000;
-                transform: scale(1.05); /* Effet de zoom lors du survol */
-            }
+        .back-button:hover {
+            background-color: #a10000;
+            transform: scale(1.05);
+        }
 
         footer {
-            background-color: #333; /* Gris foncé */
-            color: #e0e0e0;
+            background-color: #333;
+            color: #f5f5f5;
             text-align: center;
             padding: 15px;
             position: relative;
@@ -208,6 +197,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <header class="header">
@@ -224,39 +214,33 @@
 
     <div class="container">
         <div class="film-info">
-            <h2>maca ak d micka</h2>
-            <p><strong>Genre :</strong> Comédie,Animation jeunesse</p>
+            <h2>Maca ak d Micka</h2>
+            <p><strong>Genre :</strong> Comédie, Animation jeunesse</p>
             <p><strong>Date de sortie :</strong> 2024</p>
             <p><strong>Synopsis :</strong> Inspirée de l'histoire éponyme pour enfants, la série suit les aventures d'une petite fille nommée Masha et de son amie, l'Ours, qui apprennent à connaître le monde.</p>
         </div>
 
         <div class="video-container">
-            <img src="masha.jpg" alt="Couverture de la vidéo" class="cover-image" onclick="playVideo()">
-            <button class="play-button" onclick="playVideo()"></button>
-            <video id="videoPlayer" controls>
-                <source src="C:\Users\InfoPro\source\repos\WebProject1\WebProject1\NewFolder1\Nezzeh Hd\FFOutput\m 1.mp4">
-                Votre navigateur ne prend pas en charge la balise vidéo.
-            </video>
+            <iframe src="https://www.dailymotion.com/embed/video/k4BBTq5TCtgtW1BnJ58" allowfullscreen></iframe>
         </div>
 
         <div class="episode-list">
             <h2>Épisodes</h2>
-            <div class="episode-item" onclick="loadEpisode('m 1.mp4')">
-                <h3>Épisode 1 : </h3>
+            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/k4BBTq5TCtgtW1BnJ58')">
+                <h3>Épisode 1</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('m (2).mp4')">
-                <h3>Épisode 2 : </h3>
+            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/k4BBTq5TCtgtW1BnJ58')">
+                <h3>Épisode 2</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('m (3).mp4')">
-                <h3>Épisode 3 : </h3>
+            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/k4BBTq5TCtgtW1BnJ58')">
+                <h3>Épisode 3</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('m (4).mp4')">
-                <h3>Épisode 4 : </h3>
+            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/k4BBTq5TCtgtW1BnJ58')">
+                <h3>Épisode 4</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('m (5).mp4')">
-                <h3>Épisode 5 : </h3>
-            </div>
-            <!-- Ajoutez plus d'épisodes ici -->
+           <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/k4BBTq5TCtgtW1BnJ58')">
+                <h3>Épisode 5</h3>
+            </div> 
         </div>
 
         <div class="actions-container">
@@ -285,24 +269,12 @@
             }
         }
 
-        function playVideo() {
-            const videoContainer = document.querySelector('.video-container');
-            const coverImage = videoContainer.querySelector('.cover-image');
-            const videoPlayer = videoContainer.querySelector('video');
-            const playButton = videoContainer.querySelector('.play-button');
-
-            coverImage.style.display = 'none';
-            playButton.style.display = 'none';
-            videoPlayer.style.display = 'block';
-            videoPlayer.play();
-        }
-
-        function loadEpisode(episode) {
-            const videoPlayer = document.getElementById('videoPlayer');
-            videoPlayer.src = episode;
-            videoPlayer.play();
+        function loadEpisode(episodeUrl) {
+            const videoContainer = document.querySelector('.video-container iframe');
+            videoContainer.src = episodeUrl;
         }
     </script>
 
 </body>
+
 </html>
