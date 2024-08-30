@@ -8,13 +8,13 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #121212; /* Fond sombre */
-            color: #f1f1f1; /* Texte clair */
-            overflow-x: hidden; /* Empêche le défilement horizontal */
+            background-color: #121212;
+            color: #f1f1f1;
+            overflow-x: hidden;
         }
 
         .header {
-            background-color: #e50914; /* Rouge vif */
+            background-color: #e50914;
             padding: 15px 30px;
             display: flex;
             justify-content: space-between;
@@ -22,29 +22,29 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
-            .header h1 {
-                margin: 0;
-                color: #fff;
-                font-size: 1.5em;
-            }
+        .header h1 {
+            margin: 0;
+            color: #fff;
+            font-size: 1.5em;
+        }
 
-            .header .nav-links a {
-                color: #fff;
-                text-decoration: none;
-                margin: 0 15px;
-                font-weight: bold;
-            }
+        .header .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
 
-                .header .nav-links a:hover {
-                    text-decoration: underline;
-                }
+        .header .nav-links a:hover {
+            text-decoration: underline;
+        }
 
         .container {
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh; /* Assure que le conteneur prend toute la hauteur visible */
+            min-height: 100vh;
         }
 
         .film-info {
@@ -58,15 +58,15 @@
             color: #f1f1f1;
         }
 
-            .film-info h2 {
-                margin: 0 0 10px;
-                color: #e50914; /* Rouge vif pour le titre */
-            }
+        .film-info h2 {
+            margin: 0 0 10px;
+            color: #e50914;
+        }
 
-            .film-info p {
-                margin: 10px 0;
-                font-size: 1.1em;
-            }
+        .film-info p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
 
         .video-container {
             width: 100%;
@@ -79,32 +79,32 @@
             margin-bottom: 20px;
         }
 
-            .video-container video {
-                width: 100%;
-                height: auto;
-                border-radius: 10px;
-            }
+        .video-container iframe {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
 
         .actions-container {
             text-align: center;
         }
 
-            .actions-container button {
-                background-color: #e50914; /* Rouge vif */
-                color: #fff;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                font-weight: bold;
-                cursor: pointer;
-                margin: 0 10px;
-                transition: background-color 0.3s ease;
-                font-size: 1.1em;
-            }
+        .actions-container button {
+            background-color: #e50914;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+            font-size: 1.1em;
+        }
 
-                .actions-container button:hover {
-                    background-color: #a10000;
-                }
+        .actions-container button:hover {
+            background-color: #a10000;
+        }
 
         .back-button {
             position: fixed;
@@ -121,12 +121,12 @@
             z-index: 1000;
         }
 
-            .back-button:hover {
-                background-color: #a10000;
-            }
+        .back-button:hover {
+            background-color: #a10000;
+        }
 
         footer {
-            background-color: #333; /* Gris foncé */
+            background-color: #333;
             color: #f1f1f1;
             text-align: center;
             padding: 10px;
@@ -154,14 +154,14 @@
     <div class="container">
         <div class="film-info">
             <h2>Amezruy n tmurt</h2>
-            <p><strong>Genre :</strong> Histoire,les guerres</p>
+            <p><strong>Genre :</strong> Histoire, les guerres</p>
             <p><strong>Date de sortie :</strong> 2020</p>
             <p><strong>Synopsis :</strong> asaru-agi yetmeslayed ɣef wid i ɣurren tamurt mbeɛd lfetna , d imcefren i tiḥekmen , nɣan imdanen yelhan 
             '' ayemma umbeɛd lfetna d tagmat i yemyuččen '' ..</p>
         </div>
 
-        <IFRAME SRC="https://uqload.ws/embed-r8ifp7mm5u26.html" FRAMEBORDER=0 MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=NO WIDTH=640 HEIGHT=360 allowfullscreen></IFRAME>
-        
+        <div class="video-container">
+            <iframe src="https://uqload.ws/embed-r8ifp7mm5u26.html" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="640" height="360" allowfullscreen></iframe>
         </div>
 
         <div class="actions-container">
