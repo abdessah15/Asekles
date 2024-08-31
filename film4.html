@@ -6,163 +6,105 @@
     <title>Visionnage de Série - Asekles</title>
     <style>
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #121212; /* Fond sombre */
-            color: #f1f1f1; /* Texte clair */
-            overflow-x: hidden; /* Empêche le défilement horizontal */
+            background-color: #181818;
+            color: #fff;
+            margin: 0;
+            padding: 0;
         }
-
         .header {
-            background-color: #e50914; /* Rouge vif */
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
-
-            .header h1 {
-                margin: 0;
-                color: #fff;
-                font-size: 1.5em;
-            }
-
-            .header .nav-links a {
-                color: #fff;
-                text-decoration: none;
-                margin: 0 15px;
-                font-weight: bold;
-            }
-
-                .header .nav-links a:hover {
-                    text-decoration: underline;
-                }
-
-        .container {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh; /* Assure que le conteneur prend toute la hauteur visible */
-        }
-
-        .film-info {
-            max-width: 1000px;
-            width: 100%;
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
-            color: #f1f1f1;
-        }
-
-            .film-info h2 {
-                margin: 0 0 10px;
-                color: #e50914; /* Rouge vif pour le titre */
-            }
-
-            .film-info p {
-                margin: 10px 0;
-                font-size: 1.1em;
-            }
-
-        .video-container {
-            width: 100%;
-            max-width: 1000px;
-            position: relative;
-            background-color: #000;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
-        }
-
-            .video-container video {
-                width: 100%;
-                height: auto;
-                border-radius: 10px;
-            }
-
-        .episode-list {
-            max-width: 1000px;
-            width: 100%;
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
-            color: #f1f1f1;
-        }
-
-        .episode-item {
-            margin-bottom: 10px;
+            background-color: #e50914;
             padding: 10px;
-            background-color: #2a2a2a;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-            .episode-item:hover {
-                background-color: #333;
-            }
-
-            .episode-item h3 {
-                margin: 0;
-                color: #e50914;
-                font-size: 1.2em;
-            }
-
-        .actions-container {
             text-align: center;
         }
-
-            .actions-container button {
-                background-color: #e50914; /* Rouge vif */
-                color: #fff;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                font-weight: bold;
-                cursor: pointer;
-                margin: 0 10px;
-                transition: background-color 0.3s ease;
-                font-size: 1.1em;
-            }
-
-                .actions-container button:hover {
-                    background-color: #a10000;
-                }
-
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #fff;
+        }
+        .nav-links a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 18px;
+        }
         .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
+            background-color: #e50914;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            margin: 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .film-info h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .film-info p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        .video-container {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            margin-bottom: 20px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .episode-list {
+            margin: 20px 0;
+        }
+        .episode-item {
+            background-color: #333;
+            padding: 10px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .episode-item:hover {
+            background-color: #444;
+        }
+        .episode-item h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .actions-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .actions-container button {
             background-color: #e50914;
             color: #fff;
             border: none;
             padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1.2em;
+            margin: 0 10px;
             cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
             transition: background-color 0.3s ease;
-            z-index: 1000;
         }
-
-            .back-button:hover {
-                background-color: #a10000;
-            }
-
+        .actions-container button:hover {
+            background-color: #f6121d;
+        }
         footer {
-            background-color: #333; /* Gris foncé */
-            color: #f1f1f1;
             text-align: center;
-            padding: 10px;
-            position: relative;
-            bottom: 0;
-            width: 100%;
+            padding: 20px;
+            background-color: #111;
+            color: #666;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -189,46 +131,38 @@
         </div>
 
         <div class="video-container">
-            <video id="videoPlayer" controls>
-                <source src="C:\Users\InfoPro\source\repos\WebProject1\WebProject1\NewFolder1\Nezzeh Hd\FFOutput\1~2.mp4">
-                Votre navigateur ne prend pas en charge la balise vidéo.
-            </video>
+            <iframe src="https://app.videas.fr/embed/media/78d692c4-f9b6-4d6e-9297-01623ba09134/" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
         </div>
 
         <div class="episode-list">
             <h2>Épisodes</h2>
-            <div class="episode-item" onclick="loadEpisode('C:/Users/InfoPro/source/repos/WebProject1/WebProject1/NewFolder1/Nezzeh Hd/FFOutput/1~2.mp4')">
+            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/78d692c4-f9b6-4d6e-9297-01623ba09134/')">
                 <h3>Épisode 1 : Titre de l'épisode</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('C:/Users/InfoPro/source/repos/WebProject1/WebProject1/NewFolder1/Nezzeh Hd/FFOutput/2~1.mp4')">
+            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/2ffc92a9-6068-4a3a-98c7-df28927a87c0/')">
                 <h3>Épisode 2 : Titre de l'épisode</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('C:/Users/InfoPro/source/repos/WebProject1/WebProject1/NewFolder1/Nezzeh Hd/FFOutput/3.mp4')">
+            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/3630e35d-3e9e-47fc-a3ff-9948b0f86b94/')">
                 <h3>Épisode 3 : Titre de l'épisode</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('C:/Users/InfoPro/source/repos/WebProject1/WebProject1/NewFolder1/Nezzeh Hd/FFOutput/4.mp4')">
+            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/f4f35204-2db7-4fa5-8d14-d97a280851f7/')">
                 <h3>Épisode 4 : Titre de l'épisode</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('C:/Users/InfoPro/source/repos/WebProject1/WebProject1/NewFolder1/Nezzeh Hd/FFOutput/5.mp4')">
+            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/c47edec9-de50-402a-9e8d-1e39681c5ce3/')">
                 <h3>Épisode 5 : Titre de l'épisode</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('C:/Users/InfoPro/source/repos/WebProject1/WebProject1/NewFolder1/Nezzeh Hd/FFOutput/6.mp4')">
+            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/73137c61-eb08-4229-8b3b-432bbcd91b7e/')">
                 <h3>Épisode 6 : Titre de l'épisode</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('C:/Users/InfoPro/source/repos/WebProject1/WebProject1/NewFolder1/Nezzeh Hd/FFOutput/7.mp4')">
+            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/422cf2c9-14a1-4727-8f4c-f91e40edd918/')">
                 <h3>Épisode 7 : Titre de l'épisode</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('C:/Users/InfoPro/source/repos/WebProject1/WebProject1/NewFolder1/Nezzeh Hd/FFOutput/8.mp4')">
+            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/392777a3-2da4-48a0-b7b3-3d92a04a3f51/')">
                 <h3>Épisode 8 : Titre de l'épisode</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('C:/Users/InfoPro/source/repos/WebProject1/WebProject1/NewFolder1/Nezzeh Hd/FFOutput/9.mp4')">
+            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/367a3098-ec29-4624-bfca-ae8e9a181631/')">
                 <h3>Épisode 9 : Titre de l'épisode</h3>
             </div>
-        </div>
-
-        <div class="actions-container">
-            <button onclick="likeFilm()">👍 J'aime</button>
-            <button onclick="commentFilm()">💬 Commenter</button>
         </div>
     </div>
 
@@ -252,10 +186,9 @@
             }
         }
 
-        function loadEpisode(episode) {
-            const videoPlayer = document.getElementById('videoPlayer');
-            videoPlayer.src = episode;
-            videoPlayer.play();
+        function loadEpisode(episodeUrl) {
+            const videoPlayer = document.querySelector('.video-container iframe');
+            videoPlayer.src = episodeUrl;
         }
     </script>
 
