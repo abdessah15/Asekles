@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,108 +11,182 @@
     
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #181818;
-            color: #fff;
             margin: 0;
-            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d0d0d;
+            color: #f5f5f5;
+            overflow-x: hidden;
         }
+
         .header {
             background-color: #e50914;
-            padding: 10px;
-            text-align: center;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
         }
+
         .header h1 {
             margin: 0;
-            font-size: 24px;
             color: #fff;
+            font-size: 2em;
+            letter-spacing: 1px;
         }
-        .nav-links a {
+
+        .header .nav-links a {
             color: #fff;
-            margin: 0 10px;
             text-decoration: none;
-            font-size: 18px;
+            margin: 0 20px;
+            font-weight: bold;
+            transition: color 0.3s;
         }
-        .back-button {
-            background-color: #e50914;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            margin: 20px;
-            cursor: pointer;
-            font-size: 16px;
+
+        .header .nav-links a:hover {
+            color: #ffd700;
         }
+
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
-        .film-info h2 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .film-info p {
-            font-size: 16px;
-            margin: 5px 0;
-        }
-        .video-container {
-            position: relative;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-            margin-bottom: 20px;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+
+        .film-info {
+            max-width: 1000px;
             width: 100%;
-            height: 100%;
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            margin-bottom: 30px;
+            color: #f5f5f5;
+            position: relative;
+        }
+
+        .film-info h2 {
+            margin: 0 0 15px;
+            color: #e50914;
+            font-size: 1.8em;
+        }
+
+        .film-info p {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            background-color: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            margin-bottom: 30px;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 563px;
+            border-radius: 15px;
+            display: block;
             border: none;
         }
+
         .episode-list {
-            margin: 20px 0;
+            max-width: 1000px;
+            width: 100%;
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            margin-bottom: 30px;
+            color: #f5f5f5;
         }
+
         .episode-item {
-            background-color: #333;
-            padding: 10px;
-            margin: 10px 0;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #2a2a2a;
+            border-radius: 10px;
             cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s, transform 0.3s;
+            position: relative;
         }
+
         .episode-item:hover {
-            background-color: #444;
+            background-color: #333;
+            transform: scale(1.02);
         }
+
         .episode-item h3 {
             margin: 0;
-            font-size: 18px;
+            color: #e50914;
+            font-size: 1.3em;
         }
+
+        .episode-item .duration {
+            color: #999;
+            font-size: 1em;
+        }
+
         .actions-container {
-            margin-top: 20px;
             text-align: center;
         }
+
         .actions-container button {
             background-color: #e50914;
             color: #fff;
             border: none;
-            padding: 10px 20px;
-            margin: 0 10px;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: bold;
             cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            margin: 0 15px;
+            transition: background-color 0.3s, transform 0.3s;
+            font-size: 1.2em;
         }
+
         .actions-container button:hover {
-            background-color: #f6121d;
+            background-color: #a10000;
+            transform: scale(1.05);
         }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #e50914;
+            color: #fff;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            background-color: #a10000;
+            transform: scale(1.05);
+        }
+
         footer {
+            background-color: #333;
+            color: #f5f5f5;
             text-align: center;
-            padding: 20px;
-            background-color: #111;
-            color: #666;
-            font-size: 14px;
+            padding: 15px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
+
 <body>
 
     <header class="header">
@@ -128,46 +203,34 @@
 
     <div class="container">
         <div class="film-info">
-            <h2>Nom de la Série</h2>
-            <p><strong>Genre :</strong> Comédie, slapstick</p>
-            <p><strong>Date de sortie :</strong> 2023</p>
-            <p><strong>Synopsis :</strong> Yiwen n wegaz isemis Waɛli yettnadi ɣef uxeddim , Ddant-d tmucuha n tmeḥqranit mi yettɛerriḍ ad iḥareb ɣef wexxam mi teḍfer-it yiwet n tzizwit.</p>
+            <h2>Maca ak d Micka</h2>
+            <p><strong>Genre :</strong> Comédie, Animation jeunesse</p>
+            <p><strong>Date de sortie :</strong> 2024</p>
+            <p><strong>Synopsis :</strong> Inspirée de l'histoire éponyme pour enfants, la série suit les aventures d'une petite fille nommée Masha et de son amie, l'Ours, qui apprennent à connaître le monde.</p>
         </div>
 
         <div class="video-container">
-            <iframe src="https://app.videas.fr/embed/media/78d692c4-f9b6-4d6e-9297-01623ba09134/" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
+            <iframe id="videoFrame" src="https://geo.dailymotion.com/player.html?video=x94whh2" allowfullscreen></iframe>
         </div>
 
         <div class="episode-list">
             <h2>Épisodes</h2>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/78d692c4-f9b6-4d6e-9297-01623ba09134/')">
-                <h3>Épisode 1 : Titre de l'épisode</h3>
+            <div class="episode-item" onclick="loadEpisode('https://geo.dailymotion.com/player.html?video=x94whh2')">
+                <h3>Épisode 1</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/2ffc92a9-6068-4a3a-98c7-df28927a87c0/')">
-                <h3>Épisode 2 : Titre de l'épisode</h3>
+            <div class="episode-item" onclick="loadEpisode('https://geo.dailymotion.com/player.html?video=x95395q')">
+                <h3>Épisode 2</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/3630e35d-3e9e-47fc-a3ff-9948b0f86b94/')">
-                <h3>Épisode 3 : Titre de l'épisode</h3>
+            <div class="episode-item" onclick="loadEpisode('')">
+                <h3>Épisode 3</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/f4f35204-2db7-4fa5-8d14-d97a280851f7/')">
-                <h3>Épisode 4 : Titre de l'épisode</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/c47edec9-de50-402a-9e8d-1e39681c5ce3/')">
-                <h3>Épisode 5 : Titre de l'épisode</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/73137c61-eb08-4229-8b3b-432bbcd91b7e/')">
-                <h3>Épisode 6 : Titre de l'épisode</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/422cf2c9-14a1-4727-8f4c-f91e40edd918/')">
-                <h3>Épisode 7 : Titre de l'épisode</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/392777a3-2da4-48a0-b7b3-3d92a04a3f51/')">
-                <h3>Épisode 8 : Titre de l'épisode</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/367a3098-ec29-4624-bfca-ae8e9a181631/')">
-                <h3>Épisode 9 : Titre de l'épisode</h3>
-            </div>
+            <div class="episode-item" onclick="loadEpisode('')">
+                <h3>Épisode 4</h3>
+          
         </div>
+
+        <div class="actions-container">
+          
     </div>
 
     <footer>
@@ -179,22 +242,14 @@
             window.history.back();
         }
 
-        function likeFilm() {
-            alert('Vous avez aimé ce film.');
-        }
-
-        function commentFilm() {
-            const comment = prompt('Ajoutez votre commentaire :');
-            if (comment) {
-                alert('Votre commentaire : ' + comment);
-            }
-        }
-
         function loadEpisode(episodeUrl) {
-            const videoPlayer = document.querySelector('.video-container iframe');
-            videoPlayer.src = episodeUrl;
+            const videoFrame = document.getElementById('videoFrame');
+            videoFrame.src = episodeUrl;
         }
+
+        
     </script>
 
 </body>
+
 </html>
