@@ -7,7 +7,7 @@
     <title>Visionnage de Série - Asekles</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="temp_segment_66d5163aa9dbf.png">
+    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="image/png">
     
     <style>
         body {
@@ -230,6 +230,7 @@
             <div class="episode-item" onclick="loadEpisode('/')">
                 <h3>Épisode 5</h3>
             </div>
+        </div> <!-- Fermeture ajoutée ici -->
     </div>
 
     <footer>
@@ -241,15 +242,8 @@
             window.history.back();
         }
 
-        function likeFilm() {
-            alert('Vous avez aimé ce film.');
-        }
-
-        function commentFilm() {
-            const comment = prompt('Ajoutez votre commentaire :');
-            if (comment) {
-                alert('Votre commentaire : ' + comment);
-            }
+        function loadEpisode(url) {
+            document.getElementById('videoFrame').src = url;
         }
     </script>
 
