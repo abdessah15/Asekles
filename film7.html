@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visionnage de Série - Asekles</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="temp_segment_66d5163aa9dbf.png">
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d0d0d;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background-color: #e50914;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #fff;
+            font-size: 2em;
+            letter-spacing: 1px;
+        }
+
+        .header .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .header .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .container {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .film-info {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            margin-bottom: 30px;
+            color: #f5f5f5;
+            position: relative;
+        }
+
+        .film-info h2 {
+            margin: 0 0 15px;
+            color: #e50914;
+            font-size: 1.8em;
+        }
+
+        .film-info p {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            background-color: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            margin-bottom: 30px;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 563px;
+            border-radius: 15px;
+            display: block;
+            border: none;
+        }
+
+        .episode-list {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            margin-bottom: 30px;
+            color: #f5f5f5;
+        }
+
+        .episode-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            position: relative;
+        }
+
+        .episode-item:hover {
+            background-color: #333;
+            transform: scale(1.02);
+        }
+
+        .episode-item h3 {
+            margin: 0;
+            color: #e50914;
+            font-size: 1.3em;
+        }
+
+        .episode-item .duration {
+            color: #999;
+            font-size: 1em;
+        }
+
+        .actions-container {
+            text-align: center;
+        }
+
+        .actions-container button {
+            background-color: #e50914;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 15px;
+            transition: background-color 0.3s, transform 0.3s;
+            font-size: 1.2em;
+        }
+
+        .actions-container button:hover {
+            background-color: #a10000;
+            transform: scale(1.05);
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #e50914;
+            color: #fff;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            background-color: #a10000;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background-color: #333;
+            color: #f5f5f5;
+            text-align: center;
+            padding: 15px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>Asekles.com</h1>
+        <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="films.html">Films</a>
+            <a href="series.html">Séries</a>
+            <a href="new.html">Nouveautés</a>
+        </div>
+    </header>
+
+    <button class="back-button" onclick="goBack()">← Retour</button>
+
+    <div class="container">
+        <div class="film-info">
+            <h2>tom ak jerry deg new york</h2>
+            <p><strong>Genre :</strong> Comédie, Animation jeunesse</p>
+            <p><strong>Date de sortie :</strong> 2024</p>
+            <p><strong>Synopsis :</strong> Le duo débarque à New York. Tom et Jerry s'installent dans leurs nouveaux locaux au Royal Gate Hotel et déclenchent la pagaille dans la grosse pomme, provoquant un chaos hilarant en ville et partout où leurs escapades les mènent.</p>
+        </div>
+
+        <div class="video-container">
+            <iframe id="videoFrame" src="https://www.dailymotion.com/embed/video/k4BBTq5TCtgtW1BnJ58" allowfullscreen></iframe>
+        </div>
+
+        <div class="episode-list">
+            <h2>Épisodes</h2>
+            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/k4BBTq5TCtgtW1BnJ58')">
+                <h3>Épisode 1</h3>
+            </div>
+            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/x94vgua')">
+                <h3>Épisode 2</h3>
+            </div>
+            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/x94vhhe')">
+                <h3>Épisode 3</h3>
+            </div>
+            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/x94vi44')">
+                <h3>Épisode 4</h3>
+            </div>
+            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/x94virm')">
+                <h3>Épisode 5</h3>
+            </div>
+        </div>
+
+        <div class="actions-container">
+            <button onclick="showSuspense()">🎭 Découvrir</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Asekles.com. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function loadEpisode(episodeUrl) {
+            const videoFrame = document.getElementById('videoFrame');
+            videoFrame.src = episodeUrl;
+        }
+
+        function showSuspense() {
+            alert('🎭 Un mystère vous attend dans les prochains épisodes !');
+        }
+    </script>
+
+</body>
+
+</html>
