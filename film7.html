@@ -88,13 +88,6 @@
             margin-bottom: 30px;
         }
 
-        .video-container video {
-            width: 100%;
-            height: auto;
-            border-radius: 15px;
-            display: block;
-        }
-
         .episode-list {
             max-width: 1000px;
             width: 100%;
@@ -204,27 +197,24 @@
         </div>
 
         <div class="video-container">
-            <video id="videoPlayer" controls>
-                <source src="https://player.odycdn.com/v6/streams/9c844dc9377240caad2629716cf853dbfcc4a9af/dcc444.mp4" type="video/mp4">
-                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
-            </video>
+            <iframe id="odysee-iframe" style="width:100%; aspect-ratio:16 / 9;" src="https://odysee.com/$/embed/@asekles:d/ep1:9c?r=8Put6NbMX9VneyevEdGDtnrueokioRt9" allowfullscreen></iframe>
         </div>
 
         <div class="episode-list">
             <h2>Épisodes</h2>
-            <div class="episode-item" onclick="loadEpisode('https://player.odycdn.com/v6/streams/9c844dc9377240caad2629716cf853dbfcc4a9af/dcc444.mp4')">
+            <div class="episode-item" onclick="loadEpisode('https://odysee.com/$/embed/@asekles:d/ep1:9c?r=8Put6NbMX9VneyevEdGDtnrueokioRt9')">
                 <h3>Épisode 1</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('https://player.odycdn.com/v6/streams/12a4f97bace481e4e416449f8d2d75accf851f9c/32e010.mp4')">
+            <div class="episode-item" onclick="loadEpisode('https://odysee.com/$/embed/@asekles:d/ep2:12a?r=8Put6NbMX9VneyevEdGDtnrueokioRt9')">
                 <h3>Épisode 2</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('https://player.odycdn.com/v6/streams/episode3.mp4')">
+            <div class="episode-item" onclick="loadEpisode('#')">
                 <h3>Épisode 3</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('https://player.odycdn.com/v6/streams/episode4.mp4')">
+            <div class="episode-item" onclick="loadEpisode('#')">
                 <h3>Épisode 4</h3>
             </div>
-            <div class="episode-item" onclick="loadEpisode('https://player.odycdn.com/v6/streams/episode5.mp4')">
+            <div class="episode-item" onclick="loadEpisode('#')">
                 <h3>Épisode 5</h3>
             </div>
         </div>
@@ -244,12 +234,12 @@
         }
 
         function loadEpisode(episodeUrl) {
-            const videoPlayer = document.getElementById('videoPlayer');
-            videoPlayer.src = episodeUrl;
+            const iframe = document.getElementById('odysee-iframe');
+            iframe.src = episodeUrl;
         }
 
         function showSuspense() {
-            alert('🎭 Un mystère vous attend dans les prochains épisodes !');
+            alert("Suspense... Que va-t-il se passer dans le prochain épisode ?");
         }
     </script>
 
