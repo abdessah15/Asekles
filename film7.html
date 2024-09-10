@@ -8,7 +8,7 @@
 
     <!-- Favicon -->
     <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="image/png">
-    
+
     <style>
         body {
             margin: 0;
@@ -88,25 +88,36 @@
             margin-bottom: 30px;
         }
 
+        .video-container iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: none;
+        }
+
         .episode-list {
             max-width: 1000px;
             width: 100%;
             background-color: #1e1e1e;
-            padding: 25px;
+            padding: 15px;
             border-radius: 15px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
             margin-bottom: 30px;
             color: #f5f5f5;
+            overflow-x: auto;
+            white-space: nowrap;
+            display: flex;
+            gap: 10px;
         }
 
         .episode-item {
-            margin-bottom: 15px;
-            padding: 15px;
+            display: inline-block;
+            width: 180px;
             background-color: #2a2a2a;
             border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
-            position: relative;
+            padding: 15px;
+            text-align: center;
         }
 
         .episode-item:hover {
@@ -171,6 +182,18 @@
             bottom: 0;
             width: 100%;
         }
+
+        /* Menu déroulant pour sélectionner un épisode */
+        #episode-select {
+            background-color: #2a2a2a;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
     </style>
 </head>
 
@@ -197,48 +220,37 @@
         </div>
 
         <div class="video-container">
-            <iframe id="odysee-iframe" style="width:100%; aspect-ratio:16 / 9;" src="https://odysee.com/$/embed/@asekles:d/ep1:9c?r=8Put6NbMX9VneyevEdGDtnrueokioRt9" allowfullscreen></iframe>
+            <iframe id="odysee-iframe" src="https://odysee.com/$/embed/@asekles:d/ep1:9c?r=8Put6NbMX9VneyevEdGDtnrueokioRt9" allowfullscreen></iframe>
         </div>
 
-        <div class="episode-list">
-            <h2>Épisodes</h2>
-            <div class="episode-item" onclick="loadEpisode('https://odysee.com/$/embed/@asekles:d/ep1:9c?r=8Put6NbMX9VneyevEdGDtnrueokioRt9')">
-                <h3>Épisode 1</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://odysee.com/$/embed/@asekles:d/ep2:12a?r=8Put6NbMX9VneyevEdGDtnrueokioRt9')">
-                <h3>Épisode 2</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://odysee.com/$/embed/@asekles:d/ep3:e39?r=8Put6NbMX9VneyevEdGDtnrueokioRt9')">
-                <h3>Épisode 3</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://odysee.com/$/embed/@asekles:d/ep4:a5?r=8Put6NbMX9VneyevEdGDtnrueokioRt9')">
-                <h3>Épisode 4</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://odysee.com/$/embed/@asekles:d/ep5:643?r=8Put6NbMX9VneyevEdGDtnrueokioRt9')">
-                <h3>Épisode 5</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://odysee.com/$/embed/@asekles:d/ep6:a5?r=8Put6NbMX9VneyevEdGDtnrueokioRt9')">
-                <h3>Épisode 6</h3>
-            </div>
-        </div>
+        <!-- Menu déroulant pour sélectionner un épisode -->
+        <label for="episode-select">Choisir un épisode :</label>
+        <select id="episode-select" onchange="loadEpisode(this.value)">
+            <option value="https://odysee.com/$/embed/@asekles:d/ep1:9c?r=8Put6NbMX9VneyevEdGDtnrueokioRt9">Épisode 1</option>
+            <option value="https://odysee.com/$/embed/@asekles:d/ep2:12a?r=8Put6NbMX9VneyevEdGDtnrueokioRt9">Épisode 2</option>
+            <option value="https://odysee.com/$/embed/@asekles:d/ep3:e39?r=8Put6NbMX9VneyevEdGDtnrueokioRt9">Épisode 3</option>
+            <option value="https://odysee.com/$/embed/@asekles:d/ep4:a5?r=8Put6NbMX9VneyevEdGDtnrueokioRt9">Épisode 4</option>
+            <option value="https://odysee.com/$/embed/@asekles:d/ep5:643?r=8Put6NbMX9VneyevEdGDtnrueokioRt9">Épisode 5</option>
+            <option value="https://odysee.com/$/embed/@asekles:d/ep6:a5?r=8Put6NbMX9VneyevEdGDtnrueokioRt9">Épisode 6</option>
+            <option value="https://odysee.com/$/embed/@asekles:d/ep7:16?r=8Put6NbMX9VneyevEdGDtnrueokioRt9">Épisode 7</option>
+            <option value="https://odysee.com/$/embed/@asekles:d/ep8:8968?r=8Put6NbMX9VneyevEdGDtnrueokioRt9">Épisode 8</option>
+        </select>
 
     </div>
 
     <footer>
-        <p>&copy; 2024 Asekles.com. Tous droits réservés.</p>
+        <p>© 2024 Asekles.com - Tous droits réservés</p>
     </footer>
 
     <script>
+        function loadEpisode(url) {
+            document.getElementById('odysee-iframe').src = url;
+        }
+
         function goBack() {
             window.history.back();
         }
-
-        function loadEpisode(episodeUrl) {
-            const iframe = document.getElementById('odysee-iframe');
-            iframe.src = episodeUrl;
-        }
     </script>
-
 </body>
 
 </html>
