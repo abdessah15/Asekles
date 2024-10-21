@@ -138,36 +138,36 @@
 
     <div class="content">
         <h2>Recommandé pour vous</h2>
-        <div class="movie-grid">
-            <!-- Film 1 avec lien vers une nouvelle page -->
+        <div class="movie-grid" id="movie-grid">
+            <!-- Film 1 -->
             <div class="movie-item">
                 <a href="film1.html">
                     <img src="Sans titre2.jpg" alt="Film 1">
                     <h3>Cirta</h3>
                 </a>
             </div>
-            <!-- Film 2 avec lien vers une nouvelle page -->
+            <!-- Film 2 -->
             <div class="movie-item">
                 <a href="film2.html">
                     <img src="Sans titre.jpg" alt="Film 2">
                     <h3>Amezruy n tmurt</h3>
                 </a>
             </div>
-            <!-- Film 3 avec lien vers une nouvelle page -->
+            <!-- Film 3 -->
             <div class="movie-item">
                 <a href="film3.html">
                     <img src="Sans titre3.jpg" alt="Film 3">
                     <h3>Tamacahut n Wakli</h3>
                 </a>
             </div>
-            <!-- Film 4 avec lien vers une nouvelle page -->
+            <!-- Film 4 -->
             <div class="movie-item">
                 <a href="film4.html">
                     <img src="Sans titre4.jpg" alt="Film 4">
                     <h3>Waɛli ak d tzizwit</h3>
                 </a>
             </div>
-            <!-- Film 5 avec lien vers une nouvelle page -->
+            <!-- Film 5 -->
             <div class="movie-item">
                 <a href="film5.html">
                     <img src="Sans titre5.jpg" alt="Film 5">
@@ -186,5 +186,23 @@
     <footer>
         <p>&copy; 2024 Asekles.com. Tous droits réservés.</p>
     </footer>
+
+    <script>
+        // Fonction pour mélanger les éléments de la grille
+        function shuffleMovies() {
+            const grid = document.getElementById('movie-grid');
+            const movies = Array.from(grid.children);
+            // Mélanger les films
+            movies.sort(() => Math.random() - 0.5);
+            // Vider la grille
+            grid.innerHTML = '';
+            // Ajouter les films dans le nouvel ordre
+            movies.forEach(movie => grid.appendChild(movie));
+        }
+
+        // Mélanger les films au chargement de la page
+        window.onload = shuffleMovies;
+    </script>
+
 </body>
 </html>
