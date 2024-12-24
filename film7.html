@@ -144,96 +144,6 @@
             border: none;
         }
 
-        .episode-list {
-            max-width: 1000px;
-            width: 100%;
-            background-color: #1e1e1e;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-            margin-bottom: 30px;
-            color: #f5f5f5;
-            overflow-x: auto;
-            white-space: nowrap;
-            display: flex;
-            gap: 10px;
-        }
-
-        .episode-item {
-            display: inline-block;
-            width: 180px;
-            background-color: #2a2a2a;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .episode-item:hover {
-            background-color: #333;
-            transform: scale(1.02);
-        }
-
-        .episode-item h3 {
-            margin: 0;
-            color: #e50914;
-            font-size: 1.3em;
-        }
-
-        .actions-container {
-            text-align: center;
-        }
-
-        .actions-container button {
-            background-color: #e50914;
-            color: #fff;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 0 15px;
-            transition: background-color 0.3s, transform 0.3s;
-            font-size: 1.2em;
-        }
-
-        .actions-container button:hover {
-            background-color: #a10000;
-            transform: scale(1.05);
-        }
-
-        .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: #e50914;
-            color: #fff;
-            border: none;
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-size: 1.5em;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            z-index: 1000;
-        }
-
-        .back-button:hover {
-            background-color: #a10000;
-            transform: scale(1.05);
-        }
-
-        footer {
-            background-color: #333;
-            color: #f5f5f5;
-            text-align: center;
-            padding: 15px;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-
-        /* Menu déroulant pour sélectionner un épisode */
         #episode-select {
             background-color: #2a2a2a;
             color: white;
@@ -277,10 +187,9 @@
         </div>
 
         <div class="video-container">
-            <iframe id="odysee-iframe" src="https://odysee.com/$/embed/@asekles:d/ep1:9c?r=8Put6NbMX9VneyevEdGDtnrueokioRt9" allowfullscreen></iframe>
+            <iframe id="odysee-iframe" src="https://odysee.com/$/embed/@asekles:d/ep-9:85?r=8Put6NbMX9VneyevEdGDtnrueokioRt9" allowfullscreen></iframe>
         </div>
 
-        <!-- Menu déroulant pour sélectionner un épisode -->
         <label for="episode-select">Choisir un épisode :</label>
         <select id="episode-select" onchange="loadEpisode(this.value)">
             <option value="https://odysee.com/$/embed/@asekles:d/ep1:9c?r=8Put6NbMX9VneyevEdGDtnrueokioRt9">Épisode 1</option>
@@ -291,6 +200,7 @@
             <option value="https://odysee.com/$/embed/@asekles:d/ep6:a5?r=8Put6NbMX9VneyevEdGDtnrueokioRt9">Épisode 6</option>
             <option value="https://odysee.com/$/embed/@asekles:d/ep7:16?r=8Put6NbMX9VneyevEdGDtnrueokioRt9">Épisode 7</option>
             <option value="https://odysee.com/$/embed/@asekles:d/ep8:8968?r=8Put6NbMX9VneyevEdGDtnrueokioRt9">Épisode 8</option>
+            <option value="https://odysee.com/$/embed/@asekles:d/ep-9:85?r=8Put6NbMX9VneyevEdGDtnrueokioRt9">Épisode 9</option>
         </select>
 
     </div>
