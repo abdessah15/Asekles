@@ -53,7 +53,7 @@
 
         .movie-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Toujours 2 colonnes */
+            grid-template-columns: repeat(2, 1fr); /* Par défaut : 2 colonnes */
             gap: 20px;
             padding: 10px;
         }
@@ -82,14 +82,24 @@
             color: #fff;
         }
 
-        @media (max-width: 768px) {
+        /* Adaptation pour tablettes */
+        @media (min-width: 768px) {
             .movie-grid {
-                grid-template-columns: repeat(2, 1fr); /* 2 colonnes même sur smartphone */
-                gap: 15px; /* Moins d'espace entre les films pour petits écrans */
+                grid-template-columns: repeat(3, 1fr); /* 3 colonnes pour les tablettes */
             }
+        }
 
-            .movie-item h3 {
-                font-size: 1.2em; /* Légèrement réduit pour tenir sur les petits écrans */
+        /* Adaptation pour écrans larges */
+        @media (min-width: 1024px) {
+            .movie-grid {
+                grid-template-columns: repeat(5, 1fr); /* 5 colonnes pour grands écrans */
+            }
+        }
+
+        /* Adaptation pour écrans très larges */
+        @media (min-width: 1440px) {
+            .movie-grid {
+                grid-template-columns: repeat(6, 1fr); /* 6 colonnes pour très grands écrans */
             }
         }
 
