@@ -53,15 +53,15 @@
 
         .movie-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(2, 1fr); /* Toujours 2 colonnes */
+            gap: 20px;
             padding: 10px;
         }
 
         .movie-item {
             background-color: #2a2a2a;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
         }
@@ -73,32 +73,23 @@
 
         .movie-item img {
             width: 100%;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
         .movie-item h3 {
-            margin-top: 8px;
-            font-size: 1em;
+            margin-top: 10px;
+            font-size: 1.3em;
             color: #fff;
         }
 
         @media (max-width: 768px) {
             .movie-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                grid-template-columns: repeat(2, 1fr); /* 2 colonnes même sur smartphone */
+                gap: 15px; /* Moins d'espace entre les films pour petits écrans */
             }
 
             .movie-item h3 {
-                font-size: 0.9em;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .movie-grid {
-                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            }
-
-            .movie-item h3 {
-                font-size: 0.8em;
+                font-size: 1.2em; /* Légèrement réduit pour tenir sur les petits écrans */
             }
         }
 
