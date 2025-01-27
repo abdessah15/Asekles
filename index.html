@@ -53,15 +53,15 @@
 
         .movie-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Colonnes un peu plus grandes */
+            gap: 20px;
             padding: 10px;
         }
 
         .movie-item {
             background-color: #2a2a2a;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 12px; /* Légèrement plus d'espace */
+            border-radius: 10px;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
         }
@@ -73,32 +73,36 @@
 
         .movie-item img {
             width: 100%;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
         .movie-item h3 {
-            margin-top: 8px;
-            font-size: 1em;
+            margin-top: 10px;
+            font-size: 1.1em; /* Texte légèrement plus grand */
             color: #fff;
         }
 
         @media (max-width: 768px) {
             .movie-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Plus grandes colonnes pour tablettes */
             }
 
             .movie-item h3 {
-                font-size: 0.9em;
+                font-size: 1em; /* Ajuste la taille du titre */
             }
         }
 
         @media (max-width: 480px) {
             .movie-grid {
-                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Ajuste les colonnes pour téléphones */
+            }
+
+            .movie-item {
+                padding: 10px;
             }
 
             .movie-item h3 {
-                font-size: 0.8em;
+                font-size: 0.9em; /* Ajuste légèrement la taille du texte */
             }
         }
 
