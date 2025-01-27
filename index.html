@@ -4,24 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asekles</title>
-
-    <!-- Favicon -->
     <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="image/png">
-
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #1c1c1c; /* Fond sombre */
-            color: #f1f1f1; /* Texte clair */
-            padding-bottom: 60px; /* Espace réservé pour le pied de page */
+            background-color: #1c1c1c;
+            color: #f1f1f1;
             background-size: cover;
             background-position: center;
             transition: background-image 0.3s ease-in-out;
         }
 
         header {
-            background-color: #e50914; /* Rouge vif */
+            background-color: #e50914;
             padding: 20px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -37,7 +33,7 @@
             display: flex;
             justify-content: center;
             padding: 10px;
-            background-color: #333; /* Gris foncé */
+            background-color: #333;
         }
 
         nav a {
@@ -58,77 +54,60 @@
 
         .movie-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
         }
 
         .movie-item {
-            background-color: #2a2a2a; /* Gris très foncé */
-            padding: 15px;
-            border-radius: 10px;
+            background-color: #2a2a2a;
+            padding: 10px;
+            border-radius: 8px;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .movie-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
         }
 
         .movie-item img {
             width: 100%;
-            border-radius: 10px;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
         }
 
         .movie-item h3 {
             margin-top: 10px;
-            font-size: 1.2em;
-            color: #fff; /* Blanc pour le titre */
-            cursor: pointer;
-        }
-
-        .movie-item a {
-            text-decoration: none; /* Supprimer le soulignement */
-            color: inherit; /* Garder la couleur blanche */
-        }
-
-        .movie-item a:hover {
-            text-decoration: none; /* Pas de soulignement au survol */
+            font-size: 1.1em;
+            color: #fff;
         }
 
         .download-button {
-            display: inline-block;
-            background-color: #e50914; /* Rouge vif */
-            color: #fff; /* Couleur du texte */
-            padding: 15px 30px; /* Taille du bouton */
-            border-radius: 10px; /* Coins arrondis */
-            text-decoration: none; /* Pas de soulignement */
-            font-weight: bold; /* Texte en gras */
-            text-align: center; /* Centrer le texte */
-            font-size: 1.2em; /* Taille du texte */
-            transition: background-color 0.3s ease; /* Transition pour le survol */
-            margin: 20px 0; /* Marge au-dessus et en-dessous */
+            display: block;
+            margin: 30px auto;
+            background-color: #e50914;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            text-align: center;
+            transition: background-color 0.3s ease;
         }
 
         .download-button:hover {
-            background-color: #a10000; /* Couleur au survol */
+            background-color: #a10000;
         }
 
         footer {
-            background-color: #333; /* Gris foncé */
+            background-color: #333;
             color: #f1f1f1;
             text-align: center;
             padding: 10px;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Ajoute un espace pour le pied de page */
-        .footer-space {
-            height: 60px;
         }
     </style>
 </head>
@@ -141,82 +120,43 @@
         <a href="index.html">Accueil</a>
         <a href="films.html">Films</a>
         <a href="series.html">Séries</a>
-        <a href="new.html">Nouveautés</a>   
+        <a href="new.html">Nouveautés</a>
     </nav>
 
     <div class="content">
         <h2>Recommandé pour vous</h2>
-        <div class="movie-grid" id="movie-grid">
-            <!-- Film 1 -->
-            <div class="movie-item" data-bg="Sans titre2.jpg">
-                <a href="film1.html">
-                    <img src="Sans titre2.jpg" alt="Film 1">
-                    <h3>Cirta</h3>
-                </a>
+        <div class="movie-grid">
+            <div class="movie-item">
+                <img src="Sans titre2.jpg" alt="Film 1">
+                <h3>Cirta</h3>
             </div>
-            <!-- Film 2 -->
-            <div class="movie-item" data-bg="Sans titre.jpg">
-                <a href="film2.html">
-                    <img src="Sans titre.jpg" alt="Film 2">
-                    <h3>Amezruy n tmurt</h3>
-                </a>
+            <div class="movie-item">
+                <img src="Sans titre.jpg" alt="Film 2">
+                <h3>Amezruy n tmurt</h3>
             </div>
-            <!-- Film 3 -->
-            <div class="movie-item" data-bg="Sans titre3.jpg">
-                <a href="film3.html">
-                    <img src="Sans titre3.jpg" alt="Film 3">
-                    <h3>Tamacahut n Wakli</h3>
-                </a>
+            <div class="movie-item">
+                <img src="Sans titre3.jpg" alt="Film 3">
+                <h3>Tamacahut n Wakli</h3>
             </div>
-            <!-- Film 4 -->
-            <div class="movie-item" data-bg="Sans titre4.jpg">
-                <a href="film4.html">
-                    <img src="Sans titre4.jpg" alt="Film 4">
-                    <h3>Waɛli ak d tzizwit</h3>
-                </a>
+            <div class="movie-item">
+                <img src="Sans titre4.jpg" alt="Film 4">
+                <h3>Waɛli ak d tzizwit</h3>
             </div>
-            <!-- Film 5 -->
-            <div class="movie-item" data-bg="Sans titre5.jpg">
-                <a href="film5.html">
-                    <img src="Sans titre5.jpg" alt="Film 5">
-                    <h3>Zorro</h3>
-                </a>
+            <div class="movie-item">
+                <img src="Sans titre5.jpg" alt="Film 5">
+                <h3>Zorro</h3>
             </div>
-               <!-- Film 6 -->
-            <div class="movie-item" data-bg="photo_6005844016756802905_x.jpg">
-                <a href="film8.html">
-                    <img src="photo_6005844016756802905_x.jpg" alt="Film 6">
-                    <h3>Ikerri izimer</h3>
-                </a>
+            <div class="movie-item">
+                <img src="photo_6005844016756802905_x.jpg" alt="Film 6">
+                <h3>Ikerri izimer</h3>
             </div>
         </div>
 
-        <!-- Bouton de téléchargement de l'application -->
         <a class="download-button" href="https://drive.google.com/file/d/1xWQIGj-tCtTueZAnauw1717PzvE_uj8R/view?usp=sharing">Téléchargez l'application</a>
     </div>
-
-    <!-- Ajoute un espace pour le pied de page -->
-    <div class="footer-space"></div>
 
     <footer>
         <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
     </footer>
-
-    <script>
-        // Fonction pour mélanger les éléments de la grille
-        function shuffleMovies() {
-            const grid = document.getElementById('movie-grid');
-            const movies = Array.from(grid.children);
-            // Mélanger les films
-            movies.sort(() => Math.random() - 0.5);
-            // Vider la grille
-            grid.innerHTML = '';
-            // Ajouter les films dans le nouvel ordre
-            movies.forEach(movie => grid.appendChild(movie));
-        }
-
-        // Changer l'arrière-plan au survol
-        document.querySelectorAll('.movie-item').forEach(item => {
-            item.addEventListener('mouseover', function() {
-                document.body.style.backgroundImage = `url(${this.getAttribute('data-bg')})`;
-                document.body.style.filter = ''
+</body>
+</html>
