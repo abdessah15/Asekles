@@ -53,14 +53,14 @@
 
         .movie-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Colonnes un peu plus grandes */
+            grid-template-columns: repeat(2, 1fr); /* Toujours 2 colonnes */
             gap: 20px;
             padding: 10px;
         }
 
         .movie-item {
             background-color: #2a2a2a;
-            padding: 12px; /* Légèrement plus d'espace */
+            padding: 15px;
             border-radius: 10px;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
@@ -78,31 +78,17 @@
 
         .movie-item h3 {
             margin-top: 10px;
-            font-size: 1.1em; /* Texte légèrement plus grand */
+            font-size: 1.3em; /* Texte plus grand */
             color: #fff;
         }
 
         @media (max-width: 768px) {
             .movie-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Plus grandes colonnes pour tablettes */
+                grid-template-columns: 1fr; /* Une seule colonne pour petits écrans */
             }
 
             .movie-item h3 {
-                font-size: 1em; /* Ajuste la taille du titre */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .movie-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Ajuste les colonnes pour téléphones */
-            }
-
-            .movie-item {
-                padding: 10px;
-            }
-
-            .movie-item h3 {
-                font-size: 0.9em; /* Ajuste légèrement la taille du texte */
+                font-size: 1.2em;
             }
         }
 
