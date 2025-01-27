@@ -14,10 +14,10 @@
             font-family: Arial, sans-serif;
             background-color: #1c1c1c; /* Fond sombre */
             color: #f1f1f1; /* Texte clair */
-            padding-bottom: 60px; /* Espace pour le pied de page */
             background-size: cover;
             background-position: center;
             transition: background-image 0.3s ease-in-out;
+            padding-bottom: 80px; /* Espace pour le pied de page */
         }
 
         header {
@@ -58,8 +58,9 @@
 
         .movie-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr); /* 2 colonnes sur mobile */
             gap: 20px;
+            padding: 10px;
         }
 
         .movie-item {
@@ -83,35 +84,34 @@
         .movie-item h3 {
             margin-top: 10px;
             font-size: 1.2em;
-            color: #fff; /* Blanc pour le titre */
-            cursor: pointer;
+            color: #fff;
         }
 
         .movie-item a {
-            text-decoration: none; /* Supprimer le soulignement */
-            color: inherit; /* Garder la couleur blanche */
+            text-decoration: none;
+            color: inherit;
         }
 
         .movie-item a:hover {
-            text-decoration: none; /* Pas de soulignement au survol */
-        }
-
-        .download-button {
-            display: inline-block;
-            background-color: #e50914; /* Rouge vif */
-            color: #fff;
-            padding: 15px 30px;
-            border-radius: 10px;
             text-decoration: none;
-            font-weight: bold;
-            text-align: center;
-            font-size: 1.2em;
-            transition: background-color 0.3s ease;
-            margin: 20px 0;
         }
 
-        .download-button:hover {
-            background-color: #a10000;
+        @media (min-width: 768px) {
+            .movie-grid {
+                grid-template-columns: repeat(3, 1fr); /* 3 colonnes pour les tablettes */
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .movie-grid {
+                grid-template-columns: repeat(5, 1fr); /* 5 colonnes pour grands écrans */
+            }
+        }
+
+        @media (min-width: 1440px) {
+            .movie-grid {
+                grid-template-columns: repeat(6, 1fr); /* 6 colonnes pour très grands écrans */
+            }
         }
 
         footer {
@@ -123,11 +123,10 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.5);
         }
 
         .footer-space {
-            height: 60px;
+            height: 80px; /* Espace pour éviter que le contenu ne soit caché sous le pied de page */
         }
     </style>
 </head>
