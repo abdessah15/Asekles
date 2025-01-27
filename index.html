@@ -41,7 +41,6 @@
             margin: 0 15px;
             text-decoration: none;
             font-weight: bold;
-            cursor: pointer;
         }
 
         nav a:hover {
@@ -54,9 +53,9 @@
 
         .movie-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 15px;
-            margin-top: 20px;
+            padding: 10px;
         }
 
         .movie-item {
@@ -68,39 +67,39 @@
         }
 
         .movie-item:hover {
-            transform: scale(1.1);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
         }
 
         .movie-item img {
             width: 100%;
-            height: auto;
             border-radius: 8px;
-            object-fit: cover;
         }
 
         .movie-item h3 {
-            margin-top: 10px;
-            font-size: 1.1em;
+            margin-top: 8px;
+            font-size: 1em;
             color: #fff;
         }
 
-        .download-button {
-            display: block;
-            margin: 30px auto;
-            background-color: #e50914;
-            color: #fff;
-            padding: 15px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2em;
-            text-align: center;
-            transition: background-color 0.3s ease;
+        @media (max-width: 768px) {
+            .movie-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+
+            .movie-item h3 {
+                font-size: 0.9em;
+            }
         }
 
-        .download-button:hover {
-            background-color: #a10000;
+        @media (max-width: 480px) {
+            .movie-grid {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            }
+
+            .movie-item h3 {
+                font-size: 0.8em;
+            }
         }
 
         footer {
@@ -108,6 +107,10 @@
             color: #f1f1f1;
             text-align: center;
             padding: 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
         }
     </style>
 </head>
@@ -125,34 +128,50 @@
 
     <div class="content">
         <h2>Recommandé pour vous</h2>
-        <div class="movie-grid">
+        <div class="movie-grid" id="movie-grid">
+            <!-- Film 1 -->
             <div class="movie-item">
-                <img src="Sans titre2.jpg" alt="Film 1">
-                <h3>Cirta</h3>
+                <a href="film1.html">
+                    <img src="Sans titre2.jpg" alt="Film 1">
+                    <h3>Cirta</h3>
+                </a>
             </div>
+            <!-- Film 2 -->
             <div class="movie-item">
-                <img src="Sans titre.jpg" alt="Film 2">
-                <h3>Amezruy n tmurt</h3>
+                <a href="film2.html">
+                    <img src="Sans titre.jpg" alt="Film 2">
+                    <h3>Amezruy n tmurt</h3>
+                </a>
             </div>
+            <!-- Film 3 -->
             <div class="movie-item">
-                <img src="Sans titre3.jpg" alt="Film 3">
-                <h3>Tamacahut n Wakli</h3>
+                <a href="film3.html">
+                    <img src="Sans titre3.jpg" alt="Film 3">
+                    <h3>Tamacahut n Wakli</h3>
+                </a>
             </div>
+            <!-- Film 4 -->
             <div class="movie-item">
-                <img src="Sans titre4.jpg" alt="Film 4">
-                <h3>Waɛli ak d tzizwit</h3>
+                <a href="film4.html">
+                    <img src="Sans titre4.jpg" alt="Film 4">
+                    <h3>Waɛli ak d tzizwit</h3>
+                </a>
             </div>
+            <!-- Film 5 -->
             <div class="movie-item">
-                <img src="Sans titre5.jpg" alt="Film 5">
-                <h3>Zorro</h3>
+                <a href="film5.html">
+                    <img src="Sans titre5.jpg" alt="Film 5">
+                    <h3>Zorro</h3>
+                </a>
             </div>
+            <!-- Film 6 -->
             <div class="movie-item">
-                <img src="photo_6005844016756802905_x.jpg" alt="Film 6">
-                <h3>Ikerri izimer</h3>
+                <a href="film6.html">
+                    <img src="photo_6005844016756802905_x.jpg" alt="Film 6">
+                    <h3>Ikerri izimer</h3>
+                </a>
             </div>
         </div>
-
-        <a class="download-button" href="https://drive.google.com/file/d/1xWQIGj-tCtTueZAnauw1717PzvE_uj8R/view?usp=sharing">Téléchargez l'application</a>
     </div>
 
     <footer>
