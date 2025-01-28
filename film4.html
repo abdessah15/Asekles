@@ -1,200 +1,206 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visionnage de Série - Asekles</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="temp_segment_66d5163aa9dbf.png">
-    
+    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="image/png">
+
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #181818;
-            color: #fff;
             margin: 0;
-            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d0d0d;
+            color: #f5f5f5;
+            overflow-x: hidden;
         }
+
         .header {
             background-color: #e50914;
-            padding: 10px;
-            text-align: center;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+            position: relative;
         }
+
         .header h1 {
             margin: 0;
-            font-size: 24px;
             color: #fff;
+            font-size: 2em;
+            letter-spacing: 1px;
         }
-        .nav-links a {
+
+        .header .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header .nav-links a {
             color: #fff;
-            margin: 0 10px;
             text-decoration: none;
-            font-size: 18px;
+            font-weight: bold;
+            transition: color 0.3s;
         }
-        .back-button {
-            background-color: #e50914;
+
+        .header .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        /* Menu mobile */
+        .menu-toggle {
+            display: none;
+            font-size: 2em;
             color: #fff;
+            background: none;
             border: none;
-            padding: 10px;
-            margin: 20px;
             cursor: pointer;
-            font-size: 16px;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .film-info h2 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .film-info p {
-            font-size: 16px;
-            margin: 5px 0;
-        }
-        .video-container {
-            position: relative;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-            margin-bottom: 20px;
-        }
-        .video-container iframe {
+
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .episode-list {
-            margin: 20px 0;
-        }
-        .episode-item {
-            background-color: #333;
-            padding: 10px;
-            margin: 10px 0;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .episode-item:hover {
-            background-color: #444;
-        }
-        .episode-item h3 {
-            margin: 0;
-            font-size: 18px;
-        }
-        .actions-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .actions-container button {
+            top: 80px;
+            right: 20px;
             background-color: #e50914;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            margin: 0 10px;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .actions-container button:hover {
-            background-color: #f6121d;
-        }
-        footer {
-            text-align: center;
             padding: 20px;
-            background-color: #111;
-            color: #666;
-            font-size: 14px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+        }
+
+        .mobile-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 0;
+            display: block;
+            transition: color 0.3s;
+        }
+
+        .mobile-nav a:hover {
+            color: #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .header .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        .container {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .film-info {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            margin-bottom: 30px;
+            color: #f5f5f5;
+            position: relative;
+        }
+
+        .film-info h2 {
+            margin: 0 0 15px;
+            color: #e50914;
+            font-size: 1.8em;
+        }
+
+        .film-info p {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            background-color: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            margin-bottom: 30px;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: none;
+        }
+
+        #episode-select {
+            background-color: #2a2a2a;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
         }
     </style>
 </head>
-<body>
-
-    <header class="header">
-        <h1>Asekles.com</h1>
-        <div class="nav-links">
-            <a href="index.html">Accueil</a>
-            <a href="films.html">Films</a>
-            <a href="series.html">Séries</a>
-            <a href="new.html">Nouveautés</a>
-        </div>
-    </header>
-
-    <button class="back-button" onclick="goBack()">← Retour</button>
-
-    <div class="container">
+     <div class="container">
         <div class="film-info">
-            <h2>Nom de la Série</h2>
+            <h2>Waɛli ak tzizwit</h2>
             <p><strong>Genre :</strong> Comédie, slapstick</p>
             <p><strong>Date de sortie :</strong> 2023</p>
             <p><strong>Synopsis :</strong> Yiwen n wegaz isemis Waɛli yettnadi ɣef uxeddim , Ddant-d tmucuha n tmeḥqranit mi yettɛerriḍ ad iḥareb ɣef wexxam mi teḍfer-it yiwet n tzizwit.</p>
         </div>
 
         <div class="video-container">
-            <iframe src="https://app.videas.fr/embed/media/78d692c4-f9b6-4d6e-9297-01623ba09134/" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
+            <iframe id="odysee-iframe" src="https://oneupload.to/embed-yfv8o8jsxnzx.html" allowfullscreen></iframe>
         </div>
 
-        <div class="episode-list">
-            <h2>Épisodes</h2>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/78d692c4-f9b6-4d6e-9297-01623ba09134/')">
-                <h3>Épisode 1 : Titre de l'épisode</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/2ffc92a9-6068-4a3a-98c7-df28927a87c0/')">
-                <h3>Épisode 2 : Titre de l'épisode</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/3630e35d-3e9e-47fc-a3ff-9948b0f86b94/')">
-                <h3>Épisode 3 : Titre de l'épisode</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/f4f35204-2db7-4fa5-8d14-d97a280851f7/')">
-                <h3>Épisode 4 : Titre de l'épisode</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/c47edec9-de50-402a-9e8d-1e39681c5ce3/')">
-                <h3>Épisode 5 : Titre de l'épisode</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/73137c61-eb08-4229-8b3b-432bbcd91b7e/')">
-                <h3>Épisode 6 : Titre de l'épisode</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/422cf2c9-14a1-4727-8f4c-f91e40edd918/')">
-                <h3>Épisode 7 : Titre de l'épisode</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/392777a3-2da4-48a0-b7b3-3d92a04a3f51/')">
-                <h3>Épisode 8 : Titre de l'épisode</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://app.videas.fr/embed/media/367a3098-ec29-4624-bfca-ae8e9a181631/')">
-                <h3>Épisode 9 : Titre de l'épisode</h3>
-            </div>
-        </div>
+        <label for="episode-select">Choisir un épisode :</label>
+        <select id="episode-select" onchange="loadEpisode(this.value)">
+            <option value="https://oneupload.to/embed-yfv8o8jsxnzx.html">Épisode 1</option>
+            <option value="https://oneupload.to/embed-nra7rungibh3.html">Épisode 2</option>
+            <option value="https://oneupload.to/embed-mfhxry5r3ixz.html">Épisode 3</option>
+            <option value="https://oneupload.to/embed-2lwq231zq1ff.html">Épisode 4</option>
+            <option value="https://oneupload.to/embed-jf027t4g3kb4.html">Épisode 5</option>
+            <option value="https://oneupload.to/embed-mqy3bflhkmyt.html">Épisode 6</option>
+            <option value="https://oneupload.to/embed-c7595ehnrqbc.html">Épisode 7</option>
+            <option value="https://oneupload.to/embed-ccfnxgbmzabw.html">Épisode 8</option>
+            <option value="https://oneupload.to/embed-ks3qo14mfg3q.html">Épisode 9</option>
+        </select>
+
     </div>
 
     <footer>
-        <p>&copy; 2024 Asekles.com. Tous droits réservés.</p>
+        <p>© 2024 Asekles.com - Tous droits réservés</p>
     </footer>
 
     <script>
+        function loadEpisode(url) {
+            document.getElementById('odysee-iframe').src = url;
+        }
+
         function goBack() {
             window.history.back();
         }
 
-        function likeFilm() {
-            alert('Vous avez aimé ce film.');
-        }
-
-        function commentFilm() {
-            const comment = prompt('Ajoutez votre commentaire :');
-            if (comment) {
-                alert('Votre commentaire : ' + comment);
-            }
-        }
-
-        function loadEpisode(episodeUrl) {
-            const videoPlayer = document.querySelector('.video-container iframe');
-            videoPlayer.src = episodeUrl;
+        function toggleMenu() {
+            const menu = document.querySelector('.mobile-nav');
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
         }
     </script>
-
 </body>
+
 </html>
