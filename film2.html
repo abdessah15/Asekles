@@ -32,17 +32,6 @@
             font-size: 1.5em;
         }
 
-        .header .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-        }
-
-        .header .nav-links a:hover {
-            text-decoration: underline;
-        }
-
         .container {
             padding: 20px;
             display: flex;
@@ -89,46 +78,6 @@
             border: none;
         }
 
-        .actions-container {
-            text-align: center;
-        }
-
-        .actions-container button {
-            background-color: #e50914; /* Rouge vif */
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 0 10px;
-            transition: background-color 0.3s ease;
-            font-size: 1.1em;
-        }
-
-        .actions-container button:hover {
-            background-color: #a10000;
-        }
-
-        .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: #e50914;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            z-index: 1000;
-        }
-
-        .back-button:hover {
-            background-color: #a10000;
-        }
-
         footer {
             background-color: #333; /* Gris foncé */
             color: #f1f1f1;
@@ -142,8 +91,6 @@
 </head>
 <body>
 
-    
-
     <div class="container">
         <div class="film-info">
             <h2>Amezruy n tmurt</h2>
@@ -154,31 +101,13 @@
         </div>
 
         <div class="video-container">
-            <IFRAME SRC="https://oneupload.to/embed-tuyljqgwo5mq.html" FRAMEBORDER=0 MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=NO WIDTH=640 HEIGHT=360 allowfullscreen></IFRAME>
+            <iframe src="https://oneupload.to/embed-tuyljqgwo5mq.html" frameborder="0" allowfullscreen></iframe>
         </div>
-
     </div>
 
     <footer>
         <p>&copy; 2024 Asekles.com. Tous droits réservés.</p>
     </footer>
-
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-
-        function likeFilm() {
-            alert('Vous avez aimé ce film.');
-        }
-
-        function commentFilm() {
-            const comment = prompt('Ajoutez votre commentaire :');
-            if (comment) {
-                alert('Votre commentaire : ' + comment);
-            }
-        }
-    </script>
 
 </body>
 </html>
