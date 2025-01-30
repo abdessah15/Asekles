@@ -7,8 +7,8 @@
     <title>Visionnage de Série - Asekles</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="temp_segment_66d5163aa9dbf.png">
-    
+    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="image/png">
+
     <style>
         body {
             margin: 0;
@@ -25,6 +25,7 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+            position: relative;
         }
 
         .header h1 {
@@ -34,16 +35,65 @@
             letter-spacing: 1px;
         }
 
+        .header .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
         .header .nav-links a {
             color: #fff;
             text-decoration: none;
-            margin: 0 20px;
             font-weight: bold;
             transition: color 0.3s;
         }
 
         .header .nav-links a:hover {
             color: #ffd700;
+        }
+
+        /* Menu mobile */
+        .menu-toggle {
+            display: none;
+            font-size: 2em;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            background-color: #e50914;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+        }
+
+        .mobile-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 0;
+            display: block;
+            transition: color 0.3s;
+        }
+
+        .mobile-nav a:hover {
+            color: #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .header .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
         }
 
         .container {
@@ -90,172 +140,63 @@
 
         .video-container iframe {
             width: 100%;
-            height: 563px;
-            border-radius: 15px;
-            display: block;
+            aspect-ratio: 16 / 9;
             border: none;
         }
 
-        .episode-list {
-            max-width: 1000px;
-            width: 100%;
-            background-color: #1e1e1e;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-            margin-bottom: 30px;
-            color: #f5f5f5;
-        }
-
-        .episode-item {
-            margin-bottom: 15px;
-            padding: 15px;
+        #episode-select {
             background-color: #2a2a2a;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            position: relative;
-        }
-
-        .episode-item:hover {
-            background-color: #333;
-            transform: scale(1.02);
-        }
-
-        .episode-item h3 {
-            margin: 0;
-            color: #e50914;
-            font-size: 1.3em;
-        }
-
-        .episode-item .duration {
-            color: #999;
-            font-size: 1em;
-        }
-
-        .actions-container {
-            text-align: center;
-        }
-
-        .actions-container button {
-            background-color: #e50914;
-            color: #fff;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 0 15px;
-            transition: background-color 0.3s, transform 0.3s;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
             font-size: 1.2em;
-        }
-
-        .actions-container button:hover {
-            background-color: #a10000;
-            transform: scale(1.05);
-        }
-
-        .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: #e50914;
-            color: #fff;
-            border: none;
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-size: 1.5em;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            z-index: 1000;
-        }
-
-        .back-button:hover {
-            background-color: #a10000;
-            transform: scale(1.05);
-        }
-
-        footer {
-            background-color: #333;
-            color: #f5f5f5;
-            text-align: center;
-            padding: 15px;
-            position: relative;
-            bottom: 0;
+            margin-bottom: 20px;
             width: 100%;
+            max-width: 400px;
         }
     </style>
 </head>
-
-<body>
-
-    <header class="header">
-        <h1>Asekles.com</h1>
-        <div class="nav-links">
-            <a href="index.html">Accueil</a>
-            <a href="films.html">Films</a>
-            <a href="series.html">Séries</a>
-            <a href="new.html">Nouveautés</a>
-        </div>
-    </header>
-
-    <button class="back-button" onclick="goBack()">← Retour</button>
-
-    <div class="container">
+     <div class="container">
         <div class="film-info">
             <h2>Maca ak d Micka</h2>
             <p><strong>Genre :</strong> Comédie, Animation jeunesse</p>
             <p><strong>Date de sortie :</strong> 2024</p>
-            <p><strong>Synopsis :</strong> Inspirée de l'histoire éponyme pour enfants, la série suit les aventures d'une petite fille nommée Masha et de son amie, l'Ours, qui apprennent à connaître le monde.</p>
+            <p><strong>Synopsis :</strong> yiwet n teqrurt isemman Maca yettidiren ak d wersel iwumi semman Micka , syin taqsit n twuɣa glant-d s unecraḥ i yigerdan yetnezzihen.</p>
         </div>
 
         <div class="video-container">
-            <iframe id="videoFrame" src="https://www.dailymotion.com/embed/video/k4BBTq5TCtgtW1BnJ58" allowfullscreen></iframe>
+            <iframe id="odysee-iframe" src="https://oneupload.to/embed-sfv9cpm6anpr.html" allowfullscreen></iframe>
         </div>
 
-        <div class="episode-list">
-            <h2>Épisodes</h2>
-            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/k4BBTq5TCtgtW1BnJ58')">
-                <h3>Épisode 1</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/x94vgua')">
-                <h3>Épisode 2</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/x94vhhe')">
-                <h3>Épisode 3</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/x94vi44')">
-                <h3>Épisode 4</h3>
-            </div>
-            <div class="episode-item" onclick="loadEpisode('https://www.dailymotion.com/embed/video/x94virm')">
-                <h3>Épisode 5</h3>
-            </div>
-        </div>
+        <label for="episode-select">Choisir un épisode :</label>
+        <select id="episode-select" onchange="loadEpisode(this.value)">
+            <option value="https://oneupload.to/embed-sfv9cpm6anpr.html">Épisode 1</option>
+            <option value="https://oneupload.to/embed-34yuffzp2a5n.html">Épisode 2</option>
+            <option value="https://oneupload.to/embed-kmsaad30khrl.html">Épisode 3</option>
+            <option value="https://oneupload.to/embed-irp5p3zv5s71.html">Épisode 4</option>
+            <option value="https://oneupload.to/embed-mfs8hxn66sa2.html">Épisode 5</option>
+                    </select>
 
-        <div class="actions-container">
-            <button onclick="showSuspense()">🎭 Découvrir</button>
-        </div>
     </div>
 
     <footer>
-        <p>&copy; 2024 Asekles.com. Tous droits réservés.</p>
+        <p>© 2024 Asekles.com - Tous droits réservés</p>
     </footer>
 
     <script>
+        function loadEpisode(url) {
+            document.getElementById('odysee-iframe').src = url;
+        }
+
         function goBack() {
             window.history.back();
         }
 
-        function loadEpisode(episodeUrl) {
-            const videoFrame = document.getElementById('videoFrame');
-            videoFrame.src = episodeUrl;
-        }
-
-        function showSuspense() {
-            alert('🎭 Un mystère vous attend dans les prochains épisodes !');
+        function toggleMenu() {
+            const menu = document.querySelector('.mobile-nav');
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
         }
     </script>
-
 </body>
 
 </html>
