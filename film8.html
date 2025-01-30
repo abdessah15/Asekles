@@ -1,184 +1,192 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visionnage de Film - Asekles</title>
+    <title>Visionnage de Série - Asekles</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="temp_segment_66d5163aa9dbf.png">
-    
+    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="image/png">
+
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #121212; /* Fond sombre */
-            color: #f1f1f1; /* Texte clair */
-            overflow-x: hidden; /* Empêche le défilement horizontal */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d0d0d;
+            color: #f5f5f5;
+            overflow-x: hidden;
         }
 
         .header {
-            background-color: #e50914; /* Rouge vif */
-            padding: 15px 30px;
+            background-color: #e50914;
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+            position: relative;
         }
 
         .header h1 {
             margin: 0;
             color: #fff;
-            font-size: 1.5em;
+            font-size: 2em;
+            letter-spacing: 1px;
+        }
+
+        .header .nav-links {
+            display: flex;
+            gap: 20px;
         }
 
         .header .nav-links a {
             color: #fff;
             text-decoration: none;
-            margin: 0 15px;
             font-weight: bold;
+            transition: color 0.3s;
         }
 
         .header .nav-links a:hover {
-            text-decoration: underline;
+            color: #ffd700;
+        }
+
+        /* Menu mobile */
+        .menu-toggle {
+            display: none;
+            font-size: 2em;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            background-color: #e50914;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+        }
+
+        .mobile-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 0;
+            display: block;
+            transition: color 0.3s;
+        }
+
+        .mobile-nav a:hover {
+            color: #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .header .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
         }
 
         .container {
-            padding: 20px;
+            padding: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh; /* Assure que le conteneur prend toute la hauteur visible */
+            min-height: 100vh;
         }
 
         .film-info {
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
             background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
-            color: #f1f1f1;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            margin-bottom: 30px;
+            color: #f5f5f5;
+            position: relative;
         }
 
         .film-info h2 {
-            margin: 0 0 10px;
-            color: #e50914; /* Rouge vif pour le titre */
+            margin: 0 0 15px;
+            color: #e50914;
+            font-size: 1.8em;
         }
 
         .film-info p {
             margin: 10px 0;
-            font-size: 1.1em;
+            font-size: 1.2em;
         }
 
         .video-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1000px;
             position: relative;
             background-color: #000;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            margin-bottom: 30px;
         }
 
         .video-container iframe {
             width: 100%;
-            height: 500px; /* Ajustez la hauteur selon vos besoins */
+            aspect-ratio: 16 / 9;
             border: none;
         }
 
-        .actions-container {
-            text-align: center;
-        }
-
-        .actions-container button {
-            background-color: #e50914; /* Rouge vif */
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 0 10px;
-            transition: background-color 0.3s ease;
-            font-size: 1.1em;
-        }
-
-        .actions-container button:hover {
-            background-color: #a10000;
-        }
-
-        .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: #e50914;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
+        #episode-select {
+            background-color: #2a2a2a;
+            color: white;
+            padding: 10px;
             border-radius: 5px;
             font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            z-index: 1000;
-        }
-
-        .back-button:hover {
-            background-color: #a10000;
-        }
-
-        footer {
-            background-color: #333; /* Gris foncé */
-            color: #f1f1f1;
-            text-align: center;
-            padding: 10px;
-            position: relative;
-            bottom: 0;
+            margin-bottom: 20px;
             width: 100%;
+            max-width: 400px;
         }
     </style>
 </head>
-<body>
-
-    <header class="header">
-        <h1>Asekles.com</h1>
-        <div class="nav-links">
-            <a href="index.html">Accueil</a>
-            <a href="films.html">Films</a>
-            <a href="series.html">Séries</a>
-            <a href="new.html">Nouveautés</a>
-                    </div>
-    </header>
-
-    <button class="back-button" onclick="goBack()">← Retour</button>
-
-    <div class="container">
+  
+  <div class="container">
         <div class="film-info">
             <h2>Ikerri izimer</h2>
             <p><strong>Genre :</strong> Comédie , Court métrage , Film pour enfants</p>
             <p><strong>Date de sortie :</strong> 2024 </p>
-            <p><strong>Synopsis :</strong> Deg tmeddit n Yennayer, lferḥ n wakraren yettuɣal d aɛewwiq  '' ..</p>
+            <p><strong>Synopsis :</strong> Deg tmeddit n Yennayer, lferḥ n wakraren yettuɣal d aɛewwiq .</p>
         </div>
 
-        <div class="video-container">
-            <iframe <iframe id="odysee-iframe" style="width:100%; aspect-ratio:16 / 9;" src="https://odysee.com/$/embed/@asekles:d/Ixerri-izimer:1?r=8Put6NbMX9VneyevEdGDtnrueokioRt9" allowfullscreen></iframe>
-
-    </div>
+                <div class="video-container">
+            <iframe id="odysee-iframe" src="https://oneupload.to/embed-xkcowv5pexph.html" allowfullscreen></iframe>
+        </div>
 
     <footer>
-        <p>&copy; 2024 Asekles.com. Tous droits réservés.</p>
+        <p>© 2024 Asekles.com - Tous droits réservés</p>
     </footer>
 
     <script>
+        function loadEpisode(url) {
+            document.getElementById('odysee-iframe').src = url;
+        }
+
         function goBack() {
             window.history.back();
         }
 
-            }
+        function toggleMenu() {
+            const menu = document.querySelector('.mobile-nav');
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
         }
     </script>
-
 </body>
+
 </html>
