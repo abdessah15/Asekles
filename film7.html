@@ -155,6 +155,135 @@
             max-width: 400px;
         }
     </style>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c; /* Fond sombre */
+            color: #f1f1f1; /* Texte clair */
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.3s ease-in-out;
+            padding-bottom: 80px; /* Espace pour le pied de page */
+        }
+
+        header {
+            background-color: #e50914; /* Rouge vif */
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #fff;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background-color: #333; /* Gris foncé */
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 colonnes sur mobile */
+            gap: 20px;
+            padding: 10px;
+        }
+
+        .movie-item {
+            background-color: #2a2a2a; /* Gris très foncé */
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .movie-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .movie-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .movie-item h3 {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #fff;
+        }
+
+        .movie-item a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .movie-item a:hover {
+            text-decoration: none;
+        }
+
+        @media (min-width: 768px) {
+            .movie-grid {
+                grid-template-columns: repeat(3, 1fr); /* 3 colonnes pour les tablettes */
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .movie-grid {
+                grid-template-columns: repeat(5, 1fr); /* 5 colonnes pour grands écrans */
+            }
+        }
+
+        @media (min-width: 1440px) {
+            .movie-grid {
+                grid-template-columns: repeat(6, 1fr); /* 6 colonnes pour très grands écrans */
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: #f1f1f1;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .footer-space {
+            height: 80px; /* Espace pour éviter que le contenu ne soit caché sous le pied de page */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="films.html">Films</a>
+        <a href="series.html">Séries</a>
+        <a href="new.html">Nouveautés</a>
+    </nav>
 </head>
     <div class="container">
         <div class="film-info">
