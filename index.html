@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asekles</title>
-    <link rel="icon" href="logo2025(1).jpg" type="image/png">
+    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="image/png">
     <style>
         body {
             margin: 0;
@@ -46,7 +46,7 @@
 
         .content {
             padding: 20px;
-            padding-bottom: 150px;
+            padding-bottom: 200px; /* Plus d'espace pour éviter le chevauchement avec le footer */
         }
 
         .movie-grid {
@@ -99,6 +99,13 @@
             left: 0;
             width: 100%;
             font-size: 0.9em;
+        }
+
+        /* RESPONSIVE : Toujours 2 films par ligne sur les petits écrans */
+        @media (max-width: 600px) {
+            .movie-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
