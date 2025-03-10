@@ -9,59 +9,55 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #1c1c1c;
+            background-color: #000;
             color: #f1f1f1;
-            background-size: cover;
-            background-position: center;
-            transition: background-image 0.3s ease-in-out;
         }
 
         header {
-            background-color: #e50914;
-            padding: 20px;
+            background: linear-gradient(45deg, #ff0066, #6600ff);
+            padding: 10px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
         header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 2em;
             color: #fff;
         }
 
         nav {
             display: flex;
             justify-content: center;
-            padding: 10px;
-            background-color: #333;
+            padding: 8px;
+            background-color: #111;
         }
 
         nav a {
             color: #fff;
-            margin: 0 15px;
+            margin: 0 10px;
             text-decoration: none;
             font-weight: bold;
         }
 
         nav a:hover {
-            text-decoration: underline;
+            color: #ff0066;
         }
 
         .content {
             padding: 20px;
-            margin-bottom: 100px;
         }
 
         .movie-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Par défaut : 2 colonnes */
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
             padding: 10px;
         }
 
         .movie-item {
-            background-color: #2a2a2a;
-            padding: 15px;
+            background-color: #222;
+            padding: 10px;
             border-radius: 10px;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
@@ -69,7 +65,7 @@
 
         .movie-item:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 8px 16px rgba(255, 0, 102, 0.6);
         }
 
         .movie-item img {
@@ -79,53 +75,26 @@
 
         .movie-item h3 {
             margin-top: 10px;
-            font-size: 1.3em;
-            color: #fff;
-            text-decoration: none; /* Enlever le soulignement du titre */
-        }
-
-        .movie-item a {
-            text-decoration: none; /* Enlever le soulignement sous les liens */
-            color: inherit; /* Garder la couleur du titre */
-        }
-
-        .movie-item a:hover {
-            text-decoration: none; /* Enlever le soulignement au survol */
-        }
-
-        @media (min-width: 768px) {
-            .movie-grid {
-                grid-template-columns: repeat(3, 1fr); /* 3 colonnes pour les tablettes */
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .movie-grid {
-                grid-template-columns: repeat(5, 1fr); /* 5 colonnes pour grands écrans */
-            }
-        }
-
-        @media (min-width: 1440px) {
-            .movie-grid {
-                grid-template-columns: repeat(6, 1fr); /* 6 colonnes pour très grands écrans */
-            }
+            font-size: 1.2em;
+            color: #ff0066;
         }
 
         footer {
-            background-color: #333;
+            background-color: #111;
             color: #f1f1f1;
             text-align: center;
-            padding: 10px;
+            padding: 8px;
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>ⵣ Asekles ⵣ</h1>
+        <h1>ASEKLES</h1>
     </header>
 
     <nav>
@@ -137,62 +106,39 @@
 
     <div class="content">
         <h2>Recommandé pour vous</h2>
-        <div class="movie-grid" id="movie-grid">
-            <!-- Film 1 -->
+        <div class="movie-grid">
+            <!-- Films -->
             <div class="movie-item">
-                <a href="film1.html">
-                    <img src="Sans titre2.jpg" alt="Film 1">
-                    <h3>Cirta</h3>
-                </a>
+                <img src="Sans titre2.jpg" alt="Film 1">
+                <h3>Cirta</h3>
             </div>
-            <!-- Film 2 -->
             <div class="movie-item">
-                <a href="film2.html">
-                    <img src="Sans titre.jpg" alt="Film 2">
-                    <h3>Amezruy n tmurt</h3>
-                </a>
+                <img src="Sans titre.jpg" alt="Film 2">
+                <h3>Amezruy n tmurt</h3>
             </div>
-            <!-- Film 3 -->
             <div class="movie-item">
-                <a href="film3.html">
-                    <img src="Sans titre3.jpg" alt="Film 3">
-                    <h3>Tamacahut n Wakli</h3>
-                </a>
+                <img src="Sans titre3.jpg" alt="Film 3">
+                <h3>Tamacahut n Wakli</h3>
             </div>
-            <!-- Film 4 -->
             <div class="movie-item">
-                <a href="film4.html">
-                    <img src="Sans titre4.jpg" alt="Film 4">
-                    <h3>Waɛli ak d tzizwit</h3>
-                </a>
+                <img src="Sans titre4.jpg" alt="Film 4">
+                <h3>Waɛli ak d tzizwit</h3>
             </div>
-            <!-- Film 5 -->
             <div class="movie-item">
-                <a href="film5.html">
-                    <img src="Sans titre5.jpg" alt="Film 5">
-                    <h3>Zorro</h3>
-                </a>
+                <img src="Sans titre5.jpg" alt="Film 5">
+                <h3>Zorro</h3>
             </div>
-            <!-- Film 6 -->
             <div class="movie-item">
-                <a href="film8.html">
-                    <img src="photo_6005844016756802905_x.jpg" alt="Film 6">
-                    <h3>Ikerri izimer</h3>
-                     </a>
-                 </div>
-                     <!-- Film 7 -->
-            <div class="movie-item">
-                <a href="film7.html">
-                    <img src="Sans titre9.jpg" alt="Film 7">
-                    <h3>Tom et Jerry à New York</h3>
-                </a>
+                <img src="photo_6005844016756802905_x.jpg" alt="Film 6">
+                <h3>Ikerri izimer</h3>
             </div>
-                       <!-- Film 8 -->
             <div class="movie-item">
-                <a href="film6.html">
-                    <img src="Sans titre6.jpg" alt="Film 8">
-                    <h3>Maca ak d Micka</h3>
-                </a>
+                <img src="Sans titre9.jpg" alt="Film 7">
+                <h3>Tom et Jerry à New York</h3>
+            </div>
+            <div class="movie-item">
+                <img src="Sans titre6.jpg" alt="Film 8">
+                <h3>Maca ak d Micka</h3>
             </div>
         </div>
     </div>
