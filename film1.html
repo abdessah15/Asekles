@@ -3,241 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visionnage de Film - Asekles</title>
-
-    <!-- Favicon -->
-    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="temp_segment_66d5163aa9dbf.png">
-    
+    <title>Asekles</title>
+    <link rel="icon" href="Asekles.png" type="image/png">
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #121212; /* Fond sombre */
-            color: #f1f1f1; /* Texte clair */
-            overflow-x: hidden; /* Empêche le défilement horizontal */
-        }
-
-        .header {
-            background-color: #e50914; /* Rouge vif */
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        .header h1 {
-            margin: 0;
-            color: #fff;
-            font-size: 1.5em;
-        }
-
-        .header .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-        }
-
-        .header .nav-links a:hover {
-            text-decoration: underline;
-        }
-
-        .container {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh; /* Assure que le conteneur prend toute la hauteur visible */
-        }
-
-        .film-info {
-            max-width: 1000px;
-            width: 100%;
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
+            background-color: #000;
             color: #f1f1f1;
         }
 
-        .film-info h2 {
-            margin: 0 0 10px;
-            color: #e50914; /* Rouge vif pour le titre */
-            font-size: 2em; /* Taille du titre plus grande */
-        }
-
-        .film-info p {
-            margin: 10px 0;
-            font-size: 1.2em; /* Taille du texte plus grande */
-        }
-
-        .video-container {
-            width: 100%;
-            max-width: 1000px;
-            position: relative;
-            padding-top: 56.25%; /* Ratio 16:9 */
-            background-color: #000;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-<style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #1c1c1c; /* Fond sombre */
-            color: #f1f1f1; /* Texte clair */
-            background-size: cover;
-            background-position: center;
-            transition: background-image 0.3s ease-in-out;
-            padding-bottom: 80px; /* Espace pour le pied de page */
-        }
-
         header {
-            background-color: #e50914; /* Rouge vif */
-            padding: 20px;
+            background: linear-gradient(45deg, #ff0066, #6600ff);
+            padding: 10px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
         header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 2em;
             color: #fff;
         }
 
         nav {
             display: flex;
             justify-content: center;
-            padding: 10px;
-            background-color: #333; /* Gris foncé */
+            padding: 8px;
+            background-color: #111;
         }
 
         nav a {
             color: #fff;
-            margin: 0 15px;
+            margin: 0 10px;
             text-decoration: none;
             font-weight: bold;
-            cursor: pointer;
         }
 
         nav a:hover {
-            text-decoration: underline;
+            color: #ff0066;
         }
 
-        .content {
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
-        }
-
-        .movie-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 colonnes sur mobile */
             gap: 20px;
-            padding: 10px;
         }
 
-        .movie-item {
-            background-color: #2a2a2a; /* Gris très foncé */
+        .film-info {
+            background-color: #222;
             padding: 15px;
             border-radius: 10px;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            max-width: 400px;
+            text-align: left;
         }
 
-        .movie-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        .film-info h2 {
+            color: #ff0066;
         }
 
-        .movie-item img {
+        .video-container {
             width: 100%;
+            max-width: 640px;
+            text-align: center;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 360px;
             border-radius: 10px;
         }
 
-        .movie-item h3 {
-            margin-top: 10px;
-            font-size: 1.2em;
-            color: #fff;
+        .films-suggestion {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        .movie-item a {
-            text-decoration: none;
-            color: inherit;
+        .film-item {
+            background-color: #222;
+            padding: 10px;
+            border-radius: 10px;
+            width: 150px;
+            text-align: center;
         }
 
-        .movie-item a:hover {
-            text-decoration: none;
-        }
-
-        @media (min-width: 768px) {
-            .movie-grid {
-                grid-template-columns: repeat(3, 1fr); /* 3 colonnes pour les tablettes */
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .movie-grid {
-                grid-template-columns: repeat(5, 1fr); /* 5 colonnes pour grands écrans */
-            }
-        }
-
-        @media (min-width: 1440px) {
-            .movie-grid {
-                grid-template-columns: repeat(6, 1fr); /* 6 colonnes pour très grands écrans */
-            }
+        .film-item img {
+            width: 100%;
+            border-radius: 10px;
         }
 
         footer {
-            background-color: #333;
+            background-color: #111;
             color: #f1f1f1;
             text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            left: 0;
+            padding: 16px;
+            position: relative;
             width: 100%;
+            font-size: 0.9em;
+            margin-top: 40px;
         }
 
-        .footer-space {
-            height: 80px; /* Espace pour éviter que le contenu ne soit caché sous le pied de page */
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .video-container iframe {
+                height: 200px;
+            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>CIRTA - ⵙⵉⵔⵜⴰ</h1>
+    </header>
+
     <nav>
         <a href="index.html">Accueil</a>
         <a href="films.html">Films</a>
         <a href="series.html">Séries</a>
         <a href="new.html">Nouveautés</a>
     </nav>
-<body>
+
     <div class="container">
         <div class="film-info">
             <h2>Cirta</h2>
             <p><strong>Genre :</strong> Histoire, aventure</p>
             <p><strong>Date de sortie :</strong> 2022</p>
-            <p><strong>Synopsis :</strong> Ttkemmilen abrid-nsen Yuba, kusila, Kahina, d Massi ttnadint ad seɣlin tagezzant aken ad erren tamurt umaziɣ.</p>
+            <p><strong>Synopsis :</strong> Ttkemmilen abrid-nsen Yuba, Kusila, Kahina d Massi ttnadint ad seɣlin tagezzant aken ad erren tamurt umaziɣ.</p>
         </div>
-
         <div class="video-container">
             <iframe src="https://oneupload.to/embed-jj3cs89kc56q.html" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
 
-    
+    <div class="films-suggestion">
+        <div class="film8.html">
+            <img src="photo_6005844016756802905_x.jpg" alt="Film 1">
+            <p>ikerri izimer</p>
+        </div>
+        <div class="film4.html">
+            <img src="Sans titre4" alt="Film 2">
+            <p>Waɛli ak d tzizwit</p>
+        </div>
+        <div class="film3">
+            <img src="Sans titre3" alt="Film 3">
+            <p>Tamacahut N Wakli</p>
+        </div>
+    </div>
+
+    <footer>
         <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
     </footer>
 </body>
