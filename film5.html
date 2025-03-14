@@ -1,290 +1,121 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visionnage de Série - Asekles</title>
-
-    <!-- Favicon -->
-    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="image/png">
-
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0d0d0d;
-            color: #f5f5f5;
-            overflow-x: hidden;
-        }
-
-        .header {
-            background-color: #e50914;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
-            position: relative;
-        }
-
-        .header h1 {
-            margin: 0;
-            color: #fff;
-            font-size: 2em;
-            letter-spacing: 1px;
-        }
-
-        .header .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .header .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .header .nav-links a:hover {
-            color: #ffd700;
-        }
-
-        /* Menu mobile */
-        .menu-toggle {
-            display: none;
-            font-size: 2em;
-            color: #fff;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .mobile-nav {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 80px;
-            right: 20px;
-            background-color: #e50914;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
-        }
-
-        .mobile-nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 10px 0;
-            display: block;
-            transition: color 0.3s;
-        }
-
-        .mobile-nav a:hover {
-            color: #ffd700;
-        }
-
-        @media (max-width: 768px) {
-            .header .nav-links {
-                display: none;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-        }
-
-        .container {
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .film-info {
-            max-width: 1000px;
-            width: 100%;
-            background-color: #1e1e1e;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-            margin-bottom: 30px;
-            color: #f5f5f5;
-            position: relative;
-        }
-
-        .film-info h2 {
-            margin: 0 0 15px;
-            color: #e50914;
-            font-size: 1.8em;
-        }
-
-        .film-info p {
-            margin: 10px 0;
-            font-size: 1.2em;
-        }
-
-        .video-container {
-            width: 100%;
-            max-width: 1000px;
-            position: relative;
-            background-color: #000;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-            margin-bottom: 30px;
-        }
-
-        .video-container iframe {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            border: none;
-        }
-
-        #episode-select {
-            background-color: #2a2a2a;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            width: 100%;
-            max-width: 400px;
-        }
-    </style>
+    <title>Asekles</title>
+    <link rel="icon" href="Asekles.png" type="image/png">
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #1c1c1c; /* Fond sombre */
-            color: #f1f1f1; /* Texte clair */
-            background-size: cover;
-            background-position: center;
-            transition: background-image 0.3s ease-in-out;
-            padding-bottom: 80px; /* Espace pour le pied de page */
+            background-color: #000;
+            color: #f1f1f1;
         }
 
         header {
-            background-color: #e50914; /* Rouge vif */
-            padding: 20px;
+            background: linear-gradient(45deg, #ff0066, #6600ff);
+            padding: 10px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
         header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 2em;
             color: #fff;
         }
 
         nav {
             display: flex;
             justify-content: center;
-            padding: 10px;
-            background-color: #333; /* Gris foncé */
+            padding: 8px;
+            background-color: #111;
         }
 
         nav a {
             color: #fff;
-            margin: 0 15px;
+            margin: 0 10px;
             text-decoration: none;
             font-weight: bold;
-            cursor: pointer;
         }
 
         nav a:hover {
-            text-decoration: underline;
+            color: #ff0066;
         }
 
-        .content {
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
-        }
-
-        .movie-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 colonnes sur mobile */
             gap: 20px;
-            padding: 10px;
         }
 
-        .movie-item {
-            background-color: #2a2a2a; /* Gris très foncé */
+        .film-info {
+            background-color: #222;
             padding: 15px;
             border-radius: 10px;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            max-width: 400px;
+            text-align: left;
         }
 
-        .movie-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        .film-info h2 {
+            color: #ff0066;
         }
 
-        .movie-item img {
+        .video-container {
             width: 100%;
+            max-width: 640px;
+            text-align: center;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 360px;
             border-radius: 10px;
         }
 
-        .movie-item h3 {
-            margin-top: 10px;
-            font-size: 1.2em;
+        .episode-selector {
+            background-color: #222;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            background-color: #111;
             color: #fff;
-        }
-
-        .movie-item a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .movie-item a:hover {
-            text-decoration: none;
-        }
-
-        @media (min-width: 768px) {
-            .movie-grid {
-                grid-template-columns: repeat(3, 1fr); /* 3 colonnes pour les tablettes */
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .movie-grid {
-                grid-template-columns: repeat(5, 1fr); /* 5 colonnes pour grands écrans */
-            }
-        }
-
-        @media (min-width: 1440px) {
-            .movie-grid {
-                grid-template-columns: repeat(6, 1fr); /* 6 colonnes pour très grands écrans */
-            }
+            border: 1px solid #ff0066;
         }
 
         footer {
-            background-color: #333;
+            background-color: #111;
             color: #f1f1f1;
             text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            left: 0;
+            padding: 16px;
+            position: relative;
             width: 100%;
-        }
-
-        .footer-space {
-            height: 80px; /* Espace pour éviter que le contenu ne soit caché sous le pied de page */
+            font-size: 0.9em;
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Zorro - ⵣⵓⵔⵔⵓ</h1>
+    </header>
+
     <nav>
         <a href="index.html">Accueil</a>
         <a href="films.html">Films</a>
         <a href="series.html">Séries</a>
         <a href="new.html">Nouveautés</a>
     </nav>
-</head>
      <div class="container">
         <div class="film-info">
             <h2>Zorro</h2>
@@ -304,25 +135,15 @@
                     </select>
 
     </div>
-
+    
     <footer>
-        <p>© 2025 Asekles.com - Tous droits réservés</p>
+        <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
     </footer>
 
     <script>
         function loadEpisode(url) {
-            document.getElementById('odysee-iframe').src = url;
-        }
-
-        function goBack() {
-            window.history.back();
-        }
-
-        function toggleMenu() {
-            const menu = document.querySelector('.mobile-nav');
-            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+            document.getElementById("odysee-iframe").src = url;
         }
     </script>
 </body>
-
 </html>
