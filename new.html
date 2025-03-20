@@ -15,31 +15,29 @@
 
         header {
             background: linear-gradient(45deg, #ff0066, #6600ff);
-            padding: 5px;
+            padding: 10px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
         header h1 {
             margin: 0;
-            font-size: 1.5em;
+            font-size: 1.8em;
             color: #fff;
-            padding: 5px;
         }
 
         nav {
             display: flex;
             justify-content: center;
-            padding: 5px;
+            padding: 10px;
             background-color: #111;
         }
 
         nav a {
             color: #fff;
-            margin: 0 8px;
+            margin: 0 15px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 0.9em;
         }
 
         nav a:hover {
@@ -47,23 +45,22 @@
         }
 
         .content {
-            padding: 15px;
-            padding-bottom: 50px;
+            padding: 20px;
         }
 
         .movie-grid {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            padding: 5px;
+            gap: 15px;
+            padding: 10px;
         }
 
         .movie-item {
             display: flex;
             align-items: center;
             background-color: #222;
-            padding: 5px;
-            border-radius: 5px;
+            padding: 10px;
+            border-radius: 10px;
             transition: transform 0.3s, box-shadow 0.3s;
             width: fit-content;
         }
@@ -74,13 +71,13 @@
         }
 
         .movie-item img {
-            width: 120px;
+            width: 180px; /* Taille plus grande */
             height: auto;
-            border-radius: 5px;
+            border-radius: 10px;
         }
 
         .movie-item .movie-info {
-            margin-left: 10px;
+            margin-left: 15px;
         }
 
         .movie-item a {
@@ -94,7 +91,7 @@
 
         .movie-item h3 {
             margin: 0;
-            font-size: 1em;
+            font-size: 1.3em;
             color: #ff0066;
         }
 
@@ -102,18 +99,12 @@
             background-color: #111;
             color: #f1f1f1;
             text-align: center;
-            padding: 5px;
-            font-size: 0.8em;
+            padding: 8px;
+            font-size: 0.9em;
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-        }
-
-        @media (max-width: 600px) {
-            footer {
-                display: none;
-            }
         }
     </style>
 </head>
