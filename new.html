@@ -15,29 +15,31 @@
 
         header {
             background: linear-gradient(45deg, #ff0066, #6600ff);
-            padding: 10px;
+            padding: 5px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
         header h1 {
             margin: 0;
-            font-size: 2em;
+            font-size: 1.5em;
             color: #fff;
+            padding: 5px;
         }
 
         nav {
             display: flex;
             justify-content: center;
-            padding: 8px;
+            padding: 5px;
             background-color: #111;
         }
 
         nav a {
             color: #fff;
-            margin: 0 10px;
+            margin: 0 8px;
             text-decoration: none;
             font-weight: bold;
+            font-size: 0.9em;
         }
 
         nav a:hover {
@@ -45,23 +47,25 @@
         }
 
         .content {
-            padding: 20px;
-            padding-bottom: 200px; /* Plus d'espace pour éviter le chevauchement avec le footer */
+            padding: 15px;
+            padding-bottom: 50px;
         }
 
         .movie-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 5px;
         }
 
         .movie-item {
+            display: flex;
+            align-items: center;
             background-color: #222;
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
+            padding: 5px;
+            border-radius: 5px;
             transition: transform 0.3s, box-shadow 0.3s;
+            width: fit-content;
         }
 
         .movie-item:hover {
@@ -70,8 +74,13 @@
         }
 
         .movie-item img {
-            width: 100%;
-            border-radius: 10px;
+            width: 120px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .movie-item .movie-info {
+            margin-left: 10px;
         }
 
         .movie-item a {
@@ -84,8 +93,8 @@
         }
 
         .movie-item h3 {
-            margin-top: 10px;
-            font-size: 1.2em;
+            margin: 0;
+            font-size: 1em;
             color: #ff0066;
         }
 
@@ -93,18 +102,17 @@
             background-color: #111;
             color: #f1f1f1;
             text-align: center;
-            padding: 8px;
+            padding: 5px;
+            font-size: 0.8em;
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            font-size: 0.9em;
         }
 
-        /* RESPONSIVE : Toujours 2 films par ligne sur les petits écrans */
         @media (max-width: 600px) {
-            .movie-grid {
-                grid-template-columns: repeat(2, 1fr);
+            footer {
+                display: none;
             }
         }
     </style>
@@ -113,7 +121,6 @@
     <header>
         <h1>ⵣ Nouveautés - ⵉⵎⴰⵢⵏⵓⵜⴻⵏ ⵣ</h1>
     </header>
-
 
     <nav>
         <a href="index.html">Accueil</a>
@@ -125,12 +132,13 @@
     <div class="content">
         <h2>Les Dernières Nouveautés</h2>
         <div class="movie-grid">
-            <!-- Nouveauté 1 -->
             <div class="movie-item">
                 <a href="film9.html">
                     <img src="TARGIT.jpg" alt="Nouveau 1">
-                    <h3>Targit</h3>
                 </a>
+                <div class="movie-info">
+                    <a href="film9.html"><h3>Targit</h3></a>
+                </div>
             </div>
         </div>
     </div>
