@@ -125,15 +125,28 @@
             <p><strong>Synopsis :</strong> Ger leḥqer n sifuni iluled yiwen n umnay n tlelli ad iḥarben ɣef yigellilen d yimɣiden iwumi ttwaksen izerfan.</p>
         </div>
 
-        <div class="video-container">
-            <iframe id="odysee-iframe" src="https://oneupload.to/embed-qvm5y93skmmj.html" allowfullscreen></iframe>
-        </div>
+      <!-- Iframe avec un id -->
+<iframe id="episode-player" class="rumble" src="https://rumble.com/embed/v6s8rlr/?pub=4lsizp" 
+    frameborder="0" 
+    allowfullscreen 
+    allow="fullscreen; picture-in-picture"
+    style="width:100%; height:200px; border-radius:10px;">
+</iframe>
 
-        <label for="episode-select">Choisir un épisode :</label>
-        <select id="episode-select" onchange="loadEpisode(this.value)">
-            <option value="https://oneupload.to/embed-qvm5y93skmmj.html">Épisode 1</option>
-            <option value="https://oneupload.to/embed-089vb33vwmpp.html">Épisode 2</option>
-                    </select>
+<!-- Sélecteur d’épisodes -->
+<label for="episode-select">Choisir un épisode :</label>
+<select id="episode-select" onchange="loadEpisode(this.value)">
+    <option value="https://rumble.com/embed/v6s8rlr/?pub=4lsizp">Épisode 1</option>
+    <option value="https://rumble.com/embed/v6s8rlz/?pub=4lsizp">Épisode 2</option>
+</select>
+
+<!-- Script pour changer la vidéo -->
+<script>
+    function loadEpisode(url) {
+        document.getElementById("episode-player").src = url;
+    }
+</script>
+
 
     </div>
     
