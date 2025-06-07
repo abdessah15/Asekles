@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ⵣ Livres - ⵉⴷⵍⵉⵙⴻⵏ ⵣ</title>
-    <link rel="icon" href="Asekles.png" type="image/png">
+    <link rel="icon" href="Asekles.png" type="image/png" />
     <style>
         body {
             margin: 0;
@@ -45,12 +45,15 @@
 
         .content {
             padding: 20px;
+            display: flex;
+            justify-content: center; /* centre la grille */
         }
 
         .book-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            display: flex;
             gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .book-item {
@@ -59,10 +62,12 @@
             border-radius: 10px;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
+            width: 170px; /* largeur proche de l'image + padding */
+            box-sizing: border-box;
         }
 
         .book-item:hover {
-            transform: scale(1.03);
+            transform: scale(1.05);
             box-shadow: 0 8px 16px rgba(255, 0, 102, 0.6);
         }
 
@@ -79,10 +84,12 @@
         .book-item h3 {
             margin: 10px 0 5px;
             color: #ff0066;
+            font-size: 1.1em;
         }
 
         .book-item p {
-            margin: 5px 0;
+            margin: 4px 0;
+            font-size: 0.9em;
         }
 
         .book-item a button {
@@ -94,6 +101,7 @@
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s;
+            font-size: 0.9em;
         }
 
         .book-item a button:hover {
@@ -111,6 +119,16 @@
             width: 100%;
             font-size: 0.9em;
         }
+
+        /* Responsive */
+        @media (max-width: 400px) {
+            .book-item {
+                width: 90vw;
+            }
+            .book-grid {
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -127,11 +145,10 @@
     </nav>
 
     <div class="content">
-        <h2>Nos Livres Disponibles</h2>
         <div class="book-grid">
             <!-- Livre 1 -->
             <div class="book-item">
-                <img src="Copie de Isefra (1).png" alt="Livre 1">
+                <img src="Copie de Isefra (1).png" alt="Livre ISEFRA" />
                 <h3>ISEFRA</h3>
                 <p><strong>Prix :</strong> 500 DA</p>
                 <p><strong>Livraison :</strong> 500 DA</p>
@@ -144,7 +161,7 @@
 
             <!-- Livre 2 -->
             <div class="book-item">
-                <img src="livre2.jpg" alt="Livre 2">
+                <img src="livre2.jpg" alt="Livre 2" />
                 <h3>Nom du Livre</h3>
                 <p><strong>Prix :</strong> --- DA</p>
                 <p><strong>Livraison :</strong> --- DA</p>
