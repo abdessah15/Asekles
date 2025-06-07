@@ -66,14 +66,8 @@
 
         .video-container {
             width: 100%;
-            max-width: 640px;
+            max-width: 360px;
             text-align: center;
-        }
-
-        .video-container iframe {
-            width: 100%;
-            height: 360px;
-            border-radius: 10px;
         }
 
         .films-suggestion {
@@ -114,7 +108,8 @@
                 align-items: center;
             }
 
-            .video-container iframe {
+            .video-container iframe,
+            .video-container video {
                 height: 200px;
             }
         }
@@ -140,8 +135,25 @@
             <p><strong>Date de sortie :</strong> 2022</p>
             <p><strong>Synopsis :</strong> Ttkemmilen abrid-nsen Yuba, Kusila, Kahina d Massi ttnadint ad seɣlin tagezzant aken ad erren tamurt umaziɣ.</p>
         </div>
-<iframe class="rumble" width="640" height="360" src="https://rumble.com/embed/v6r9g31/?pub=4lsizp" frameborder="0" allowfullscreen></iframe>
-     </div>
+
+        <div class="video-container">
+            <!-- Option 1 : Lecteur Rumble (réduit) -->
+            <iframe class="rumble" src="https://rumble.com/embed/v6r9g31/?pub=4lsizp" 
+                frameborder="0" 
+                allowfullscreen 
+                allow="fullscreen; picture-in-picture"
+                style="width:100%; height:200px; border-radius:10px;">
+            </iframe>
+
+            <!-- Option 2 : Lecteur HTML5 (si tu veux héberger toi-même la vidéo) -->
+            <!--
+            <video controls style="width:100%; border-radius:10px;">
+                <source src="film-cirta.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+            -->
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
