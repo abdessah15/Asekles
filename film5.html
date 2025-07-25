@@ -116,7 +116,8 @@
         <a href="series.html">Séries</a>
         <a href="new.html">Nouveautés</a>
     </nav>
-     <div class="container">
+
+    <div class="container">
         <div class="film-info">
             <h2>Zorro</h2>
             <p><strong>Genre :</strong> Aventures</p>
@@ -124,38 +125,32 @@
             <p><strong>Synopsis :</strong> Ger leḥqer n sifuni iluled yiwen n umnay n tlelli ad iḥarben ɣef yigellilen d yimɣiden iwumi ttwaksen izerfan.</p>
         </div>
 
-      <!-- Iframe avec un id -->
-<iframe id="episode-player" class="rumble" src="https://rumble.com/embed/v6s8rlr/?pub=4lsizp" 
-    frameborder="0" 
-    allowfullscreen 
-    allow="fullscreen; picture-in-picture"
-    style="width:100%; height:200px; border-radius:10px;">
-</iframe>
+        <!-- Vidéo + sélection d’épisode -->
+        <div class="video-container">
+            <iframe id="episode-player" class="rumble" src="https://rumble.com/embed/v6s8rlr/?pub=4lsizp" 
+                frameborder="0" 
+                allowfullscreen 
+                allow="fullscreen; picture-in-picture">
+            </iframe>
 
-<!-- Sélecteur d’épisodes -->
-<label for="episode-select">Choisir un épisode :</label>
-<select id="episode-select" onchange="loadEpisode(this.value)">
-    <option value="https://rumble.com/embed/v6s8rlr/?pub=4lsizp">Épisode 1</option>
-    <option value="https://rumble.com/embed/v6s8rlz/?pub=4lsizp">Épisode 2</option>
-</select>
-
-<!-- Script pour changer la vidéo -->
-<script>
-    function loadEpisode(url) {
-        document.getElementById("episode-player").src = url;
-    }
-</script>
-
-
+            <div class="episode-selector">
+                <label for="episode-select">Choisir un épisode :</label>
+                <select id="episode-select" onchange="loadEpisode(this.value)">
+                    <option value="https://rumble.com/embed/v6s8rlr/?pub=4lsizp">Épisode 1</option>
+                    <option value="https://rumble.com/embed/v6s8rlz/?pub=4lsizp">Épisode 2</option>
+                </select>
+            </div>
+        </div>
     </div>
     
     <footer>
         <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
     </footer>
 
+    <!-- Script final correct -->
     <script>
         function loadEpisode(url) {
-            document.getElementById("odysee-iframe").src = url;
+            document.getElementById("episode-player").src = url;
         }
     </script>
 </body>
