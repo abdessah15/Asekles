@@ -71,7 +71,7 @@
         }
 
         .movie-item img {
-            width: 180px; /* Taille plus grande */
+            width: 180px;
             height: auto;
             border-radius: 10px;
         }
@@ -93,6 +93,37 @@
             margin: 0;
             font-size: 1.3em;
             color: #ff0066;
+        }
+
+        /* Bouton DON flottant */
+        #don-float {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: #ff0066;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            text-decoration: none;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        #don-float:hover {
+            background-color: #cc0055;
+        }
+
+        @media (max-width: 600px) {
+            #don-float {
+                font-size: 14px;
+                padding: 10px 16px;
+                bottom: 100px;
+                right: 10px;
+            }
         }
 
         footer {
@@ -122,17 +153,17 @@
 
     <div class="content">
         <h2>Les Dernières Nouveautés</h2>
-         <!-- Films -->
-            <div class="movie-item">
-                <a href="film10.html">
-                    <img src="hmimi2.jpg" alt="Film 1">
-                    <h3>Ḥmimi d Lyes</h3>
-                </a>
-            </div>
-                </div>
-            </div>
+        <!-- Films -->
+        <div class="movie-item">
+            <a href="film10.html">
+                <img src="hmimi2.jpg" alt="Film 1">
+                <h3>Ḥmimi d Lyes</h3>
+            </a>
         </div>
     </div>
+
+    <!-- Bouton DON flottant -->
+    <a href="Don.html" id="don-float">💰 Faire un don</a>
 
     <footer>
         <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
