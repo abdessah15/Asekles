@@ -68,6 +68,7 @@
             width: 100%;
             max-width: 360px;
             text-align: center;
+            position: relative; /* pour l’overlay */
         }
 
         .films-suggestion {
@@ -113,6 +114,18 @@
                 height: 200px;
             }
         }
+
+        /* Styles pour l’overlay qui bloque la barre du haut */
+        .overlay-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px; /* Ajuste la hauteur si nécessaire */
+            background: rgba(0,0,0,0);
+            z-index: 10;
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body>
@@ -136,21 +149,13 @@
         </div>
 
         <div class="video-container">
-            <!-- Option 1 : Lecteur Rumble (réduit) -->
-            <iframe class="rumble" src="https://rumble.com/embed/v6r9g31/?pub=4lsizp" 
+            <iframe 
+                src="https://drive.google.com/file/d/1AGTjTo4mMHeKSObdy6yeVYJYFbFeplca/preview" 
                 frameborder="0" 
-                allowfullscreen 
-                allow="fullscreen; picture-in-picture"
+                allow="autoplay; fullscreen" 
                 style="width:100%; height:200px; border-radius:10px;">
             </iframe>
-
-            <!-- Option 2 : Lecteur HTML5 (si tu veux héberger toi-même la vidéo) -->
-            <!--
-            <video controls style="width:100%; border-radius:10px;">
-                <source src="film-cirta.mp4" type="video/mp4">
-                Votre navigateur ne supporte pas la lecture vidéo.
-            </video>
-            -->
+            <div class="overlay-top"></div>
         </div>
     </div>
 
