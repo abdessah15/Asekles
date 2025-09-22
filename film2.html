@@ -1,179 +1,170 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asekles</title>
-    <link rel="icon" href="Asekles.png" type="image/png">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #000;
-            color: #f1f1f1;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asekles - Amezruy n tmurt</title>
+  <link rel="icon" href="Asekles.png" type="image/png">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #f1f1f1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-        header {
-            background: linear-gradient(45deg, #ff0066, #6600ff);
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
+    header {
+      background: linear-gradient(45deg, #ff0066, #6600ff);
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 2em;
-            color: #fff;
-        }
+    header h1 {
+      margin: 0;
+      font-size: 1.8em;
+      color: #fff;
+    }
 
-        nav {
-            display: flex;
-            justify-content: center;
-            padding: 8px;
-            background-color: #111;
-        }
+    nav {
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      background-color: #111;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-        nav a {
-            color: #fff;
-            margin: 0 10px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
 
-        nav a:hover {
-            color: #ff0066;
-        }
+    nav a:hover {
+      color: #ff0066;
+    }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            gap: 20px;
-        }
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      gap: 20px;
+    }
 
-        .film-info {
-            background-color: #222;
-            padding: 15px;
-            border-radius: 10px;
-            max-width: 400px;
-            text-align: left;
-        }
+    .film-info {
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      line-height: 1.6;
+      text-align: left;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
 
-        .film-info h2 {
-            color: #ff0066;
-        }
+    .film-info h2 {
+      color: #ff0066;
+      margin-top: 0;
+    }
 
-        .video-container {
-            width: 100%;
-            max-width: 640px;
-            text-align: center;
-        }
+    .video-container {
+      width: 100%;
+      max-width: 800px;
+    }
 
-        .iframe-container {
-            position: relative;
-            width: 100%;
-            max-width: 640px;
-            height: 360px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .iframe-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .overlay-top {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50px; /* Hauteur de la barre du haut à ajuster si besoin */
-            background: rgba(0,0,0,0);
-            z-index: 10;
-            pointer-events: auto;
-        }
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* ratio 16:9 */
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
 
-        .films-suggestion {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
+    .iframe-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
 
-        .film-item {
-            background-color: #222;
-            padding: 10px;
-            border-radius: 10px;
-            width: 150px;
-            text-align: center;
-        }
+    /* Overlay pour bloquer la barre du haut */
+    .overlay-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 40px; /* cache boutons du haut */
+      background: rgba(0,0,0,0);
+      z-index: 10;
+      pointer-events: auto;
+    }
 
-        .film-item img {
-            width: 100%;
-            border-radius: 10px;
-        }
+    footer {
+      background-color: #111;
+      color: #f1f1f1;
+      text-align: center;
+      padding: 16px;
+      font-size: 0.9em;
+    }
 
-        footer {
-            background-color: #111;
-            color: #f1f1f1;
-            text-align: center;
-            padding: 16px;
-            position: relative;
-            width: 100%;
-            font-size: 0.9em;
-            margin-top: 40px;
-        }
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.5em;
+      }
+    }
 
-        @media (max-width: 600px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .iframe-container {
-                height: 200px;
-            }
-        }
-    </style>
+    @media (max-width: 480px) {
+      .film-info {
+        padding: 15px;
+        font-size: 0.9em;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Amezruy n tmurt - ⴰⵎⴻⵣⵔⵓⵢ ⵏ ⵜⵎⵓⵔⵜ</h1>
-    </header>
+  <header>
+    <h1>Amezruy n tmurt - ⴰⵎⴻⵣⵔⵓⵢ ⵏ ⵜⵎⵓⵔⵜ</h1>
+  </header>
 
-    <nav>
-        <a href="index.html">Accueil</a>
-        <a href="films.html">Films</a>
-        <a href="series.html">Séries</a>
-        <a href="new.html">Nouveautés</a>
-    </nav>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="films.html">Films</a>
+    <a href="series.html">Séries</a>
+    <a href="new.html">Nouveautés</a>
+  </nav>
 
-    <div class="container">
-        <div class="film-info">
-            <h2>Amezruy n tmurt</h2>
-            <p><strong>Genre :</strong> Histoire, les guerres</p>
-            <p><strong>Date de sortie :</strong> 2020</p>
-            <p><strong>Synopsis :</strong> asaru-agi yetmeslayed ɣef wid i ɣurren tamurt mbeɛd lfetna , d imcefren i tiḥekmen , nɣan imdanen yelhan 
-            '' ayemma umbeɛd lfetna d tagmat i yemyuččen '' ..</p>
-        </div>
-
-        <div class="video-container">
-            <div class="iframe-container">
-                <iframe 
-                  src="https://dsvplay.com/e/3nzl1nhjh544" 
-                  allow="autoplay; fullscreen"
-                ></iframe>
-                <div class="overlay-top"></div>
-            </div>
-        </div>
-
+  <div class="container">
+    <div class="film-info">
+      <h2>Amezruy n tmurt</h2>
+      <p><strong>Genre :</strong> Histoire, guerres</p>
+      <p><strong>Date de sortie :</strong> 2020</p>
+      <p><strong>Synopsis :</strong> Asaru-agi yetmeslayed ɣef wid i ɣurren tamurt mbeɛd lfetna, d imcefren i tiḥekmen, nɣan imdanen yelhan.  
+      '' Ayemma umbeɛd lfetna d tagmat i yemyuččen ''...</p>
     </div>
 
-    <footer>
-        <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
-    </footer>
+    <div class="video-container">
+      <div class="iframe-container">
+        <iframe 
+          src="https://dsvplay.com/e/3nzl1nhjh544" 
+          allow="autoplay; fullscreen" 
+          allowfullscreen>
+        </iframe>
+        <div class="overlay-top"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
+  </footer>
 </body>
 </html>
-
