@@ -56,7 +56,7 @@
             background-color: #222;
             padding: 15px;
             border-radius: 10px;
-            max-width: 400px;
+            max-width: 500px;
             text-align: left;
         }
 
@@ -78,10 +78,18 @@
 
         .episode-selector {
             background-color: #222;
-            padding: 10px;
+            padding: 15px;
             border-radius: 10px;
             text-align: center;
             margin-top: 20px;
+            max-width: 400px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #ff0066;
         }
 
         select {
@@ -91,6 +99,7 @@
             background-color: #111;
             color: #fff;
             border: 1px solid #ff0066;
+            width: 100%;
         }
 
         footer {
@@ -102,6 +111,12 @@
             width: 100%;
             font-size: 0.9em;
             margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .video-container iframe {
+                height: 200px;
+            }
         }
     </style>
 </head>
@@ -127,7 +142,8 @@
 
         <!-- Vidéo + sélection d’épisode -->
         <div class="video-container">
-            <iframe id="episode-player" class="https://dsvplay.com/e/7ghb76ntkc9l" 
+            <iframe id="episode-player" 
+                src="https://dsvplay.com/e/7ghb76ntkc9l" 
                 frameborder="0" 
                 allowfullscreen 
                 allow="fullscreen; picture-in-picture">
@@ -137,7 +153,7 @@
                 <label for="episode-select">Choisir un épisode :</label>
                 <select id="episode-select" onchange="loadEpisode(this.value)">
                     <option value="https://dsvplay.com/e/7ghb76ntkc9l">Épisode 1</option>
-                    <option value="https://dsvplay.com/e/7ghb76ntkc9l">Épisode 2</option>
+                    <option value="https://dsvplay.com/e/5pkkce3974vh">Épisode 2</option>
                 </select>
             </div>
         </div>
@@ -155,4 +171,3 @@
     </script>
 </body>
 </html>
-
