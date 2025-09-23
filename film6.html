@@ -127,7 +127,9 @@
 
         <!-- Conteneur vidéo + sélection d’épisodes -->
         <div class="video-container">
-            <iframe id="episode-player" class="rumble" src="https://rumble.com/embed/v6s8p8l/?pub=4lsizp" 
+            <!-- ✅ src corrigé -->
+            <iframe id="episode-player" 
+                src="https://dsvplay.com/e/52ygk45g26kz"
                 frameborder="0" 
                 allowfullscreen 
                 allow="fullscreen; picture-in-picture">
@@ -136,11 +138,11 @@
             <div class="episode-selector">
                 <label for="episode-select">Choisir un épisode :</label>
                 <select id="episode-select" onchange="loadEpisode(this.value)">
-                    <option value="https://rumble.com/embed/v6s8p8l/?pub=4lsizp">Épisode 1</option>
-                    <option value="https://rumble.com/embed/v6s8p8r/?pub=4lsizp">Épisode 2</option>
-                    <option value="https://rumble.com/embed/v6s8p8v/?pub=4lsizp">Épisode 3</option>
-                    <option value="https://rumble.com/embed/v6s8p91/?pub=4lsizp">Épisode 4</option>
-                    <option value="https://rumble.com/embed/v6s8p95/?pub=4lsizp">Épisode 5</option>
+                    <option value="https://dsvplay.com/e/52ygk45g26kz">Épisode 1</option>
+                    <option value="https://dsvplay.com/e/inr4y4ghx2vt">Épisode 2</option>
+                    <option value="https://dsvplay.com/e/1guu07dhxn8e">Épisode 3</option>
+                    <option value="https://dsvplay.com/e/p0krpfg5zjl4">Épisode 4</option>
+                    <option value="https://dsvplay.com/e/cw9mvqz4ilka">Épisode 5</option>
                 </select>
             </div>
         </div>
