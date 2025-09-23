@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <meta name="google-site-verification" content="ihF94BOoU_H2-Pfh_mLVSHjfaw5wdaV2BSeoLEkDOws">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asekles - Imuḥucen</title>
+    <title>Asekles</title>
     <link rel="icon" href="Asekles.png" type="image/png">
+
     <style>
         body {
             margin: 0;
@@ -26,14 +28,6 @@
             color: #fff;
         }
 
-        .warning {
-            background-color: #ff0066;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            font-weight: bold;
-        }
-
         nav {
             display: flex;
             justify-content: center;
@@ -52,155 +46,210 @@
             color: #ff0066;
         }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .content {
             padding: 20px;
-            gap: 20px;
+            padding-bottom: 200px;
         }
 
-        .film-info {
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 10px;
+        }
+
+        .movie-item {
             background-color: #222;
-            padding: 15px;
+            padding: 10px;
             border-radius: 10px;
-            max-width: 400px;
-            text-align: left;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .film-info h2 {
+        .movie-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(255, 0, 102, 0.6);
+        }
+
+        .movie-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .movie-item a {
+            text-decoration: none;
             color: #ff0066;
         }
 
-        .video-container {
-            width: 100%;
-            max-width: 640px;
-            text-align: center;
-        }
-
-        .video-container iframe {
-            width: 100%;
-            height: 360px;
-            border-radius: 10px;
-        }
-
-        .episode-selector {
-            background-color: #222;
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        select {
-            padding: 10px;
-            font-size: 1em;
-            border-radius: 5px;
-            background-color: #111;
-            color: #fff;
-            border: 1px solid #ff0066;
-        }
-
-        /* Bouton DON juste au-dessus du footer, aligné à droite */
-        #don-footer {
-            display: flex;
-            justify-content: flex-end; /* aligné à droite */
-            margin-top: 40px; /* espace au-dessus du bouton */
-            margin-right: 20px; /* espace par rapport au bord droit */
-            margin-bottom: 20px; /* espace entre bouton et footer */
-        }
-
-        #don-footer a {
-            background-color: #ff0066;
-            color: white;
-            padding: 14px 28px;
-            border-radius: 30px;
-            font-size: 18px;
-            font-weight: bold;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: background-color 0.3s;
-        }
-
-        #don-footer a img {
-            width: 35px;
-            height: 35px;
-        }
-
-        #don-footer a:hover {
-            background-color: #cc0055;
+        .movie-item h3 {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #ff0066;
         }
 
         footer {
             background-color: #111;
             color: #f1f1f1;
             text-align: center;
-            padding: 16px;
+            padding: 8px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             font-size: 0.9em;
         }
 
         @media (max-width: 600px) {
-            #don-footer a {
-                font-size: 16px;
-                padding: 12px 20px;
+            .movie-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Bouton flottant DON */
+        #don-float {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: #ff0066;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            text-decoration: none;
+            z-index: 1000;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #don-float img {
+            height: 22px;
+        }
+
+        #don-float:hover {
+            background-color: #cc0055;
+        }
+
+        @media (max-width: 600px) {
+            #don-float {
+                font-size: 14px;
+                padding: 10px 16px;
+                bottom: 100px;
+                right: 10px;
+            }
+
+            #don-float img {
+                height: 18px;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Imuḥucen - ⵉⵎⵓⵃⵓⵛⴻⵏ</h1>
+        <h1>ASEKLES - ⴰⵙⴻⴽⵍⴻⵙ</h1>
     </header>
 
-    <div class="warning">
-        ⚠️ Le site est actuellement en panne. Cette page est une version temporaire et exclusive pour visionner le film. ⚠️
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="films.html">Films</a>
+        <a href="series.html">Séries</a>
+        <a href="new.html">Nouveautés</a>
+    </nav>
+
+    <div class="content">
+        <h2>Recommandé pour vous</h2>
+        <div class="movie-grid">
+            <div class="movie-item">
+                <a href="imuhucen.html">
+                    <img src="imuhuchen.jpg" alt="Film Imuḥucen">
+                    <h3>Imuḥucen</h3>
+                </a>
+            </div>
+
+            <div class="movie-item">
+                <a href="film10.html">
+                    <img src="hmimi.jpg" alt="Film Ḥmimi d Lyes">
+                    <h3>Ḥmimi d Lyes</h3>
+                </a>
+            </div>
+
+            <div class="movie-item">
+                <a href="film1.html">
+                    <img src="Sans titre2.jpg" alt="Film Cirta">
+                    <h3>Cirta</h3>
+                </a>
+            </div>
+
+            <div class="movie-item">
+                <a href="film2.html">
+                    <img src="Sans titre.jpg" alt="Film Amezruy n tmurt">
+                    <h3>Amezruy n tmurt</h3>
+                </a>
+            </div>
+
+            <div class="movie-item">
+                <a href="film3.html">
+                    <img src="Sans titre3.jpg" alt="Film Tamacahut n Wakli">
+                    <h3>Tamacahut n Wakli</h3>
+                </a>
+            </div>
+
+            <div class="movie-item">
+                <a href="film4.html">
+                    <img src="Sans titre4.jpg" alt="Film Waɛli ak d tzizwit">
+                    <h3>Waɛli ak d tzizwit</h3>
+                </a>
+            </div>
+
+            <div class="movie-item">
+                <a href="film5.html">
+                    <img src="Sans titre5.jpg" alt="Film Zorro">
+                    <h3>Zorro</h3>
+                </a>
+            </div>
+
+            <div class="movie-item">
+                <a href="film8.html">
+                    <img src="ikerri.jpg" alt="Film Ikerri izimer">
+                    <h3>Ikerri izimer</h3>
+                </a>
+            </div>
+
+            <div class="movie-item">
+                <a href="film7.html">
+                    <img src="Sans titre11.jpg" alt="Film Tom et Jerry à New York">
+                    <h3>Tom et Jerry à New York</h3>
+                </a>
+            </div>
+
+            <div class="movie-item">
+                <a href="film6.html">
+                    <img src="Sans titre6.jpg" alt="Film Maca ak d Micka">
+                    <h3>Maca ak d Micka</h3>
+                </a>
+            </div>
+
+            <div class="movie-item">
+                <a href="film9.html">
+                    <img src="IMG_1264.jpeg" alt="Film Targit">
+                    <h3>Targit</h3>
+                </a>
+            </div>
+        </div>
     </div>
 
-    <div class="container">
-        <div class="film-info">
-            <h2>IMUḤUCEN</h2>
-            <p><strong>Genre :</strong> Comédie, Animation jeunesse</p>
-            <p><strong>Date de sortie :</strong> 2025</p>
-            <p><strong>Synopsis :</strong> Reda, Ɛisa, Ɛliluc, Ḥmimuc, d imuḥucen, d iɛlaḍ, yal tikkelt i deg ara ad binen sewjaden taxnanast iwakken ad rewlen seg lḥebs-nni i deg llan, di lḥebs-nni yella ccambiṭ i wumi semman Muḥend Waɛli, ak ufus-is aẓelmaḍ i wumi semman Haniya, war asṭuqqet n wawal atan ihi tezrart-a ar ɣur-nwen.</p>
-        </div>
-
-        <div class="video-container">
-            <iframe id="odysee-iframe" src="https://www.youtube.com/embed/V3PiDigOuCI" allowfullscreen></iframe>
-        </div>
-
-        <div class="episode-selector">
-            <label for="episode-select">Choisir un épisode :</label>
-            <select id="episode-select" onchange="loadEpisode(this.value)">
-                <option value="https://www.youtube.com/embed/V3PiDigOuCI">EP1 - Yewḥec lfil yernad gma-s</option>
-                <option value="https://www.youtube.com/embed/keL2m2O4RmU">EP2 - Tamuffirt</option>
-                <option value="https://www.youtube.com/embed/_p8P9NcToq4">EP3 - Ilat anect ilat</option>
-                <option value="https://www.youtube.com/embed/jRec6ZS_85I">EP4 - Nuli s aggur</option>
-                <option value="https://www.youtube.com/embed/oDfeXjYQLVM">EP5 - Timesrifegt</option>
-                <option value="https://www.youtube.com/embed/pns1n76X8Fw">EP6 - Taxnanast n wekbal</option>
-                <option value="https://www.youtube.com/embed/8SX3cTnVCy0">EP7 - Belqasem n ɛli caɛban (lmaḥfud)</option>
-                <option value="https://www.youtube.com/embed/Tb7JnPiHz78">EP8 - Nuṛa</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Bouton DON juste au-dessus du footer, aligné à droite -->
-    <div id="don-footer">
-        <a href="Don.html">
-            <img src="https://www.poste.dz/images/logo-round.png" alt="Logo Algérie Poste">
-            Faire un don
-        </a>
-    </div>
+    <!-- Bouton flottant DON -->
+    <a href="Don.html" id="don-float">
+        <img src="https://logowik.com/content/uploads/images/baridimob2693.logowik.com.webp" alt="BaridiMob">
+        Faire un don
+    </a>
 
     <footer>
         <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
     </footer>
-
-    <script>
-        function loadEpisode(url) {
-            document.getElementById("odysee-iframe").src = url;
-        }
-    </script>
 </body>
 </html>
