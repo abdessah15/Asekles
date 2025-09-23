@@ -76,27 +76,6 @@
             border-radius: 10px;
         }
 
-        .films-suggestion {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .film-item {
-            background-color: #222;
-            padding: 10px;
-            border-radius: 10px;
-            width: 150px;
-            text-align: center;
-        }
-
-        .film-item img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
         footer {
             background-color: #111;
             color: #f1f1f1;
@@ -109,11 +88,6 @@
         }
 
         @media (max-width: 600px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-            }
-
             .video-container iframe {
                 height: 200px;
             }
@@ -132,21 +106,22 @@
         <a href="new.html">Nouveautés</a>
     </nav>
 
-  <div class="container">
+    <div class="container">
         <div class="film-info">
             <h2>Ikerri izimer</h2>
-            <p><strong>Genre :</strong> Comédie , Court métrage , Film pour enfants</p>
-            <p><strong>Date de sortie :</strong> 2024 </p>
-            <p><strong>Synopsis :</strong> Deg tmeddit n Yennayer, lferḥ n wakraren yettuɣal d aɛewwiq .</p>
+            <p><strong>Genre :</strong> Comédie, Court métrage, Film pour enfants</p>
+            <p><strong>Date de sortie :</strong> 2024</p>
+            <p><strong>Synopsis :</strong> Deg tmeddit n Yennayer, lferḥ n wakraren yettuɣal d aɛewwiq.</p>
         </div>
-                 <!-- Option 1 : Lecteur Rumble (réduit) -->
-            <iframe class="rumble" src="https://dsvplay.com/e/gwzdqqt1t6w1" 
+
+        <div class="video-container">
+            <iframe src="https://dsvplay.com/e/gwzdqqt1t6w1" 
                 frameborder="0" 
                 allowfullscreen 
-                allow="fullscreen; picture-in-picture"
-                style="width:100%; height:200px; border-radius:10px;">
+                allow="fullscreen; picture-in-picture">
             </iframe>
-     </div>
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
