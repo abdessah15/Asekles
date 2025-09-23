@@ -1,176 +1,197 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asekles</title>
-    <link rel="icon" href="Asekles.png" type="image/png">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #000;
-            color: #f1f1f1;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asekles – Nouveautés</title>
+  <link rel="icon" href="Asekles.png" type="image/png">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #f1f1f1;
+    }
 
-        header {
-            background: linear-gradient(45deg, #ff0066, #6600ff);
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
+    header {
+      background: linear-gradient(45deg, #ff0066, #6600ff);
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 1.8em;
-            color: #fff;
-        }
+    header h1 {
+      margin: 0;
+      font-size: 1.8em;
+      color: #fff;
+    }
 
-        nav {
-            display: flex;
-            justify-content: center;
-            padding: 10px;
-            background-color: #111;
-        }
+    nav {
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      background-color: #111;
+    }
 
-        nav a {
-            color: #fff;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-        nav a:hover {
-            color: #ff0066;
-        }
+    nav a:hover {
+      color: #ff0066;
+    }
 
-        .content {
-            padding: 20px;
-        }
+    .content {
+      padding: 20px;
+      padding-bottom: 200px; /* pour éviter chevauchement footer */
+    }
 
-        .movie-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            padding: 10px;
-        }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ff0066;
+    }
 
-        .movie-item {
-            display: flex;
-            align-items: center;
-            background-color: #222;
-            padding: 10px;
-            border-radius: 10px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            width: fit-content;
-        }
+    .movie-item {
+      display: flex;
+      align-items: center;
+      background-color: #222;
+      padding: 12px;
+      border-radius: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      width: fit-content;
+      margin: auto; /* centrer le bloc */
+    }
 
-        .movie-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(255, 0, 102, 0.6);
-        }
+    .movie-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(255, 0, 102, 0.6);
+    }
 
-        .movie-item img {
-            width: 180px;
-            height: auto;
-            border-radius: 10px;
-        }
+    .movie-item img {
+      width: 180px;
+      height: auto;
+      border-radius: 10px;
+    }
 
-        .movie-item .movie-info {
-            margin-left: 15px;
-        }
+    .movie-item h3 {
+      margin: 0 0 0 15px;
+      font-size: 1.3em;
+      color: #ff0066;
+    }
 
-        .movie-item a {
-            text-decoration: none;
-            color: #ff0066;
-        }
+    .movie-item a {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      color: #ff0066;
+    }
 
-        .movie-item a:visited {
-            color: #ff0066;
-        }
+    /* Bouton DON flottant */
+    #don-float {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background-color: #ff0066;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      text-decoration: none;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.3s;
+    }
 
-        .movie-item h3 {
-            margin: 0;
-            font-size: 1.3em;
-            color: #ff0066;
-        }
+    #don-float img {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: white;
+      padding: 2px;
+    }
 
-        /* Bouton DON flottant */
-        #don-float {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            background-color: #ff0066;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            cursor: pointer;
-            text-decoration: none;
-            z-index: 1000;
-            transition: background-color 0.3s;
-        }
+    #don-float:hover {
+      background-color: #cc0055;
+    }
 
-        #don-float:hover {
-            background-color: #cc0055;
-        }
+    @media (max-width: 600px) {
+      .movie-item {
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+      }
 
-        @media (max-width: 600px) {
-            #don-float {
-                font-size: 14px;
-                padding: 10px 16px;
-                bottom: 100px;
-                right: 10px;
-            }
-        }
+      .movie-item h3 {
+        margin: 10px 0 0;
+      }
 
-        footer {
-            background-color: #111;
-            color: #f1f1f1;
-            text-align: center;
-            padding: 8px;
-            font-size: 0.9em;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-        }
-    </style>
+      #don-float {
+        font-size: 14px;
+        padding: 8px 14px;
+        bottom: 100px;
+        right: 10px;
+      }
+
+      #don-float img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    footer {
+      background-color: #111;
+      color: #f1f1f1;
+      text-align: center;
+      padding: 8px;
+      font-size: 0.9em;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>ⵣ Nouveautés - ⵉⵎⴰⵢⵏⵓⵜⴻⵏ ⵣ</h1>
-    </header>
+  <header>
+    <h1>ⵣ Nouveautés - ⵉⵎⴰⵢⵏⵓⵜⴻⵏ ⵣ</h1>
+  </header>
 
-    <nav>
-        <a href="index.html">Accueil</a>
-        <a href="films.html">Films</a>
-        <a href="series.html">Séries</a>
-        <a href="new.html">Nouveautés</a>
-    </nav>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="films.html">Films</a>
+    <a href="series.html">Séries</a>
+    <a href="new.html">Nouveautés</a>
+  </nav>
 
-    <div class="content">
-        <h2>Les Dernières Nouveautés</h2>
-        <!-- Films -->
-        <div class="movie-item">
-            <a href="imuhucen.html">
-                <img src="imuhuchen.jpg" alt="Film 1">
-                <h3>Imuḥucen</h3>
-            </a>
-        </div>
+  <div class="content">
+    <h2>Les Dernières Nouveautés</h2>
+
+    <!-- Films -->
+    <div class="movie-item">
+      <a href="imuhucen.html">
+        <img src="imuhuchen.jpg" alt="Film 1">
+        <h3>Imuḥucen</h3>
+      </a>
     </div>
+  </div>
 
-       <!-- Bouton flottant DON -->
-    <a href="Don.html" id="don-float">
-        <img src="https://logowik.com/content/uploads/images/baridimob2693.logowik.com.webp" alt="BaridiMob">
-        Faire un don
-    </a>
+  <!-- Bouton flottant DON -->
+  <a href="Don.html" id="don-float">
+    <img src="https://logowik.com/content/uploads/images/baridimob2693.logowik.com.webp" alt="BaridiMob">
+    Faire un don
+  </a>
 
-    <footer>
-        <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
-    </footer>
+  <footer>
+    <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
+  </footer>
 </body>
 </html>
-
