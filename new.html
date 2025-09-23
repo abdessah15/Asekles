@@ -1,133 +1,154 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Asekles – Nouveautés</title>
-  <link rel="icon" href="Asekles.png" type="image/png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asekles - Nouveautés</title>
+  <link rel="icon" href="Asekles.png" type="image/png">
   <style>
-    :root{
-      --accent: #ff0066;
-      --bg: #000;
-      --card: #222;
-      --nav-bg: #111;
-    }
-
-    html,body{height:100%;}
-
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: var(--bg);
+      background-color: #000;
       color: #f1f1f1;
-      -webkit-font-smoothing:antialiased;
     }
 
-    header{
-      background: linear-gradient(45deg, var(--accent), #6600ff);
+    header {
+      background: linear-gradient(45deg, #ff0066, #6600ff);
       padding: 10px;
       text-align: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-    }
-    header h1{ margin:0; font-size:1.8em; color:#fff; }
-
-    nav{
-      display:flex;
-      justify-content:center;
-      padding:10px;
-      background:var(--nav-bg);
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    nav a{ color:#fff; text-decoration:none; font-weight:700; padding:6px 8px; }
-    nav a:hover{ color:var(--accent); }
-
-    .content{
-      padding:20px;
-      /* espace bas pour le bouton 'don' (évite chevauchement si footer masqué) */
-      padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
-      max-width:1100px;
-      margin:0 auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     }
 
-    h2{
-      color:var(--accent);
-      text-align:center;
-      margin:0 0 18px 0;
-      font-size:1.4em;
+    header h1 {
+      margin: 0;
+      font-size: 1.8em;
+      color: #fff;
     }
 
-    /* GRID responsive : sur desktop 2 colonnes, sur mobile 1 colonne */
-    .movie-grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap:15px;
-      align-items:start;
+    nav {
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      background-color: #111;
     }
 
-    /* carte film */
-    .movie-item{
-      display:flex;
-      gap:14px;
-      background:var(--card);
-      padding:12px;
-      border-radius:10px;
-      align-items:center;
-      transition: transform .22s ease, box-shadow .22s ease;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-    }
-    .movie-item:hover{
-      transform: translateY(-6px);
-      box-shadow: 0 12px 24px rgba(255,0,102,0.14);
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
     }
 
-    .movie-item img{
-      width:180px;
-      height:110px;
-      object-fit:cover;
-      border-radius:8px;
-      flex-shrink:0;
-      background:#111;
+    nav a:hover {
+      color: #ff0066;
     }
 
-    .movie-info{ display:flex; flex-direction:column; gap:6px; }
-    .movie-info h3{ margin:0; color:var(--accent); font-size:1.15em; }
-    .movie-info p{ margin:0; color:#dcdcdc; font-size:0.95em; }
-
-    a.card-link{ text-decoration:none; color:inherit; display:flex; align-items:center; gap:14px; width:100%; }
-
-    /* BOUTON DON flottant (logo + texte) */
-    #don-float{
-      position:fixed;
-      right:18px;
-      bottom:20px;
-      z-index:1200;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      background:var(--accent);
-      color:#fff;
-      padding:10px 14px;
-      border-radius:999px;
-      box-shadow:0 8px 20px rgba(0,0,0,0.45);
-      text-decoration:none;
-      font-weight:700;
-      transition:transform .12s ease, background .12s ease;
+    .content {
+      padding: 20px;
     }
-    #don-float img{ width:22px; height:22px; object-fit:contain; background:#fff; padding:2px; border-radius:4px; }
 
-    #don-float:hover{ transform:scale(1.05); background:#e6005c; }
+    h2 {
+      margin-bottom: 20px;
+      color: #ff0066;
+    }
 
-    /* FOOTER masqué par défaut (tu avais demandé footer masqué) */
-    footer{ display:none; }
+    /* Grille films */
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+    }
 
-    /* petits écrans : stacked layout */
-    @media (max-width:720px){
-      .movie-grid{ grid-template-columns: 1fr; }
-      .movie-item{ flex-direction:column; align-items:center; text-align:center; width:100%; }
-      .movie-item img{ width:80%; height:160px; }
-      .movie-info{ align-items:center; }
-      #don-float{ right:12px; bottom:18px; padding:9px 12px; }
+    .movie-item {
+      background-color: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .movie-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(255, 0, 102, 0.6);
+    }
+
+    .movie-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .movie-info {
+      padding: 10px;
+      text-align: center;
+    }
+
+    .movie-info h3 {
+      margin: 10px 0 0;
+      font-size: 1.1em;
+      color: #ff0066;
+    }
+
+    .movie-info a {
+      text-decoration: none;
+      color: #ff0066;
+      font-weight: bold;
+    }
+
+    .movie-info a:hover {
+      text-decoration: underline;
+    }
+
+    /* Bouton DON flottant */
+    #don-float {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background-color: #ff0066;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      text-decoration: none;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #don-float img {
+      height: 22px;
+    }
+
+    #don-float:hover {
+      background-color: #cc0055;
+    }
+
+    @media (max-width: 600px) {
+      #don-float {
+        font-size: 13px;
+        padding: 8px 14px;
+        bottom: 100px;
+        right: 10px;
+      }
+      #don-float img {
+        height: 18px;
+      }
+    }
+
+    footer {
+      background-color: #111;
+      color: #f1f1f1;
+      text-align: center;
+      padding: 8px;
+      font-size: 0.9em;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
     }
   </style>
 </head>
@@ -143,25 +164,23 @@
     <a href="new.html">Nouveautés</a>
   </nav>
 
-  <main class="content" role="main">
+  <div class="content">
     <h2>Les Dernières Nouveautés</h2>
-
-    <section class="movie-grid" aria-label="Nouveautés">
-      <!-- exemple de carte (duplique pour ajouter d'autres nouveautés) -->
-      <article class="movie-item">
-        <a class="card-link" href="imuhucen.html" aria-label="Voir Imuḥucen">
-          <img src="imuhuchen.jpg" alt="Affiche Imuḥucen">
+    <div class="movie-grid">
+      <div class="movie-item">
+        <a href="imuhucen.html">
+          <img src="imuhuchen.jpg" alt="Imuḥucen">
           <div class="movie-info">
             <h3>Imuḥucen</h3>
-            <p>Comédie / Animation jeunesse • 2025</p>
           </div>
         </a>
-      </article>
-    </section>
-  </main>
+      </div>
+      <!-- 👉 Tu peux ajouter d’autres nouveautés ici -->
+    </div>
+  </div>
 
-  <!-- Bouton DON flottant (avec logo BaridiMob) -->
-  <a id="don-float" href="Don.html" aria-label="Faire un don">
+  <!-- Bouton flottant DON -->
+  <a href="Don.html" id="don-float">
     <img src="https://logowik.com/content/uploads/images/baridimob2693.logowik.com.webp" alt="BaridiMob">
     Faire un don
   </a>
