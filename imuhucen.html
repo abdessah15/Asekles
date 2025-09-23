@@ -29,13 +29,14 @@
         nav {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
             padding: 8px;
             background-color: #111;
         }
 
         nav a {
             color: #fff;
-            margin: 0 10px;
+            margin: 0 12px;
             text-decoration: none;
             font-weight: bold;
         }
@@ -56,41 +57,49 @@
             background-color: #222;
             padding: 15px;
             border-radius: 10px;
-            max-width: 400px;
-            text-align: left;
+            max-width: 600px;
+            line-height: 1.6;
         }
 
         .film-info h2 {
             color: #ff0066;
+            margin-bottom: 10px;
         }
 
         .video-container {
             width: 100%;
-            max-width: 640px;
-            text-align: center;
+            max-width: 800px;
+            aspect-ratio: 16/9;
+            position: relative;
         }
 
         .video-container iframe {
             width: 100%;
-            height: 360px;
+            height: 100%;
+            border: none;
             border-radius: 10px;
         }
 
         .episode-selector {
             background-color: #222;
-            padding: 10px;
+            padding: 12px;
             border-radius: 10px;
             text-align: center;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         select {
             padding: 10px;
             font-size: 1em;
-            border-radius: 5px;
+            border-radius: 6px;
             background-color: #111;
             color: #fff;
             border: 1px solid #ff0066;
+            cursor: pointer;
+        }
+
+        select:hover {
+            border-color: #6600ff;
         }
 
         footer {
@@ -98,7 +107,6 @@
             color: #f1f1f1;
             text-align: center;
             padding: 16px;
-            position: relative;
             width: 100%;
             font-size: 0.9em;
             margin-top: 40px;
@@ -122,24 +130,24 @@
             <h2>IMUḤUCEN</h2>
             <p><strong>Genre :</strong> Comédie, Animation jeunesse</p>
             <p><strong>Date de sortie :</strong> 2025</p>
-            <p><strong>Synopsis :</strong> Reda,Ɛisa,Ɛliluc,Ḥmimuc, d imuḥucen , d iɛlaḍ, yal tikkelt i deg ara ad binen sewjaden taxnanast iwakken ad rewlen seg lḥebs-nni i deg llan, di lḥebs-nni yella ccambiṭ i wumi semman Muḥend Waɛli , ak ufus-is aẓelmaḍ i wumi semman Haniya , war asṭuqqet n wawal atan ihi tezrart-a ar ɣur-nwen.</p>
+            <p><strong>Synopsis :</strong> Reda, Ɛisa, Ɛliluc, Ḥmimuc d imuḥucen, d iɛlaḍ. Yal tikkelt ara binen sewjaden taxnanast iwakken ad rewlen seg lḥebs. Deg lḥebs yella ccambiṭ Muḥend Waɛli akked Haniya, war asṭuqqet n wawal, atan ihi tezrart-a ar ɣur-nwen.</p>
         </div>
 
         <div class="video-container">
-            <iframe id="odysee-iframe" src="https://rumble.com/embed/v6wya6q/?pub=4lsizp" allowfullscreen></iframe>
+            <iframe id="odysee-iframe" src="https://dsvplay.com/e/498d4sp5fic8" allowfullscreen></iframe>
         </div>
 
         <div class="episode-selector">
-            <label for="episode-select">Choisir un épisode :</label>
+            <label for="episode-select">Choisir un épisode :</label><br><br>
             <select id="episode-select" onchange="loadEpisode(this.value)">
-                <option value="https://rumble.com/embed/v6wya6q/?pub=4lsizp">EP1- Yewḥec lfil yernad gma-s</option>
-                <option value=https://rumble.com/embed/v6wyb8u/?pub=4lsizp">EP2- Tamuffirt</option>
-                <option value="https://rumble.com/embed/v6wybiu/?pub=4lsizp">EP3- Ilat anect ilat</option>
-                <option value="https://rumble.com/embed/v6wybjc/?pub=4lsizp">EP4- Nuli s aggur</option>
-                <option value="https://rumble.com/embed/v6wybok/?pub=4lsizp">EP5- Timesrifegt</option>
-                <option value="https://rumble.com/embed/v6wycwe/?pub=4lsizp">EP6- Taxnanast n wekbal</option>
-                <option value="https://rumble.com/embed/v6wycwm/?pub=4lsizp">EP7- Belqasem n ɛli caɛban ( lmaḥfud )</option>
-                <option value="https://rumble.com/embed/v6wycw0/?pub=4lsizp">EP8- Nuṛa</option>
+                <option value="https://dsvplay.com/e/498d4sp5fic8">EP1 - Yewḥec lfil yernad gma-s</option>
+                <option value="https://dsvplay.com/e/3bknnnos9lcg">EP2 - Tamuffirt</option>
+                <option value="https://dsvplay.com/e/xvnvlj9xc5a5">EP3 - Ilat anect ilat</option>
+                <option value="https://dsvplay.com/e/9dg37vz9tryq">EP4 - Nuli s aggur</option>
+                <option value="https://dsvplay.com/e/j4da3g9s3pmv">EP5 - Timesrifegt</option>
+                <option value="https://dsvplay.com/e/3uwg829o2uu7">EP6 - Taxnanast n wekbal</option>
+                <option value="https://dsvplay.com/e/h4qmss96g4ls">EP7 - Belqasem n ɛli caɛban (lmaḥfud)</option>
+                <option value="https://dsvplay.com/e/g0ctcjb4r3j2">EP8 - Nuṛa</option>
             </select>
         </div>
     </div>
