@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asekles</title>
+  <title>Asekles - Ḥmimi d Lyes</title>
   <link rel="icon" href="Asekles.png" type="image/png">
   <style>
     body {
@@ -15,7 +15,7 @@
 
     header {
       background: linear-gradient(45deg, #ff0066, #6600ff);
-      padding: 10px;
+      padding: 12px;
       text-align: center;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     }
@@ -29,14 +29,14 @@
     nav {
       display: flex;
       justify-content: center;
-      padding: 8px;
+      padding: 10px;
       background-color: #111;
       flex-wrap: wrap;
     }
 
     nav a {
       color: #fff;
-      margin: 5px 10px;
+      margin: 5px 12px;
       text-decoration: none;
       font-weight: bold;
     }
@@ -49,55 +49,37 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
+      padding: 25px 15px;
       gap: 20px;
     }
 
     .film-info {
       background-color: #222;
-      padding: 15px;
+      padding: 18px;
       border-radius: 10px;
-      max-width: 400px;
+      max-width: 500px;
       text-align: left;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
     .film-info h2 {
+      margin-top: 0;
       color: #ff0066;
     }
 
     .video-container {
       width: 100%;
-      max-width: 600px;
+      max-width: 640px;
       aspect-ratio: 16/9;
       overflow: hidden;
       border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
     .video-container iframe {
       width: 100%;
       height: 100%;
       border: none;
-    }
-
-    .films-suggestion {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .film-item {
-      background-color: #222;
-      padding: 10px;
-      border-radius: 10px;
-      width: 150px;
-      text-align: center;
-    }
-
-    .film-item img {
-      width: 100%;
-      border-radius: 10px;
     }
 
     footer {
@@ -108,6 +90,16 @@
       width: 100%;
       font-size: 0.9em;
       margin-top: 40px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5em;
+      }
+      .film-info {
+        padding: 15px;
+        font-size: 0.95em;
+      }
     }
   </style>
 </head>
@@ -133,7 +125,7 @@
 
     <div class="video-container">
       <iframe 
-        src="https://rumble.com/embed/v6ugtnu/?pub=4lsizp" 
+        src="https://dsvplay.com/e/c1z87czohcea" 
         allowfullscreen 
         allow="fullscreen; picture-in-picture">
       </iframe>
