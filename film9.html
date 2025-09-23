@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asekles</title>
+    <title>Asekles - Targit</title>
     <link rel="icon" href="Asekles.png" type="image/png">
     <style>
         body {
@@ -15,7 +15,7 @@
 
         header {
             background: linear-gradient(45deg, #ff0066, #6600ff);
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
@@ -29,13 +29,13 @@
         nav {
             display: flex;
             justify-content: center;
-            padding: 8px;
+            padding: 10px;
             background-color: #111;
         }
 
         nav a {
             color: #fff;
-            margin: 0 10px;
+            margin: 0 12px;
             text-decoration: none;
             font-weight: bold;
         }
@@ -48,19 +48,21 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 25px 15px;
             gap: 20px;
         }
 
         .film-info {
             background-color: #222;
-            padding: 15px;
+            padding: 18px;
             border-radius: 10px;
-            max-width: 400px;
+            max-width: 500px;
             text-align: left;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
         }
 
         .film-info h2 {
+            margin-top: 0;
             color: #ff0066;
         }
 
@@ -76,53 +78,25 @@
             border-radius: 10px;
         }
 
-        .films-suggestion {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .film-item {
-            background-color: #222;
-            padding: 10px;
-            border-radius: 10px;
-            width: 150px;
-            text-align: center;
-        }
-
-        .film-item img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
         footer {
             background-color: #111;
             color: #f1f1f1;
             text-align: center;
             padding: 16px;
-            position: relative;
-            width: 100%;
-            font-size: 0.9em;
             margin-top: 40px;
+            font-size: 0.9em;
         }
 
         @media (max-width: 600px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-            }
-
             .video-container iframe {
-                height: 200px;
+                height: 220px;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Targit - ⵜⴰⵔⴳⵉⵜ </h1>
+        <h1>Targit - ⵜⴰⵔⴳⵉⵜ</h1>
     </header>
 
     <nav>
@@ -132,22 +106,24 @@
         <a href="new.html">Nouveautés</a>
     </nav>
 
-  <div class="container">
+    <div class="container">
         <div class="film-info">
             <h2>Targit</h2>
-            <p><strong>Genre :</strong> Cinéma de fantasy , Histoir dramatique</p>
-            <p><strong>Date de sortie :</strong> 2025 </p>
-            <p><strong>Synopsis :</strong> d yiwen iɛewqen deg tegzirt anda ulac win yellan , din yebda yettargud ayen ulac .</p>
+            <p><strong>Genre :</strong> Cinéma fantastique, Histoire dramatique</p>
+            <p><strong>Date de sortie :</strong> 2025</p>
+            <p><strong>Synopsis :</strong> D yiwen iɛewqen deg tegzirt anda ulac win yellan, din yebda yettargud ayen ulac.</p>
         </div>
-            <!-- Option 1 : Lecteur Rumble (réduit) -->
-            <iframe class="rumble" src="https://rumble.com/embed/v6s8zub/?pub=4lsizp" 
-                frameborder="0" 
-                allowfullscreen 
-                allow="fullscreen; picture-in-picture"
-                style="width:100%; height:200px; border-radius:10px;">
-            </iframe>     </div>
-      
-      <footer>
+
+        <div class="video-container">
+            <iframe src="https://dsvplay.com/e/kctbulmagrj3"
+                frameborder="0"
+                allowfullscreen
+                allow="fullscreen; picture-in-picture">
+            </iframe>
+        </div>
+    </div>
+
+    <footer>
         <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
     </footer>
 </body>
