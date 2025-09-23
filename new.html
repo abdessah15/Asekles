@@ -89,14 +89,20 @@
       color: #ff0066;
     }
 
-    .movie-info a {
+    /* 🔥 Correction pour enlever le soulignement bleu */
+    .movie-item a {
       text-decoration: none;
-      color: #ff0066;
-      font-weight: bold;
+      color: inherit;
     }
 
-    .movie-info a:hover {
-      text-decoration: underline;
+    .movie-item a h3 {
+      text-decoration: none;
+      color: #ff0066;
+    }
+
+    .movie-item a:hover h3 {
+      text-decoration: none;
+      color: #ff3399; /* effet hover optionnel */
     }
 
     /* Bouton DON flottant */
