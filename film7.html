@@ -126,21 +126,26 @@
         </div>
 
         <div class="video-container">
-            <iframe id="odysee-iframe" src="https://rumble.com/embed/v6s8rm5/?pub=4lsizp" allowfullscreen></iframe>
+            <iframe id="episode-player" 
+                src="https://dsvplay.com/e/f7p5r4ppi7ci" 
+                frameborder="0"
+                allowfullscreen 
+                allow="fullscreen; picture-in-picture">
+            </iframe>
         </div>
 
         <div class="episode-selector">
             <label for="episode-select">Choisir un épisode :</label>
             <select id="episode-select" onchange="loadEpisode(this.value)">
-                <option value="https://rumble.com/embed/v6s8rm5/?pub=4lsizp">Épisode 1</option>
-                <option value="https://rumble.com/embed/v6s8rmd/?pub=4lsizp">Épisode 2</option>
-                <option value="https://rumble.com/embed/v6s8slx/?pub=4lsizp">Épisode 3</option>
-                <option value="https://rumble.com/embed/v6s8sm3/?pub=4lsizp">Épisode 4</option>
-                <option value="https://rumble.com/embed/v6s8smf/?pub=4lsizp">Épisode 5</option>
-                <option value="https://rumble.com/embed/v6s8smp/?pub=4lsizp">Épisode 6</option>
-                <option value="https://rumble.com/embed/v6s8smt/?pub=4lsizp">Épisode 7</option>
-                <option value="https://rumble.com/embed/v6s8sn3/?pub=4lsizp">Épisode 8</option>
-                <option value="https://rumble.com/embed/v6s8sn9/?pub=4lsizp">Épisode 9</option>
+                <option value="https://dsvplay.com/e/f7p5r4ppi7ci">Épisode 1</option>
+                <option value="https://dsvplay.com/e/s3yporvwnfo4">Épisode 2</option>
+                <option value="https://dsvplay.com/e/32ucidez7ruu">Épisode 3</option>
+                <option value="https://dsvplay.com/e/nc6xarpn6x7z">Épisode 4</option>
+                <option value="https://dsvplay.com/e/0xquko371y40">Épisode 5</option>
+                <option value="https://dsvplay.com/e/ohx92mb5pzlr">Épisode 6</option>
+                <option value="https://dsvplay.com/e/lv9ybo5ad10v">Épisode 7</option>
+                <option value="https://dsvplay.com/e/rex44ot33zgt">Épisode 8</option>
+                <option value="https://dsvplay.com/e/2qzouxcy4qge">Épisode 9</option>
             </select>
         </div>
     </div>
@@ -151,7 +156,7 @@
 
     <script>
         function loadEpisode(url) {
-            document.getElementById("odysee-iframe").src = url;
+            document.getElementById("episode-player").src = url;
         }
     </script>
 </body>
