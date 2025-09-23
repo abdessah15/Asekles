@@ -31,11 +31,12 @@
       justify-content: center;
       padding: 8px;
       background-color: #111;
+      flex-wrap: wrap;
     }
 
     nav a {
       color: #fff;
-      margin: 0 10px;
+      margin: 5px 10px;
       text-decoration: none;
       font-weight: bold;
     }
@@ -101,25 +102,37 @@
       font-size: 0.9em;
     }
 
+    /* Bouton Faire un don flottant */
     #don-float {
       position: fixed;
       bottom: 80px;
       right: 20px;
-      background-color: #ff0066;
+      background: #ff0066;
       color: white;
-      padding: 12px 20px;
+      padding: 10px 16px;
       border-radius: 30px;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: bold;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      cursor: pointer;
       text-decoration: none;
       z-index: 1000;
-      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    #don-float img {
+      height: 24px;
+      width: auto;
+      margin-right: 8px;
+      border-radius: 4px;
+      background: white;
+      padding: 2px;
     }
 
     #don-float:hover {
-      background-color: #cc0055;
+      background: #cc0055;
+      transform: scale(1.05);
     }
 
     @media (max-width: 600px) {
@@ -128,10 +141,15 @@
       }
 
       #don-float {
-        font-size: 14px;
-        padding: 10px 16px;
+        font-size: 13px;
+        padding: 8px 12px;
         bottom: 100px;
         right: 10px;
+      }
+
+      #don-float img {
+        height: 20px;
+        margin-right: 6px;
       }
     }
   </style>
@@ -175,7 +193,7 @@
           <h3>Tom et Jerry à New York</h3>
         </a>
       </div>
-        <div class="movie-item">
+      <div class="movie-item">
         <a href="imuhucen.html">
           <img src="imuhuchen.jpg" alt="Série 5" />
           <h3>Imuḥucen</h3>
@@ -184,15 +202,14 @@
     </div>
   </div>
 
-      <!-- Bouton flottant DON -->
-    <a href="Don.html" id="don-float">
-        <img src="https://logowik.com/content/uploads/images/baridimob2693.logowik.com.webp" alt="BaridiMob">
-        Faire un don
-    </a>
+  <!-- Bouton Faire un don -->
+  <a href="Don.html" id="don-float">
+    <img src="https://logowik.com/content/uploads/images/baridimob2693.logowik.com.webp" alt="BaridiMob">
+    Faire un don
+  </a>
 
   <footer>
     <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
   </footer>
 </body>
 </html>
-
