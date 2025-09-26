@@ -74,6 +74,7 @@
             width: 100%;
             height: 360px;
             border-radius: 10px;
+            border: 0;
         }
 
         .episode-selector {
@@ -143,17 +144,16 @@
         <!-- Vidéo + sélection d’épisode -->
         <div class="video-container">
             <iframe id="episode-player" 
-                src="https://dsvplay.com/e/7ghb76ntkc9l" 
-                frameborder="0" 
-                allowfullscreen 
-                allow="fullscreen; picture-in-picture">
+                src="https://peertube.wtf/videos/embed/sjcfsYU3iEwQmmTdrGqZjq" 
+                allow="fullscreen" 
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms">
             </iframe>
 
             <div class="episode-selector">
                 <label for="episode-select">Choisir un épisode :</label>
                 <select id="episode-select" onchange="loadEpisode(this.value)">
-                    <option value="https://dsvplay.com/e/7ghb76ntkc9l">Épisode 1</option>
-                    <option value="https://dsvplay.com/e/5pkkce3974vh">Épisode 2</option>
+                    <option value="https://peertube.wtf/videos/embed/sjcfsYU3iEwQmmTdrGqZjq">Épisode 1</option>
+                    <option value="https://peertube.wtf/videos/embed/uoBQakyS7ieeamKFomJmzH">Épisode 2</option>
                 </select>
             </div>
         </div>
@@ -163,7 +163,7 @@
         <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
     </footer>
 
-    <!-- Script final correct -->
+    <!-- Script final -->
     <script>
         function loadEpisode(url) {
             document.getElementById("episode-player").src = url;
