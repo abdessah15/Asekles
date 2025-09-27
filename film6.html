@@ -72,8 +72,9 @@
 
         .video-container iframe {
             width: 100%;
-            height: 360px;
+            aspect-ratio: 16 / 9;
             border-radius: 10px;
+            border: 0;
         }
 
         .episode-selector {
@@ -125,24 +126,21 @@
             <p><strong>Synopsis :</strong> Yiwet n teqrurt isemman Maca yettidiren ak d wersel iwumi semman Micka, syin taqsit n twuɣa glant-d s unecraḥ i yigerdan yetnezzihen.</p>
         </div>
 
-        <!-- Conteneur vidéo + sélection d’épisodes -->
+        <!-- Vidéo + sélection d’épisodes -->
         <div class="video-container">
-            <!-- ✅ src corrigé -->
             <iframe id="episode-player" 
-                src="https://dsvplay.com/e/52ygk45g26kz"
-                frameborder="0" 
-                allowfullscreen 
-                allow="fullscreen; picture-in-picture">
+                src="https://odysee.com/$/embed/@asekles:d/maca-ak-d-micka-EP-(1):a?r=UgHCRscWTZraSU5PcChM513GgHQ5AvEv" 
+                allowfullscreen>
             </iframe>
 
             <div class="episode-selector">
                 <label for="episode-select">Choisir un épisode :</label>
                 <select id="episode-select" onchange="loadEpisode(this.value)">
-                    <option value="https://dsvplay.com/e/52ygk45g26kz">Épisode 1</option>
-                    <option value="https://dsvplay.com/e/inr4y4ghx2vt">Épisode 2</option>
-                    <option value="https://dsvplay.com/e/1guu07dhxn8e">Épisode 3</option>
-                    <option value="https://dsvplay.com/e/p0krpfg5zjl4">Épisode 4</option>
-                    <option value="https://dsvplay.com/e/cw9mvqz4ilka">Épisode 5</option>
+                    <option value="https://odysee.com/$/embed/@asekles:d/maca-ak-d-micka-EP-(1):a?r=UgHCRscWTZraSU5PcChM513GgHQ5AvEv">Épisode 1</option>
+                    <option value="https://odysee.com/$/embed/@asekles:d/maca-ak-d-micka-EP-(2):9?r=UgHCRscWTZraSU5PcChM513GgHQ5AvEv">Épisode 2</option>
+                    <option value="https://odysee.com/$/embed/@asekles:d/maca-ak-d-micka-EP-(3):5?r=UgHCRscWTZraSU5PcChM513GgHQ5AvEv">Épisode 3</option>
+                    <option value="https://odysee.com/$/embed/@asekles:d/maca-ak-d-micka-EP-(4):e?r=UgHCRscWTZraSU5PcChM513GgHQ5AvEv">Épisode 4</option>
+                    <option value="https://odysee.com/$/embed/@asekles:d/maca-ak-d-micka-EP-(5):f?r=UgHCRscWTZraSU5PcChM513GgHQ5AvEv">Épisode 5</option>
                 </select>
             </div>
         </div>
@@ -152,7 +150,7 @@
         <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
     </footer>
 
-    <!-- ✅ Script correct uniquement -->
+    <!-- Script -->
     <script>
         function loadEpisode(url) {
             document.getElementById("episode-player").src = url;
