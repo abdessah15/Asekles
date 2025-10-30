@@ -1,198 +1,262 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta name="google-site-verification" content="ihF94BOoU_H2-Pfh_mLVSHjfaw5wdaV2BSeoLEkDOws">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asekles</title>
-    <link rel="icon" href="Asekles.png" type="image/png">
+  <meta name="google-site-verification" content="ihF94BOoU_H2-Pfh_mLVSHjfaw5wdaV2BSeoLEkDOws">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asekles</title>
+  <link rel="icon" href="Asekles.png" type="image/png">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #000;
-            color: #f1f1f1;
-        }
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #f1f1f1;
+    }
 
-        header {
-            background: linear-gradient(45deg, #ff0066, #6600ff);
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
+    header {
+      background: linear-gradient(45deg, #ff0066, #6600ff);
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 2em;
-            color: #fff;
-        }
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      color: #fff;
+    }
 
-        nav {
-            display: flex;
-            justify-content: center;
-            padding: 8px;
-            background-color: #111;
-        }
+    nav {
+      display: flex;
+      justify-content: center;
+      padding: 8px;
+      background-color: #111;
+      flex-wrap: wrap;
+    }
 
-        nav a {
-            color: #fff;
-            margin: 0 10px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    nav a {
+      color: #fff;
+      margin: 5px 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-        nav a:hover {
-            color: #ff0066;
-        }
+    nav a:hover {
+      color: #ff0066;
+    }
 
-        .content {
-            padding: 20px;
-            padding-bottom: 200px;
-        }
+    .content {
+      padding: 20px;
+      padding-bottom: 200px;
+    }
 
-        .movie-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
+    .content h2 {
+      text-align: center;
+      color: #ff0066;
+      margin-bottom: 20px;
+    }
 
-        .movie-item {
-            background-color: #222;
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
-            transition: 0.3s;
-        }
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      padding: 10px;
+    }
 
-        .movie-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(255, 0, 102, 0.6);
-        }
+    .movie-item {
+      background-color: #222;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
 
-        .movie-item img {
-            width: 90%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
+    .movie-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(255, 0, 102, 0.6);
+    }
 
-        /* Supprimer le bleu des liens */
-        .movie-item a {
-            text-decoration: none;
-            color: inherit;
-        }
+    .movie-item img {
+      width: 100%;
+      border-radius: 10px;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
 
-        .movie-item a:visited {
-            color: inherit;
-        }
+    .movie-item:hover img {
+      transform: scale(1.05);
+    }
 
-        .movie-item h3 {
-            color: #ff0066;
-            font-size: 1.1em;
-            margin-top: 10px;
-        }
+    .movie-item a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-        footer {
-            background-color: #111;
-            color: #f1f1f1;
-            text-align: center;
-            padding: 8px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
+    .movie-item a:visited {
+      color: inherit;
+    }
 
-        #don-float {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            background-color: #ff0066;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .movie-item h3 {
+      margin-top: 10px;
+      font-size: 1.2em;
+      color: #ff0066;
+    }
 
-        #don-float img {
-            height: 22px;
-        }
-    </style>
+    footer {
+      background-color: #111;
+      color: #f1f1f1;
+      text-align: center;
+      padding: 8px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      font-size: 0.9em;
+    }
+
+    /* Bouton flottant DON */
+    #don-float {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #ff0066;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      text-decoration: none;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    #don-float img {
+      height: 24px;
+      width: auto;
+      margin-right: 8px;
+      border-radius: 4px;
+      background: white;
+      padding: 2px;
+    }
+
+    #don-float:hover {
+      background: #cc0055;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      #don-float {
+        font-size: 13px;
+        padding: 8px 12px;
+        bottom: 100px;
+        right: 10px;
+      }
+
+      #don-float img {
+        height: 20px;
+        margin-right: 6px;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <header>
+    <h1>ⵣ Asekles - ⴰⵙⴻⴽⵍⴻⵙ ⵣ</h1>
+  </header>
 
-<header>
-    <h1>ASEKLES - ⴰⵙⴻⴽⵍⴻⵙ</h1>
-</header>
-
-<nav>
+  <nav>
     <a href="index.html">Accueil</a>
     <a href="films.html">Films</a>
     <a href="series.html">Séries</a>
     <a href="new.html">Nouveautés</a>
-</nav>
+  </nav>
 
-<div class="content">
+  <div class="content">
     <h2>Recommandé pour vous</h2>
 
     <div class="movie-grid">
-        <div class="movie-item">
-            <a href="amghar-aneghrum.html"><img src="photo.jpg"><h3>Amɣar aneɣrum</h3></a>
-        </div>
-        <div class="movie-item">
-            <a href="imuhucen.html"><img src="imuhuchen.jpg"><h3>Imuḥucen</h3></a>
-        </div>
-        <div class="movie-item">
-            <a href="film10.html"><img src="hmimi.jpg"><h3>Ḥmimi d Lyes</h3></a>
-        </div>
-        <div class="movie-item">
-            <a href="film1.html"><img src="Sans titre2.jpg"><h3>Cirta</h3></a>
-        </div>
-        <div class="movie-item">
-            <a href="film2.html"><img src="Sans titre.jpg"><h3>Amezruy n tmurt</h3></a>
-        </div>
-        <div class="movie-item">
-            <a href="film3.html"><img src="Sans titre3.jpg"><h3>Tamacahut n Wakli</h3></a>
-        </div>
-        <div class="movie-item">
-            <a href="film4.html"><img src="Sans titre4.jpg"><h3>Waɛli ak d tzizwit</h3></a>
-        </div>
-        <div class="movie-item">
-            <a href="film5.html"><img src="Sans titre5.jpg"><h3>Zorro</h3></a>
-        </div>
-        <div class="movie-item">
-            <a href="film8.html"><img src="ikerri.jpg"><h3>Ikerri izimer</h3></a>
-        </div>
-        <div class="movie-item">
-            <a href="film7.html"><img src="Sans titre11.jpg"><h3>Tom et Jerry à New York</h3></a>
-        </div>
-        <div class="movie-item">
-            <a href="film6.html"><img src="Sans titre6.jpg"><h3>Maca ak d Micka</h3></a>
-        </div>
-              <div class="movie-item">
-            <a href="film7.html"><img src="Sans titre11.jpg"><h3>Tom et Jerry à New York</h3></a>
-        </div>
-        <div class="movie-item">
-            <a href="film9.html"><img src="IMG_1264.jpeg"><h3>Targit</h3></a>
-        </div>
+      <div class="movie-item">
+        <a href="amghar-aneghrum.html">
+          <img src="photo.jpg" alt="Film 1">
+          <h3>Amɣar aneɣrum</h3>
+        </a>
+      </div>
+      <div class="movie-item">
+        <a href="imuhucen.html">
+          <img src="imuhuchen.jpg" alt="Film 2">
+          <h3>Imuḥucen</h3>
+        </a>
+      </div>
+      <div class="movie-item">
+        <a href="film10.html">
+          <img src="hmimi.jpg" alt="Film 3">
+          <h3>Ḥmimi d Lyes</h3>
+        </a>
+      </div>
+      <div class="movie-item">
+        <a href="film1.html">
+          <img src="Sans titre2.jpg" alt="Film 4">
+          <h3>Cirta</h3>
+        </a>
+      </div>
+      <div class="movie-item">
+        <a href="film2.html">
+          <img src="Sans titre.jpg" alt="Film 5">
+          <h3>Amezruy n tmurt</h3>
+        </a>
+      </div>
+      <div class="movie-item">
+        <a href="film3.html">
+          <img src="Sans titre3.jpg" alt="Film 6">
+          <h3>Tamacahut n Wakli</h3>
+        </a>
+      </div>
+      <div class="movie-item">
+        <a href="film4.html">
+          <img src="Sans titre4.jpg" alt="Film 7">
+          <h3>Waɛli ak d tzizwit</h3>
+        </a>
+      </div>
+      <div class="movie-item">
+        <a href="film5.html">
+          <img src="Sans titre5.jpg" alt="Film 8">
+          <h3>Zorro</h3>
+        </a>
+      </div>
+      <div class="movie-item">
+        <a href="film8.html">
+          <img src="ikerri.jpg" alt="Film 9">
+          <h3>Ikerri izimer</h3>
+        </a>
+      </div>
+      <div class="movie-item">
+        <a href="film9.html">
+          <img src="IMG_1264.jpeg" alt="Film 10">
+          <h3>Targit</h3>
+        </a>
+      </div>
     </div>
-</div>
+  </div>
 
-<a href="Don.html" id="don-float">
-    <img src="https://logowik.com/content/uploads/images/baridimob2693.logowik.com.webp">
+  <!-- Bouton flottant DON -->
+  <a href="Don.html" id="don-float">
+    <img src="https://logowik.com/content/uploads/images/baridimob2693.logowik.com.webp" alt="BaridiMob">
     Faire un don
-</a>
+  </a>
 
-<footer>
+  <footer>
     <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
-</footer>
-
+  </footer>
 </body>
 </html>
-
-
