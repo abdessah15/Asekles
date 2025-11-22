@@ -32,6 +32,7 @@
       padding: 8px;
       background-color: #111;
       flex-wrap: wrap;
+      gap: 10px;
     }
 
     nav a {
@@ -45,6 +46,49 @@
       color: #ff0066;
     }
 
+    /* === MENU LANGUE === */
+    .lang-switch {
+      position: relative;
+    }
+
+    #lang-btn {
+      background: #111;
+      color: #fff;
+      border: 2px solid #ff0066;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #lang-btn:hover {
+      background: #ff0066;
+    }
+
+    .lang-menu {
+      display: none;
+      position: absolute;
+      background: #222;
+      border: 1px solid #ff0066;
+      border-radius: 8px;
+      top: 35px;
+      min-width: 140px;
+      z-index: 999;
+    }
+
+    .lang-menu a {
+      display: block;
+      padding: 8px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .lang-menu a:hover {
+      background: #ff0066;
+    }
+
+    /* === CONTENU === */
     .content {
       padding: 20px;
       padding-bottom: 200px;
@@ -80,29 +124,13 @@
       color: #ff0066;
     }
 
-    .movie-item a:visited {
-      color: #ff0066;
-    }
-
     .movie-item h3 {
       margin-top: 10px;
       font-size: 1.2em;
       color: #ff0066;
     }
 
-    footer {
-      background-color: #111;
-      color: #f1f1f1;
-      text-align: center;
-      padding: 8px;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      font-size: 0.9em;
-    }
-
-    /* BOUTON DE DON FLOTTANT */
+    /* === BOUTON DON === */
     #don-float {
       position: fixed;
       bottom: 80px;
@@ -135,6 +163,18 @@
       transform: scale(1.05);
     }
 
+    footer {
+      background-color: #111;
+      color: #f1f1f1;
+      text-align: center;
+      padding: 8px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      font-size: 0.9em;
+    }
+
     @media (max-width: 600px) {
       .movie-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -155,6 +195,7 @@
   </style>
 </head>
 <body>
+
   <header>
     <h1>ⵣ Asekles - ⴰⵙⴻⴽⵍⴻⵙ ⵣ</h1>
   </header>
@@ -163,7 +204,16 @@
     <a href="index.html">Accueil</a>
     <a href="films.html">Films</a>
     <a href="series.html">Séries</a>
-    <a href="new.html">en Tamazight</a>
+
+    <!-- ===== Bouton Langue ===== -->
+    <div class="lang-switch">
+      <button id="lang-btn">Choisir la langue</button>
+      <div class="lang-menu" id="lang-menu">
+        <a href="new.html">ⵣ Tamaziɣt</a>
+        <a href="index.html">🇫🇷 Français</a>
+      </div>
+    </div>
+    <!-- ========================== -->
   </nav>
 
   <div class="content">
@@ -261,10 +311,26 @@
     Faire un don
   </a>
 
+
   <footer>
-    <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
+    <p>&copy; 2025 Asekles</p>
   </footer>
+
+  <!-- SCRIPT MENU LANGUE -->
+  <script>
+    const btn = document.getElementById("lang-btn");
+    const menu = document.getElementById("lang-menu");
+
+    btn.onclick = () => {
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    };
+
+    document.onclick = (e) => {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        menu.style.display = "none";
+      }
+    };
+  </script>
+
 </body>
 </html>
-
-
