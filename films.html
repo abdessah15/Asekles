@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Films – Asekles</title>
+  <title>ⵣ Films - ⵉⵙⵓⵔⴰ ⵣ</title>
   <link rel="icon" href="Asekles.png" type="image/png">
   <style>
     body {
@@ -32,6 +32,7 @@
       padding: 8px;
       background-color: #111;
       flex-wrap: wrap;
+      gap: 10px;
     }
 
     nav a {
@@ -45,6 +46,49 @@
       color: #ff0066;
     }
 
+    /* === MENU LANGUE === */
+    .lang-switch {
+      position: relative;
+    }
+
+    #lang-btn {
+      background: #111;
+      color: #fff;
+      border: 2px solid #ff0066;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #lang-btn:hover {
+      background: #ff0066;
+    }
+
+    .lang-menu {
+      display: none;
+      position: absolute;
+      background: #222;
+      border: 1px solid #ff0066;
+      border-radius: 8px;
+      top: 35px;
+      min-width: 140px;
+      z-index: 999;
+    }
+
+    .lang-menu a {
+      display: block;
+      padding: 8px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .lang-menu a:hover {
+      background: #ff0066;
+    }
+
+    /* === CONTENU === */
     .content {
       padding: 20px;
       padding-bottom: 200px;
@@ -80,29 +124,13 @@
       color: #ff0066;
     }
 
-    .movie-item a:visited {
-      color: #ff0066;
-    }
-
     .movie-item h3 {
       margin-top: 10px;
       font-size: 1.2em;
       color: #ff0066;
     }
 
-    footer {
-      background-color: #111;
-      color: #f1f1f1;
-      text-align: center;
-      padding: 8px;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      font-size: 0.9em;
-    }
-
-    /* BOUTON DE DON FLOTTANT */
+    /* === BOUTON DON === */
     #don-float {
       position: fixed;
       bottom: 80px;
@@ -135,6 +163,18 @@
       transform: scale(1.05);
     }
 
+    footer {
+      background-color: #111;
+      color: #f1f1f1;
+      text-align: center;
+      padding: 8px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      font-size: 0.9em;
+    }
+
     @media (max-width: 600px) {
       .movie-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -155,6 +195,7 @@
   </style>
 </head>
 <body>
+
   <header>
     <h1>ⵣ Films - ⵉⵙⵓⵔⴰ ⵣ</h1>
   </header>
@@ -163,11 +204,21 @@
     <a href="index.html">Accueil</a>
     <a href="films.html">Films</a>
     <a href="series.html">Séries</a>
-    <a href="new.html">Nouveautés</a>
+
+    <!-- ===== Bouton Langue ===== -->
+    <div class="lang-switch">
+      <button id="lang-btn">Choisir la langue</button>
+      <div class="lang-menu" id="lang-menu">
+        <a href="isura.html">ⵣ Tamaziɣt</a>
+        <a href="films.html">🇫🇷 Français</a>
+      </div>
+    </div>
+    <!-- ========================== -->
   </nav>
 
   <div class="content">
     <h2>Liste des Films</h2>
+
     <div class="movie-grid">
       <div class="movie-item">
         <a href="film1.html">
@@ -175,37 +226,43 @@
           <h3>Cirta</h3>
         </a>
       </div>
+
       <div class="movie-item">
         <a href="film2.html">
           <img src="Sans titre.jpg" alt="Film 2">
           <h3>Amezruy n tmurt</h3>
         </a>
       </div>
+
       <div class="movie-item">
         <a href="film3.html">
           <img src="Sans titre3.jpg" alt="Film 3">
           <h3>Tamacahut n Wakli</h3>
         </a>
       </div>
+
       <div class="movie-item">
         <a href="film8.html">
           <img src="ikerri.jpg" alt="Film 4">
           <h3>Ikerri izimer</h3>
         </a>
       </div>
+
       <div class="movie-item">
         <a href="film9.html">
           <img src="IMG_1264.jpeg" alt="Film 5">
           <h3>Targit</h3>
         </a>
       </div>
+
       <div class="movie-item">
         <a href="film10.html">
           <img src="hmimi.jpg" alt="Film 6">
           <h3>Ḥmimi d Lyes</h3>
         </a>
       </div>
-            <div class="movie-item">
+
+      <div class="movie-item">
         <a href="amghar-aneghrum.html">
           <img src="photo.jpg" alt="Film 7">
           <h3>Amɣar aneɣrum</h3>
@@ -217,12 +274,28 @@
   <!-- Bouton flottant DON -->
   <a href="Don.html" id="don-float">
     <img src="https://logowik.com/content/uploads/images/baridimob2693.logowik.com.webp" alt="BaridiMob">
-    Faire un don
+    Faire un Don
   </a>
 
   <footer>
-    <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
+    <p>&copy; 2025 Asekles</p>
   </footer>
+
+  <!-- SCRIPT MENU LANGUE -->
+  <script>
+    const btn = document.getElementById("lang-btn");
+    const menu = document.getElementById("lang-menu");
+
+    btn.onclick = () => {
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    };
+
+    document.onclick = (e) => {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        menu.style.display = "none";
+      }
+    };
+  </script>
+
 </body>
 </html>
-
