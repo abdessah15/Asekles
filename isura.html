@@ -33,6 +33,7 @@
       background-color: #111;
       flex-wrap: wrap;
       gap: 10px;
+      position: relative;
     }
 
     nav a {
@@ -49,16 +50,18 @@
     /* === MENU LANGUE === */
     .lang-switch {
       position: relative;
+      display: inline-block;
     }
 
     #lang-btn {
-      background: #111;
+      background: #222;
       color: #fff;
       border: 2px solid #ff0066;
       padding: 6px 12px;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
+      user-select: none;
     }
 
     #lang-btn:hover {
@@ -71,21 +74,25 @@
       background: #222;
       border: 1px solid #ff0066;
       border-radius: 8px;
-      top: 35px;
-      min-width: 140px;
+      top: 42px;
+      min-width: 8px;
       z-index: 999;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      overflow: hidden;
     }
 
     .lang-menu a {
       display: block;
-      padding: 8px;
+      padding: 10px 12px;
       text-decoration: none;
       color: #fff;
       font-weight: bold;
+      white-space: nowrap;
     }
 
     .lang-menu a:hover {
       background: #ff0066;
+      color: #fff;
     }
 
     /* === CONTENU === */
@@ -201,22 +208,23 @@
   </header>
 
   <nav>
-    <a href="new.html">Axxam</a>
+    <a href="index.html">Axxam</a>
     <a href="isura.html">Isura</a>
     <a href="tizrarin.html">Tizrarin</a>
 
     <!-- ===== Bouton Langue ===== -->
-    <div class="lang-switch">
-      <button id="lang-btn">fren tutlayt</button>
-      <div class="lang-menu" id="lang-menu">
-        <a href="new.html">ⵣ Tamaziɣt</a>
-        <a href="index.html">🇫🇷 Français</a>
+    <div class="lang-switch" aria-haspopup="true" aria-expanded="false">
+      <button id="lang-btn" aria-controls="lang-menu" aria-label="Choisir la langue">fren tutlayt</button>
+      <div class="lang-menu" id="lang-menu" role="menu" aria-hidden="true">
+        <a href="index.html" role="menuitem" title="Tamaziɣt (Kabyle)">ⵣ Tamaziɣt</a>
+        <a href="#" role="menuitem" title="Français">🇫🇷 Français</a>
+        <a href="#" role="menuitem" title="English">🇺🇸 English</a>
       </div>
     </div>
     <!-- ========================== -->
   </nav>
 
-  <div class="content">
+    <div class="content">
     <h2>Umuɣ n yisura</h2>
 
     <div class="movie-grid">
@@ -268,8 +276,6 @@
           <h3>Amɣar aneɣrum</h3>
         </a>
       </div>
-    </div>
-  </div>
 
   <!-- Bouton flottant DON -->
   <a href="Don.html" id="don-float">
@@ -285,17 +291,65 @@
   <script>
     const btn = document.getElementById("lang-btn");
     const menu = document.getElementById("lang-menu");
+    const langSwitch = document.querySelector('.lang-switch');
+    const defaultBtnText = btn.textContent;
 
-    btn.onclick = () => {
-      menu.style.display = menu.style.display === "block" ? "none" : "block";
-    };
+    // Ouvrir/fermer menu (toggle)
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const opened = menu.style.display === "block";
+      menu.style.display = opened ? "none" : "block";
+      langSwitch.setAttribute('aria-expanded', String(!opened));
+      menu.setAttribute('aria-hidden', String(opened));
+    });
 
-    document.onclick = (e) => {
-      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+    // Empêcher la fermeture quand on clique dans le menu
+    menu.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    // Fermer le menu si on clique ailleurs
+    document.addEventListener('click', (e) => {
+      if (!langSwitch.contains(e.target)) {
         menu.style.display = "none";
+        langSwitch.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
       }
-    };
+    });
+
+    // Afficher le nom de la langue dans le bouton au survol d'un item
+    const items = menu.querySelectorAll('a');
+    items.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        // montrer le texte de l'item (utile si texte coupé ou si tu veux un "preview")
+        btn.textContent = item.textContent.trim();
+      });
+      item.addEventListener('mouseleave', () => {
+        // revenir au texte par défaut
+        btn.textContent = defaultBtnText;
+      });
+
+      // Optionnel : si l'utilisateur clique sur une langue, mettez à jour le bouton et fermez
+      item.addEventListener('click', (ev) => {
+        btn.textContent = item.textContent.trim();
+        menu.style.display = "none";
+        langSwitch.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        // laisse le lien fonctionner normalement (navigation)
+      });
+    });
+
+    // Si l'utilisateur quitte tout le widget (touche Échap), fermer
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        menu.style.display = 'none';
+        langSwitch.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        btn.focus();
+      }
+    });
   </script>
 
 </body>
 </html>
+
