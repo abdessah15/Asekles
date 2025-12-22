@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asekles - Ḥmimi d Lyes</title>
   <link rel="icon" href="Asekles.png" type="image/png">
+
+  <!-- CSS Artplayer -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.css">
+
   <style>
     body {
       margin: 0;
@@ -15,9 +19,8 @@
 
     header {
       background: linear-gradient(45deg, #ff0066, #6600ff);
-      padding: 12px;
+      padding: 15px;
       text-align: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     }
 
     header h1 {
@@ -31,12 +34,12 @@
       justify-content: center;
       padding: 10px;
       background-color: #111;
+      gap: 20px;
       flex-wrap: wrap;
     }
 
     nav a {
       color: #fff;
-      margin: 5px 12px;
       text-decoration: none;
       font-weight: bold;
     }
@@ -49,87 +52,158 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 25px 15px;
-      gap: 20px;
-    }
-
-    .film-info {
-      background-color: #222;
-      padding: 18px;
-      border-radius: 10px;
-      max-width: 500px;
-      text-align: left;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    }
-
-    .film-info h2 {
-      margin-top: 0;
-      color: #ff0066;
+      gap: 25px;
+      padding: 20px;
     }
 
     .video-container {
       width: 100%;
-      max-width: 640px;
-      aspect-ratio: 16/9;
+      max-width: 900px;
+      position: relative;
+      background: #000;
+      border-radius: 12px;
       overflow: hidden;
-      border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
-    .video-container iframe {
+    /* Thumb + ratio */
+    .video-thumb {
       width: 100%;
-      height: 100%;
-      border: none;
+      aspect-ratio: 16/9;
+      background: url("12.jpg") center/cover no-repeat;
+      cursor: pointer;
+      position: relative;
+    }
+
+    /* Bouton Play */
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90px;
+      height: 90px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+      z-index: 2;
+    }
+
+    .play-btn::before {
+      content: "";
+      border-style: solid;
+      border-width: 18px 0 18px 30px;
+      border-color: transparent transparent transparent #ff0066;
+      margin-left: 5px;
+    }
+
+    .video-thumb:hover .play-btn {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .artplayer-app {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: none;
+    }
+
+    .film-info {
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 900px;
+      line-height: 1.6;
+    }
+
+    .film-info h2 {
+      color: #ff0066;
+      margin-top: 0;
     }
 
     footer {
       background-color: #111;
-      color: #f1f1f1;
       text-align: center;
       padding: 16px;
-      width: 100%;
       font-size: 0.9em;
-      margin-top: 40px;
+      color: #aaa;
     }
 
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.5em;
-      }
-      .film-info {
-        padding: 15px;
-        font-size: 0.95em;
+    /* Fix mobile thumb clickable */
+    @supports not (aspect-ratio: 1/1) {
+      .video-thumb, .artplayer-app {
+        height: calc(100vw * 9 / 16);
       }
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>Ḥmimi d Lyes - ⵃⵎⵉⵎⵉ ⴷ ⵍⵢⴻⵙ</h1>
-  </header>
 
-  <nav>
-    <a href="index.html">Accueil</a>
-    <a href="films.html">Films</a>
-    <a href="series.html">Séries</a>
-    <a href="new.html">Nouveautés</a>
-  </nav>
+<header>
+  <h1>Ḥmimi d Lyes - ⵃⵎⵉⵎⵉ ⴷ ⵍⵢⴻⵙ</h1>
+</header>
 
-  <div class="container">
-    <div class="film-info">
-      <h2>Ḥmimi d Lyes</h2>
-      <p><strong>Genre :</strong> Animation, Aventure</p>
-      <p><strong>Date de sortie :</strong> 2025</p>
-      <p><strong>Synopsis :</strong> Ḥmimi d Lyes, d asaru n unecreḥ, yettales-d yiwet n tmacahut yellan deg zman anda llan idinuẓuṛen !</p>
+<nav>
+  <a href="index.html">Axxam</a>
+  <a href="isura.html">Isura</a>
+  <a href="tizrarin.html">Tizrarin</a>
+</nav>
+
+<div class="container">
+
+  <div class="video-container">
+    <div class="video-thumb" id="thumb">
+      <div class="play-btn"></div>
     </div>
-
-    <div class="video-container">
-    <iframe id="odysee-iframe" style="width:100%; aspect-ratio:16 / 9;" src="https://odysee.com/%24/embed/%40asekles%3Ad%2FHmimi-d-lyes%3Ae?r=UgHCRscWTZraSU5PcChM513GgHQ5AvEv&signature=0b2863d3663a91dacc9b650177236ae8c43ed17db7c1af1e4803205a2d3885fd0d9020b9f05b6fd03387989e5d9539926c224bfc89b914ad5b1ee305463f4f82&signature_ts=1759006353" allowfullscreen></iframe>
-    </div>
+    <div class="artplayer-app" id="player"></div>
   </div>
 
-  <footer>
-    <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
-  </footer>
+  <div class="film-info">
+    <h2>Ḥmimi d Lyes</h2>
+    <p><strong>Tawsit :</strong> Unuɣ ittembiwilen, inig, Arrac</p>
+    <p><strong>Azemz n usufeɣ :</strong> 2025</p>
+    <p><strong>Aglam n usaru :</strong>
+Ḥmimi d Lyes, d asaru n unecreḥ, yettales-d yiwet n tmacahut yellan deg zman anda llan idinuẓuṛen !
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2025 Asekles
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
+<script>
+  const thumb = document.getElementById("thumb");
+  const playerBox = document.getElementById("player");
+  let art;
+
+  thumb.addEventListener("click", () => {
+    thumb.style.display = "none";
+    playerBox.style.display = "block";
+
+    art = new Artplayer({
+      container: playerBox,
+      url: "https://player.odycdn.com/v6/streams/e79c818992a8995e6299d472af6cf6ebf37e2c56/484136.mp4",
+      autoplay: true,
+      volume: 0.6,
+      fullscreen: true,
+      fullscreenWeb: true,
+      playsInline: true,
+      theme: "#ff0066",
+      autoSize: false,
+      aspectRatio: false,
+    });
+
+    art.on("ready", () => {
+      art.fullscreen = true;
+    });
+  });
+</script>
+
 </body>
 </html>
