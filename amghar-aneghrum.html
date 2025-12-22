@@ -132,6 +132,19 @@
       font-size: 0.9em;
       color: #aaa;
     }
+
+    /* MOBILE FIX */
+    @media (max-width: 768px) {
+      .video-thumb {
+        aspect-ratio: auto; 
+        height: 200px; /* fixe la hauteur sur mobile */
+        background-size: cover;
+      }
+      .artplayer-app {
+        aspect-ratio: auto;
+        height: 200px;
+      }
+    }
   </style>
 </head>
 
@@ -200,7 +213,6 @@
       aspectRatio: false,
     });
 
-    /* FULLSCREEN AUTO */
     art.on("ready", () => {
       art.fullscreen = true;
     });
