@@ -66,7 +66,6 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
-    /* Thumb + ratio */
     .video-thumb {
       width: 100%;
       aspect-ratio: 16/9;
@@ -75,7 +74,6 @@
       position: relative;
     }
 
-    /* Bouton Play */
     .play-btn {
       position: absolute;
       top: 50%;
@@ -110,12 +108,124 @@
       display: none;
     }
 
+    /* ===== PERSONNAGES ===== */
+    .characters-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 900px;
+      margin: 20px auto 0;
+    }
+
+    .characters {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 10px 0;
+    }
+
+    .characters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: #ff0066;
+      border: none;
+      font-size: 2em;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 50%;
+      z-index: 10;
+    }
+
+    .scroll-btn.left {
+      left: -10px;
+    }
+
+    .scroll-btn.right {
+      right: -10px;
+    }
+
+    .scroll-btn:hover {
+      background: rgba(0,0,0,0.8);
+    }
+
+    .character {
+      text-align: center;
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+
+    .character img {
+      width: 95px;
+      height: 95px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ff0066;
+      box-shadow: 0 0 18px rgba(255,0,102,.6);
+      transition: .3s;
+    }
+
+    .character:hover img {
+      transform: scale(1.15);
+      box-shadow: 0 0 28px rgba(255,0,102,1);
+    }
+
+    .character .name {
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    .character .role {
+      font-size: .8em;
+      color: #bbb;
+    }
+
     .film-info {
       background-color: #1a1a1a;
       padding: 20px;
       border-radius: 12px;
       max-width: 900px;
       line-height: 1.6;
+    }
+
+    /* ===== MODAL DESCRIPTION ===== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .modal-content h3 {
+      color: #ff0066;
+    }
+
+    .close {
+      margin-top: 15px;
+      padding: 8px 15px;
+      background: #ff0066;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 6px;
     }
 
     .film-info h2 {
@@ -131,7 +241,6 @@
       color: #aaa;
     }
 
-    /* Fix mobile thumb clickable */
     @supports not (aspect-ratio: 1/1) {
       .video-thumb, .artplayer-app {
         height: calc(100vw * 9 / 16);
@@ -161,6 +270,27 @@
     <div class="artplayer-app" id="player"></div>
   </div>
 
+  <!-- PERSONNAGES AVEC SCROLL -->
+  <div class="characters-wrapper">
+    <button class="scroll-btn left">&#10094;</button>
+    <div class="characters" id="characters">
+      <div class="character" onclick="showDesc('XERZI Ɛabdessaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵙⵙⴰⵃ','d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.')">
+        <img src="Abdessah.jpg">
+        <div class="name">XERZI Ɛabdessaḥ</div>
+        <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
+      </div>
+
+      <div class="character" onclick="showDesc('XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ','d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay.')">
+        <img src="Abdelkader.jpg">
+        <div class="name">XERZI Ɛabdelqader</div>
+        <div class="role">d asegbar</div>
+      </div>
+
+      <!-- Ajoute ici les autres personnages -->
+    </div>
+    <button class="scroll-btn right">&#10095;</button>
+  </div>
+
   <div class="film-info">
     <h2>Amɣar aneɣrum</h2>
     <p><strong>Tawsit :</strong> Unuɣ ittembiwilen, Asaru-Awezlan, Arrac</p>
@@ -177,6 +307,15 @@
 <footer>
   &copy; 2025 Asekles
 </footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
+    <button class="close" onclick="closeModal()">Fermer</button>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
 <script>
@@ -205,6 +344,39 @@
       art.fullscreen = true;
     });
   });
+
+  function showDesc(title, text) {
+    document.getElementById("modalTitle").innerText = title;
+    document.getElementById("modalText").innerText = text;
+    document.getElementById("modal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("modal").style.display = "none";
+  }
+
+  // Scroll des personnages
+  const charContainer = document.getElementById("characters");
+  const leftBtn = document.querySelector('.scroll-btn.left');
+  const rightBtn = document.querySelector('.scroll-btn.right');
+  const scrollAmount = 200;
+
+  function updateButtons() {
+    leftBtn.disabled = charContainer.scrollLeft <= 0;
+    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth;
+  }
+
+  leftBtn.addEventListener('click', () => {
+    charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    setTimeout(updateButtons, 300);
+  });
+
+  rightBtn.addEventListener('click', () => {
+    charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    setTimeout(updateButtons, 300);
+  });
+
+  updateButtons();
 </script>
 
 </body>
