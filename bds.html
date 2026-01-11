@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asekles - Berhuc d Salas</title>
+  <link rel="icon" href="Asekles.png" type="image/png">
+
+  <!-- CSS Artplayer -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #f1f1f1;
+    }
+
+    header {
+      background: linear-gradient(45deg, #ff0066, #6600ff);
+      padding: 15px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      color: #fff;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      background-color: #111;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #ff0066;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+      padding: 20px;
+    }
+
+    .video-container {
+      width: 100%;
+      max-width: 900px;
+      position: relative;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+
+    .video-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: url("3.png") center/cover no-repeat;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90px;
+      height: 90px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+      z-index: 2;
+    }
+
+    .play-btn::before {
+      content: "";
+      border-style: solid;
+      border-width: 18px 0 18px 30px;
+      border-color: transparent transparent transparent #ff0066;
+      margin-left: 5px;
+    }
+
+    .video-thumb:hover .play-btn {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .artplayer-app {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: none;
+    }
+
+    /* ===== PERSONNAGES ===== */
+    .characters-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 900px;
+      margin: 20px auto 0;
+    }
+
+    .characters {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 10px 0;
+    }
+
+    .characters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: #ff0066;
+      border: none;
+      font-size: 2em;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 50%;
+      z-index: 10;
+    }
+
+    .scroll-btn.left {
+      left: -10px;
+    }
+
+    .scroll-btn.right {
+      right: -10px;
+    }
+
+    .scroll-btn:hover {
+      background: rgba(0,0,0,0.8);
+    }
+
+    .character {
+      text-align: center;
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+
+    .character img {
+      width: 95px;
+      height: 95px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ff0066;
+      box-shadow: 0 0 18px rgba(255,0,102,.6);
+      transition: .3s;
+    }
+
+    .character:hover img {
+      transform: scale(1.15);
+      box-shadow: 0 0 28px rgba(255,0,102,1);
+    }
+
+    .character .name {
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    .character .role {
+      font-size: .8em;
+      color: #bbb;
+    }
+
+    .film-info {
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 900px;
+      line-height: 1.6;
+    }
+
+    /* ===== MODAL DESCRIPTION ===== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .modal-content h3 {
+      color: #ff0066;
+    }
+
+    .close {
+      margin-top: 15px;
+      padding: 8px 15px;
+      background: #ff0066;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .film-info h2 {
+      color: #ff0066;
+      margin-top: 0;
+    }
+
+    footer {
+      background-color: #111;
+      text-align: center;
+      padding: 16px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+
+    @supports not (aspect-ratio: 1/1) {
+      .video-thumb, .artplayer-app {
+        height: calc(100vw * 9 / 16);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Berhuc d Salas - ⴱⴻⵔⵀⵓⵛ ⴷ ⵙⴰⵍⴰⵙ
+</h1>
+</header>
+
+<nav>
+  <a href="index.html">Axxam</a>
+  <a href="isura.html">Isura</a>
+  <a href="tizrarin.html">Tizrarin</a>
+</nav>
+
+<div class="container">
+
+  <div class="video-container">
+    <div class="video-thumb" id="thumb">
+      <div class="play-btn"></div>
+    </div>
+    <div class="artplayer-app" id="player"></div>
+  </div>
+
+  <!-- PERSONNAGES AVEC SCROLL -->
+  <div class="characters-wrapper">
+    <button class="scroll-btn left">&#10094;</button>
+    <div class="characters" id="characters">
+<div class="character" onclick="showDesc('XERZI Ɛabdessaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵙⵙⴰⵃ','d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.')">
+        <img src="Abdessah.jpg">
+        <div class="name">XERZI Ɛabdessaḥ</div>
+        <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
+      </div>
+            <div class="character" onclick="showDesc('BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻⵙ ','tamekfaḍut d tamedyazt d tamarut, d yelli-s n tɣiwant it Muḥli, tlul deg useggas n 2001 deg waɣir n it Wertilan agezdu n Ṣṭif. Tewwi-d agerdas n master deg taɣult n Tesnalmudt deg tutlayt d yidles Amaziɣ.')">
+        <img src="femme.png">
+        <div class="name">BEǦǦA Ṭawes</div>
+        <div class="role">d tasegbart</div>
+      </div>
+      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
+        <img src="amazigh.jpg">
+        <div class="name">XERZI Amaziɣ</div>
+        <div class="role">d asegbar</div>
+      </div>
+      
+      <div class="character" onclick="showDesc('XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ','d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay.')">
+        <img src="Abdelkader.jpg">
+        <div class="name">XERZI Ɛabdelqader</div>
+        <div class="role">d asegbar</div>
+      </div>
+      
+      <!-- Ajoute ici les autres personnages -->
+    </div>
+    <button class="scroll-btn right">&#10095;</button>
+  </div>
+  <div class="film-info">
+    <h2>Berhuc d Salas
+</h2>
+    <p><strong>Tawsit :</strong> Inig, Amuggan, Arrac</p>
+    <p><strong>Azemz n usufeɣ :</strong> 2026</p>
+    <p><strong>Aglam n usaru :</strong>
+Deg tlemmast n ṭrad amaḍlan wis sin, deg yidurar n Fransa, imezdaɣ n yiwet n taddart tamecṭuḥt, i deg d-tlul tayri ger waydi d wemdan amecṭuḥ, aydi-nni i ɛezlen wat taddart imi ɛudden d netta i tetten lmal-nni i ttaǧǧan deg udaynin, maca yiwen n wass tbeddel tmuɣli, ufan-t d netta i yellan yesseḥbibir fell-asen seg uccanen.
+    </p>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
+    <button class="close" onclick="closeModal()">Mdel</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
+<script>
+  const thumb = document.getElementById("thumb");
+  const playerBox = document.getElementById("player");
+  let art;
+
+  thumb.addEventListener("click", () => {
+    thumb.style.display = "none";
+    playerBox.style.display = "block";
+
+    art = new Artplayer({
+      container: playerBox,
+      url: "https://player.odycdn.com/api/v3/streams/free/Berhuc-d-Salas/49982ca9dd551d7b0df506ad31aea175559fd1d7/1400aa.mp4",
+      autoplay: true,
+      volume: 0.6,
+      fullscreen: true,
+      fullscreenWeb: true,
+      playsInline: true,
+      theme: "#ff0066",
+      autoSize: false,
+      aspectRatio: false,
+    });
+
+    art.on("ready", () => {
+      art.fullscreen = true;
+    });
+  });
+
+  function showDesc(title, text) {
+    document.getElementById("modalTitle").innerText = title;
+    document.getElementById("modalText").innerText = text;
+    document.getElementById("modal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("modal").style.display = "none";
+  }
+
+  // Scroll des personnages
+  const charContainer = document.getElementById("characters");
+  const leftBtn = document.querySelector('.scroll-btn.left');
+  const rightBtn = document.querySelector('.scroll-btn.right');
+  const scrollAmount = 200;
+
+  function updateButtons() {
+    leftBtn.disabled = charContainer.scrollLeft <= 0;
+    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth;
+  }
+
+  leftBtn.addEventListener('click', () => {
+    charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    setTimeout(updateButtons, 300);
+  });
+
+  rightBtn.addEventListener('click', () => {
+    charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    setTimeout(updateButtons, 300);
+  });
+
+  updateButtons();
+</script>
+
+</body>
+</html>
