@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Connexion – Asekles</title>
+
+<style>
+body {
+  background:#000;
+  color:#fff;
+  font-family:Arial, sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.box {
+  background:#111;
+  padding:30px;
+  border-radius:12px;
+  width:320px;
+  text-align:center;
+}
+
+h2 {
+  margin-top:0;
+}
+
+input {
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:6px;
+  border:none;
+}
+
+button {
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:1em;
+}
+
+#loginBtn {
+  background:#ff0066;
+  color:white;
+}
+
+#whatsappBtn {
+  background:#25D366;
+  color:white;
+}
+
+#error {
+  color:#ff5555;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2> Kcem s tsarut</h2>
+
+  <!-- 🟢 Aɣɣ-d aferwak -->
+  <button id="whatsappBtn">Aɣɣ-d aferwak</button>
+
+  <hr style="margin:15px 0; border-color:#333;">
+
+  <!-- 🔐 Anekcum -->
+  <input id="email" type="email" placeholder="Isem n umiḍan">
+  <input id="password" type="password" placeholder="Tasarut">
+
+  <button id="loginBtn">Kcem</button>
+
+  <p id="error"></p>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+
+/* 🔥 FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
+  authDomain: "test-2fdd3.firebaseapp.com",
+  projectId: "test-2fdd3",
+  appId: "1:244317844373:web:3a4e5b77c649f54d7fbc9c"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+/* 📲 WHATSAPP */
+whatsappBtn.onclick = () => {
+  const msg = `Bonjour, je souhaite acheter un abonnement Asekles (200 DA / mois).`;
+  window.open(
+    "https://wa.me/213549717754?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
+};
+
+/* 🔑 LOGIN */
+loginBtn.onclick = async () => {
+  try {
+    await signInWithEmailAndPassword(auth, email.value, password.value);
+    window.location.href = "index.html";
+  } catch {
+    error.innerText = "Tuccḍa deg tsarut !";
+  }
+};
+</script>
+
+</body>
+</html>
