@@ -1,218 +1,166 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ⵣ Asekles - ⴰⵙⴻⴽⵍⴻⵙ ⵣ</title>
-  <link rel="icon" href="Asekles.png" type="image/png">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #000;
-      color: #f1f1f1;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ⵣ Asekles - ⴰⵙⴻⴽⵍⴻⵙ ⵣ</title>
+<link rel="icon" href="Asekles.png" type="image/png">
 
-    header {
-      background: linear-gradient(45deg, #ff0066, #6600ff);
-      padding: 10px;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #f1f1f1;
+}
 
-    header h1 {
-      margin: 0;
-      font-size: 2em;
-      color: #fff;
-    }
+/* ===== HEADER ===== */
+header {
+  background: linear-gradient(45deg, #ff0066, #6600ff);
+  padding: 10px;
+  text-align: center;
+}
 
-    nav {
-      display: flex;
-      justify-content: center;
-      padding: 8px;
-      background-color: #111;
-      flex-wrap: wrap;
-      gap: 10px;
-      position: relative;
-    }
+header h1 {
+  margin: 0;
+  font-size: 2em;
+}
 
-    nav a {
-      color: #fff;
-      margin: 5px 10px;
-      text-decoration: none;
-      font-weight: bold;
-    }
+/* ===== NAV ===== */
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  background: #111;
+  flex-wrap: wrap;
+}
 
-    nav a:hover {
-      color: #ff0066;
-    }
+nav a,
+#amidanBtn {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    /* === MENU LANGUE === */
-    .lang-switch {
-      position: relative;
-      display: inline-block;
-    }
+nav a:hover,
+#amidanBtn:hover {
+  color: #ff0066;
+}
 
-    #lang-btn {
-      background: #222;
-      color: #fff;
-      border: 2px solid #ff0066;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      user-select: none;
-    }
+/* ===== AMIDAN ===== */
+.account-wrapper {
+  position: relative;
+}
 
-    #lang-btn:hover {
-      background: #ff0066;
-    }
+#accountBox {
+  display: none;
+  position: absolute;
+  top: 32px;
+  right: 0;
+  background: #111;
+  border: 2px solid #ff0066;
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 220px;
+  z-index: 999;
+}
 
-    .lang-menu {
-      display: none;
-      position: absolute;
-      background: #222;
-      border: 1px solid #ff0066;
-      border-radius: 8px;
-      top: 42px;
-      min-width: 8px;
-      z-index: 999;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-      overflow: hidden;
-    }
+#logoutBtn {
+  background: #ff0066;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
 
-    .lang-menu a {
-      display: block;
-      padding: 10px 12px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: bold;
-      white-space: nowrap;
-    }
+/* ===== CONTENT ===== */
+.content {
+  padding: 20px;
+  padding-bottom: 120px;
+}
 
-    .lang-menu a:hover {
-      background: #ff0066;
-      color: #fff;
-    }
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
 
-    /* === CONTENU === */
-    .content {
-      padding: 20px;
-      padding-bottom: 200px;
-    }
+.movie-item {
+  background: #222;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform .3s, box-shadow .3s;
+}
 
-    .movie-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      padding: 10px;
-    }
+.movie-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(255,0,102,.6);
+}
 
-    .movie-item {
-      background-color: #222;
-      padding: 10px;
-      border-radius: 10px;
-      text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
+.movie-item img {
+  width: 100%;
+  border-radius: 10px;
+}
 
-    .movie-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 16px rgba(255, 0, 102, 0.6);
-    }
+.movie-item h3 {
+  position: relative;
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #ff0066;
+  padding-bottom: 6px;
+}
+  a {
+  text-decoration: none;
+  color: inherit;
+}
 
-    .movie-item img {
-      width: 100%;
-      border-radius: 10px;
-    }
+/* ===== FOOTER ===== */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #111;
+  text-align: center;
+  padding: 8px;
+  font-size: .9em;
+}
 
-    .movie-item a {
-      text-decoration: none;
-      color: #ff0066;
-    }
-
-    .movie-item h3 {
-      margin-top: 10px;
-      font-size: 1.2em;
-      color: #ff0066;
-    }
-
-    /* === BOUTON DON === */
-    #don-float {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      background: #ff0066;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 30px;
-      font-size: 15px;
-      font-weight: bold;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      text-decoration: none;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      transition: background 0.3s, transform 0.2s;
-    }
-
-    #don-float img {
-      height: 24px;
-      width: auto;
-      margin-right: 8px;
-      border-radius: 4px;
-      background: white;
-      padding: 2px;
-    }
-
-    #don-float:hover {
-      background: #cc0055;
-      transform: scale(1.05);
-    }
-
-    footer {
-      background-color: #111;
-      color: #f1f1f1;
-      text-align: center;
-      padding: 8px;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      font-size: 0.9em;
-    }
-
-    @media (max-width: 600px) {
-      .movie-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      #don-float {
-        font-size: 13px;
-        padding: 8px 12px;
-        bottom: 100px;
-        right: 10px;
-      }
-
-      #don-float img {
-        height: 20px;
-        margin-right: 6px;
-      }
-    }
-  </style>
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
 </head>
+
 <body>
 
-  <header>
-    <h1>ⵣ Asekles - ⴰⵙⴻⴽⵍⴻⵙ ⵣ</h1>
-  </header>
+<header>
+  <h1>ⵣ Asekles - ⴰⵙⴻⴽⵍⴻⵙ ⵣ</h1>
+</header>
 
-  <nav>
-    <a href="index.html">Axxam</a>
-    <a href="isura.html">Isura</a>
-    <a href="tizrarin.html">Tizrarin</a>
-  </nav>
+<nav>
+  <a href="index.html">Axxam</a>
+  <a href="isura.html">Isura</a>
+  <a href="tizrarin.html">Tizrarin</a>
 
+  <div class="account-wrapper">
+    <span id="amidanBtn" style="display:none;">Amiḍan</span>
+
+    <div id="accountBox">
+      <p id="userEmail"></p>
+      <button id="logoutBtn">Effeɣ</button>
+    </div>
+  </div>
+</nav>
     <div class="content">
     <h2>I kunwi d kunemti</h2>
       <div class="movie-grid">
@@ -306,81 +254,59 @@
           <h3>Maca ak d Micka</h3>
         </a>
       </div>
-
-  <!-- Bouton flottant DON -->
-  <a href="Don.html" id="don-float">
-    <img src="https://logowik.com/content/uploads/images/baridimob2693.logowik.com.webp" alt="BaridiMob">
-    Gred asefk
-  </a>
-
   <footer>
     <p>&copy; 2026 Asekles</p>
   </footer>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
-  <!-- SCRIPT MENU LANGUE -->
-  <script>
-    const btn = document.getElementById("lang-btn");
-    const menu = document.getElementById("lang-menu");
-    const langSwitch = document.querySelector('.lang-switch');
-    const defaultBtnText = btn.textContent;
+/* 🔥 FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
+  authDomain: "test-2fdd3.firebaseapp.com",
+  projectId: "test-2fdd3",
+  appId: "1:244317844373:web:3a4e5b77c649f54d7fbc9c"
+};
 
-    // Ouvrir/fermer menu (toggle)
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const opened = menu.style.display === "block";
-      menu.style.display = opened ? "none" : "block";
-      langSwitch.setAttribute('aria-expanded', String(!opened));
-      menu.setAttribute('aria-hidden', String(opened));
-    });
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-    // Empêcher la fermeture quand on clique dans le menu
-    menu.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
+/* 🎯 ELEMENTS */
+const amidanBtn = document.getElementById("amidanBtn");
+const accountBox = document.getElementById("accountBox");
+const userEmail = document.getElementById("userEmail");
+const logoutBtn = document.getElementById("logoutBtn");
 
-    // Fermer le menu si on clique ailleurs
-    document.addEventListener('click', (e) => {
-      if (!langSwitch.contains(e.target)) {
-        menu.style.display = "none";
-        langSwitch.setAttribute('aria-expanded', 'false');
-        menu.setAttribute('aria-hidden', 'true');
-      }
-    });
+/* 🔐 PROTECTION PAGE */
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+  } else {
+    amidanBtn.style.display = "inline";
+    userEmail.textContent = "Connecté : " + user.email;
+  }
+});
 
-    // Afficher le nom de la langue dans le bouton au survol d'un item
-    const items = menu.querySelectorAll('a');
-    items.forEach(item => {
-      item.addEventListener('mouseenter', () => {
-        // montrer le texte de l'item (utile si texte coupé ou si tu veux un "preview")
-        btn.textContent = item.textContent.trim();
-      });
-      item.addEventListener('mouseleave', () => {
-        // revenir au texte par défaut
-        btn.textContent = defaultBtnText;
-      });
+/* 👤 OUVRIR / FERMER AMIDAN */
+amidanBtn.addEventListener("click", () => {
+  accountBox.style.display =
+    accountBox.style.display === "block" ? "none" : "block";
+});
 
-      // Optionnel : si l'utilisateur clique sur une langue, mettez à jour le bouton et fermez
-      item.addEventListener('click', (ev) => {
-        btn.textContent = item.textContent.trim();
-        menu.style.display = "none";
-        langSwitch.setAttribute('aria-expanded', 'false');
-        menu.setAttribute('aria-hidden', 'true');
-        // laisse le lien fonctionner normalement (navigation)
-      });
-    });
+/* 🚪 DÉCONNEXION */
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "login.html";
+});
 
-    // Si l'utilisateur quitte tout le widget (touche Échap), fermer
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        menu.style.display = 'none';
-        langSwitch.setAttribute('aria-expanded', 'false');
-        menu.setAttribute('aria-hidden', 'true');
-        btn.focus();
-      }
-    });
-  </script>
+/* ❌ FERMER SI CLIC AILLEURS */
+document.addEventListener("click", (e) => {
+  if (!amidanBtn.contains(e.target) && !accountBox.contains(e.target)) {
+    accountBox.style.display = "none";
+  }
+});
+</script>
 
 </body>
 </html>
-
-
