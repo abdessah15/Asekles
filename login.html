@@ -2,9 +2,17 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+
+<!-- 📱 Mobile friendly (empêche le zoom auto) -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>Connexion – Asekles</title>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
   background:#000;
   color:#fff;
@@ -12,52 +20,61 @@ body {
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
+  min-height:100vh;
+  margin:0;
+  padding:15px;
 }
 
 .box {
   background:#111;
-  padding:30px;
-  border-radius:12px;
-  width:320px;
+  padding:25px;
+  border-radius:14px;
+  width:100%;
+  max-width:360px;
   text-align:center;
 }
 
 h2 {
-  margin-top:0;
+  margin:0 0 15px;
 }
 
+/* 🔵 Inputs (no zoom mobile) */
 input {
   width:100%;
-  padding:10px;
-  margin:6px 0;
-  border-radius:6px;
+  padding:12px;
+  margin:8px 0;
+  border-radius:8px;
   border:none;
+  font-size:16px;
 }
 
+/* 🔘 Buttons */
 button {
   width:100%;
-  padding:10px;
-  margin-top:10px;
+  padding:12px;
+  margin-top:12px;
   border:none;
-  border-radius:6px;
+  border-radius:8px;
   cursor:pointer;
-  font-size:1em;
+  font-size:16px;
 }
 
-#loginBtn {
-  background:#ff0066;
+/* Messenger */
+#messengerBtn {
+  background:#0084FF;
   color:white;
 }
 
-#whatsappBtn {
-  background:#25D366;
+/* Login */
+#loginBtn {
+  background:#ff0066;
   color:white;
 }
 
 #error {
   color:#ff5555;
   margin-top:10px;
+  font-size:14px;
 }
 </style>
 </head>
@@ -65,14 +82,14 @@ button {
 <body>
 
 <div class="box">
-  <h2> Kcem s tsarut</h2>
+  <h2>Kcem s tsarut</h2>
 
-  <!-- 🟢 Aɣɣ-d aferwak -->
-  <button id="whatsappBtn">Aɣɣ-d aferwak</button>
+  <!-- 🔵 Messenger -->
+  <button id="messengerBtn">Aɣɣ-d aferwak</button>
 
-  <hr style="margin:15px 0; border-color:#333;">
+  <hr style="margin:18px 0; border-color:#333;">
 
-  <!-- 🔐 Anekcum -->
+  <!-- 🔐 Login -->
   <input id="email" type="email" placeholder="Isem n umiḍan">
   <input id="password" type="password" placeholder="Tasarut">
 
@@ -85,7 +102,7 @@ button {
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
-/* 🔥 FIREBASE */
+/* 🔥 Firebase config */
 const firebaseConfig = {
   apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
   authDomain: "test-2fdd3.firebaseapp.com",
@@ -96,16 +113,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-/* 📲 WHATSAPP */
-whatsappBtn.onclick = () => {
-  const msg = `Bonjour, je souhaite acheter un abonnement Asekles (200 DA / mois).`;
+/* 📩 Messenger */
+messengerBtn.onclick = () => {
+  const msg = `Bonjour 👋
+Je souhaite acheter un abonnement Asekles.
+Prix : 600 DA pour 3 mois.
+Merci de me contacter pour les détails.`;
+
   window.open(
-    "https://wa.me/213549717754?text=" + encodeURIComponent(msg),
+    "https://m.me/kherzi.abdessah.7?text=" + encodeURIComponent(msg),
     "_blank"
   );
 };
 
-/* 🔑 LOGIN */
+/* 🔑 Login */
 loginBtn.onclick = async () => {
   try {
     await signInWithEmailAndPassword(auth, email.value, password.value);
