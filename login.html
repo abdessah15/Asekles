@@ -14,15 +14,26 @@
 }
 
 body {
-  background:#000;
-  color:#fff;
-  font-family:Arial, sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-  margin:0;
-  padding:15px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 15px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 🌫️ Image de fond floutée */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("fond.png") center / cover no-repeat;
+  filter: blur(14px); /* ≈ 30% */
+  transform: scale(1.1); /* évite les bords flous visibles */
+  z-index: -1;
 }
 
 .box {
