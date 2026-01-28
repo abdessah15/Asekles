@@ -247,21 +247,161 @@
       }
     }
   </style>
+  <style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #f1f1f1;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: linear-gradient(45deg, #ff0066, #6600ff);
+  padding: 10px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2em;
+}
+
+/* ===== NAV ===== */
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  background: #111;
+  flex-wrap: wrap;
+}
+
+nav a,
+#amidanBtn {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+nav a:hover,
+#amidanBtn:hover {
+  color: #ff0066;
+}
+
+/* ===== AMIDAN ===== */
+.account-wrapper {
+  position: relative;
+}
+
+#accountBox {
+  display: none;
+  position: absolute;
+  top: 32px;
+  right: 0;
+  background: #111;
+  border: 2px solid #ff0066;
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 220px;
+  z-index: 999;
+}
+
+#logoutBtn {
+  background: #ff0066;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* ===== CONTENT ===== */
+.content {
+  padding: 20px;
+  padding-bottom: 120px;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.movie-item {
+  background: #222;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform .3s, box-shadow .3s;
+}
+
+.movie-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(255,0,102,.6);
+}
+
+.movie-item img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.movie-item h3 {
+  position: relative;
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #ff0066;
+  padding-bottom: 6px;
+}
+  a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #111;
+  text-align: center;
+  padding: 8px;
+  font-size: .9em;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  .movie-grid {ⵣ Asekl
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>Ḥmimi d Lyes - ⵃⵎⵉⵎⵉ ⴷ ⵍⵢⴻⵙ
-</h1>
+  <h1>Ḥmimi d Lyes - ⵃⵎⵉⵎⵉ ⴷ ⵍⵢⴻⵙ</h1>
 </header>
 
 <nav>
   <a href="index.html">Axxam</a>
   <a href="isura.html">Isura</a>
   <a href="tizrarin.html">Tizrarin</a>
-</nav>
 
+  <div class="account-wrapper">
+    <span id="amidanBtn" style="display:none;">Amiḍan</span>
+
+    <div id="accountBox">
+      <p id="userEmail"></p>
+      <button id="logoutBtn">Effeɣ</button>
+    </div>
+  </div>
+</nav>
 <div class="container">
 
   <div class="video-container">
@@ -376,8 +516,55 @@
 
   updateButtons();
 </script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
+/* 🔥 FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
+  authDomain: "test-2fdd3.firebaseapp.com",
+  projectId: "test-2fdd3",
+  appId: "1:244317844373:web:3a4e5b77c649f54d7fbc9c"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+/* 🎯 ELEMENTS */
+const amidanBtn = document.getElementById("amidanBtn");
+const accountBox = document.getElementById("accountBox");
+const userEmail = document.getElementById("userEmail");
+const logoutBtn = document.getElementById("logoutBtn");
+
+/* 🔐 PROTECTION PAGE */
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+  } else {
+    amidanBtn.style.display = "inline";
+    userEmail.textContent = "Connecté : " + user.email;
+  }
+});
+
+/* 👤 OUVRIR / FERMER AMIDAN */
+amidanBtn.addEventListener("click", () => {
+  accountBox.style.display =
+    accountBox.style.display === "block" ? "none" : "block";
+});
+
+/* 🚪 DÉCONNEXION */
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "login.html";
+});
+
+/* ❌ FERMER SI CLIC AILLEURS */
+document.addEventListener("click", (e) => {
+  if (!amidanBtn.contains(e.target) && !accountBox.contains(e.target)) {
+    accountBox.style.display = "none";
+  }
+});
+</script>
 </body>
 </html>
-
-
