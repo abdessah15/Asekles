@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asekles</title>
+  <title>Asekles - Imuḥucen</title>
   <link rel="icon" href="Asekles.png" type="image/png">
+
+  <!-- CSS Artplayer -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.css">
+
   <style>
     body {
       margin: 0;
@@ -12,141 +16,577 @@
       background-color: #000;
       color: #f1f1f1;
     }
+
     header {
       background: linear-gradient(45deg, #ff0066, #6600ff);
-      padding: 10px;
+      padding: 15px;
       text-align: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     }
+
     header h1 {
       margin: 0;
       font-size: 2em;
       color: #fff;
     }
+
     nav {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      padding: 8px;
+      padding: 10px;
       background-color: #111;
+      gap: 20px;
+      flex-wrap: wrap;
     }
+
     nav a {
       color: #fff;
-      margin: 0 12px;
       text-decoration: none;
       font-weight: bold;
     }
+
     nav a:hover {
       color: #ff0066;
     }
+
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 25px;
       padding: 20px;
-      gap: 20px;
     }
-    .film-info {
-      background-color: #222;
-      padding: 15px;
-      border-radius: 10px;
-      max-width: 600px;
-      line-height: 1.6;
-    }
-    .film-info h2 {
-      color: #ff0066;
-      margin-bottom: 10px;
-    }
+
     .video-container {
       width: 100%;
-      max-width: 800px;
+      max-width: 900px;
+      position: relative;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+
+    .video-thumb {
+      width: 100%;
       aspect-ratio: 16/9;
+      background: url("wali.png") center/cover no-repeat;
+      cursor: pointer;
       position: relative;
     }
-    .video-container iframe {
+
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90px;
+      height: 90px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+      z-index: 2;
+    }
+
+    .play-btn::before {
+      content: "";
+      border-style: solid;
+      border-width: 18px 0 18px 30px;
+      border-color: transparent transparent transparent #ff0066;
+      margin-left: 5px;
+    }
+
+    .video-thumb:hover .play-btn {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .artplayer-app {
       width: 100%;
-      height: 100%;
+      aspect-ratio: 16/9;
+      display: none;
+    }
+
+    /* ===== PERSONNAGES ===== */
+    .characters-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 900px;
+      margin: 20px auto 0;
+    }
+
+    .characters {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 10px 0;
+    }
+
+    .characters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: #ff0066;
       border: none;
-      border-radius: 10px;
-    }
-    .episode-selector {
-      background-color: #222;
-      padding: 12px;
-      border-radius: 10px;
-      text-align: center;
-      margin-top: 10px;
-    }
-    select {
-      padding: 10px;
-      font-size: 1em;
-      border-radius: 6px;
-      background-color: #111;
-      color: #fff;
-      border: 1px solid #ff0066;
+      font-size: 2em;
       cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 50%;
+      z-index: 10;
     }
-    select:hover {
-      border-color: #6600ff;
+
+    .scroll-btn.left {
+      left: -10px;
     }
+
+    .scroll-btn.right {
+      right: -10px;
+    }
+
+    .scroll-btn:hover {
+      background: rgba(0,0,0,0.8);
+    }
+
+    .character {
+      text-align: center;
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+
+    .character img {
+      width: 95px;
+      height: 95px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ff0066;
+      box-shadow: 0 0 18px rgba(255,0,102,.6);
+      transition: .3s;
+    }
+
+    .character:hover img {
+      transform: scale(1.15);
+      box-shadow: 0 0 28px rgba(255,0,102,1);
+    }
+
+    .character .name {
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    .character .role {
+      font-size: .8em;
+      color: #bbb;
+    }
+
+    .film-info {
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 900px;
+      line-height: 1.6;
+    }
+
+    /* ===== MODAL DESCRIPTION ===== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .modal-content h3 {
+      color: #ff0066;
+    }
+
+    .close {
+      margin-top: 15px;
+      padding: 8px 15px;
+      background: #ff0066;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .film-info h2 {
+      color: #ff0066;
+      margin-top: 0;
+    }
+
     footer {
       background-color: #111;
-      color: #f1f1f1;
       text-align: center;
       padding: 16px;
-      width: 100%;
       font-size: 0.9em;
-      margin-top: 40px;
+      color: #aaa;
+    }
+
+    @supports not (aspect-ratio: 1/1) {
+      .video-thumb, .artplayer-app {
+        height: calc(100vw * 9 / 16);
+      }
     }
   </style>
+  <style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #f1f1f1;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: linear-gradient(45deg, #ff0066, #6600ff);
+  padding: 10px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2em;
+}
+
+/* ===== NAV ===== */
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  background: #111;
+  flex-wrap: wrap;
+}
+
+nav a,
+#amidanBtn {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+nav a:hover,
+#amidanBtn:hover {
+  color: #ff0066;
+}
+
+/* ===== AMIDAN ===== */
+.account-wrapper {
+  position: relative;
+}
+
+#accountBox {
+  display: none;
+  position: absolute;
+  top: 32px;
+  right: 0;
+  background: #111;
+  border: 2px solid #ff0066;
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 220px;
+  z-index: 999;
+}
+
+#logoutBtn {
+  background: #ff0066;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* ===== CONTENT ===== */
+.content {
+  padding: 20px;
+  padding-bottom: 120px;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.movie-item {
+  background: #222;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform .3s, box-shadow .3s;
+}
+
+.movie-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(255,0,102,.6);
+}
+
+.movie-item img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.movie-item h3 {
+  position: relative;
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #ff0066;
+  padding-bottom: 6px;
+}
+  a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #111;
+  text-align: center;
+  padding: 8px;
+  font-size: .9em;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>    Imuḥucen - ⵉⵎⵓⵃⵓⵛⴻⵏ   </h1>
-  </header>
 
-  <nav>
-    <a href="index.html">Accueil</a>
-    <a href="films.html">Films</a>
-    <a href="series.html">Séries</a>
-    <a href="new.html">Nouveautés</a>
-  </nav>
+<header>
+  <h1>Imuḥucen - ⵉⵎⵓⵃⵓⵛⴻⵏ</h1>
+</header>
 
-  <div class="container">
-    <div class="film-info">
-      <h2>IMUḤUCEN</h2>
-      <p><strong>Genre :</strong> Comédie, Animation jeunesse</p>
-      <p><strong>Date de sortie :</strong> 2025</p>
-      <p><strong>Synopsis :</strong> Reda, Ɛisa, Ɛliluc, Ḥmimuc d imuḥucen, d iɛlaḍ. Yal tikkelt ara binen sewjaden taxnanast iwakken ad rewlen seg lḥebs. Deg lḥebs yella ccambiṭ Muḥend Waɛli akked Haniya, war asṭuqqet n wawal, atan ihi tezrart-a ar ɣur-nwen.</p>
-    </div>
+<nav>
+  <a href="index.html">Axxam</a>
+  <a href="isura.html">Isura</a>
+  <a href="tizrarin.html">Tizrarin</a>
 
-    <div class="video-container">
-      <!-- Premier épisode par défaut -->
-      <iframe id="odysee-iframe" src="https://odysee.com/$/embed/@asekles:d/EP1--Yewhec-lfil-yernad-gma-s:6" allowfullscreen></iframe>
-    </div>
+  <div class="account-wrapper">
+    <span id="amidanBtn" style="display:none;">Amiḍan</span>
 
-    <div class="episode-selector">
-      <label for="episode-select">Choisir un épisode :</label><br><br>
-      <select id="episode-select" onchange="loadEpisode(this.value)">
-        <option value="https://odysee.com/$/embed/@asekles:d/EP1--Yewhec-lfil-yernad-gma-s:6">EP1 - Yewḥec lfil yernad gma-s</option>
-        <option value="https://odysee.com/$/embed/@asekles:d/EP2--Tamuffirt:d">EP2 - Tamuffirt</option>
-        <option value="https://odysee.com/$/embed/@asekles:d/EP3--Ilat-anect-ilat:a">EP3 - Ilat anect ilat</option>
-        <option value="https://odysee.com/$/embed/@asekles:d/EP4--Nuli-s-aggur:3">EP4 - Nuli s aggur</option>
-        <option value="https://odysee.com/$/embed/@asekles:d/EP5--Timesrifegt:7">EP5 - Timesrifegt</option>
-        <option value="https://odysee.com/$/embed/@asekles:d/EP6--Taxnanast-n-wekbal:0">EP6 - Taxnanast n wekbal</option>
-        <option value="https://odysee.com/$/embed/@kabdessah:f/EP7--Belqasem-n-3li-ca3ban-%28-lmahfud-%29:9">EP7 - Belqasem n ɛli caɛban (lmaḥfud)</option>
-        <option value="https://odysee.com/$/embed/@kabdessah:f/EP8--Nura:9">EP8 - Nuṛa</option>
-      </select>
+    <div id="accountBox">
+      <p id="userEmail"></p>
+      <button id="logoutBtn">Effeɣ</button>
     </div>
   </div>
+</nav>
 
-  <footer>
-    <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
-  </footer>
+<div class="container">
 
-  <script>
-    function loadEpisode(url) {
-      document.getElementById("odysee-iframe").src = url;
-    }
-  </script>
+  <div class="video-container">
+    <div class="video-thumb" id="thumb">
+      <div class="play-btn"></div>
+    </div>
+    <div class="artplayer-app" id="player"></div>
+    <select id="episodeSelect"
+  style="width:100%;max-width:900px;padding:10px;
+         background:#111;color:#fff;
+         border:1px solid #ff0066;
+         border-radius:8px;">
+  <option value="0">Aḥric 1</option>
+  <option value="1">Aḥric 2</option>
+  <option value="2">Aḥric 3</option>
+  <option value="3">Aḥric 4</option>
+  <option value="4">Aḥric 5</option>
+  <option value="5">Aḥric 6</option>
+  <option value="6">Aḥric 7</option>
+  <option value="7">Aḥric 8</option>
+</select>
+  </div>
+
+  <!-- PERSONNAGES AVEC SCROLL -->
+  <div class="characters-wrapper">
+    <button class="scroll-btn left">&#10094;</button>
+    <div class="characters" id="characters">
+      <div class="character" onclick="showDesc('XERZI Ɛabdessaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵙⵙⴰⵃ','d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.')">
+        <img src="Abdessah.jpg">
+        <div class="name">XERZI Ɛabdessaḥ</div>
+        <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
+      </div>
+      <!-- Ajoute ici les autres personnages -->
+    </div>
+    <button class="scroll-btn right">&#10095;</button>
+  </div>
+  <div class="film-info">
+    <h2>IMUḤUCEN</h2>
+    <p><strong>Tawsit :</strong> Taḍṣa, Igerdan</p>
+    <p><strong>Azemz n usufeɣ :</strong> 2025</p>
+    <p><strong>Aglam n usaru :</strong>
+Reda, Ɛisa, Ɛliluc, Ḥmimuc d imuḥucen, d iɛlaḍ. Yal tikkelt ara binen sewjaden taxnanast iwakken ad rewlen seg lḥebs. Deg lḥebs yella ccambiṭ Muḥend Waɛli akked Haniya, war asṭuqqet n wawal, atan ihi tezrart-a ar ɣur-nwen.
+    </p>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
+    <button class="close" onclick="closeModal()">Mdel</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
+<script>
+  const thumb = document.getElementById("thumb");
+  const playerBox = document.getElementById("player");
+  const episodeSelect = document.getElementById("episodeSelect");
+  let art;
+
+  const episodes = [
+    { title: "Aḥric 1", url: "https://player.odycdn.com/api/v3/streams/free/EP1--Yewhec-lfil-yernad-gma-s/269b7d9f560d8d53131e2d9ee47d99f6e60b6dc9/0c2ea8.mp4" },
+    { title: "Aḥric 2", url: "https://player.odycdn.com/api/v3/streams/free/EP2--Tamuffirt/0040eb67609c9b35835527a939d37d3b30574e73/7fff5b.mp4" },
+    { title: "Aḥric 3", url: "https://player.odycdn.com/api/v3/streams/free/EP3--Ilat-anect-ilat/c418b3b3d91de9c6bb614ca5502c2448656ee6c6/353cf3.mp4" },
+    { title: "Aḥric 4", url: "https://player.odycdn.com/api/v3/streams/free/EP4--Nuli-s-aggur/8af49d94a728d884449c996bf68f8d25fe7e9afc/0a90a1.mp4" },
+    { title: "Aḥric 5", url: "https://player.odycdn.com/api/v3/streams/free/EP5--Timesrifegt/5be019abf1a11c3315c3b570a2dcab0b9dfaadf4/317eae.mp4" },
+    { title: "Aḥric 6", url: "https://player.odycdn.com/api/v3/streams/free/EP6--Taxnanast-n-wekbal/bab7ad83ed1c071853e15e4b7fb5a924b62fb8b2/80b714.mp4" },
+    { title: "Aḥric 7", url: "https://player.odycdn.com/api/v3/streams/free/EP7--Belqasem-n-3li-ca3ban-(-lmahfud-)/9644b34d118fc8132fc11c715c56c73061feb55c/d559cc.mp4" },
+    { title: "Aḥric 8", url: "https://player.odycdn.com/api/v3/streams/free/EP8--Nura/9aa0b40f52e75404a4c4f3a7b7b59aeef185f334/6f04de.mp4" },
+  ];
+
+  thumb.addEventListener("click", () => {
+    thumb.style.display = "none";
+    playerBox.style.display = "block";
+
+    art = new Artplayer({
+      container: playerBox,
+      url: episodes[0].url,
+      autoplay: true,
+      volume: 0.6,
+      fullscreen: true,
+      fullscreenWeb: true,
+      playsInline: true,
+      theme: "#ff0066",
+      autoSize: false,
+      aspectRatio: false,
+    });
+
+    art.on("ready", () => {
+      art.fullscreen = true;
+    });
+  });
+
+  episodeSelect.addEventListener("change", () => {
+    if (!art) return;
+    const ep = episodes[episodeSelect.value];
+    art.switchUrl(ep.url);
+    art.play();
+  });
+ function showDesc(title, text) {
+    document.getElementById("modalTitle").innerText = title;
+    document.getElementById("modalText").innerText = text;
+    document.getElementById("modal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("modal").style.display = "none";
+  }
+
+  // Scroll des personnages
+  const charContainer = document.getElementById("characters");
+  const leftBtn = document.querySelector('.scroll-btn.left');
+  const rightBtn = document.querySelector('.scroll-btn.right');
+  const scrollAmount = 200;
+
+  function updateButtons() {
+    leftBtn.disabled = charContainer.scrollLeft <= 0;
+    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth;
+  }
+
+  leftBtn.addEventListener('click', () => {
+    charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    setTimeout(updateButtons, 300);
+  });
+
+  rightBtn.addEventListener('click', () => {
+    charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    setTimeout(updateButtons, 300);
+  });
+
+  updateButtons();
+</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+
+/* 🔥 FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
+  authDomain: "test-2fdd3.firebaseapp.com",
+  projectId: "test-2fdd3",
+  appId: "1:244317844373:web:3a4e5b77c649f54d7fbc9c"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+/* 🎯 ELEMENTS */
+const amidanBtn = document.getElementById("amidanBtn");
+const accountBox = document.getElementById("accountBox");
+const userEmail = document.getElementById("userEmail");
+const logoutBtn = document.getElementById("logoutBtn");
+
+/* 🔐 PROTECTION PAGE */
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+  } else {
+    amidanBtn.style.display = "inline";
+    userEmail.textContent = "Connecté : " + user.email;
+  }
+});
+
+/* 👤 OUVRIR / FERMER AMIDAN */
+amidanBtn.addEventListener("click", () => {
+  accountBox.style.display =
+    accountBox.style.display === "block" ? "none" : "block";
+});
+
+/* 🚪 DÉCONNEXION */
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "login.html";
+});
+
+/* ❌ FERMER SI CLIC AILLEURS */
+document.addEventListener("click", (e) => {
+  if (!amidanBtn.contains(e.target) && !accountBox.contains(e.target)) {
+    accountBox.style.display = "none";
+  }
+});
+</script>  
 </body>
 </html>
