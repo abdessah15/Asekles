@@ -7,13 +7,35 @@
 <link rel="icon" href="Asekles.png" type="image/png">
 
 <style>
-/* 🔒 cacher avant auth */
 body {
-  display: none;
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #000;
   color: #f1f1f1;
+}
+
+/* ===== LOADER ===== */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #333;
+  border-top: 6px solid #ff0066;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* ===== HEADER ===== */
@@ -144,6 +166,11 @@ footer {
 
 <body>
 
+<!-- 🔄 LOADER -->
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
 <header>
   <h1>ⵣ Asekles - ⴰⵙⴻⴽⵍⴻⵙ ⵣ</h1>
 </header>
@@ -155,7 +182,6 @@ footer {
 
   <div class="account-wrapper">
     <span id="amidanBtn" style="display:none;">Amiḍan</span>
-
     <div id="accountBox">
       <p id="userEmail"></p>
       <p id="userExpire" style="color:#ffcc00;font-size:14px;"></p>
@@ -168,8 +194,6 @@ footer {
   <h2>I kunwi d kunemti</h2>
 
   <div class="movie-grid">
-
-    <!-- 🎬 TES FILMS (inchangés) -->
     <div class="movie-item"><a href="bds.html"><img src="bdsa.jpg"><h3>Berhuc d Salas</h3></a></div>
     <div class="movie-item"><a href="amghar-aneghrum.html"><img src="photo.jpg"><h3>Amɣar aneɣrum</h3></a></div>
     <div class="movie-item"><a href="imuhucen.html"><img src="imuhuchen.jpg"><h3>Imuḥucen</h3></a></div>
@@ -183,13 +207,12 @@ footer {
     <div class="movie-item"><a href="film9.html"><img src="IMG_1264.jpeg"><h3>Targit</h3></a></div>
     <div class="movie-item"><a href="film7.html"><img src="Sans titre11.jpg"><h3>Tom et Jerry à New York</h3></a></div>
     <div class="movie-item"><a href="film6.html"><img src="Sans titre6.jpg"><h3>Maca ak d Micka</h3></a></div>
-
   </div>
 </div>
 
 <footer>© Asekles</footer>
 
-<!-- 🔥 FIREBASE v8 – TV OK -->
+<!-- 🔥 FIREBASE v8 -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -206,6 +229,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var auth = firebase.auth();
 
+var loader = document.getElementById("loader");
 var amidanBtn = document.getElementById("amidanBtn");
 var accountBox = document.getElementById("accountBox");
 var userEmail = document.getElementById("userEmail");
@@ -235,7 +259,7 @@ auth.onAuthStateChanged(function(user) {
       return;
     }
 
-    document.body.style.display = "block";
+    loader.style.display = "none";
     amidanBtn.style.display = "inline";
     userEmail.textContent = "Isem n umiḍan : " + data.email;
     userExpire.textContent = "Azemz n tagara : " + data.expiresAt;
@@ -244,7 +268,8 @@ auth.onAuthStateChanged(function(user) {
 
 amidanBtn.onclick = function(e) {
   e.stopPropagation();
-  accountBox.style.display = accountBox.style.display === "block" ? "none" : "block";
+  accountBox.style.display =
+    accountBox.style.display === "block" ? "none" : "block";
 };
 
 logoutBtn.onclick = function() {
