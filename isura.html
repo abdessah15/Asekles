@@ -7,7 +7,9 @@
 <link rel="icon" href="Asekles.png" type="image/png">
 
 <style>
+/* 🔒 cacher avant auth */
 body {
+  display: none;
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #000;
@@ -109,13 +111,12 @@ nav a:hover,
 }
 
 .movie-item h3 {
-  position: relative;
   margin-top: 10px;
   font-size: 1.2em;
   color: #ff0066;
-  padding-bottom: 6px;
 }
-  a {
+
+a {
   text-decoration: none;
   color: inherit;
 }
@@ -144,7 +145,7 @@ footer {
 <body>
 
 <header>
-  <h1>ⵣ Isura - ⵉⵙⵓⵔⴰ ⵣ<h1>
+  <h1>ⵣ Isura - ⵉⵙⵓⵔⴰ ⵣ</h1>
 </header>
 
 <nav>
@@ -157,116 +158,98 @@ footer {
 
     <div id="accountBox">
       <p id="userEmail"></p>
+      <p id="userExpire" style="color:#ffcc00;font-size:14px;"></p>
       <button id="logoutBtn">Effeɣ</button>
     </div>
   </div>
 </nav>
-  <div class="content">
-    <h2>Umuɣ n yisura</h2>
-      <div class="movie-grid">
-      <div class="movie-item">
-        <a href="film1.html">
-          <img src="Sans titre2.jpg" alt="Film 1">
-          <h3>Cirta</h3>
-        </a>
-      </div>
 
-      <div class="movie-item">
-        <a href="film2.html">
-          <img src="Sans titre.jpg" alt="Film 2">
-          <h3>Amezruy n tmurt</h3>
-        </a>
-      </div>
+<div class="content">
+  <h2>Umuɣ n yisura</h2>
 
-      <div class="movie-item">
-        <a href="film3.html">
-          <img src="Sans titre3.jpg" alt="Film 3">
-          <h3>Tamacahut n Wakli</h3>
-        </a>
-      </div>
+  <div class="movie-grid">
+    <div class="movie-item"><a href="film1.html"><img src="Sans titre2.jpg"><h3>Cirta</h3></a></div>
+    <div class="movie-item"><a href="film2.html"><img src="Sans titre.jpg"><h3>Amezruy n tmurt</h3></a></div>
+    <div class="movie-item"><a href="film3.html"><img src="Sans titre3.jpg"><h3>Tamacahut n Wakli</h3></a></div>
+    <div class="movie-item"><a href="film8.html"><img src="ikerri.jpg"><h3>Ikerri izimer</h3></a></div>
+    <div class="movie-item"><a href="film9.html"><img src="IMG_1264.jpeg"><h3>Targit</h3></a></div>
+    <div class="movie-item"><a href="film10.html"><img src="hmimi.jpg"><h3>Ḥmimi d Lyes</h3></a></div>
+    <div class="movie-item"><a href="amghar-aneghrum.html"><img src="photo.jpg"><h3>Amɣar aneɣrum</h3></a></div>
+    <div class="movie-item"><a href="bds.html"><img src="bdsa.jpg"><h3>Berhuc d Salas</h3></a></div>
+  </div>
+</div>
 
-      <div class="movie-item">
-        <a href="film8.html">
-          <img src="ikerri.jpg" alt="Film 4">
-          <h3>Ikerri izimer</h3>
-        </a>
-      </div>
+<footer>© Asekles</footer>
 
-      <div class="movie-item">
-        <a href="film9.html">
-          <img src="IMG_1264.jpeg" alt="Film 5">
-          <h3>Targit</h3>
-        </a>
-      </div>
+<!-- 🔥 FIREBASE v8 -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
-      <div class="movie-item">
-        <a href="film10.html">
-          <img src="hmimi.jpg" alt="Film 6">
-          <h3>Ḥmimi d Lyes</h3>
-        </a>
-      </div>
-
-      <div class="movie-item">
-        <a href="amghar-aneghrum.html">
-          <img src="photo.jpg" alt="Film 7">
-          <h3>Amɣar aneɣrum</h3>
-        </a>
-      </div>
-            <div class="movie-item">
-        <a href="bds.html">
-          <img src="bdsa.jpg" alt="Film 7">
-          <h3>Berhuc d Salas</h3>
-        </a>
-      </div>
-      <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
-
-/* 🔥 FIREBASE CONFIG */
-const firebaseConfig = {
+<script>
+var firebaseConfig = {
   apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
   authDomain: "test-2fdd3.firebaseapp.com",
+  databaseURL: "https://test-2fdd3-default-rtdb.firebaseio.com",
   projectId: "test-2fdd3",
   appId: "1:244317844373:web:3a4e5b77c649f54d7fbc9c"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+firebase.initializeApp(firebaseConfig);
+var auth = firebase.auth();
 
-/* 🎯 ELEMENTS */
-const amidanBtn = document.getElementById("amidanBtn");
-const accountBox = document.getElementById("accountBox");
-const userEmail = document.getElementById("userEmail");
-const logoutBtn = document.getElementById("logoutBtn");
+var amidanBtn = document.getElementById("amidanBtn");
+var accountBox = document.getElementById("accountBox");
+var userEmail = document.getElementById("userEmail");
+var userExpire = document.getElementById("userExpire");
+var logoutBtn = document.getElementById("logoutBtn");
 
-/* 🔐 PROTECTION PAGE */
-onAuthStateChanged(auth, (user) => {
+auth.onAuthStateChanged(function(user) {
   if (!user) {
-    window.location.href = "login.html";
-  } else {
-    amidanBtn.style.display = "inline";
-    userEmail.textContent = "Connecté : " + user.email;
+    location.replace("login.html");
+    return;
   }
+
+  firebase.database().ref("users/" + user.uid).once("value").then(function(snap) {
+    if (!snap.exists()) {
+      auth.signOut();
+      location.replace("login.html");
+      return;
+    }
+
+    var data = snap.val();
+    var today = new Date().toISOString().split("T")[0];
+
+    if (data.expiresAt < today) {
+      alert("Amiḍan yekfa");
+      auth.signOut();
+      location.replace("login.html");
+      return;
+    }
+
+    document.body.style.display = "block";
+    amidanBtn.style.display = "inline";
+    userEmail.textContent = "Isem n umiḍan : " + data.email;
+    userExpire.textContent = "Azemz n tagara : " + data.expiresAt;
+  });
 });
 
-/* 👤 OUVRIR / FERMER AMIDAN */
-amidanBtn.addEventListener("click", () => {
+amidanBtn.onclick = function(e) {
+  e.stopPropagation();
   accountBox.style.display =
     accountBox.style.display === "block" ? "none" : "block";
-});
+};
 
-/* 🚪 DÉCONNEXION */
-logoutBtn.addEventListener("click", async () => {
-  await signOut(auth);
-  window.location.href = "login.html";
-});
+logoutBtn.onclick = function() {
+  auth.signOut().then(function() {
+    location.replace("login.html");
+  });
+};
 
-/* ❌ FERMER SI CLIC AILLEURS */
-document.addEventListener("click", (e) => {
-  if (!amidanBtn.contains(e.target) && !accountBox.contains(e.target)) {
-    accountBox.style.display = "none";
-  }
-});
+document.onclick = function() {
+  accountBox.style.display = "none";
+};
 </script>
+
 </body>
 </html>
