@@ -531,32 +531,6 @@ Asaru-agi ad ken-yawi ɣer umaḍal n yinig d teḍsa. Čaqlala, d awtul yečču
       autoSize: false,
       aspectRatio: false,
     });
-<script>
-  // 🚫 Désactiver clic droit
-  document.addEventListener("contextmenu", function(e) {
-    e.preventDefault();
-  });
-
-  // 🚫 Bloquer F12 + raccourcis
-  document.addEventListener("keydown", function(e) {
-
-    if (e.key === "F12") {
-      e.preventDefault();
-    }
-
-    if (e.ctrlKey && e.shiftKey && (
-        e.key === "I" || 
-        e.key === "J" || 
-        e.key === "C"
-    )) {
-      e.preventDefault();
-    }
-
-    if (e.ctrlKey && e.key === "u") {
-      e.preventDefault();
-    }
-  });
-</script>
     art.on("ready", () => {
       art.fullscreen = true;
     });
