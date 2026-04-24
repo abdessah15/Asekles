@@ -520,20 +520,23 @@ Asaru-agi ad ken-yawi ɣer umaḍal n yinig d teḍsa. Čaqlala, d awtul yečču
     playerBox.style.display = "block";
 
     art = new Artplayer({
-      container: playerBox,
-      url: atob("aHR0cHM6Ly9wbGF5ZXIub2R5Y2RuLmNvbS9hcGkvdjMvc3RyZWFtcy9mcmVlL0FzYXJ1LW4taW3Dp2VxbGFsLzI1MjMyYjcyYjM2Njc2ZmM0MDRjMWQxYjQwNGYzMDQ1M2VmZTc0MDQvNGU0NzBhLm1wNA=="),      autoplay: true,
-      volume: 0.6,
-      fullscreen: true,
-      fullscreenWeb: true,
-      playsInline: true,
-      theme: "#ff0066",
-      autoSize: false,
-      aspectRatio: false,
-    });
-    art.on("ready", () => {
-      art.fullscreen = true;
-    });
-  });
+  container: playerBox,
+  url: atob("aHR0cHM6Ly9wbGF5ZXIub2R5Y2RuLmNvbS9hcGkvdjMvc3RyZWFtcy9mcmVlL0FzYXJ1LW4taW3Dp2VxbGFsLzI1MjMyYjcyYjM2Njc2ZmM0MDRjMWQxYjQwNGYzMDQ1M2VmZTc0MDQvNGU0NzBhLm1wNA=="),
+  autoplay: true,
+  volume: 0.6,
+  fullscreen: true,
+  fullscreenWeb: true,
+  playsInline: true,
+  theme: "#ff0066",
+
+  // ✅ AJOUTE ÇA
+  moreVideoAttr: {
+    controlsList: 'nodownload'
+  },
+
+  // ❌ Désactive debug
+  settings: false
+});
 
   function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
