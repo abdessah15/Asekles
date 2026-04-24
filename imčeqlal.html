@@ -510,33 +510,41 @@ Asaru-agi ad ken-yawi ɣer umaḍal n yinig d teḍsa. Čaqlala, d awtul yečču
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
+
 <script>
-  const thumb = document.getElementById("thumb");
-  const playerBox = document.getElementById("player");
-  let art;
+const thumb = document.getElementById("thumb");
+const playerBox = document.getElementById("player");
+let art;
 
-  thumb.addEventListener("click", () => {
-    thumb.style.display = "none";
-    playerBox.style.display = "block";
+thumb.addEventListener("click", () => {
+  thumb.style.display = "none";
+  playerBox.style.display = "block";
 
-    art = new Artplayer({
-  container: playerBox,
-  url: atob("aHR0cHM6Ly9wbGF5ZXIub2R5Y2RuLmNvbS9hcGkvdjMvc3RyZWFtcy9mcmVlL0FzYXJ1LW4taW3Dp2VxbGFsLzI1MjMyYjcyYjM2Njc2ZmM0MDRjMWQxYjQwNGYzMDQ1M2VmZTc0MDQvNGU0NzBhLm1wNA=="),
-  autoplay: true,
-  volume: 0.6,
-  fullscreen: true,
-  fullscreenWeb: true,
-  playsInline: true,
-  theme: "#ff0066",
+  art = new Artplayer({
+    container: playerBox,
 
-  // ✅ AJOUTE ÇA
-  moreVideoAttr: {
-    controlsList: 'nodownload'
-  },
+    // 🔒 URL cachée (base64)
+    url: atob("aHR0cHM6Ly9wbGF5ZXIub2R5Y2RuLmNvbS9hcGkvdjMvc3RyZWFtcy9mcmVlL0FzYXJ1LW4taW3Dp2VxbGFsLzI1MjMyYjcyYjM2Njc2ZmM0MDRjMWQxYjQwNGYzMDQ1M2VmZTc0MDQvNGU0NzBhLm1wNA=="),
 
-  // ❌ Désactive debug
-  settings: false
+    autoplay: true,
+    volume: 0.6,
+    fullscreen: true,
+    fullscreenWeb: true,
+    playsInline: true,
+    theme: "#ff0066",
+
+    // 🚫 enlève bouton download
+    moreVideoAttr: {
+      controlsList: 'nodownload'
+    },
+
+    // 🚫 enlève menu paramètres
+    settings: false
+  });
 });
+
+// ❌ désactiver clic droit
+document.addEventListener("contextmenu", e => e.preventDefault());
 
   function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
