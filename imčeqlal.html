@@ -523,8 +523,8 @@ thumb.addEventListener("click", () => {
   art = new Artplayer({
     container: playerBox,
 
-    // 🔒 URL cachée (base64)
-    url: atob("aHR0cHM6Ly9wbGF5ZXIub2R5Y2RuLmNvbS9hcGkvdjMvc3RyZWFtcy9mcmVlL0FzYXJ1LW4taW3Dp2VxbGFsLzI1MjMyYjcyYjM2Njc2ZmM0MDRjMWQxYjQwNGYzMDQ1M2VmZTc0MDQvNGU0NzBhLm1wNA=="),
+    // 🔥 METS UN LIEN MP4 DIRECT (IMPORTANT)
+    url: "https://www.w3schools.com/html/mov_bbb.mp4",
 
     autoplay: true,
     volume: 0.6,
@@ -533,51 +533,48 @@ thumb.addEventListener("click", () => {
     playsInline: true,
     theme: "#ff0066",
 
-    // 🚫 enlève bouton download
     moreVideoAttr: {
-      controlsList: 'nodownload'
+      controlsList: "nodownload"
     },
 
-    // 🚫 enlève menu paramètres
     settings: false
   });
 });
 
-// ❌ désactiver clic droit
-document.addEventListener("contextmenu", e => e.preventDefault());
+// ✅ TES FONCTIONS DOIVENT ÊTRE EN DEHORS
+function showDesc(title, text) {
+  document.getElementById("modalTitle").innerText = title;
+  document.getElementById("modalText").innerText = text;
+  document.getElementById("modal").style.display = "flex";
+}
 
-  function showDesc(title, text) {
-    document.getElementById("modalTitle").innerText = title;
-    document.getElementById("modalText").innerText = text;
-    document.getElementById("modal").style.display = "flex";
-  }
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+}
 
-  function closeModal() {
-    document.getElementById("modal").style.display = "none";
-  }
+// Scroll
+const charContainer = document.getElementById("characters");
+const leftBtn = document.querySelector('.scroll-btn.left');
+const rightBtn = document.querySelector('.scroll-btn.right');
+const scrollAmount = 200;
 
-  // Scroll des personnages
-  const charContainer = document.getElementById("characters");
-  const leftBtn = document.querySelector('.scroll-btn.left');
-  const rightBtn = document.querySelector('.scroll-btn.right');
-  const scrollAmount = 200;
+function updateButtons() {
+  leftBtn.disabled = charContainer.scrollLeft <= 0;
+  rightBtn.disabled =
+    charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth;
+}
 
-  function updateButtons() {
-    leftBtn.disabled = charContainer.scrollLeft <= 0;
-    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth;
-  }
+leftBtn.addEventListener('click', () => {
+  charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  setTimeout(updateButtons, 300);
+});
 
-  leftBtn.addEventListener('click', () => {
-    charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    setTimeout(updateButtons, 300);
-  });
+rightBtn.addEventListener('click', () => {
+  charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  setTimeout(updateButtons, 300);
+});
 
-  rightBtn.addEventListener('click', () => {
-    charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    setTimeout(updateButtons, 300);
-  });
-
-  updateButtons();
+updateButtons();
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
