@@ -6,8 +6,10 @@
   <title>Asekles - IMČEQLAL</title>
   <link rel="icon" href="Asekles.png" type="image/png">
 
-  <!-- CSS Artplayer -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.css">
+<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
+<style>
+:root { --plyr-color-main: #ff0066; }
+</style>
 
   <style>
     body {
@@ -56,57 +58,6 @@
       padding: 20px;
     }
 
-    .video-container {
-      width: 100%;
-      max-width: 900px;
-      position: relative;
-      background: #000;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    }
-
-    .video-thumb {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: url("imčqll.jpg") center/cover no-repeat;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .play-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90px;
-      height: 90px;
-      background: rgba(0,0,0,0.6);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.3s;
-      z-index: 2;
-    }
-
-    .play-btn::before {
-      content: "";
-      border-style: solid;
-      border-width: 18px 0 18px 30px;
-      border-color: transparent transparent transparent #ff0066;
-      margin-left: 5px;
-    }
-
-    .video-thumb:hover .play-btn {
-      transform: translate(-50%, -50%) scale(1.1);
-    }
-
-    .artplayer-app {
-      width: 100%;
-      aspect-ratio: 16/9;
-      display: none;
-    }
 
     /* ===== PERSONNAGES ===== */
     .characters-wrapper {
@@ -409,7 +360,9 @@ footer {
     <div class="video-thumb" id="thumb">
       <div class="play-btn"></div>
     </div>
-    <div class="artplayer-app" id="player"></div>
+    <video id="player" class="artplayer-app" controls>
+  <source src="https://player.odycdn.com/api/v3/streams/free/Asaru-n-im%C4%8Deqlal/25232b72b36676fc404c1d1b404f30453efe7404/4e470a.mp4" type="video/mp4">
+</video>
   </div>
 
   <!-- PERSONNAGES AVEC SCROLL -->
@@ -509,33 +462,21 @@ Asaru-agi ad ken-yawi ɣer umaḍal n yinig d teḍsa. Čaqlala, d awtul yečču
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+
 <script>
-  const thumb = document.getElementById("thumb");
-  const playerBox = document.getElementById("player");
-  let art;
+const thumb = document.getElementById("thumb");
+const video = document.getElementById("player");
 
-  thumb.addEventListener("click", () => {
-    thumb.style.display = "none";
-    playerBox.style.display = "block";
+const player = new Plyr('#player');
 
-    art = new Artplayer({
-      container: playerBox,
-      url: "https://player.odycdn.com/api/v3/streams/free/Asaru-n-im%C4%8Deqlal/25232b72b36676fc404c1d1b404f30453efe7404/4e470a.mp4",
-      autoplay: true,
-      volume: 0.6,
-      fullscreen: true,
-      fullscreenWeb: true,
-      playsInline: true,
-      theme: "#ff0066",
-      autoSize: false,
-      aspectRatio: false,
-    });
-    art.on("ready", () => {
-      art.fullscreen = true;
-    });
-  });
-
+thumb.addEventListener("click", () => {
+  thumb.style.display = "none";
+  video.style.display = "block";
+  player.play();
+});
   function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalText").innerText = text;
