@@ -6,10 +6,14 @@
   <title>Asekles - Zorro</title>
   <link rel="icon" href="Asekles.png" type="image/png">
 
-  <!-- CSS Artplayer -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.css">
+  <!-- CSS Plyr -->
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
 
   <style>
+    :root { 
+      --plyr-color-main: #ff0066; 
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -17,6 +21,12 @@
       color: #f1f1f1;
     }
 
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ===== HEADER ===== */
     header {
       background: linear-gradient(45deg, #ff0066, #6600ff);
       padding: 15px;
@@ -29,31 +39,65 @@
       color: #fff;
     }
 
+    /* ===== NAV ===== */
     nav {
       display: flex;
       justify-content: center;
-      padding: 10px;
-      background-color: #111;
+      align-items: center;
       gap: 20px;
+      padding: 10px;
+      background: #111;
       flex-wrap: wrap;
     }
 
-    nav a {
+    nav a,
+    #amidanBtn {
       color: #fff;
-      text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
     }
 
-    nav a:hover {
+    nav a:hover,
+    #amidanBtn:hover {
       color: #ff0066;
     }
 
+    /* ===== AMIDAN ===== */
+    .account-wrapper {
+      position: relative;
+    }
+
+    #accountBox {
+      display: none;
+      position: absolute;
+      top: 32px;
+      right: 0;
+      background: #111;
+      border: 2px solid #ff0066;
+      padding: 15px;
+      border-radius: 10px;
+      min-width: 220px;
+      z-index: 999;
+    }
+
+    #logoutBtn {
+      background: #ff0066;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* ===== CONTAINER CENTRAL ===== */
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 25px;
       padding: 20px;
+      padding-bottom: 120px; /* Évite la superposition avec le footer fixe */
     }
 
     .video-container {
@@ -79,9 +123,9 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 90px;
-      height: 90px;
-      background: rgba(0,0,0,0.6);
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 0, 102, 0.85);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -90,22 +134,39 @@
       z-index: 2;
     }
 
-    .play-btn::before {
+    .play-btn::after {
       content: "";
+      position: absolute;
+      left: 32px;
+      top: 22px;
       border-style: solid;
       border-width: 18px 0 18px 30px;
-      border-color: transparent transparent transparent #ff0066;
-      margin-left: 5px;
+      border-color: transparent transparent transparent white;
     }
 
     .video-thumb:hover .play-btn {
       transform: translate(-50%, -50%) scale(1.1);
     }
 
-    .artplayer-app {
+    /* Conteneur Plyr */
+    .plyr-box {
       width: 100%;
       aspect-ratio: 16/9;
       display: none;
+    }
+
+    #episodeSelect {
+      width: 100%;
+      max-width: 900px;
+      padding: 12px;
+      background: #111;
+      color: #fff;
+      border: 1px solid #ff0066;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-size: 1em;
+      outline: none;
+      cursor: pointer;
     }
 
     /* ===== PERSONNAGES ===== */
@@ -124,6 +185,7 @@
       overflow-x: auto;
       scroll-behavior: smooth;
       padding: 10px 0;
+      width: 100%;
     }
 
     .characters::-webkit-scrollbar {
@@ -144,13 +206,8 @@
       z-index: 10;
     }
 
-    .scroll-btn.left {
-      left: -10px;
-    }
-
-    .scroll-btn.right {
-      right: -10px;
-    }
+    .scroll-btn.left { left: -10px; }
+    .scroll-btn.right { right: -10px; }
 
     .scroll-btn:hover {
       background: rgba(0,0,0,0.8);
@@ -160,6 +217,7 @@
       text-align: center;
       cursor: pointer;
       flex: 0 0 auto;
+      width: 110px;
     }
 
     .character img {
@@ -180,6 +238,7 @@
     .character .name {
       margin-top: 8px;
       font-weight: bold;
+      font-size: 0.9em;
     }
 
     .character .role {
@@ -187,12 +246,20 @@
       color: #bbb;
     }
 
+    /* ===== INFOS DU FILM ===== */
     .film-info {
       background-color: #1a1a1a;
       padding: 20px;
       border-radius: 12px;
       max-width: 900px;
       line-height: 1.6;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .film-info h2 {
+      color: #ff0066;
+      margin-top: 0;
     }
 
     /* ===== MODAL DESCRIPTION ===== */
@@ -212,10 +279,12 @@
       border-radius: 12px;
       max-width: 400px;
       text-align: center;
+      border: 1px solid #ff0066;
     }
 
     .modal-content h3 {
       color: #ff0066;
+      margin-top: 0;
     }
 
     .close {
@@ -228,158 +297,26 @@
       border-radius: 6px;
     }
 
-    .film-info h2 {
-      color: #ff0066;
-      margin-top: 0;
-    }
-
+    /* ===== FOOTER ===== */
     footer {
-      background-color: #111;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #111;
       text-align: center;
-      padding: 16px;
-      font-size: 0.9em;
-      color: #aaa;
+      padding: 8px;
+      font-size: .9em;
+      border-top: 1px solid #222;
+      z-index: 100;
     }
 
-    @supports not (aspect-ratio: 1/1) {
-      .video-thumb, .artplayer-app {
+    @supports not (aspect-ratio: 16/9) {
+      .video-thumb, .plyr-box {
         height: calc(100vw * 9 / 16);
       }
     }
   </style>
-  <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #000;
-  color: #f1f1f1;
-}
-
-/* ===== HEADER ===== */
-header {
-  background: linear-gradient(45deg, #ff0066, #6600ff);
-  padding: 10px;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2em;
-}
-
-/* ===== NAV ===== */
-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  padding: 10px;
-  background: #111;
-  flex-wrap: wrap;
-}
-
-nav a,
-#amidanBtn {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-nav a:hover,
-#amidanBtn:hover {
-  color: #ff0066;
-}
-
-/* ===== AMIDAN ===== */
-.account-wrapper {
-  position: relative;
-}
-
-#accountBox {
-  display: none;
-  position: absolute;
-  top: 32px;
-  right: 0;
-  background: #111;
-  border: 2px solid #ff0066;
-  padding: 15px;
-  border-radius: 10px;
-  min-width: 220px;
-  z-index: 999;
-}
-
-#logoutBtn {
-  background: #ff0066;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  width: 100%;
-}
-
-/* ===== CONTENT ===== */
-.content {
-  padding: 20px;
-  padding-bottom: 120px;
-}
-
-.movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-}
-
-.movie-item {
-  background: #222;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
-  transition: transform .3s, box-shadow .3s;
-}
-
-.movie-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(255,0,102,.6);
-}
-
-.movie-item img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.movie-item h3 {
-  position: relative;
-  margin-top: 10px;
-  font-size: 1.2em;
-  color: #ff0066;
-  padding-bottom: 6px;
-}
-  a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* ===== FOOTER ===== */
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #111;
-  text-align: center;
-  padding: 8px;
-  font-size: .9em;
-}
-
-/* ===== MOBILE ===== */
-@media (max-width: 600px) {
-  .movie-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-</style>
 </head>
 
 <body>
@@ -405,51 +342,54 @@ footer {
 
 <div class="container">
 
+  <!-- ZONE DE LECTURE VIDEO -->
   <div class="video-container">
     <div class="video-thumb" id="thumb">
       <div class="play-btn"></div>
     </div>
-    <div class="artplayer-app" id="player"></div>
-    <select id="episodeSelect"
-  style="width:100%;max-width:900px;padding:10px;
-         background:#111;color:#fff;
-         border:1px solid #ff0066;
-         border-radius:8px;">
-  <option value="0">Aḥric 1</option>
-  <option value="1">Aḥric 2</option>
-</select>
+    
+    <div class="plyr-box" id="playerWrapper">
+      <video id="player" controls playsinline></video>
+    </div>
   </div>
 
-  <!-- PERSONNAGES AVEC SCROLL -->
+  <!-- SÉLECTEUR D'ÉPISODES -->
+  <select id="episodeSelect">
+    <option value="0">Aḥric 1</option>
+    <option value="1">Aḥric 2</option>
+  </select>
+
+  <!-- LISTE DES PERSONNAGES -->
   <div class="characters-wrapper">
     <button class="scroll-btn left">&#10094;</button>
     <div class="characters" id="characters">
       <div class="character" onclick="showDesc('XERZI Ɛabdessaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵙⵙⴰⵃ','d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.')">
-        <img src="Abdessah.jpg">
+        <img src="Abdessah.jpg" alt="XERZI Ɛabdessaḥ">
         <div class="name">XERZI Ɛabdessaḥ</div>
         <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
       </div>
-            <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
-        <img src="amazigh.jpg">
+      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
+        <img src="amazigh.jpg" alt="XERZI Amaziɣ">
         <div class="name">XERZI Amaziɣ</div>
         <div class="role">d asegbar</div>
       </div>
-      <!-- Ajoute ici les autres personnages -->
     </div>
     <button class="scroll-btn right">&#10095;</button>
   </div>
+
+  <!-- INFORMATIONS SUR LA SÉRIE -->
   <div class="film-info">
     <h2>Zorro</h2>
-    <p><strong>Tawsit :</strong>Inig</p>
+    <p><strong>Tawsit :</strong> Inig</p>
     <p><strong>Azemz n usufeɣ :</strong> 2024</p>
-    <p><strong>Aglam n usaru :</strong>
-Ger leḥqer n sifuni iluled yiwen n umnay n tlelli ad iḥarben ɣef yigellilen d yimɣiden iwumi ttwaksen izerfan.
+    <p><strong>Aglam n usaru :</strong><br>
+      Ger leḥqer n sifuni iluled yiwen n umnay n tlelli ad iḥarben ɣef yigellilen d yimɣiden iwumi ttwaksen izerfan.
     </p>
   </div>
 
 </div>
 
-<!-- MODAL -->
+<!-- MODAL DESCRIPTION -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <h3 id="modalTitle"></h3>
@@ -457,48 +397,66 @@ Ger leḥqer n sifuni iluled yiwen n umnay n tlelli ad iḥarben ɣef yigellilen
     <button class="close" onclick="closeModal()">Mdel</button>
   </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
 <script>
   const thumb = document.getElementById("thumb");
-  const playerBox = document.getElementById("player");
+  const playerWrapper = document.getElementById("playerWrapper");
+  const videoElement = document.getElementById("player");
   const episodeSelect = document.getElementById("episodeSelect");
-  let art;
+  let player;
 
   const episodes = [
-    { title: "Aḥric 1", url: "https://player.odycdn.com/api/v3/streams/free/Zorro-EP-(1)/730e192067b1bad3408e49a613717420e08b5ea2/5aa243.mp4" },
-    { title: "Aḥric 2", url: "https://player.odycdn.com/api/v3/streams/free/Zorro-EP-(2)/098744345c6741c3326851d708016f4f535107f9/faff97.mp4" },
+    { title: "Aḥric 1", url: "https://firebasestorage.googleapis.com/v0/b/test-2fdd3.firebasestorage.app/o/Zorro%20EP%201.mp4?alt=media&token=eb2d0a33-06a2-49b2-8475-97adc9caa7f8" },
+    { title: "Aḥric 2", url: "https://firebasestorage.googleapis.com/v0/b/test-2fdd3.firebasestorage.app/o/Zorro%20EP%202.mp4?alt=media&token=c3b92777-b71c-4f31-8e4b-eb98809edf6d" },
   ];
 
-  thumb.addEventListener("click", () => {
+  // Initialisation de Plyr au clic initial
+  function initPlayer(videoUrl) {
     thumb.style.display = "none";
-    playerBox.style.display = "block";
+    playerWrapper.style.display = "block";
 
-    art = new Artplayer({
-      container: playerBox,
-      url: episodes[0].url,
-      autoplay: true,
-      volume: 0.6,
-      fullscreen: true,
-      fullscreenWeb: true,
-      playsInline: true,
-      theme: "#ff0066",
-      autoSize: false,
-      aspectRatio: false,
+    player = new Plyr('#player', {
+      controls: ['play-large', 'play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'fullscreen'],
+      ratio: '16:9'
     });
 
-    art.on("ready", () => {
-      art.fullscreen = true;
+    player.source = {
+      type: 'video',
+      sources: [{ src: videoUrl, type: 'video/mp4' }]
+    };
+
+    player.once('ready', () => {
+      player.play();
     });
+  }
+
+  thumb.addEventListener("click", () => {
+    const activeIndex = episodeSelect.value;
+    initPlayer(episodes[activeIndex].url);
   });
 
+  // Changement d'épisode dynamique via le select menu
   episodeSelect.addEventListener("change", () => {
-    if (!art) return;
-    const ep = episodes[episodeSelect.value];
-    art.switchUrl(ep.url);
-    art.play();
+    const selectedUrl = episodes[episodeSelect.value].url;
+    
+    if (!player) {
+      initPlayer(selectedUrl);
+    } else {
+      player.source = {
+        type: 'video',
+        sources: [{ src: selectedUrl, type: 'video/mp4' }]
+      };
+      player.once('ready', () => {
+        player.play();
+      });
+    }
   });
- function showDesc(title, text) {
+
+  // Blocage du clic droit sur la balise vidéo
+  videoElement.addEventListener("contextmenu", (e) => e.preventDefault());
+
+  // Gestion des fenêtres modales
+  function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalText").innerText = text;
     document.getElementById("modal").style.display = "flex";
@@ -508,28 +466,33 @@ Ger leḥqer n sifuni iluled yiwen n umnay n tlelli ad iḥarben ɣef yigellilen
     document.getElementById("modal").style.display = "none";
   }
 
-  // Scroll des personnages
+  window.addEventListener('click', (e) => {
+    const modal = document.getElementById("modal");
+    if (e.target === modal) closeModal();
+  });
+
+  // Carrousel des personnages
   const charContainer = document.getElementById("characters");
   const leftBtn = document.querySelector('.scroll-btn.left');
   const rightBtn = document.querySelector('.scroll-btn.right');
-  const scrollAmount = 200;
+  const scrollAmount = 250;
 
   function updateButtons() {
-    leftBtn.disabled = charContainer.scrollLeft <= 0;
-    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth;
+    leftBtn.disabled = charContainer.scrollLeft <= 2;
+    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth - 2;
   }
 
   leftBtn.addEventListener('click', () => {
     charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    setTimeout(updateButtons, 300);
   });
 
   rightBtn.addEventListener('click', () => {
     charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    setTimeout(updateButtons, 300);
   });
 
-  updateButtons();
+  charContainer.addEventListener('scroll', updateButtons);
+  window.addEventListener('resize', updateButtons);
+  setTimeout(updateButtons, 400);
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
@@ -584,4 +547,3 @@ document.addEventListener("click", (e) => {
 
 </body>
 </html>
-
