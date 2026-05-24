@@ -6,10 +6,14 @@
   <title>Asekles - Maca ak d Micka</title>
   <link rel="icon" href="Asekles.png" type="image/png">
 
-  <!-- CSS Artplayer -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.css">
+  <!-- CSS Plyr -->
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
 
   <style>
+    :root { 
+      --plyr-color-main: #ff0066; 
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -17,6 +21,7 @@
       color: #f1f1f1;
     }
 
+    /* ===== HEADER ===== */
     header {
       background: linear-gradient(45deg, #ff0066, #6600ff);
       padding: 15px;
@@ -29,31 +34,66 @@
       color: #fff;
     }
 
+    /* ===== NAV ===== */
     nav {
       display: flex;
       justify-content: center;
+      align-items: center;
       padding: 10px;
       background-color: #111;
       gap: 20px;
       flex-wrap: wrap;
     }
 
-    nav a {
+    nav a,
+    #amidanBtn {
       color: #fff;
       text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
     }
 
-    nav a:hover {
+    nav a:hover,
+    #amidanBtn:hover {
       color: #ff0066;
     }
 
+    /* ===== AMIDAN ===== */
+    .account-wrapper {
+      position: relative;
+    }
+
+    #accountBox {
+      display: none;
+      position: absolute;
+      top: 32px;
+      right: 0;
+      background: #111;
+      border: 2px solid #ff0066;
+      padding: 15px;
+      border-radius: 10px;
+      min-width: 220px;
+      z-index: 999;
+    }
+
+    #logoutBtn {
+      background: #ff0066;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* ===== CONTENT ===== */
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 25px;
       padding: 20px;
+      padding-bottom: 120px;
     }
 
     .video-container {
@@ -79,9 +119,9 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 90px;
-      height: 90px;
-      background: rgba(0,0,0,0.6);
+      width: 80px;
+      height: 80px;
+      background: rgba(255,0,102,0.85);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -90,12 +130,14 @@
       z-index: 2;
     }
 
-    .play-btn::before {
+    .play-btn::after {
       content: "";
+      position: absolute;
+      left: 32px;
+      top: 22px;
       border-style: solid;
       border-width: 18px 0 18px 30px;
-      border-color: transparent transparent transparent #ff0066;
-      margin-left: 5px;
+      border-color: transparent transparent transparent white;
     }
 
     .video-thumb:hover .play-btn {
@@ -106,6 +148,20 @@
       width: 100%;
       aspect-ratio: 16/9;
       display: none;
+    }
+
+    #episodeSelect {
+      width: 100%;
+      max-width: 900px;
+      padding: 12px;
+      background: #111;
+      color: #fff;
+      border: 1px solid #ff0066;
+      border-radius: 8px;
+      font-weight: bold;
+      outline: none;
+      cursor: pointer;
+      margin-top: 15px;
     }
 
     /* ===== PERSONNAGES ===== */
@@ -144,13 +200,8 @@
       z-index: 10;
     }
 
-    .scroll-btn.left {
-      left: -10px;
-    }
-
-    .scroll-btn.right {
-      right: -10px;
-    }
+    .scroll-btn.left { left: -10px; }
+    .scroll-btn.right { right: -10px; }
 
     .scroll-btn:hover {
       background: rgba(0,0,0,0.8);
@@ -160,6 +211,7 @@
       text-align: center;
       cursor: pointer;
       flex: 0 0 auto;
+      width: 110px;
     }
 
     .character img {
@@ -180,6 +232,7 @@
     .character .name {
       margin-top: 8px;
       font-weight: bold;
+      font-size: 0.9em;
     }
 
     .character .role {
@@ -193,6 +246,12 @@
       border-radius: 12px;
       max-width: 900px;
       line-height: 1.6;
+      width: 100%;
+    }
+
+    .film-info h2 {
+      color: #ff0066;
+      margin-top: 0;
     }
 
     /* ===== MODAL DESCRIPTION ===== */
@@ -228,17 +287,16 @@
       border-radius: 6px;
     }
 
-    .film-info h2 {
-      color: #ff0066;
-      margin-top: 0;
-    }
-
+    /* ===== FOOTER ===== */
     footer {
-      background-color: #111;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #111;
       text-align: center;
-      padding: 16px;
-      font-size: 0.9em;
-      color: #aaa;
+      padding: 8px;
+      font-size: .9em;
     }
 
     @supports not (aspect-ratio: 1/1) {
@@ -247,139 +305,6 @@
       }
     }
   </style>
-  <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #000;
-  color: #f1f1f1;
-}
-
-/* ===== HEADER ===== */
-header {
-  background: linear-gradient(45deg, #ff0066, #6600ff);
-  padding: 10px;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2em;
-}
-
-/* ===== NAV ===== */
-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  padding: 10px;
-  background: #111;
-  flex-wrap: wrap;
-}
-
-nav a,
-#amidanBtn {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-nav a:hover,
-#amidanBtn:hover {
-  color: #ff0066;
-}
-
-/* ===== AMIDAN ===== */
-.account-wrapper {
-  position: relative;
-}
-
-#accountBox {
-  display: none;
-  position: absolute;
-  top: 32px;
-  right: 0;
-  background: #111;
-  border: 2px solid #ff0066;
-  padding: 15px;
-  border-radius: 10px;
-  min-width: 220px;
-  z-index: 999;
-}
-
-#logoutBtn {
-  background: #ff0066;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  width: 100%;
-}
-
-/* ===== CONTENT ===== */
-.content {
-  padding: 20px;
-  padding-bottom: 120px;
-}
-
-.movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-}
-
-.movie-item {
-  background: #222;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
-  transition: transform .3s, box-shadow .3s;
-}
-
-.movie-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(255,0,102,.6);
-}
-
-.movie-item img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.movie-item h3 {
-  position: relative;
-  margin-top: 10px;
-  font-size: 1.2em;
-  color: #ff0066;
-  padding-bottom: 6px;
-}
-  a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* ===== FOOTER ===== */
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #111;
-  text-align: center;
-  padding: 8px;
-  font-size: .9em;
-}
-
-/* ===== MOBILE ===== */
-@media (max-width: 600px) {
-  .movie-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-</style>
 </head>
 
 <body>
@@ -409,19 +334,18 @@ footer {
     <div class="video-thumb" id="thumb">
       <div class="play-btn"></div>
     </div>
-    <div class="artplayer-app" id="player"></div>
-    <select id="episodeSelect"
-  style="width:100%;max-width:900px;padding:10px;
-         background:#111;color:#fff;
-         border:1px solid #ff0066;
-         border-radius:8px;">
-  <option value="0">Aḥric 1</option>
-  <option value="1">Aḥric 2</option>
-  <option value="2">Aḥric 3</option>
-  <option value="3">Aḥric 4</option>
-  <option value="4">Aḥric 5</option>
-</select>
+    
+    <!-- Lecteur Plyr -->
+    <video id="player" class="artplayer-app" controls style="display:none;"></video>
   </div>
+  
+  <select id="episodeSelect">
+    <option value="0">Aḥric 1</option>
+    <option value="1">Aḥric 2</option>
+    <option value="2">Aḥric 3</option>
+    <option value="3">Aḥric 4</option>
+    <option value="4">Aḥric 5</option>
+  </select>
 
   <!-- PERSONNAGES AVEC SCROLL -->
   <div class="characters-wrapper">
@@ -432,7 +356,7 @@ footer {
         <div class="name">XERZI Ɛabdessaḥ</div>
         <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
       </div>
-            <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
+      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰざⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
         <img src="amazigh.jpg">
         <div class="name">XERZI Amaziɣ</div>
         <div class="role">d asegbar</div>
@@ -441,6 +365,7 @@ footer {
     </div>
     <button class="scroll-btn right">&#10095;</button>
   </div>
+
   <div class="film-info">
     <h2>Maca ak d Micka</h2>
     <p><strong>Tawsit :</strong> Taḍṣa, Igerdan</p>
@@ -461,50 +386,73 @@ Yiwet n teqrurt isemman Maca yettidiren ak d wersel iwumi semman Micka, syin taq
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
+<footer>
+  <p>© 2026 Asekles - Isura n Igerdan</p>
+</footer>
+
+<!-- JS Plyr -->
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
 <script>
   const thumb = document.getElementById("thumb");
-  const playerBox = document.getElementById("player");
+  const videoElement = document.getElementById("player");
   const episodeSelect = document.getElementById("episodeSelect");
-  let art;
+  let player;
 
+  // Liste des épisodes de Maca ak d Micka
   const episodes = [
-    { title: "Aḥric 1", url: "https://player.odycdn.com/api/v3/streams/free/maca-ak-d-micka-EP-(1)/67574b6024a939e01f6ea820cb61f8d74de424ac/f99bc7.mp4" },
-    { title: "Aḥric 2", url: "https://player.odycdn.com/api/v3/streams/free/maca-ak-d-micka-EP-(2)/1f6ef2df58e8aea273d21e7e22c65de2beb3f01c/acb7cd.mp4" },
-    { title: "Aḥric 3", url: "https://player.odycdn.com/api/v3/streams/free/maca-ak-d-micka-EP-(3)/4ad2b6b451b369c292dcdb2fc5744145cb468916/ede10f.mp4" },
-    { title: "Aḥric 4", url: "https://player.odycdn.com/api/v3/streams/free/maca-ak-d-micka-EP-(4)/921fbbc5cdc58682f9ad0e6a2521ed478a99015f/2bff7b.mp4" },
-    { title: "Aḥric 5", url: "https://player.odycdn.com/api/v3/streams/free/maca-ak-d-micka-EP-(5)/9003e8a705b11fdba1911bcc06edd0ad664d472a/053f6c.mp4" },
+    { title: "Aḥric 1", url: "https://firebasestorage.googleapis.com/v0/b/test-2fdd3.firebasestorage.app/o/maca%20ak%20d%20micka%20EP%20(1).mp4?alt=media&token=9e1b42cd-e756-496e-8bf0-47abe0639730" },
+    { title: "Aḥric 2", url: "https://firebasestorage.googleapis.com/v0/b/test-2fdd3.firebasestorage.app/o/maca%20ak%20d%20micka%20EP%20(2).mp4?alt=media&token=031fd457-6824-422f-923e-e66829a0a183" },
+    { title: "Aḥric 3", url: "https://firebasestorage.googleapis.com/v0/b/test-2fdd3.firebasestorage.app/o/maca%20ak%20d%20micka%20EP%20(3).mp4?alt=media&token=0a4e2b8e-f4c4-4378-a8df-d6c2bea8a33e" },
+    { title: "Aḥric 4", url: "https://firebasestorage.googleapis.com/v0/b/test-2fdd3.firebasestorage.app/o/maca%20ak%20d%20micka%20EP%20(4).mp4?alt=media&token=6633c78b-f0bb-4516-86d9-c3843d4682b2" },
+    { title: "Aḥric 5", url: "https://firebasestorage.googleapis.com/v0/b/test-2fdd3.firebasestorage.app/o/maca%20ak%20d%20micka%20EP%20(5).mp4?alt=media&token=2518915b-b27e-4cb5-9223-265547043cf2" }
   ];
 
+  // Fonction d'initialisation et chargement de vidéo dans Plyr
+  function loadVideo(url) {
+    if (!player) {
+      player = new Plyr('#player');
+    }
+    player.source = {
+      type: 'video',
+      sources: [
+        {
+          src: url,
+          type: 'video/mp4'
+        }
+      ]
+    };
+  }
+
+  // Clic initial sur le poster (thumbnail)
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
-    playerBox.style.display = "block";
-
-    art = new Artplayer({
-      container: playerBox,
-      url: episodes[0].url,
-      autoplay: true,
-      volume: 0.6,
-      fullscreen: true,
-      fullscreenWeb: true,
-      playsInline: true,
-      theme: "#ff0066",
-      autoSize: false,
-      aspectRatio: false,
-    });
-
-    art.on("ready", () => {
-      art.fullscreen = true;
+    videoElement.style.display = "block";
+    
+    const currentIndex = episodeSelect.value;
+    loadVideo(episodes[currentIndex].url);
+    
+    player.on('ready', () => {
+      player.play();
     });
   });
 
+  // Gestion du menu déroulant des épisodes
   episodeSelect.addEventListener("change", () => {
-    if (!art) return;
-    const ep = episodes[episodeSelect.value];
-    art.switchUrl(ep.url);
-    art.play();
+    const selectedIndex = episodeSelect.value;
+    
+    if (thumb.style.display !== "none") {
+      thumb.style.display = "none";
+      videoElement.style.display = "block";
+    }
+    
+    loadVideo(episodes[selectedIndex].url);
+    player.on('ready', () => {
+      player.play();
+    });
   });
- function showDesc(title, text) {
+
+  // Boîte modale description
+  function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalText").innerText = text;
     document.getElementById("modal").style.display = "flex";
@@ -514,7 +462,7 @@ Yiwet n teqrurt isemman Maca yettidiren ak d wersel iwumi semman Micka, syin taq
     document.getElementById("modal").style.display = "none";
   }
 
-  // Scroll des personnages
+  // Défilement horizontal de la liste des personnages
   const charContainer = document.getElementById("characters");
   const leftBtn = document.querySelector('.scroll-btn.left');
   const rightBtn = document.querySelector('.scroll-btn.right');
@@ -536,6 +484,11 @@ Yiwet n teqrurt isemman Maca yettidiren ak d wersel iwumi semman Micka, syin taq
   });
 
   updateButtons();
+
+  // Désactiver le menu contextuel du clic droit sur la vidéo
+  videoElement.addEventListener("contextmenu", function(e) {
+    e.preventDefault();
+  });
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
