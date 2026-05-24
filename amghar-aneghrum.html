@@ -6,10 +6,14 @@
   <title>Asekles - Amɣar aneɣrum</title>
   <link rel="icon" href="Asekles.png" type="image/png">
 
-  <!-- CSS Artplayer -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.css">
+  <!-- CSS Plyr (remplace Artplayer) -->
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
 
   <style>
+    :root { 
+      --plyr-color-main: #ff0066; 
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -17,43 +21,78 @@
       color: #f1f1f1;
     }
 
+    /* ===== HEADER ===== */
     header {
       background: linear-gradient(45deg, #ff0066, #6600ff);
-      padding: 15px;
+      padding: 10px;
       text-align: center;
     }
 
     header h1 {
       margin: 0;
       font-size: 2em;
-      color: #fff;
     }
 
+    /* ===== NAV ===== */
     nav {
       display: flex;
       justify-content: center;
-      padding: 10px;
-      background-color: #111;
+      align-items: center;
       gap: 20px;
+      padding: 10px;
+      background: #111;
       flex-wrap: wrap;
     }
 
-    nav a {
+    nav a,
+    #amidanBtn {
       color: #fff;
       text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
     }
 
-    nav a:hover {
+    nav a:hover,
+    #amidanBtn:hover {
       color: #ff0066;
     }
 
+    /* ===== AMIDAN ===== */
+    .account-wrapper {
+      position: relative;
+    }
+
+    #accountBox {
+      display: none;
+      position: absolute;
+      top: 32px;
+      right: 0;
+      background: #111;
+      border: 2px solid #ff0066;
+      padding: 15px;
+      border-radius: 10px;
+      min-width: 220px;
+      z-index: 999;
+    }
+
+    #logoutBtn {
+      background: #ff0066;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* ===== CONTENT ===== */
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 25px;
       padding: 20px;
+      padding-bottom: 120px;
     }
 
     .video-container {
@@ -78,24 +117,23 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90px;
-      height: 90px;
-      background: rgba(0,0,0,0.6);
+      transform: translate(-50%,-50%);
+      width: 80px;
+      height: 80px;
+      background: rgba(255,0,102,0.85);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       transition: 0.3s;
       z-index: 2;
     }
 
-    .play-btn::before {
+    .play-btn::after {
       content: "";
+      position: absolute;
+      left: 32px;
+      top: 22px;
       border-style: solid;
       border-width: 18px 0 18px 30px;
-      border-color: transparent transparent transparent #ff0066;
-      margin-left: 5px;
+      border-color: transparent transparent transparent white;
     }
 
     .video-thumb:hover .play-btn {
@@ -144,13 +182,8 @@
       z-index: 10;
     }
 
-    .scroll-btn.left {
-      left: -10px;
-    }
-
-    .scroll-btn.right {
-      right: -10px;
-    }
+    .scroll-btn.left { left: -10px; }
+    .scroll-btn.right { right: -10px; }
 
     .scroll-btn:hover {
       background: rgba(0,0,0,0.8);
@@ -160,6 +193,7 @@
       text-align: center;
       cursor: pointer;
       flex: 0 0 auto;
+      width: 110px;
     }
 
     .character img {
@@ -180,6 +214,7 @@
     .character .name {
       margin-top: 8px;
       font-weight: bold;
+      font-size: 0.9em;
     }
 
     .character .role {
@@ -193,6 +228,12 @@
       border-radius: 12px;
       max-width: 900px;
       line-height: 1.6;
+      width: 100%;
+    }
+
+    .film-info h2 {
+      color: #ff0066;
+      margin-top: 0;
     }
 
     /* ===== MODAL DESCRIPTION ===== */
@@ -228,17 +269,16 @@
       border-radius: 6px;
     }
 
-    .film-info h2 {
-      color: #ff0066;
-      margin-top: 0;
-    }
-
+    /* ===== FOOTER ===== */
     footer {
-      background-color: #111;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #111;
       text-align: center;
-      padding: 16px;
-      font-size: 0.9em;
-      color: #aaa;
+      padding: 8px;
+      font-size: .9em;
     }
 
     @supports not (aspect-ratio: 1/1) {
@@ -247,139 +287,6 @@
       }
     }
   </style>
-  <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #000;
-  color: #f1f1f1;
-}
-
-/* ===== HEADER ===== */
-header {
-  background: linear-gradient(45deg, #ff0066, #6600ff);
-  padding: 10px;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2em;
-}
-
-/* ===== NAV ===== */
-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  padding: 10px;
-  background: #111;
-  flex-wrap: wrap;
-}
-
-nav a,
-#amidanBtn {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-nav a:hover,
-#amidanBtn:hover {
-  color: #ff0066;
-}
-
-/* ===== AMIDAN ===== */
-.account-wrapper {
-  position: relative;
-}
-
-#accountBox {
-  display: none;
-  position: absolute;
-  top: 32px;
-  right: 0;
-  background: #111;
-  border: 2px solid #ff0066;
-  padding: 15px;
-  border-radius: 10px;
-  min-width: 220px;
-  z-index: 999;
-}
-
-#logoutBtn {
-  background: #ff0066;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  width: 100%;
-}
-
-/* ===== CONTENT ===== */
-.content {
-  padding: 20px;
-  padding-bottom: 120px;
-}
-
-.movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-}
-
-.movie-item {
-  background: #222;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
-  transition: transform .3s, box-shadow .3s;
-}
-
-.movie-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(255,0,102,.6);
-}
-
-.movie-item img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.movie-item h3 {
-  position: relative;
-  margin-top: 10px;
-  font-size: 1.2em;
-  color: #ff0066;
-  padding-bottom: 6px;
-}
-  a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* ===== FOOTER ===== */
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #111;
-  text-align: center;
-  padding: 8px;
-  font-size: .9em;
-}
-
-/* ===== MOBILE ===== */
-@media (max-width: 600px) {
-  .movie-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-</style>
 </head>
 
 <body>
@@ -395,20 +302,24 @@ footer {
 
   <div class="account-wrapper">
     <span id="amidanBtn" style="display:none;">Amiḍan</span>
-
     <div id="accountBox">
       <p id="userEmail"></p>
       <button id="logoutBtn">Effeɣ</button>
     </div>
   </div>
 </nav>
+
 <div class="container">
 
   <div class="video-container">
     <div class="video-thumb" id="thumb">
       <div class="play-btn"></div>
     </div>
-    <div class="artplayer-app" id="player"></div>
+    
+    <!-- Lecteur Plyr intégré ici -->
+    <video id="player" class="artplayer-app" controls style="display:none;">
+      <source src="https://stream.vidhosting.in/videos/5363c077.mp4" type="video/mp4">
+    </video>
   </div>
 
   <!-- PERSONNAGES AVEC SCROLL -->
@@ -426,8 +337,6 @@ footer {
         <div class="name">XERZI Ɛabdelqader</div>
         <div class="role">d asegbar</div>
       </div>
-
-      <!-- Ajoute ici les autres personnages -->
     </div>
     <button class="scroll-btn right">&#10095;</button>
   </div>
@@ -454,34 +363,21 @@ footer {
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
+<!-- JS Plyr -->
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
 <script>
+  // Initialisation du lecteur vidéo
   const thumb = document.getElementById("thumb");
-  const playerBox = document.getElementById("player");
-  let art;
+  const video = document.getElementById("player");
+  const player = new Plyr('#player');
 
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
-    playerBox.style.display = "block";
-
-    art = new Artplayer({
-      container: playerBox,
-      url: "https://stream.vidhosting.in/videos/5363c077.mp4",
-      autoplay: true,
-      volume: 0.6,
-      fullscreen: true,
-      fullscreenWeb: true,
-      playsInline: true,
-      theme: "#ff0066",
-      autoSize: false,
-      aspectRatio: false,
-    });
-
-    art.on("ready", () => {
-      art.fullscreen = true;
-    });
+    video.style.display = "block";
+    player.play();
   });
 
+  // Gestion de la modale
   function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalText").innerText = text;
@@ -513,7 +409,16 @@ footer {
     setTimeout(updateButtons, 300);
   });
 
+  // Mettre à jour l'état des boutons au chargement
   updateButtons();
+</script>
+
+<script>
+  // Bloquer le clic droit sur la vidéo
+  const playerBox = document.getElementById("player");
+  playerBox.addEventListener("contextmenu", function(e) {
+    e.preventDefault();
+  });
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
