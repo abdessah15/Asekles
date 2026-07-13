@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asekles - AREKSIM</title>
+  <link rel="icon" href="Asekles.png" type="image/png">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
+
+  <style>
+    :root { 
+      --plyr-color-main: #ff0066; 
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #f1f1f1;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: linear-gradient(45deg, #ff0066, #6600ff);
+      padding: 15px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      color: #fff;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      padding: 10px;
+      background: #111;
+      flex-wrap: wrap;
+    }
+
+    nav a,
+    #amidanBtn {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    nav a:hover,
+    #amidanBtn:hover {
+      color: #ff0066;
+    }
+
+    /* ===== AMIDAN ===== */
+    .account-wrapper {
+      position: relative;
+    }
+
+    #accountBox {
+      display: none;
+      position: absolute;
+      top: 32px;
+      right: 0;
+      background: #111;
+      border: 2px solid #ff0066;
+      padding: 15px;
+      border-radius: 10px;
+      min-width: 220px;
+      z-index: 999;
+    }
+
+    #logoutBtn {
+      background: #ff0066;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* ===== CONTENT ===== */
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+      padding: 20px;
+      padding-bottom: 120px;
+    }
+
+    .video-container {
+      width: 100%;
+      max-width: 900px;
+      position: relative;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+
+    .video-thumb {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      cursor: pointer;
+    }
+
+    .video-thumb img {
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+    }
+
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 80px;
+      height: 80px;
+      background: rgba(255,0,102,0.85);
+      border-radius: 50%;
+      transition: 0.3s;
+      z-index: 2;
+    }
+
+    .play-btn::after {
+      content: "";
+      position: absolute;
+      left: 32px;
+      top: 22px;
+      border-style: solid;
+      border-width: 18px 0 18px 30px;
+      border-color: transparent transparent transparent white;
+    }
+
+    .video-thumb:hover .play-btn {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .artplayer-app {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: none;
+    }
+
+    /* ===== PERSONNAGES ===== */
+    .characters-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 900px;
+      margin: 20px auto 0;
+    }
+
+    .characters {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 10px 0;
+    }
+
+    .characters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: #ff0066;
+      border: none;
+      font-size: 2em;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 50%;
+      z-index: 10;
+    }
+
+    .scroll-btn.left { left: -10px; }
+    .scroll-btn.right { right: -10px; }
+
+    .scroll-btn:hover {
+      background: rgba(0,0,0,0.8);
+    }
+
+    .character {
+      text-align: center;
+      cursor: pointer;
+      flex: 0 0 auto;
+      width: 110px;
+    }
+
+    .character img {
+      width: 95px;
+      height: 95px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ff0066;
+      box-shadow: 0 0 18px rgba(255,0,102,.6);
+      transition: .3s;
+    }
+
+    .character:hover img {
+      transform: scale(1.15);
+      box-shadow: 0 0 28px rgba(255,0,102,1);
+    }
+
+    .character .name {
+      margin-top: 8px;
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+
+    .character .role {
+      font-size: .8em;
+      color: #bbb;
+    }
+
+    .film-info {
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 900px;
+      line-height: 1.6;
+      width: 100%;
+    }
+
+    .film-info h2 {
+      color: #ff0066;
+      margin-top: 0;
+    }
+
+    /* ===== MODAL DESCRIPTION ===== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .modal-content h3 {
+      color: #ff0066;
+    }
+
+    .close {
+      margin-top: 15px;
+      padding: 8px 15px;
+      background: #ff0066;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    /* ===== GRILLES ET AUTRES ===== */
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .movie-item {
+      background: #222;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .movie-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(255,0,102,.6);
+    }
+
+    .movie-item img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .movie-item h3 {
+      position: relative;
+      margin-top: 10px;
+      font-size: 1.2em;
+      color: #ff0066;
+      padding-bottom: 6px;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #111;
+      text-align: center;
+      padding: 8px;
+      font-size: .9em;
+    }
+
+    @supports not (aspect-ratio: 1/1) {
+      .video-thumb, .artplayer-app {
+        height: calc(100vw * 9 / 16);
+      }
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 600px) {
+      .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>AREKSIM - ⴰⵔⴻⴽⵙⵉⵎ</h1>
+</header>
+
+<nav>
+  <a href="index.html">Axxam</a>
+  <a href="isura.html">Isura</a>
+  <a href="tizrarin.html">Tizrarin</a>
+
+  <div class="account-wrapper">
+    <span id="amidanBtn" style="display:none;">Amiḍan</span>
+    <div id="accountBox">
+      <p id="userEmail"></p>
+      <button id="logoutBtn">Effeɣ</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="video-container">
+    <div class="video-thumb" id="thumb">
+      <img src="kulla (1).jpg" alt="cover vidéo">
+      <div class="play-btn"></div>
+    </div>
+
+    <video id="player" class="artplayer-app" controls style="display:none;">
+      <source src="https://player.odycdn.com/v6/streams/a38712163f906a1f02bd501f93433040003f1f8b/61d614.mp4">
+    </video>
+  </div>
+
+  <div class="characters-wrapper">
+    <button class="scroll-btn left">&#10094;</button>
+    <div class="characters" id="characters">
+      
+      <div class="character" onclick="showDesc('XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ','d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.')">
+        <img src="Abdessah.jpg" alt="XERZI Ɛabdeṣṣaḥ">
+        <div class="name">XERZI Ɛabdeṣṣaḥ</div>
+        <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
+      </div>
+
+      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
+        <img src="amazigh.jpg" alt="XERZI Amaziɣ">
+        <div class="name">XERZI Amaziɣ</div>
+        <div class="role">d asegbar</div>
+      </div>
+
+      <div class="character" onclick="showDesc('MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⴷⵉ ⵎⴰⵀⴷⵉ ','D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
+        <img src="MahdiMes.jpg" alt="MESƐUDI Mahdi">
+        <div class="name">MESƐUDI Mahdi</div>
+        <div class="role">d asegbar</div>
+      </div>
+      
+      <div class="character" onclick="showDesc('MADI Ḥamza - ⵎⴰⴷⵉ ⵃⴰⵎⵣⴰ ','D ilemẓi anaẓuṛ, ilul ass 12 wanber 2006, ittcewwiq icewwiqen icennu, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+        <img src="Hamzamadi.jpg" alt="MADI Ḥamza">
+        <div class="name">MADI Ḥamza</div>
+        <div class="role">d asegbar</div>
+      </div>
+            <div class="character" onclick="showDesc('Nabila Ubaɛziz - ⵏⴰⴱⵉⵍⴰ ⵓⴱⴰⵄⵣⵓⵣ ','Nabila UBAƐZIZ, d tanelmadt di tseddawit Mulud At MƐEMMER, d  tilemẓit si Taddart At Gwaret, Taɣiwant n Timizar Sidi Menṣur, At Jennad. D tamarut, d tamedyazt, d timsuneɣt,  i tikkelt tamezwarut ideg itekka yid-neɣ deg usisleg n usaru n Kulla s taɣect-is')">
+        <img src="NabilaUbaɛziz.jpg" alt="Nabila Ubaɛziz">
+        <div class="name">Nabila Ubaɛziz</div>
+        <div class="role">d tasegbart</div>
+      </div>
+      
+      <div class="character" onclick="showDesc('Ṣalaḥ Labib - ⵚⴰⵍⴰⵃ ⵍⴰⴱⵉⴱ','Ilul ass n 19 furar 1994 Taddart n Ticci, taɣiwant n at muḥli agezdu n sṭif d imṣeḍsu, d aselway n tidukkla tadelsant IZUMAL, yewwi-d agerdas n master deg taɣult n tasnudert ( biologie ).')">
+        <img src="ṣalaḥlabib.jpg" alt="Ṣalaḥ Labib">
+        <div class="name">Ṣalaḥ Labib</div>
+        <div class="role">d asegbar</div>
+      </div>
+
+      <div class="character" onclick="showDesc('Redwan ḤARUS - ⵔⴻⴷⵡⴰⵏ ⵃⴰⵔⵓⵙ','Ilul ass n 4 furar 1991 Taddart n ---, taɣiwant n at muḥli agezdu n sṭif d imṣeḍsu, d aselway n tidukkla tadelsant IZUMAL, yewwi-d agerdas n master deg taɣult n tasnudert ( biologie ).')">
+        <img src="redwanḥarus.jpg" alt="Redwan ḤARUS">
+        <div class="name">Redwan ḤARUS</div>
+        <div class="role">d asegbar</div>
+      </div>
+
+      <div class="character" onclick="showDesc('BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻⵙ ','tamekfaḍut d tamedyazt d tamarut, d yelli-s n tɣiwant it Muḥli, tlul deg useggas n 2001 deg waɣir n it Wertilan agezdu n Ṣṭif. Tewwi-d agerdas n master deg taɣult n Tesnalmudt deg tutlayt d yidles Amaziɣ.')">
+        <img src="femme.png" alt="BEǦǦA Ṭawes">
+        <div class="name">BEǦǦA Ṭawes</div>
+        <div class="role">tanemhalt tanaẓuṛant n usisleg, d tasegbart</div>
+      </div>
+      
+      <div class="character" onclick="showDesc('MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⴷⵉ ⵃⴰⵏⴰⵏ ','D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+        <img src="femme.png" alt="MESƐUDI Ḥanan">
+        <div class="name">MESƐUDI Ḥanan</div>
+        <div class="role">d tasegbart</div>
+      </div>
+
+      <div class="character" onclick="showDesc('XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ','d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay.')">
+        <img src="Abdelkader.jpg" alt="XERZI Ɛabdelqader">
+        <div class="name">XERZI Ɛabdelqader</div>
+        <div class="role">d asegbar</div>
+      </div>
+      
+      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+        <img src="femme.png" alt="MESƐUDI Nawal">
+        <div class="name">MESƐUDI Nawal</div>
+        <div class="role">d tasegbart</div>
+      </div>
+      
+    </div>
+    <button class="scroll-btn right">&#10095;</button>
+  </div>
+
+  <div class="film-info">
+    <h2>AREKSIM</h2>
+    <p><strong>Tawsit :</strong> Inig,Amuggan, Arrac</p>
+    <p><strong>Azemz n usufeɣ :</strong> 2026</p>
+    <p><strong>Aglam n usaru :</strong>
+    Asaru n Kulla d tamacahut n tilawt rẓagen, taqcict yellan ɛzizet ɣer yimawlan-is teggra-d ger yifassen  n temcumt n Ɛdidi d yessi-s , ḥermen-tt seg kra yellan,  maca win iṣebren yettaf yettawi deg taggara, ad d-nwali amek i d-as-teflali tafat i Kulla tewweḍ ɣer wayen tessaram !
+    </p>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
+    <button class="close" onclick="closeModal()">Mdel</button>
+  </div>
+</div>
+
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<script>
+  // Initialisation du lecteur vidéo
+  const thumb = document.getElementById("thumb");
+  const video = document.getElementById("player");
+  const player = new Plyr('#player');
+
+  thumb.addEventListener("click", () => {
+    thumb.style.display = "none";
+    video.style.display = "block";
+    player.play();
+  });
+
+  // Gestion de la modale
+  function showDesc(title, text) {
+    document.getElementById("modalTitle").innerText = title;
+    document.getElementById("modalText").innerText = text;
+    document.getElementById("modal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("modal").style.display = "none";
+  }
+
+  // Scroll des personnages
+  const charContainer = document.getElementById("characters");
+  const leftBtn = document.querySelector('.scroll-btn.left');
+  const rightBtn = document.querySelector('.scroll-btn.right');
+  const scrollAmount = 200;
+
+  function updateButtons() {
+    leftBtn.disabled = charContainer.scrollLeft <= 0;
+    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth;
+  }
+
+  leftBtn.addEventListener('click', () => {
+    charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    setTimeout(updateButtons, 300);
+  });
+
+  rightBtn.addEventListener('click', () => {
+    charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    setTimeout(updateButtons, 300);
+  });
+
+  // Mettre à jour l'état des boutons au chargement
+  updateButtons();
+</script>
