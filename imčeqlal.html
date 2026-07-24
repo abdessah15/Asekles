@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asekles - IMČEQLAL</title>
   <link rel="icon" href="Asekles.png" type="image/png">
+  
+  <!-- CSS Plyr -->
   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
 
   <style>
@@ -107,13 +109,14 @@
     .video-thumb {
       position: relative;
       width: 100%;
-      max-width: 900px;
+      aspect-ratio: 16/9;
       cursor: pointer;
     }
 
     .video-thumb img {
       width: 100%;
-      border-radius: 12px;
+      height: 100%;
+      object-fit: cover;
       display: block;
     }
 
@@ -144,7 +147,28 @@
       transform: translate(-50%, -50%) scale(1.1);
     }
 
-    .artplayer-app {
+    /* ===== CERCLE DE CHARGEMENT (SPINNER) ===== */
+    .loader {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 6px solid rgba(255, 255, 255, 0.2);
+      border-top: 6px solid #ff0066;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      z-index: 10;
+    }
+
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .plyr-box {
       width: 100%;
       aspect-ratio: 16/9;
       display: none;
@@ -166,6 +190,7 @@
       overflow-x: auto;
       scroll-behavior: smooth;
       padding: 10px 0;
+      width: 100%;
     }
 
     .characters::-webkit-scrollbar {
@@ -233,6 +258,7 @@
       max-width: 900px;
       line-height: 1.6;
       width: 100%;
+      box-sizing: border-box;
     }
 
     .film-info h2 {
@@ -257,6 +283,7 @@
       border-radius: 12px;
       max-width: 400px;
       text-align: center;
+      border: 1px solid #ff0066;
     }
 
     .modal-content h3 {
@@ -271,39 +298,6 @@
       color: #fff;
       cursor: pointer;
       border-radius: 6px;
-    }
-
-    /* ===== GRILLES ET AUTRES ===== */
-    .movie-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-
-    .movie-item {
-      background: #222;
-      padding: 10px;
-      border-radius: 10px;
-      text-align: center;
-      transition: transform .3s, box-shadow .3s;
-    }
-
-    .movie-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 16px rgba(255,0,102,.6);
-    }
-
-    .movie-item img {
-      width: 100%;
-      border-radius: 10px;
-    }
-
-    .movie-item h3 {
-      position: relative;
-      margin-top: 10px;
-      font-size: 1.2em;
-      color: #ff0066;
-      padding-bottom: 6px;
     }
 
     a {
@@ -321,18 +315,12 @@
       text-align: center;
       padding: 8px;
       font-size: .9em;
+      z-index: 100;
     }
 
-    @supports not (aspect-ratio: 1/1) {
-      .video-thumb, .artplayer-app {
+    @supports not (aspect-ratio: 16/9) {
+      .video-thumb, .plyr-box {
         height: calc(100vw * 9 / 16);
-      }
-    }
-
-    /* ===== MOBILE ===== */
-    @media (max-width: 600px) {
-      .movie-grid {
-        grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
@@ -359,17 +347,25 @@
 </nav>
 
 <div class="container">
+
+  <!-- ZONE LECTEUR VIDEO -->
   <div class="video-container">
     <div class="video-thumb" id="thumb">
       <img src="imčqll.jpg" alt="cover vidéo">
       <div class="play-btn"></div>
     </div>
 
-    <video id="player" class="artplayer-app" controls style="display:none;">
-      <source src="https://player.odycdn.com/v6/streams/25232b72b36676fc404c1d1b404f30453efe7404/4e470a.mp4" type="video/mp4">
-    </video>
+    <!-- Cercle de chargement -->
+    <div class="loader" id="videoLoader"></div>
+
+    <div class="plyr-box" id="playerWrapper">
+      <video id="player" controls playsinline preload="auto">
+        <source src="https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4" type="video/mp4">
+      </video>
+    </div>
   </div>
 
+  <!-- PERSONNAGES AVEC SCROLL -->
   <div class="characters-wrapper">
     <button class="scroll-btn left">&#10094;</button>
     <div class="characters" id="characters">
@@ -456,16 +452,18 @@
     <button class="scroll-btn right">&#10095;</button>
   </div>
 
+  <!-- DETAILS DU FILM -->
   <div class="film-info">
     <h2>IMČEQLAL</h2>
     <p><strong>Tawsit :</strong> Inig, Taḍṣa, Arrac</p>
     <p><strong>Azemz n usufeɣ :</strong> 2026</p>
-    <p><strong>Aglam n usaru :</strong>
+    <p><strong>Aglam n usaru :</strong><br>
     Asaru-agi ad ken-yawi ɣer umaḍal n yinig d teḍsa. Čaqlala, d awtul yeččuren d tabɣest d twuɣa, maca ur d-kkint kan akka, d aseḥbiber ɣef tudert-is d tin n twacult-is iɣef yettḥebbir. Deg tmazirt n Muḥend Ukufi ideg tebda tmacahut, win i wumi semman awaɣzen, maca tella Tamilla i yellan ḥninet ɣur-sen, yis-s i d-selken acḥal d abrid, maca yiwet n tikkelt yemmut uwaɣzen, yewret-it mmi-s n gma-s, dɣa da i yebda yinig...
     </p>
   </div>
 </div>
 
+<!-- MODAL DESCRIPTION -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <h3 id="modalTitle"></h3>
@@ -476,18 +474,39 @@
 
 <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
 <script>
-  // Initialisation du lecteur vidéo
   const thumb = document.getElementById("thumb");
-  const video = document.getElementById("player");
-  const player = new Plyr('#player');
+  const playerWrapper = document.getElementById("playerWrapper");
+  const videoElement = document.getElementById("player");
+  const loader = document.getElementById("videoLoader");
+  let player;
 
+  // Initialisation Plyr au premier clic
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
-    video.style.display = "block";
-    player.play();
+    playerWrapper.style.display = "block";
+    loader.style.display = "block";
+
+    player = new Plyr('#player', {
+      controls: [
+        'play-large', 'play', 'progress', 'current-time', 'duration', 
+        'mute', 'volume', 'settings', 'fullscreen'
+      ],
+      settings: ['speed'],
+      speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] },
+      ratio: '16:9'
+    });
+
+    player.once('ready', () => {
+      player.play();
+    });
+
+    // Gestion du spinner de chargement
+    player.on('playing', () => { loader.style.display = "none"; });
+    player.on('canplay', () => { loader.style.display = "none"; });
+    player.on('waiting', () => { loader.style.display = "block"; });
   });
 
-  // Gestion de la modale
+  // Gestion des modales d'information
   function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalText").innerText = text;
@@ -498,30 +517,35 @@
     document.getElementById("modal").style.display = "none";
   }
 
-  // Scroll des personnages
+  // Défilement fluide de la liste des personnages
   const charContainer = document.getElementById("characters");
   const leftBtn = document.querySelector('.scroll-btn.left');
   const rightBtn = document.querySelector('.scroll-btn.right');
-  const scrollAmount = 200;
+  const scrollAmount = 250;
 
   function updateButtons() {
-    leftBtn.disabled = charContainer.scrollLeft <= 0;
-    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth;
+    leftBtn.disabled = charContainer.scrollLeft <= 2;
+    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth - 2;
   }
 
   leftBtn.addEventListener('click', () => {
     charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    setTimeout(updateButtons, 300);
   });
 
   rightBtn.addEventListener('click', () => {
     charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    setTimeout(updateButtons, 300);
   });
 
-  // Mettre à jour l'état des boutons au chargement
-  updateButtons();
+  charContainer.addEventListener('scroll', updateButtons);
+  window.addEventListener('resize', updateButtons);
+  setTimeout(updateButtons, 500);
+
+  // Empêcher le menu contextuel clic droit sur la vidéo
+  videoElement.addEventListener("contextmenu", function(e) {
+    e.preventDefault();
+  });
 </script>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
@@ -570,13 +594,6 @@ document.addEventListener("click", (e) => {
   if (!amidanBtn.contains(e.target) && !accountBox.contains(e.target)) {
     accountBox.style.display = "none";
   }
-});
-</script>  
-  <script>
-const playerBox = document.getElementById("player");
-
-playerBox.addEventListener("contextmenu", function(e) {
-  e.preventDefault();
 });
 </script>
 </body>
