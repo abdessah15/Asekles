@@ -9,22 +9,26 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #000;
-      color: #f1f1f1;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #141414;
+      color: #fff;
     }
 
     /* ===== HEADER ===== */
     header {
-      background: linear-gradient(45deg, #ff0066, #6600ff);
-      padding: 15px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(20,20,20,1) 100%);
+      padding: 20px;
       text-align: center;
+      border-bottom: 1px solid #222;
     }
 
     header h1 {
       margin: 0;
-      font-size: 2em;
-      color: #fff;
+      font-size: 2.2em;
+      color: #e50914;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 800;
     }
 
     /* ===== NAV ===== */
@@ -32,23 +36,25 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 20px;
-      padding: 10px;
-      background: #111;
+      gap: 25px;
+      padding: 12px;
+      background: #141414;
       flex-wrap: wrap;
     }
 
     nav a,
     #amidanBtn {
-      color: #fff;
+      color: #e5e5e5;
       text-decoration: none;
       font-weight: bold;
       cursor: pointer;
+      transition: color 0.2s ease;
+      font-size: 0.95em;
     }
 
     nav a:hover,
     #amidanBtn:hover {
-      color: #ff0066;
+      color: #e50914;
     }
 
     /* ===== AMIDAN ===== */
@@ -59,25 +65,31 @@
     #accountBox {
       display: none;
       position: absolute;
-      top: 32px;
+      top: 35px;
       right: 0;
-      background: #111;
-      border: 2px solid #ff0066;
+      background: rgba(0, 0, 0, 0.9);
+      border: 1px solid #333;
       padding: 15px;
-      border-radius: 10px;
+      border-radius: 4px;
       min-width: 220px;
       z-index: 999;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.8);
     }
 
     #logoutBtn {
-      background: #ff0066;
+      background: #e50914;
       color: #fff;
       border: none;
       padding: 8px 12px;
-      border-radius: 6px;
+      border-radius: 4px;
       cursor: pointer;
       width: 100%;
       font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    #logoutBtn:hover {
+      background: #f40612;
     }
 
     /* ===== CONTENT ===== */
@@ -85,22 +97,23 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 25px;
+      gap: 30px;
       padding: 20px;
       padding-bottom: 120px;
     }
 
+    /* ===== NETFLIX PLAYER CONTAINER ===== */
     .video-container {
       width: 100%;
-      max-width: 900px;
+      max-width: 960px;
       position: relative;
       background: #000;
-      border-radius: 12px;
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
     }
 
-    /* PLEIN ÉCRAN MOBILE & DESKTOP */
+    /* FULLSCREEN RESPONSIVE */
     .video-container:fullscreen,
     .video-container:-webkit-full-screen {
       width: 100vw !important;
@@ -113,11 +126,14 @@
       background: #000 !important;
     }
 
+    /* NETFLIX THUMBNAIL WRAPPER */
     .video-thumb {
       position: relative;
       width: 100%;
       aspect-ratio: 16/9;
       cursor: pointer;
+      overflow: hidden;
+      background: #000;
     }
 
     .video-thumb img {
@@ -125,36 +141,54 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
     }
 
+    .video-thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
+      transition: opacity 0.3s ease;
+    }
+
+    .video-thumb:hover img {
+      transform: scale(1.03);
+    }
+
+    /* NETFLIX RED PLAY BUTTON */
     .play-btn {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 80px;
-      height: 80px;
-      background: rgba(255, 0, 102, 0.85);
+      width: 70px;
+      height: 70px;
+      background: #e50914;
       border-radius: 50%;
-      transition: transform 0.3s ease;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
       z-index: 2;
+      box-shadow: 0 4px 20px rgba(229, 9, 20, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .play-btn::after {
       content: "";
       position: absolute;
-      left: 32px;
-      top: 22px;
+      left: 27px;
       border-style: solid;
-      border-width: 18px 0 18px 30px;
-      border-color: transparent transparent transparent white;
+      border-width: 12px 0 12px 20px;
+      border-color: transparent transparent transparent #fff;
     }
 
     .video-thumb:hover .play-btn {
       transform: translate(-50%, -50%) scale(1.15);
+      background: #f40612;
     }
 
-    /* ===== LECTEUR VIDEO SUR MESURE ===== */
+    /* ===== CUSTOM PLAYER ===== */
     .custom-player {
       display: none;
       position: relative;
@@ -176,15 +210,15 @@
       display: block;
     }
 
-    /* SPINNER DE CHARGEMENT */
+    /* NETFLIX SPINNER */
     .video-loader {
       display: none;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      border: 4px solid rgba(255,255,255,0.2);
-      border-top: 4px solid #ff0066;
+      border: 4px solid rgba(255,255,255,0.15);
+      border-top: 4px solid #e50914;
       border-radius: 50%;
       width: 50px;
       height: 50px;
@@ -198,17 +232,17 @@
       100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
-    /* BARRE DE CONTRÔLES DYNAMIQUE */
+    /* BARRE DE CONTRÔLES NETFLIX */
     .custom-controls {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(transparent, rgba(0, 0, 0, 0.95));
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 60%, transparent 100%);
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
+      gap: 12px;
+      padding: 12px 18px;
       opacity: 0;
       transition: opacity 0.3s ease;
       z-index: 99999;
@@ -217,13 +251,12 @@
       width: 100%;
     }
 
-    /* MARGES DE SÉCURITÉ PLEIN ÉCRAN / ROTATION */
     .video-container:fullscreen .custom-controls,
     .video-container:-webkit-full-screen .custom-controls {
-      padding-bottom: max(12px, env(safe-area-inset-bottom));
-      padding-left: max(16px, env(safe-area-inset-left));
-      padding-right: max(16px, env(safe-area-inset-right));
-      padding-top: 10px;
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
+      padding-top: 12px;
     }
 
     .custom-player:hover .custom-controls,
@@ -245,6 +278,11 @@
       border-radius: 4px;
       flex-shrink: 0;
       -webkit-tap-highlight-color: transparent;
+      transition: transform 0.15s ease;
+    }
+
+    .ctrl-btn:hover {
+      transform: scale(1.1);
     }
 
     .ctrl-btn svg {
@@ -255,102 +293,91 @@
     }
 
     .ctrl-btn:hover svg {
-      fill: #ff0066;
+      fill: #e50914;
     }
 
     .time-display {
-      font-size: 0.78em;
-      color: #ccc;
+      font-size: 0.8em;
+      color: #aaa;
       white-space: nowrap;
-      font-family: monospace;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       flex-shrink: 0;
+      font-weight: 500;
     }
 
-    /* BARRE DE PROGRESSION FLUIDE */
+    /* PROGRESS BAR STYLE NETFLIX */
     .progress-bar {
       flex: 1;
       min-width: 30px;
       -webkit-appearance: none;
       appearance: none;
-      height: 5px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 3px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
       outline: none;
       cursor: pointer;
+      transition: height 0.15s ease;
+    }
+
+    .progress-bar:hover {
+      height: 7px;
     }
 
     .progress-bar::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 15px;
-      height: 15px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
-      background: #ff0066;
+      background: #e50914;
       cursor: pointer;
+      box-shadow: 0 0 8px rgba(0,0,0,0.5);
     }
 
     .progress-bar::-moz-range-thumb {
-      width: 15px;
-      height: 15px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
-      background: #ff0066;
+      background: #e50914;
       cursor: pointer;
       border: none;
+      box-shadow: 0 0 8px rgba(0,0,0,0.5);
     }
 
     /* MENU VITESSE COMPACT */
     .speed-select {
-      background: rgba(20, 20, 20, 0.8);
+      background: rgba(0, 0, 0, 0.6);
       color: #fff;
       border: 1px solid #444;
       border-radius: 4px;
-      padding: 3px 4px;
+      padding: 3px 6px;
       font-size: 0.75em;
       cursor: pointer;
       outline: none;
       flex-shrink: 0;
+      transition: border-color 0.2s;
+    }
+
+    .speed-select:hover {
+      border-color: #e50914;
     }
 
     /* ADAPTATION MOBILE ET PAYSAGE */
     @media screen and (max-width: 600px) {
       .custom-controls {
-        gap: 4px;
-        padding: 6px 8px;
-      }
-      .ctrl-btn {
-        padding: 2px;
+        gap: 6px;
+        padding: 8px 10px;
       }
       .ctrl-btn svg {
         width: 18px;
         height: 18px;
       }
       .time-display {
-        font-size: 0.65em;
+        font-size: 0.68em;
       }
       .speed-select {
         font-size: 0.65em;
-        padding: 2px;
-      }
-    }
-
-    @media screen and (max-height: 500px) and (orientation: landscape) {
-      .custom-controls {
-        padding: 6px 10px;
-        gap: 6px;
-      }
-      .ctrl-btn {
-        padding: 4px;
-      }
-      .ctrl-btn svg {
-        width: 19px;
-        height: 19px;
-      }
-      .time-display {
-        font-size: 0.7em;
-      }
-      .speed-select {
-        padding: 2px 3px;
-        font-size: 0.7em;
+        padding: 2px 4px;
       }
     }
 
@@ -360,8 +387,8 @@
       display: flex;
       align-items: center;
       width: 100%;
-      max-width: 900px;
-      margin: 20px auto 0;
+      max-width: 960px;
+      margin: 10px auto 0;
     }
 
     .characters {
@@ -381,28 +408,28 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0,0,0,0.8);
-      color: #ff0066;
-      border: 1px solid #ff0066;
-      font-size: 1.5em;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      border: 1px solid #333;
+      font-size: 1.2em;
       cursor: pointer;
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.2s, border-color 0.2s;
     }
 
     .scroll-btn:hover {
-      background: #ff0066;
-      color: #fff;
+      background: #e50914;
+      border-color: #e50914;
     }
 
-    .scroll-btn.left { left: 5px; }
-    .scroll-btn.right { right: 5px; }
+    .scroll-btn.left { left: -10px; }
+    .scroll-btn.right { right: -10px; }
 
     .character {
       text-align: center;
@@ -413,46 +440,49 @@
     }
 
     .character img {
-      width: 95px;
-      height: 95px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #ff0066;
-      box-shadow: 0 0 15px rgba(255,0,102,.5);
-      transition: transform .3s;
+      border: 2px solid #333;
+      transition: transform .3s, border-color .3s;
     }
 
     .character:hover img,
     .character:focus img {
-      transform: scale(1.1);
+      transform: scale(1.08);
+      border-color: #e50914;
     }
 
     .character .name {
       margin-top: 8px;
-      font-weight: bold;
+      font-weight: 600;
       font-size: 0.85em;
+      color: #e5e5e5;
     }
 
     .character .role {
       font-size: .75em;
-      color: #bbb;
+      color: #808080;
     }
 
     /* ===== FILM INFO ===== */
     .film-info {
-      background-color: #1a1a1a;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 900px;
+      background-color: #181818;
+      padding: 24px;
+      border-radius: 8px;
+      max-width: 960px;
       line-height: 1.6;
       width: 100%;
       box-sizing: border-box;
-      border: 1px solid #333;
+      border: 1px solid #262626;
     }
 
     .film-info h2 {
-      color: #ff0066;
+      color: #fff;
       margin-top: 0;
+      font-size: 1.6em;
+      letter-spacing: 0.5px;
     }
 
     /* ===== MODAL DESCRIPTION ===== */
@@ -468,36 +498,41 @@
     }
 
     .modal-content {
-      background: #1a1a1a;
+      background: #181818;
       padding: 25px;
-      border-radius: 12px;
+      border-radius: 8px;
       max-width: 450px;
       width: 100%;
       text-align: center;
-      border: 1px solid #ff0066;
-      box-shadow: 0 0 20px rgba(255, 0, 102, 0.4);
+      border: 1px solid #333;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
     }
 
     .modal-content h3 {
-      color: #ff0066;
+      color: #e50914;
       margin-top: 0;
     }
 
     .modal-content p {
       line-height: 1.5;
-      color: #ddd;
+      color: #cccccc;
       font-size: 0.95em;
     }
 
     .close {
       margin-top: 15px;
-      padding: 8px 20px;
-      background: #ff0066;
+      padding: 8px 24px;
+      background: #e50914;
       border: none;
       color: #fff;
       cursor: pointer;
-      border-radius: 6px;
+      border-radius: 4px;
       font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .close:hover {
+      background: #f40612;
     }
 
     @supports not (aspect-ratio: 16/9) {
@@ -530,7 +565,7 @@
 
 <div class="container">
 
-  <!-- LECTEUR VIDEO SUR MESURE ADAPTÉ MOBILE ET DESKTOP -->
+  <!-- LECTEUR VIDEO STYLE NETFLIX -->
   <div class="video-container" id="videoContainer">
     <div class="video-thumb" id="thumb">
       <img src="imčqll.jpg" alt="cover vidéo">
@@ -715,7 +750,7 @@
   </div>
 </div>
 
-<!-- LOGIQUE DU LECTEUR VIDÉO SUR MESURE -->
+<!-- LOGIQUE DU LECTEUR VIDÉO -->
 <script>
   const videoContainer = document.getElementById("videoContainer");
   const thumb = document.getElementById("thumb");
@@ -739,7 +774,7 @@
   const fsEnterIcon = document.getElementById("fsEnterIcon");
   const fsExitIcon = document.getElementById("fsExitIcon");
 
-  // Démarrage de la vidéo lors du clic sur la miniature
+  // Démarrage de la vidéo
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
     playerWrapper.style.display = "block";
@@ -770,7 +805,7 @@
     playerWrapper.classList.add("paused");
   });
 
-  // Formater le temps (00:00:00)
+  // Formater le temps
   function formatTime(seconds) {
     if (isNaN(seconds) || seconds === Infinity) return "00:00:00";
     const h = Math.floor(seconds / 3600);
@@ -780,7 +815,7 @@
     return `${pad(h)}:${pad(m)}:${pad(s)}`;
   }
 
-  // Mise à jour de la barre de progression et du temps
+  // Barre de progression
   video.addEventListener("timeupdate", () => {
     if (!isNaN(video.duration) && video.duration > 0) {
       const pct = (video.currentTime / video.duration) * 100;
@@ -789,7 +824,6 @@
     }
   });
 
-  // Navigation dans la vidéo via le curseur
   progressBar.addEventListener("input", () => {
     if (!isNaN(video.duration) && video.duration > 0) {
       const seekTime = (progressBar.value / 100) * video.duration;
@@ -797,7 +831,7 @@
     }
   });
 
-  // Activer / Désactiver le son
+  // Gestion volume
   function updateVolumeUI() {
     if (video.muted || video.volume === 0) {
       volumeIcon.style.display = "none";
@@ -820,7 +854,7 @@
     video.playbackRate = parseFloat(e.target.value);
   });
 
-  // Gestion du plein écran
+  // Plein Écran
   function toggleFullscreen() {
     if (!document.fullscreenElement && !document.webkitFullscreenElement) {
       if (videoContainer.requestFullscreen) {
@@ -853,12 +887,12 @@
   document.addEventListener("fullscreenchange", updateFsIcons);
   document.addEventListener("webkitfullscreenchange", updateFsIcons);
 
-  // Spinner de chargement
+  // Spinner
   video.addEventListener("waiting", () => { videoLoader.style.display = "block"; });
   video.addEventListener("playing", () => { videoLoader.style.display = "none"; });
   video.addEventListener("canplay", () => { videoLoader.style.display = "none"; });
 
-  // Masquage automatique des contrôles en cours de lecture
+  // Masquage auto des contrôles
   let hideControlsTimeout;
   function showControls() {
     playerWrapper.classList.add("show-controls");
@@ -872,8 +906,6 @@
 
   playerWrapper.addEventListener("mousemove", showControls);
   playerWrapper.addEventListener("touchstart", showControls);
-
-  // Empêcher le clic droit sur le lecteur
   playerWrapper.addEventListener("contextmenu", (e) => e.preventDefault());
 
   // Modal Personnages
@@ -910,7 +942,7 @@
     }
   });
 
-  // Défilement carrousel personnages
+  // Carousel Personnages
   const charContainer = document.getElementById("characters");
   const leftBtn = document.getElementById("scrollLeft");
   const rightBtn = document.getElementById("scrollRight");
