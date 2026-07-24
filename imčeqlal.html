@@ -581,72 +581,89 @@
     </div>
   </div>
 
-  <!-- PERSONNAGES -->
+   <!-- PERSONNAGES AVEC SCROLL -->
   <div class="characters-wrapper">
-    <button class="scroll-btn left" id="scrollLeft">&#10094;</button>
+    <button class="scroll-btn left">&#10094;</button>
     <div class="characters" id="characters">
-      <div class="character" tabindex="0" role="button" data-title="XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ" data-desc="d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.">
-        <img src="Abdessah.jpg" alt="XERZI Ɛabdeṣṣaḥ">
-        <div class="name">XERZI Ɛabdeṣṣaḥ</div><div class="role">Anemhal anaẓuṛan n usisleg</div>
+<div class="character" onclick="showDesc('XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ','d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.')">
+        <img src="Abdessah.jpg">
+        <div class="name">XERZI Ɛabdeṣṣaḥ</div>
+        <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
       </div>
-      <div class="character" tabindex="0" role="button" data-title="BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻⵙ" data-desc="tamekfaḍut d tamedyazt d tamarut...">
-        <img src="femme.png" alt="BEǦǦA Ṭawes">
-        <div class="name">BEǦǦA Ṭawes</div><div class="role">d tasegbart</div>
+            <div class="character" onclick="showDesc('BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻⵙ ','tamekfaḍut d tamedyazt d tamarut, d yelli-s n tɣiwant it Muḥli, tlul deg useggas n 2001 deg waɣir n it Wertilan agezdu n Ṣṭif. Tewwi-d agerdas n master deg taɣult n Tesnalmudt deg tutlayt d yidles Amaziɣ.')">
+        <img src="femme.png">
+        <div class="name">BEǦǦA Ṭawes</div>
+        <div class="role">d tasegbart</div>
       </div>
-      <div class="character" tabindex="0" role="button" data-title="MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⵓⴷⵉ ⵃⴰⵏⴰⵏ" data-desc="D tilemẓit, tlul ass n 4 yennayer 2001...">
-        <img src="femme.png" alt="MESƐUDI Ḥanan">
-        <div class="name">MESƐUDI Ḥanan</div><div class="role">d tasegbart</div>
+      <div class="character" onclick="showDesc('MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⴷⵉ ⵃⴰⵏⴰⵏ ','D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+        <img src="femme.png">
+        <div class="name">MESƐUDI Ḥanan</div>
+        <div class="role">d tasegbart</div>
       </div>
-      <div class="character" tabindex="0" role="button" data-title="BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰⵏⵉⵢⴰ" data-desc="D tilemẓit, tlul ass n 13 Furar 2007...">
-        <img src="femme.png" alt="BEṬṬAC Haniya">
-        <div class="name">BEṬṬAC Haniya</div><div class="role">d tasegbart</div>
+       <div class="character" onclick="showDesc('BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰⵏⵉⵢⴰ ','D tilemẓit, tlul ass n 13 Furar 2007 deg Sidi Ɛic, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
+        <img src="femme.png">
+        <div class="name">BEṬṬAC Haniya</div>
+        <div class="role">d tasegbart</div>
       </div>
-      <div class="character" tabindex="0" role="button" data-title="MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ" data-desc="D tilemẓit, d tamekfaḍut deg tfaskiwin...">
-        <img src="femme.png" alt="MESƐUDI Nawal">
-        <div class="name">MESƐUDI Nawal</div><div class="role">d tasegbart</div>
+            <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+        <img src="femme.png">
+        <div class="name">MESƐUDI Nawal</div>
+        <div class="role">d tasegbart</div>
       </div>
-      <div class="character" tabindex="0" role="button" data-title="MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⴷⵉ ⵎⴰⵀⴷⵉ" data-desc="D ilemẓi, ilul ass n 8 Ctember 2005...">
-        <img src="MahdiMes.jpg" alt="MESƐUDI Mahdi">
-        <div class="name">MESƐUDI Mahdi</div><div class="role">d asegbar</div>
+      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
+        <img src="MahdiMes.jpg">
+        <div class="name">MESƐUDI Mahdi</div>
+        <div class="role">d asegbar</div>
       </div>
-      <div class="character" tabindex="0" role="button" data-title="XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ" data-desc="d anaẓuṛ, ilul ass 19 tuber 2013...">
-        <img src="amazigh.jpg" alt="XERZI Amaziⵖ">
-        <div class="name">XERZI Amaziⵖ</div><div class="role">d asegbar</div>
-      </div>
-      <div class="character" tabindex="0" role="button" data-title="MADI Ḥamza - ⵎⴰⴷⵉ ⵃⴰⵎⵣⴰ" data-desc="D ilemẓi anaẓuṛ, ilul ass 12 wanber 2006...">
-        <img src="Hamzamadi.jpg" alt="MADI Ḥamza">
-        <div class="name">MADI Ḥamza</div><div class="role">d asegbar</div>
-      </div>
-      <div class="character" tabindex="0" role="button" data-title="Mariya ASIL ḤARRUS - ⵎⴰⵔⵉⵢⴰ ⴰⵙⵉⵍ ⵃⴰⵔⵔⵓⵙ" data-desc="d tagrudt n sin iseggasen...">
-        <img src="maria.jpg" alt="Mariya ASIL ḤARRUS">
-        <div class="name">Mariya ASIL ḤARRUS</div><div class="role">d tasegbart</div>
-      </div>
-      <div class="character" tabindex="0" role="button" data-title="BENNUṚ Amina - ⴱⴻⵏⵏⵓⵕ ⴰⵎⵉⵏⴰ" data-desc="D taqcict, tlul 3 tuber 2016...">
-        <img src="femme.png" alt="BENNUṚ Amina">
-        <div class="name">BENNUṚ Amina</div><div class="role">d tasegbart</div>
-      </div>
-      <div class="character" tabindex="0" role="button" data-title="XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ" data-desc="d amɣar azemni, d anaẓur...">
-        <img src="Abdelkader.jpg" alt="XERZI Ɛabdelqader">
-        <div class="name">XERZI Ɛabdelqader</div><div class="role">d asegbar</div>
-      </div>
-      <div class="character" tabindex="0" role="button" data-title="TUMERT Ǧilali - ⵊⵉⵍⴰⵍⵉ ⵜⵓⵎⴻⵔⵜ" data-desc="D anaẓur n asegber d acennay...">
-        <img src="toumertdjilali.jpg" alt="TUMERT Ǧilali">
-        <div class="name">TUMERT Ǧilali</div><div class="role">d acennay</div>
-      </div> 
-      <div class="character" tabindex="0" role="button" data-title="YUSFI Sadeq - ⵢⵓⵙⴼⵉ ⵙⴰⴷⴻⵇ" data-desc="D anaẓur n umezgun, sinima akked ccna d uẓawan...">
-        <img src="sadekyousfi.jpg" alt="YUSFI Sadeq">
-        <div class="name">YUSFI Sadeq</div><div class="role">d acennay</div>
-      </div>
-    </div>
-    <button class="scroll-btn right" id="scrollRight">&#10095;</button>
-  </div>
 
+      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
+        <img src="amazigh.jpg">
+        <div class="name">XERZI Amaziɣ</div>
+        <div class="role">d asegbar</div>
+      </div>
+      
+      <div class="character" onclick="showDesc('MADI Ḥamza - ⵎⴰⴷⵉ ⵃⴰⵎⵣⴰ ','D ilemẓi anaẓuṛ, ilul ass 12 wanber 2006, ittcewwiq icewwiqen icennu, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+        <img src="Hamzamadi.jpg">
+        <div class="name">MADI Ḥamza</div>
+        <div class="role">d asegbar</div>
+      </div>
+            <div class="character" onclick="showDesc('Mariya ASIL ḤARRUS - ⵎⴰⵔⵉⵢⴰ ⴰⵙⵉⵍ ⵃⴰⵔⵔⵓⵙ ','d tagrudt n sin iseggasen, tlul ass 8 ctember 2023, deg ɛin lbenyan di ldzayer tamanaɣt, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+        <img src="maria.jpg">
+        <div class="name">Mariya ASIL ḤARRUS</div>
+        <div class="role">d tasegbart</div>
+      </div>
+                  <div class="character" onclick="showDesc('BENNUṚ Amina - ⴱⴻⵏⵏⵓⵕ ⴰⵎⵉⵏⴰ ','D taqcict, tlul 3 tuber 2016 deg Targa uzemmur Bgayet, D yellis n Ɛumar Bennuṛ, D tanelmadt deg uswir wis ukkuẓ deg uɣerbaz amenzu, d taɛeggalt deg ugraw ASIREM n tdukla tadelsant IZUMAL n taddart n Tici')">
+        <img src="femme.png">
+        <div class="name">BENNUṚ Amina</div>
+        <div class="role">d tasegbart</div>
+      </div>
+      <div class="character" onclick="showDesc('XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ','d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay.')">
+        <img src="Abdelkader.jpg">
+        <div class="name">XERZI Ɛabdelqader</div>
+        <div class="role">d asegbar</div>
+      </div>
+            <div class="character" onclick="showDesc('TUMERT Ǧilali - ⵊⵉⵍⴰⵍⵉ ⵜⵓⵎⴻⵔⵜ','D anaẓur n asegber d acennay, yexdem aṭas n tezrarin d yisura s teqbaylit gar-asen-tt Tinifift, Rbiḥa, Tayri txidas d wiyaḍ nniḍen, ilul ass n 4 yulyu 1989 deg ugezdu n tizi wezzu, n Buɣni n taddart At ɛebdelmumen, yetteka yid-neɣ deg usaru n IMČEQLAL s snat n tezlatin n uḍebsi-ines 2020.')">
+        <img src="toumertdjilali.jpg">
+        <div class="name">TUMERT Ǧilali</div>
+        <div class="role">d acennay</div>
+      </div> 
+     <div class="character" onclick="showDesc('YUSFI Sadeq - ⵢⵓⵙⴼⵉ ⵙⴰⴷⴻⵇ','D anaẓur n umezgun, sinima akked ccna d uẓawan, yugmed yufrar-d seg yidles Amaziɣ. Yezuzzured leqdic-is deg YouTube, itekka d waṭas n temsufeɣ gar-asen-tt asaru n IMČEQLAL yid-neɣ s ccbaḥa n tezlatin-is.')">
+        <img src="sadekyousfi.jpg">
+        <div class="name">YUSFI Sadeq</div>
+        <div class="role">d acennay</div>
+      </div
+      
+      <!-- Ajoute ici les autres personnages -->
+    </div>
+    <button class="scroll-btn right">&#10095;</button>
+  </div>
   <div class="film-info">
-    <h2>IMČEQLAL</h2>
+    <h2>IMČEQLAL
+</h2>
     <p><strong>Tawsit :</strong> Inig, Taḍṣa, Arrac</p>
     <p><strong>Azemz n usufeɣ :</strong> 2026</p>
-    <p><strong>Aglam n usaru :</strong><br>
-    Asaru-agi ad ken-yawi ɣer umaḍal n yinig d teḍsa. Čaqlala, d awtul yeččuren d tabɣest d twuɣa, maca ur d-kkint kan akka, d aseḥbiber ɣef tudert-is d tin n twacult-is iɣef yettḥebbir. Deg tmazirt n Muḥend Ukufi ideg tebda tmacahut, win i wumi semman awaɣzen, maca tella Tamilla i yellan ḥninet ɣur-sen, yis-s i d-selken acḥal d abrid, maca yiwet n tikkelt yemmut uwaɣzen, yewret-it mmi-s n gma-s, dɣa da i yebda yinig...
+    <p><strong>Aglam n usaru :</strong>
+ Asaru-agi ad ak-nyawi ɣer umaḍal n yinig d teḍṣa, Čaqlala d awtul yeččuren d tabɣest d twuɣa, maca ur d-kkin-tt kan akk-a, d aseḥbiber ɣef tudert-is d tin n twacult-is iɣef yettḥebbir, deg tmazirt n Muḥend Ukufi ideg tebda tmacahut, win umi semman awaɣzen, maca tella Tamila i yellan ḥninet ɣer-sen, s yis-s i d-selken acḥal d abrid, maca yiwet n tikkelt yemmut uwaɣzen, iwertit mmis n gmas, dɣa da i yebda yinig...
     </p>
   </div>
 </div>
