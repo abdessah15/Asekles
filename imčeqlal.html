@@ -8,7 +8,7 @@
 
   <style>
     :root {
-      --nflx-red: #e50914;
+      --nflx-red: #ff0066; /* Magenta / Rose vif du site */
       --nflx-bg: #000000;
       --nflx-text: #ffffff;
       --nflx-subtext: #aaaaaa;
@@ -101,7 +101,7 @@
       padding-bottom: 120px;
     }
 
-    /* ===== LECTEUR NETFLIX SÉCURISÉ ===== */
+    /* ===== LECTEUR MAGENTA SÉCURISÉ ===== */
     .nflx-player-container {
       width: 100%;
       max-width: 900px;
@@ -131,7 +131,7 @@
       display: block;
     }
 
-    /* Gros bouton Play central */
+    /* Gros bouton Play central (Magenta) */
     .center-play-btn {
       position: absolute;
       top: 50%;
@@ -139,7 +139,7 @@
       transform: translate(-50%, -50%);
       width: 80px;
       height: 80px;
-      background: rgba(229, 9, 20, 0.85);
+      background: rgba(255, 0, 102, 0.85);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -274,7 +274,7 @@
       border-radius: 50%;
       background: var(--nflx-red);
       cursor: pointer;
-      box-shadow: 0 0 8px rgba(229, 9, 20, 0.8);
+      box-shadow: 0 0 8px rgba(255, 0, 102, 0.8);
     }
 
     .nflx-progress-bar::-moz-range-thumb {
@@ -283,7 +283,7 @@
       border-radius: 50%;
       background: var(--nflx-red);
       cursor: pointer;
-      box-shadow: 0 0 8px rgba(229, 9, 20, 0.8);
+      box-shadow: 0 0 8px rgba(255, 0, 102, 0.8);
       border: none;
     }
 
@@ -521,7 +521,7 @@
 
 <div class="container">
 
-  <!-- LECTEUR VIDÉO NETFLIX PROTÉGÉ AVEC THUMBNAIL -->
+  <!-- LECTEUR VIDÉO MAGENTA SÉCURISÉ -->
   <div class="nflx-player-container" id="nflxContainer">
     
     <div class="loading-spinner" id="spinner"></div>
@@ -529,7 +529,6 @@
       <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
     </div>
 
-    <!-- Thumbnail (poster) et protection anti-téléchargement configurés -->
     <video id="nflxVideo" playsinline preload="metadata" poster="imčqll.jpg" oncontextmenu="return false;" controlsList="nodownload">
       <source src="https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4" type="video/mp4">
     </video>
