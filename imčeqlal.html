@@ -6,6 +6,9 @@
   <title>Asekles - IMČEQLAL</title>
   <link rel="icon" href="Asekles.png" type="image/png">
 
+  <!-- CSS Video.js (Lecteur clean et rapide) -->
+  <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+
   <style>
     body {
       margin: 0;
@@ -140,11 +143,20 @@
       transform: translate(-50%, -50%) scale(1.1);
     }
 
-    /* BOÎTE ARTPLAYER */
-    .artplayer-box {
+    /* ZONE DU LECTEUR VIDEO.JS */
+    .video-box {
       width: 100%;
-      aspect-ratio: 16/9;
       display: none;
+    }
+
+    /* Personnalisation couleur Video.js */
+    .video-js .vjs-play-progress,
+    .video-js .vjs-volume-level,
+    .video-js .vjs-slider-bar {
+      background: #ff0066 !important;
+    }
+    .video-js .vjs-control-bar {
+      background-color: rgba(17, 17, 17, 0.85) !important;
     }
 
     /* ===== PERSONNAGES ===== */
@@ -292,7 +304,7 @@
     }
 
     @supports not (aspect-ratio: 16/9) {
-      .video-thumb, .artplayer-box {
+      .video-thumb {
         height: calc(100vw * 9 / 16);
       }
     }
@@ -302,7 +314,7 @@
 <body>
 
 <header>
-  <h1>IMČEQLAL - ⵉⵎⵞⴻⵇⵍⴰⵍ</h1>
+  <h1>IMČEQLAL - ⵉ幕ⴻⵇⵍⴰⵍ</h1>
 </header>
 
 <nav>
@@ -321,14 +333,18 @@
 
 <div class="container">
 
-  <!-- ZONE LECTEUR VIDEO ARTPLAYER -->
+  <!-- ZONE LECTEUR VIDEO -->
   <div class="video-container">
     <div class="video-thumb" id="thumb">
       <img src="imčqll.jpg" alt="cover vidéo">
       <div class="play-btn"></div>
     </div>
 
-    <div class="artplayer-box" id="artplayer"></div>
+    <div class="video-box" id="playerWrapper">
+      <video id="my-video" class="video-js vjs-default-skin vjs-16-9" controls preload="auto">
+        <source src="https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4" type="video/mp4">
+      </video>
+    </div>
   </div>
 
   <!-- PERSONNAGES AVEC SCROLL -->
@@ -354,13 +370,13 @@
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰ蛸ⵉⵢⴰ ','D tilemẓit, tlul ass n 13 Furar 2007 deg Sidi Ɛic, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
+      <div class="character" onclick="showDesc('BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰⵏⵉⵢ加 ','D tilemẓit, tlul ass n 13 Furar 2007 deg Sidi Ɛic, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
         <img src="femme.png" alt="BEṬṬAC Haniya">
         <div class="name">BEṬṬAC Haniya</div>
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰ立 ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
         <img src="femme.png" alt="MESƐUDI Nawal">
         <div class="name">MESƐUDI Nawal</div>
         <div class="role">d tasegbart</div>
@@ -384,7 +400,7 @@
         <div class="role">d asegbar</div>
       </div>
       
-      <div class="character" onclick="showDesc('Mariya ASIL ḤARRUS - ⵎⴰⵔⵉⵢⴰ ⴰⵙⵉⵍ ⵃⴰⵔⵔⵓⵙ ','d tagrudt n sin iseggasen, tlul ass 8 ctember 2023, deg ɛin lbenyan di ldzayer tamanaɣt, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+      <div class="character" onclick="showDesc('Mariya ASIL ḤARRUS - ⵎⴰⵉⵢⴰ ⴰսⵉⵍ ⵃⴰⵔⵔⵓⵙ ','d tagrudt n sin iseggasen, tlul ass 8 ctember 2023, deg ɛin lbenyan di ldzayer tamanaɣt, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
         <img src="maria.jpg" alt="Mariya ASIL ḤARRUS">
         <div class="name">Mariya ASIL ḤARRUS</div>
         <div class="role">d tasegbart</div>
@@ -402,7 +418,7 @@
         <div class="role">d asegbar</div>
       </div>
       
-      <div class="character" onclick="showDesc('TUMERT Ǧilali - ⵊⵉⵍⴰⵍⵉ ⵜⵓⵎⴻⵔⵜ','D anaẓur n asegber d acennay, yexdem aṭas n tezrarin d yisura s teqbaylit gar-asen-tt Tinifift, Rbiḥa, Tayri txidas d wiyaḍ nniḍen, ilul ass n 4 yulyu 1989 deg ugezdu n tizi wezzu, n Buɣni n taddart At ɛebdelmumen, yetteka yid-neɣ deg usaru n IMČEQLAL s snat n tezlatin n uḍebsi-ines 2020.')">
+      <div class="character" onclick="showDesc('TUMERT Ǧilali - ⵊⵉ黎ⴰⵍⵉ ⵜⵓⵎⴻⵔⵜ','D anaẓur n asegber d acennay, yexdem aṭas n tezrarin d yisura s teqbaylit gar-asen-tt Tinifift, Rbiḥa, Tayri txidas d wiyaḍ nniḍen, ilul ass n 4 yulyu 1989 deg ugezdu n tizi wezzu, n Buɣni n taddart At ɛebdelmumen, yetteka yid-neɣ deg usaru n IMČEQLAL s snat n tezlatin n uḍebsi-ines 2020.')">
         <img src="toumertdjilali.jpg" alt="TUMERT Ǧilali">
         <div class="name">TUMERT Ǧilali</div>
         <div class="role">d acennay</div>
@@ -438,50 +454,35 @@
   </div>
 </div>
 
-<!-- SCRIPT ARTPLAYER (Ultra rapide & fluide) -->
-<script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
+<!-- SCRIPT VIDEO.JS -->
+<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 <script>
   const thumb = document.getElementById("thumb");
-  const playerWrapper = document.getElementById("artplayer");
-  let art;
-
-  const videoUrl = "https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4";
+  const playerWrapper = document.getElementById("playerWrapper");
+  let mainPlayer;
 
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
     playerWrapper.style.display = "block";
 
-    art = new Artplayer({
-      container: '#artplayer',
-      url: videoUrl,
-      poster: 'imčqll.jpg',
-      autoplay: true,
-      volume: 0.8,
-      isLive: false,
-      muted: false,
-      setting: true,
-      loop: false,
-      flip: true,
-      playbackRate: true,
-      aspectRatio: true,
-      fullscreen: true,
-      fullscreenWeb: true,
-      miniProgressBar: true,
-      playsInline: true,
-      autoPlayback: true,
-      theme: '#ff0066',
-      icons: {
-        loading: '<div style="border: 4px solid rgba(255,255,255,0.2); border-top: 4px solid #ff0066; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;"></div>'
-      }
+    // Initialisation fluide avec option de vitesse intégrée
+    mainPlayer = videojs('my-video', {
+      playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 2],
+      fluid: true,
+      responsive: true
     });
 
-    // Empêcher le menu contextuel clic droit sur la vidéo
-    art.on('ready', () => {
-      art.video.addEventListener('contextmenu', (e) => e.preventDefault());
+    mainPlayer.ready(function() {
+      mainPlayer.play();
+    });
+
+    // Blocage du clic droit sur la zone vidéo
+    mainPlayer.on('contextmenu', function(e) {
+      e.preventDefault();
     });
   });
 
-  // Modale
+  // Gestion des modales d'information
   function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalText").innerText = text;
@@ -492,7 +493,7 @@
     document.getElementById("modal").style.display = "none";
   }
 
-  // Scroll personnages
+  // Défilement de la liste des personnages
   const charContainer = document.getElementById("characters");
   const leftBtn = document.querySelector('.scroll-btn.left');
   const rightBtn = document.querySelector('.scroll-btn.right');
