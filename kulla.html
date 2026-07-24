@@ -150,6 +150,27 @@
       display: none;
     }
 
+    /* ===== CERCLE DE CHARGEMENT (SPINNER) ===== */
+    .loader {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 6px solid rgba(255, 255, 255, 0.2);
+      border-top: 6px solid #ff0066;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      z-index: 10;
+    }
+
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
     /* ===== PERSONNAGES ===== */
     .characters-wrapper {
       position: relative;
@@ -364,9 +385,13 @@
       <img src="kulla (1).jpg" alt="cover vidéo">
       <div class="play-btn"></div>
     </div>
+    
+    <!-- Cercle de chargement -->
+    <div class="loader" id="videoLoader"></div>
 
-    <video id="player" class="artplayer-app" controls style="display:none;">
-      <source src="https://ia600706.us.archive.org/24/items/16-26-1616416/Asaru%20n%20Kulla.mp4">
+    <!-- Lecteur avec préchargement (preload="auto") -->
+    <video id="player" class="artplayer-app" controls preload="auto" style="display:none;">
+      <source src="https://ia600706.us.archive.org/24/items/16-26-1616416/Asaru%20n%20Kulla.mp4" type="video/mp4">
     </video>
   </div>
 
@@ -464,16 +489,33 @@
 
 <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
 <script>
-  // Initialisation du lecteur vidéo
+  // Initialisation du lecteur vidéo avec vitesse de lecture
   const thumb = document.getElementById("thumb");
   const video = document.getElementById("player");
-  const player = new Plyr('#player');
+  const loader = document.getElementById("videoLoader");
+  
+  // Configuration Plyr
+  const player = new Plyr('#player', {
+    controls: [
+      'play-large', 'play', 'progress', 'current-time', 'duration', 
+      'mute', 'volume', 'settings', 'fullscreen'
+    ],
+    settings: ['speed'], 
+    speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] }
+  });
 
+  // Action au clic sur la miniature
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
     video.style.display = "block";
+    loader.style.display = "block"; 
     player.play();
   });
+
+  // Gestion du spinner selon l'état de la vidéo
+  video.addEventListener("canplay", () => { loader.style.display = "none"; });
+  video.addEventListener("playing", () => { loader.style.display = "none"; });
+  video.addEventListener("waiting", () => { loader.style.display = "block"; });
 
   // Gestion de la modale
   function showDesc(title, text) {
@@ -507,10 +549,9 @@
     setTimeout(updateButtons, 300);
   });
 
-  // Mettre à jour l'état des boutons au chargement
   updateButtons();
 </script>
-  <script type="module">
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
@@ -560,7 +601,7 @@ document.addEventListener("click", (e) => {
   }
 });
 </script>  
-  <script>
+<script>
 const playerBox = document.getElementById("player");
 
 playerBox.addEventListener("contextmenu", function(e) {
