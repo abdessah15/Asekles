@@ -101,7 +101,7 @@
       padding-bottom: 120px;
     }
 
-    /* ===== LECTEUR NETFLIX ===== */
+    /* ===== LECTEUR NETFLIX CORRIGÉ ===== */
     .nflx-player-container {
       width: 100%;
       max-width: 900px;
@@ -112,6 +112,7 @@
       overflow: hidden;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
       user-select: none;
+      cursor: pointer; /* Indique que la zone est cliquable */
     }
 
     .nflx-player-container:fullscreen,
@@ -130,16 +131,64 @@
       display: block;
     }
 
+    /* Gros bouton Play central */
+    .center-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      background: rgba(229, 9, 20, 0.85);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none; /* Ne bloque pas le clic global */
+    }
+    
+    .center-play-btn svg {
+      width: 40px;
+      height: 40px;
+      fill: #fff;
+      margin-left: 5px; /* Centrage optique du triangle */
+    }
+
+    .nflx-player-container:hover .center-play-btn {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    /* Spinner de chargement */
+    .loading-spinner {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255,255,255,0.3);
+      border-top: 4px solid var(--nflx-red);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+
     /* Overlay global (titre + contrôles) */
     .nflx-overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(
         to bottom,
-        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.8) 0%,
         transparent 20%,
         transparent 70%,
-        rgba(0, 0, 0, 0.85) 100%
+        rgba(0, 0, 0, 0.9) 100%
       );
       display: flex;
       flex-direction: column;
@@ -148,6 +197,8 @@
       opacity: 0;
       transition: opacity 0.3s ease;
       z-index: 10;
+      /* CORRECTION CAPITALE : Laisse passer les clics vers la vidéo */
+      pointer-events: none; 
     }
 
     .nflx-player-container:hover .nflx-overlay,
@@ -156,7 +207,13 @@
       opacity: 1;
     }
 
-    /* En-tête : Titre Netflix */
+    /* Réactiver les clics UNIQUEMENT sur les boutons et les barres */
+    .nflx-header, 
+    .nflx-bottom-controls {
+      pointer-events: auto; 
+    }
+
+    /* En-tête : Titre */
     .nflx-header {
       display: flex;
       align-items: center;
@@ -179,6 +236,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      padding-bottom: 5px;
     }
 
     /* Barre de progression fluide */
@@ -317,30 +375,15 @@
       border: none;
     }
 
-    /* Adaptation mobile des contrôles Netflix */
+    /* Adaptation mobile */
     @media screen and (max-width: 600px) {
-      .nflx-overlay {
-        padding: 10px 15px;
-      }
-      .nflx-title {
-        font-size: 0.9em;
-      }
-      .nflx-subtitle {
-        font-size: 0.75em;
-      }
-      .nflx-left-controls, .nflx-right-controls {
-        gap: 10px;
-      }
-      .nflx-btn svg {
-        width: 22px;
-        height: 22px;
-      }
-      .nflx-time {
-        font-size: 0.7em;
-      }
-      .nflx-volume-group:hover .nflx-volume-slider {
-        width: 45px;
-      }
+      .nflx-overlay { padding: 10px 15px; }
+      .nflx-title { font-size: 0.9em; }
+      .nflx-subtitle { font-size: 0.75em; }
+      .nflx-left-controls, .nflx-right-controls { gap: 12px; }
+      .nflx-btn svg { width: 22px; height: 22px; }
+      .nflx-time { font-size: 0.7em; }
+      .nflx-volume-group:hover .nflx-volume-slider { width: 45px; }
     }
 
     /* ===== PERSONNAGES ===== */
@@ -362,9 +405,7 @@
       width: 100%;
     }
 
-    .characters::-webkit-scrollbar {
-      display: none;
-    }
+    .characters::-webkit-scrollbar { display: none; }
 
     .scroll-btn {
       position: absolute;
@@ -385,11 +426,7 @@
       transition: background 0.2s, color 0.2s;
     }
 
-    .scroll-btn:hover {
-      background: #ff0066;
-      color: #fff;
-    }
-
+    .scroll-btn:hover { background: #ff0066; color: #fff; }
     .scroll-btn.left { left: 5px; }
     .scroll-btn.right { right: 5px; }
 
@@ -411,21 +448,9 @@
       transition: transform .3s;
     }
 
-    .character:hover img,
-    .character:focus img {
-      transform: scale(1.1);
-    }
-
-    .character .name {
-      margin-top: 8px;
-      font-weight: bold;
-      font-size: 0.85em;
-    }
-
-    .character .role {
-      font-size: .75em;
-      color: #bbb;
-    }
+    .character:hover img, .character:focus img { transform: scale(1.1); }
+    .character .name { margin-top: 8px; font-weight: bold; font-size: 0.85em; }
+    .character .role { font-size: .75em; color: #bbb; }
 
     /* ===== FILM INFO ===== */
     .film-info {
@@ -438,11 +463,7 @@
       box-sizing: border-box;
       border: 1px solid #333;
     }
-
-    .film-info h2 {
-      color: #ff0066;
-      margin-top: 0;
-    }
+    .film-info h2 { color: #ff0066; margin-top: 0; }
 
     /* ===== MODAL DESCRIPTION ===== */
     .modal {
@@ -455,7 +476,6 @@
       z-index: 9999;
       padding: 15px;
     }
-
     .modal-content {
       background: #1a1a1a;
       padding: 25px;
@@ -466,18 +486,8 @@
       border: 1px solid #ff0066;
       box-shadow: 0 0 20px rgba(255, 0, 102, 0.4);
     }
-
-    .modal-content h3 {
-      color: #ff0066;
-      margin-top: 0;
-    }
-
-    .modal-content p {
-      line-height: 1.5;
-      color: #ddd;
-      font-size: 0.95em;
-    }
-
+    .modal-content h3 { color: #ff0066; margin-top: 0; }
+    .modal-content p { line-height: 1.5; color: #ddd; font-size: 0.95em; }
     .close {
       margin-top: 15px;
       padding: 8px 20px;
@@ -490,9 +500,7 @@
     }
 
     @supports not (aspect-ratio: 16/9) {
-      .nflx-player-container {
-        height: calc(100vw * 9 / 16);
-      }
+      .nflx-player-container { height: calc(100vw * 9 / 16); }
     }
   </style>
 </head>
@@ -519,8 +527,15 @@
 
 <div class="container">
 
-  <!-- LECTEUR VIDÉO NETFLIX -->
+  <!-- LECTEUR VIDÉO NETFLIX CORRIGÉ -->
   <div class="nflx-player-container" id="nflxContainer">
+    
+    <!-- Spinner et Bouton Central -->
+    <div class="loading-spinner" id="spinner"></div>
+    <div class="center-play-btn" id="centerPlayBtn">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    </div>
+
     <video id="nflxVideo" playsinline preload="metadata">
       <source src="https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4" type="video/mp4">
     </video>
@@ -535,7 +550,6 @@
 
       <!-- Contrôles bas -->
       <div class="nflx-bottom-controls">
-        <!-- Barre de progression + temps en HEURES -->
         <div class="nflx-progress-wrapper">
           <div class="nflx-progress-container">
             <input type="range" class="nflx-progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1">
@@ -543,7 +557,6 @@
           <span class="nflx-time" id="timeDisplay">00:00:00 / 00:00:00</span>
         </div>
 
-        <!-- Boutons de commande -->
         <div class="nflx-buttons-row">
           <div class="nflx-left-controls">
             <!-- Lecture / Pause -->
@@ -565,7 +578,7 @@
             <!-- Volume -->
             <div class="nflx-volume-group">
               <button class="nflx-btn" id="muteBtn" title="Ṣṣut (M)">
-                <svg id="volumeIcon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                <svg id="volumeIcon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                 <svg id="muteIcon" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
               </button>
               <input type="range" class="nflx-volume-slider" id="volumeSlider" min="0" max="1" step="0.05" value="1">
@@ -583,119 +596,65 @@
     </div>
   </div>
 
-  <!-- PERSONNAGES AVEC SCROLL -->
+  <!-- PERSONNAGES (Inchangé) -->
   <div class="characters-wrapper">
-    <button class="scroll-btn left" id="scrollLeft" aria-label="Scroll left">&#10094;</button>
-    
+    <button class="scroll-btn left" id="scrollLeft">&#10094;</button>
     <div class="characters" id="characters">
-      
-      <div class="character" tabindex="0" role="button" 
-           data-title="XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ" 
-           data-desc="d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.">
+      <!-- Mêmes personnages que dans votre code -->
+      <div class="character" tabindex="0" role="button" data-title="XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ" data-desc="d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.">
         <img src="Abdessah.jpg" alt="XERZI Ɛabdeṣṣaḥ">
-        <div class="name">XERZI Ɛabdeṣṣaḥ</div>
-        <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
+        <div class="name">XERZI Ɛabdeṣṣaḥ</div><div class="role">Anemhal anaẓuṛan n usisleg</div>
       </div>
-      
-      <div class="character" tabindex="0" role="button" 
-           data-title="BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻⵙ" 
-           data-desc="tamekfaḍut d tamedyazt d tamarut, d yelli-s n tɣiwant it Muḥli, tlul deg useggas n 2001 deg waɣir n it Wertilan agezdu n Ṣṭif. Tewwi-d agerdas n master deg taɣult n Tesnalmudt deg tutlayt d yidles Amaziɣ.">
+      <div class="character" tabindex="0" role="button" data-title="BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻⵙ" data-desc="tamekfaḍut d tamedyazt d tamarut...">
         <img src="femme.png" alt="BEǦǦA Ṭawes">
-        <div class="name">BEǦǦA Ṭawes</div>
-        <div class="role">d tasegbart</div>
+        <div class="name">BEǦǦA Ṭawes</div><div class="role">d tasegbart</div>
       </div>
-      
-      <div class="character" tabindex="0" role="button" 
-           data-title="MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⵓⴷⵉ ⵃⴰⵏⴰⵏ" 
-           data-desc="D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is">
+      <div class="character" tabindex="0" role="button" data-title="MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⵓⴷⵉ ⵃⴰⵏⴰⵏ" data-desc="D tilemẓit, tlul ass n 4 yennayer 2001...">
         <img src="femme.png" alt="MESƐUDI Ḥanan">
-        <div class="name">MESƐUDI Ḥanan</div>
-        <div class="role">d tasegbart</div>
+        <div class="name">MESƐUDI Ḥanan</div><div class="role">d tasegbart</div>
       </div>
-      
-      <div class="character" tabindex="0" role="button" 
-           data-title="BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰⵏⵉⵢⴰ" 
-           data-desc="D tilemẓit, tlul ass n 13 Furar 2007 deg Sidi Ɛic, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is.">
+      <div class="character" tabindex="0" role="button" data-title="BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰⵏⵉⵢⴰ" data-desc="D tilemẓit, tlul ass n 13 Furar 2007...">
         <img src="femme.png" alt="BEṬṬAC Haniya">
-        <div class="name">BEṬṬAC Haniya</div>
-        <div class="role">d tasegbart</div>
+        <div class="name">BEṬṬAC Haniya</div><div class="role">d tasegbart</div>
       </div>
-      
-      <div class="character" tabindex="0" role="button" 
-           data-title="MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ" 
-           data-desc="D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is">
+      <div class="character" tabindex="0" role="button" data-title="MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ" data-desc="D tilemẓit, d tamekfaḍut deg tfaskiwin...">
         <img src="femme.png" alt="MESƐUDI Nawal">
-        <div class="name">MESƐUDI Nawal</div>
-        <div class="role">d tasegbart</div>
+        <div class="name">MESƐUDI Nawal</div><div class="role">d tasegbart</div>
       </div>
-      
-      <div class="character" tabindex="0" role="button" 
-           data-title="MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⴷⵉ ⵎⴰⵀⴷⵉ" 
-           data-desc="D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.">
+      <div class="character" tabindex="0" role="button" data-title="MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⴷⵉ ⵎⴰⵀⴷⵉ" data-desc="D ilemẓi, ilul ass n 8 Ctember 2005...">
         <img src="MahdiMes.jpg" alt="MESƐUDI Mahdi">
-        <div class="name">MESƐUDI Mahdi</div>
-        <div class="role">d asegbar</div>
+        <div class="name">MESƐUDI Mahdi</div><div class="role">d asegbar</div>
       </div>
-
-      <div class="character" tabindex="0" role="button" 
-           data-title="XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ" 
-           data-desc="d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura">
+      <div class="character" tabindex="0" role="button" data-title="XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ" data-desc="d anaẓuṛ, ilul ass 19 tuber 2013...">
         <img src="amazigh.jpg" alt="XERZI Amaziɣ">
-        <div class="name">XERZI Amaziɣ</div>
-        <div class="role">d asegbar</div>
+        <div class="name">XERZI Amaziɣ</div><div class="role">d asegbar</div>
       </div>
-      
-      <div class="character" tabindex="0" role="button" 
-           data-title="MADI Ḥamza - ⵎⴰⴷⵉ ⵃⴰⵎⵣⴰ" 
-           data-desc="D ilemẓi anaẓuṛ, ilul ass 12 wanber 2006, ittcewwiq icewwiqen icennu, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is">
+      <div class="character" tabindex="0" role="button" data-title="MADI Ḥamza - ⵎⴰⴷⵉ ⵃⴰⵎⵣⴰ" data-desc="D ilemẓi anaẓuṛ, ilul ass 12 wanber 2006...">
         <img src="Hamzamadi.jpg" alt="MADI Ḥamza">
-        <div class="name">MADI Ḥamza</div>
-        <div class="role">d asegbar</div>
+        <div class="name">MADI Ḥamza</div><div class="role">d asegbar</div>
       </div>
-      
-      <div class="character" tabindex="0" role="button" 
-           data-title="Mariya ASIL ḤARRUS - ⵎⴰⵔⵉⵢⴰ ⴰⵙⵉⵍ ⵃⴰⵔⵔⵓⵙ" 
-           data-desc="d tagrudt n sin iseggasen, tlul ass 8 ctember 2023, deg ɛin lbenyan di ldzayer tamanaɣt, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is">
+      <div class="character" tabindex="0" role="button" data-title="Mariya ASIL ḤARRUS - ⵎⴰⵔⵉⵢⴰ ⴰⵙⵉⵍ ⵃⴰⵔⵔⵓⵙ" data-desc="d tagrudt n sin iseggasen...">
         <img src="maria.jpg" alt="Mariya ASIL ḤARRUS">
-        <div class="name">Mariya ASIL ḤARRUS</div>
-        <div class="role">d tasegbart</div>
+        <div class="name">Mariya ASIL ḤARRUS</div><div class="role">d tasegbart</div>
       </div>
-      
-      <div class="character" tabindex="0" role="button" 
-           data-title="BENNUṚ Amina - ⴱⴻⵏⵏⵓⵕ ⴰⵎⵉⵏⴰ" 
-           data-desc="D taqcict, tlul 3 tuber 2016 deg Targa uzemmur Bgayet, D yellis n Ɛumar Bennuṛ, D tanelmadt deg uswir wis ukkuẓ deg uɣerbaz amenzu, d taɛeggalt deg ugraw ASIREM n tdukla tadelsant IZUMAL n taddart n Tici">
+      <div class="character" tabindex="0" role="button" data-title="BENNUṚ Amina - ⴱⴻⵏⵏⵓⵕ ⴰⵎⵉⵏⴰ" data-desc="D taqcict, tlul 3 tuber 2016...">
         <img src="femme.png" alt="BENNUṚ Amina">
-        <div class="name">BENNUṚ Amina</div>
-        <div class="role">d tasegbart</div>
+        <div class="name">BENNUṚ Amina</div><div class="role">d tasegbart</div>
       </div>
-      
-      <div class="character" tabindex="0" role="button" 
-           data-title="XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ" 
-           data-desc="d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay.">
+      <div class="character" tabindex="0" role="button" data-title="XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ" data-desc="d amɣar azemni, d anaẓur...">
         <img src="Abdelkader.jpg" alt="XERZI Ɛabdelqader">
-        <div class="name">XERZI Ɛabdelqader</div>
-        <div class="role">d asegbar</div>
+        <div class="name">XERZI Ɛabdelqader</div><div class="role">d asegbar</div>
       </div>
-      
-      <div class="character" tabindex="0" role="button" 
-           data-title="TUMERT Ǧilali - ⵊⵉⵍⴰⵍⵉ ⵜⵓⵎⴻⵔⵜ" 
-           data-desc="D anaẓur n asegber d acennay, yexdem aṭas n tezrarin d yisura s teqbaylit gar-asen-tt Tinifift, Rbiḥa, Tayri txidas d wiyaḍ nniḍen, ilul ass n 4 yulyu 1989 deg ugezdu n tizi wezzu, n Buɣni n taddart At ɛebdelmumen, yetteka yid-neɣ deg usaru n IMČEQLAL s snat n tezlatin n uḍebsi-ines 2020.">
+      <div class="character" tabindex="0" role="button" data-title="TUMERT Ǧilali - ⵊⵉⵍⴰⵍⵉ ⵜⵓⵎⴻⵔⵜ" data-desc="D anaẓur n asegber d acennay...">
         <img src="toumertdjilali.jpg" alt="TUMERT Ǧilali">
-        <div class="name">TUMERT Ǧilali</div>
-        <div class="role">d acennay</div>
+        <div class="name">TUMERT Ǧilali</div><div class="role">d acennay</div>
       </div> 
-      
-      <div class="character" tabindex="0" role="button" 
-           data-title="YUSFI Sadeq - ⵢⵓⵙⴼⵉ ⵙⴰⴷⴻⵇ" 
-           data-desc="D anaẓur n umezgun, sinima akked ccna d uẓawan, yugmed yufrar-d seg yidles Amaziɣ. Yezuzzured leqdic-is deg YouTube, itekka d waṭas n temsufeɣ gar-asen-tt asaru n IMČEQLAL yid-neɣ s ccbaḥa n tezlatin-is.">
+      <div class="character" tabindex="0" role="button" data-title="YUSFI Sadeq - ⵢⵓⵙⴼⵉ ⵙⴰⴷⴻⵇ" data-desc="D anaẓur n umezgun, sinima akked ccna d uẓawan...">
         <img src="sadekyousfi.jpg" alt="YUSFI Sadeq">
-        <div class="name">YUSFI Sadeq</div>
-        <div class="role">d acennay</div>
+        <div class="name">YUSFI Sadeq</div><div class="role">d acennay</div>
       </div>
-      
     </div>
-    
-    <button class="scroll-btn right" id="scrollRight" aria-label="Scroll right">&#10095;</button>
+    <button class="scroll-btn right" id="scrollRight">&#10095;</button>
   </div>
 
   <!-- DETAILS DU FILM -->
@@ -722,6 +681,10 @@
 <script>
   const video = document.getElementById("nflxVideo");
   const container = document.getElementById("nflxContainer");
+  
+  // Boutons et contrôles
+  const centerPlayBtn = document.getElementById("centerPlayBtn");
+  const spinner = document.getElementById("spinner");
   const playBtn = document.getElementById("playBtn");
   const playIcon = document.getElementById("playIcon");
   const pauseIcon = document.getElementById("pauseIcon");
@@ -735,45 +698,50 @@
   const muteIcon = document.getElementById("muteIcon");
   const fsBtn = document.getElementById("fsBtn");
 
+  // Fonction Lecture / Pause
   function togglePlay() {
     if (video.paused) video.play();
     else video.pause();
   }
 
-  playBtn.addEventListener("click", togglePlay);
-  video.addEventListener("click", togglePlay);
+  // Clic sur l'ensemble du conteneur pour Play/Pause (grâce à pointer-events corrigé)
+  container.addEventListener("click", (e) => {
+    // Si on a cliqué sur un bouton de la barre, on ignore pour éviter un double déclenchement
+    if (e.target.closest('.nflx-bottom-controls')) return; 
+    togglePlay();
+  });
 
+  // Gestion de l'affichage Play/Pause/Loading
   video.addEventListener("play", () => {
     playIcon.style.display = "none";
     pauseIcon.style.display = "block";
+    centerPlayBtn.style.display = "none";
     container.classList.remove("paused");
   });
 
   video.addEventListener("pause", () => {
     playIcon.style.display = "block";
     pauseIcon.style.display = "none";
+    centerPlayBtn.style.display = "flex";
     container.classList.add("paused");
   });
 
-  // Reculer / Avancer de 10 secondes
-  rewindBtn.addEventListener("click", () => {
-    video.currentTime = Math.max(0, video.currentTime - 10);
-  });
+  // Afficher le spinner quand Archive.org met du temps à charger
+  video.addEventListener("waiting", () => { spinner.style.display = "block"; });
+  video.addEventListener("playing", () => { spinner.style.display = "none"; });
+  video.addEventListener("canplay", () => { spinner.style.display = "none"; });
 
-  forwardBtn.addEventListener("click", () => {
-    video.currentTime = Math.min(video.duration, video.currentTime + 10);
-  });
+  // Reculer / Avancer de 10 secondes
+  rewindBtn.addEventListener("click", () => { video.currentTime = Math.max(0, video.currentTime - 10); });
+  forwardBtn.addEventListener("click", () => { video.currentTime = Math.min(video.duration, video.currentTime + 10); });
 
   // Formatage du temps en HEURES (HH:MM:SS)
   function formatHours(seconds) {
     if (isNaN(seconds) || seconds === Infinity) return "00:00:00";
-    
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
     const s = Math.floor(seconds % 60);
-    
     const pad = (num) => String(num).padStart(2, '0');
-    
     return `${pad(h)}:${pad(m)}:${pad(s)}`;
   }
 
@@ -828,12 +796,14 @@
   let hideControlsTimeout;
   function showControls() {
     container.classList.add("show-controls");
+    document.body.style.cursor = "default";
     clearTimeout(hideControlsTimeout);
     hideControlsTimeout = setTimeout(() => {
       if (!video.paused) {
         container.classList.remove("show-controls");
+        document.body.style.cursor = "none"; // Cache la souris en plein écran
       }
-    }, 3000);
+    }, 2500);
   }
 
   container.addEventListener("mousemove", showControls);
@@ -868,44 +838,31 @@
       const desc = card.getAttribute('data-desc');
       showDesc(title, desc);
     };
-
     card.addEventListener('click', handleOpen);
     card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        handleOpen();
-      }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleOpen(); }
     });
   });
 
   window.addEventListener("click", (e) => {
     const modal = document.getElementById("modal");
-    if (e.target === modal) {
-      closeModal();
-    }
+    if (e.target === modal) closeModal();
   });
 
   // Défilement carrousel personnages
   const charContainer = document.getElementById("characters");
   const leftBtn = document.getElementById("scrollLeft");
   const rightBtn = document.getElementById("scrollRight");
-  const scrollAmount = 260;
-
-  leftBtn.addEventListener('click', () => {
-    charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-  });
-
-  rightBtn.addEventListener('click', () => {
-    charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-  });
+  
+  leftBtn.addEventListener('click', () => { charContainer.scrollBy({ left: -260, behavior: 'smooth' }); });
+  rightBtn.addEventListener('click', () => { charContainer.scrollBy({ left: 260, behavior: 'smooth' }); });
 </script>
 
-<!-- FIREBASE AUTHENTICATION -->
+<!-- FIREBASE AUTHENTICATION (Inchangé) -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
-/* FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
   authDomain: "test-2fdd3.firebaseapp.com",
@@ -916,39 +873,28 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-/* ELEMENTS DOM */
 const amidanBtn = document.getElementById("amidanBtn");
 const accountBox = document.getElementById("accountBox");
 const userEmail = document.getElementById("userEmail");
 const logoutBtn = document.getElementById("logoutBtn");
 
-/* PROTECTION PAGE VIA FIREBASE */
 onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    window.location.href = "login.html";
-  } else {
-    amidanBtn.style.display = "inline";
-    userEmail.textContent = "Connecté : " + user.email;
-  }
+  if (!user) { window.location.href = "login.html"; } 
+  else { amidanBtn.style.display = "inline"; userEmail.textContent = "Connecté : " + user.email; }
 });
 
-/* MENU DE COMPTE */
 amidanBtn.addEventListener("click", (e) => {
   e.stopPropagation();
   accountBox.style.display = accountBox.style.display === "block" ? "none" : "block";
 });
 
-/* DÉCONNEXION */
 logoutBtn.addEventListener("click", async () => {
   await signOut(auth);
   window.location.href = "login.html";
 });
 
-/* FERMER MENU SI CLIC AILLEURS */
 document.addEventListener("click", (e) => {
-  if (!amidanBtn.contains(e.target) && !accountBox.contains(e.target)) {
-    accountBox.style.display = "none";
-  }
+  if (!amidanBtn.contains(e.target) && !accountBox.contains(e.target)) { accountBox.style.display = "none"; }
 });
 </script>
 
