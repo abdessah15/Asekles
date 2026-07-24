@@ -144,6 +144,27 @@
       transform: translate(-50%, -50%) scale(1.1);
     }
 
+    /* ===== CERCLE DE CHARGEMENT (SPINNER) ===== */
+    .loader {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 6px solid rgba(255, 255, 255, 0.2);
+      border-top: 6px solid #ff0066;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      z-index: 10;
+    }
+
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
     /* Boîte du lecteur Plyr */
     .plyr-box {
       width: 100%;
@@ -328,8 +349,11 @@
       <div class="play-btn"></div>
     </div>
     
+    <!-- Cercle de chargement -->
+    <div class="loader" id="videoLoader"></div>
+
     <div class="plyr-box" id="playerWrapper">
-      <video id="player" controls playsinline></video>
+      <video id="player" controls playsinline preload="auto"></video>
     </div>
   </div>
 
@@ -376,12 +400,14 @@
     <button class="close" onclick="closeModal()">Mdel</button>
   </div>
 </div>
+
 <!-- Scripts de gestion Plyr et UI -->
 <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
 <script>
   const thumb = document.getElementById("thumb");
   const playerWrapper = document.getElementById("playerWrapper");
   const videoElement = document.getElementById("player");
+  const loader = document.getElementById("videoLoader");
   let player;
 
   const videoUrl = "https://ia600707.us.archive.org/14/items/2-23-2/CIRTA.mp4";
@@ -390,9 +416,15 @@
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
     playerWrapper.style.display = "block";
+    loader.style.display = "block";
 
     player = new Plyr('#player', {
-      controls: ['play-large', 'play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'fullscreen'],
+      controls: [
+        'play-large', 'play', 'progress', 'current-time', 'duration', 
+        'mute', 'volume', 'settings', 'fullscreen'
+      ],
+      settings: ['speed'],
+      speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] },
       ratio: '16:9'
     });
 
@@ -404,6 +436,11 @@
     player.once('ready', () => {
       player.play();
     });
+
+    // Gestion de la roue de chargement
+    player.on('playing', () => { loader.style.display = "none"; });
+    player.on('canplay', () => { loader.style.display = "none"; });
+    player.on('waiting', () => { loader.style.display = "block"; });
   });
 
   // Gestion des modales d'information
@@ -445,6 +482,7 @@
     e.preventDefault();
   });
 </script>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
