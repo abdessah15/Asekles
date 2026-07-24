@@ -1,17 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ber">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Asekles - AREKSIM</title>
   <link rel="icon" href="Asekles.png" type="image/png">
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
 
   <style>
-    :root { 
-      --plyr-color-main: #ff0066; 
-    }
-
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -82,9 +77,10 @@
       border-radius: 6px;
       cursor: pointer;
       width: 100%;
+      font-weight: bold;
     }
 
-    /* ===== CONTENT ===== */
+    /* ===== CONTENT CONTAINER ===== */
     .container {
       display: flex;
       flex-direction: column;
@@ -104,16 +100,30 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
+    /* PLEIN ÉCRAN DESKTOP ET MOBILE */
+    .video-container:fullscreen,
+    .video-container:-webkit-full-screen {
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: none !important;
+      border-radius: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: #000 !important;
+    }
+
     .video-thumb {
       position: relative;
       width: 100%;
-      max-width: 900px;
+      aspect-ratio: 16/9;
       cursor: pointer;
     }
 
     .video-thumb img {
       width: 100%;
-      border-radius: 12px;
+      height: 100%;
+      object-fit: cover;
       display: block;
     }
 
@@ -121,12 +131,12 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%,-50%);
+      transform: translate(-50%, -50%);
       width: 80px;
       height: 80px;
-      background: rgba(255,0,102,0.85);
+      background: rgba(255, 0, 102, 0.85);
       border-radius: 50%;
-      transition: 0.3s;
+      transition: transform 0.3s ease;
       z-index: 2;
     }
 
@@ -141,13 +151,207 @@
     }
 
     .video-thumb:hover .play-btn {
-      transform: translate(-50%, -50%) scale(1.1);
+      transform: translate(-50%, -50%) scale(1.15);
     }
 
-    .artplayer-app {
-      width: 100%;
-      aspect-ratio: 16/9;
+    /* ===== LECTEUR VIDÉO SUR MESURE ===== */
+    .custom-player {
       display: none;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+    }
+
+    .video-container:fullscreen .custom-player,
+    .video-container:-webkit-full-screen .custom-player {
+      aspect-ratio: unset !important;
+    }
+
+    .custom-player video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* SPINNER DE CHARGEMENT */
+    .video-loader {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 4px solid rgba(255,255,255,0.2);
+      border-top: 4px solid #ff0066;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 0.8s linear infinite;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* BARRE DE CONTRÔLES DYNAMIQUE */
+    .custom-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.95));
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 99999;
+      pointer-events: none;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    /* MARGES DE SÉCURITÉ PLEIN ÉCRAN / ROTATION MOBILE */
+    .video-container:fullscreen .custom-controls,
+    .video-container:-webkit-full-screen .custom-controls {
+      padding-bottom: max(12px, env(safe-area-inset-bottom));
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+      padding-top: 10px;
+    }
+
+    .custom-player:hover .custom-controls,
+    .custom-player.paused .custom-controls,
+    .custom-player.show-controls .custom-controls {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .ctrl-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .ctrl-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: #ffffff;
+      transition: fill 0.2s;
+    }
+
+    .ctrl-btn:hover svg {
+      fill: #ff0066;
+    }
+
+    .time-display {
+      font-size: 0.78em;
+      color: #ccc;
+      white-space: nowrap;
+      font-family: monospace;
+      flex-shrink: 0;
+    }
+
+    /* BARRE DE PROGRESSION FLUIDE */
+    .progress-bar {
+      flex: 1;
+      min-width: 30px;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 5px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .progress-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #ff0066;
+      cursor: pointer;
+    }
+
+    .progress-bar::-moz-range-thumb {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #ff0066;
+      cursor: pointer;
+      border: none;
+    }
+
+    /* MENU VITESSE COMPACT */
+    .speed-select {
+      background: rgba(20, 20, 20, 0.8);
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 4px;
+      padding: 3px 4px;
+      font-size: 0.75em;
+      cursor: pointer;
+      outline: none;
+      flex-shrink: 0;
+    }
+
+    /* ADAPTATION SMARTPHONE ET PAYSAGE */
+    @media screen and (max-width: 600px) {
+      .custom-controls {
+        gap: 4px;
+        padding: 6px 8px;
+      }
+      .ctrl-btn {
+        padding: 2px;
+      }
+      .ctrl-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .time-display {
+        font-size: 0.65em;
+      }
+      .speed-select {
+        font-size: 0.65em;
+        padding: 2px;
+      }
+    }
+
+    @media screen and (max-height: 500px) and (orientation: landscape) {
+      .custom-controls {
+        padding: 6px 10px;
+        gap: 6px;
+      }
+      .ctrl-btn {
+        padding: 4px;
+      }
+      .ctrl-btn svg {
+        width: 19px;
+        height: 19px;
+      }
+      .time-display {
+        font-size: 0.7em;
+      }
+      .speed-select {
+        padding: 2px 3px;
+        font-size: 0.7em;
+      }
     }
 
     /* ===== PERSONNAGES ===== */
@@ -165,7 +369,8 @@
       gap: 20px;
       overflow-x: auto;
       scroll-behavior: smooth;
-      padding: 10px 0;
+      padding: 10px 5px;
+      width: 100%;
     }
 
     .characters::-webkit-scrollbar {
@@ -176,28 +381,35 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.8);
       color: #ff0066;
-      border: none;
-      font-size: 2em;
+      border: 1px solid #ff0066;
+      font-size: 1.5em;
       cursor: pointer;
-      padding: 5px 10px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
     }
-
-    .scroll-btn.left { left: -10px; }
-    .scroll-btn.right { right: -10px; }
 
     .scroll-btn:hover {
-      background: rgba(0,0,0,0.8);
+      background: #ff0066;
+      color: #fff;
     }
+
+    .scroll-btn.left { left: 5px; }
+    .scroll-btn.right { right: 5px; }
 
     .character {
       text-align: center;
       cursor: pointer;
       flex: 0 0 auto;
       width: 110px;
+      outline: none;
     }
 
     .character img {
@@ -206,26 +418,27 @@
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid #ff0066;
-      box-shadow: 0 0 18px rgba(255,0,102,.6);
-      transition: .3s;
+      box-shadow: 0 0 15px rgba(255,0,102,.5);
+      transition: transform .3s;
     }
 
-    .character:hover img {
-      transform: scale(1.15);
-      box-shadow: 0 0 28px rgba(255,0,102,1);
+    .character:hover img,
+    .character:focus img {
+      transform: scale(1.1);
     }
 
     .character .name {
       margin-top: 8px;
       font-weight: bold;
-      font-size: 0.9em;
+      font-size: 0.85em;
     }
 
     .character .role {
-      font-size: .8em;
+      font-size: .75em;
       color: #bbb;
     }
 
+    /* ===== INFOS DU FILM ===== */
     .film-info {
       background-color: #1a1a1a;
       padding: 20px;
@@ -233,6 +446,8 @@
       max-width: 900px;
       line-height: 1.6;
       width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #333;
     }
 
     .film-info h2 {
@@ -248,91 +463,46 @@
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 999;
+      z-index: 9999;
+      padding: 15px;
     }
 
     .modal-content {
       background: #1a1a1a;
-      padding: 20px;
+      padding: 25px;
       border-radius: 12px;
-      max-width: 400px;
+      max-width: 450px;
+      width: 100%;
       text-align: center;
+      border: 1px solid #ff0066;
+      box-shadow: 0 0 20px rgba(255, 0, 102, 0.4);
     }
 
     .modal-content h3 {
       color: #ff0066;
+      margin-top: 0;
+    }
+
+    .modal-content p {
+      line-height: 1.5;
+      color: #ddd;
+      font-size: 0.95em;
     }
 
     .close {
       margin-top: 15px;
-      padding: 8px 15px;
+      padding: 8px 20px;
       background: #ff0066;
       border: none;
       color: #fff;
       cursor: pointer;
       border-radius: 6px;
+      font-weight: bold;
     }
 
-    /* ===== GRILLES ET AUTRES ===== */
-    .movie-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-
-    .movie-item {
-      background: #222;
-      padding: 10px;
-      border-radius: 10px;
-      text-align: center;
-      transition: transform .3s, box-shadow .3s;
-    }
-
-    .movie-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 16px rgba(255,0,102,.6);
-    }
-
-    .movie-item img {
-      width: 100%;
-      border-radius: 10px;
-    }
-
-    .movie-item h3 {
-      position: relative;
-      margin-top: 10px;
-      font-size: 1.2em;
-      color: #ff0066;
-      padding-bottom: 6px;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* ===== FOOTER ===== */
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #111;
-      text-align: center;
-      padding: 8px;
-      font-size: .9em;
-    }
-
-    @supports not (aspect-ratio: 1/1) {
-      .video-thumb, .artplayer-app {
+    @supports not (aspect-ratio: 16/9) {
+      .video-thumb, .custom-player {
         height: calc(100vw * 9 / 16);
-      }
-    }
-
-    /* ===== MOBILE ===== */
-    @media (max-width: 600px) {
-      .movie-grid {
-        grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
@@ -351,6 +521,7 @@
 
   <div class="account-wrapper">
     <span id="amidanBtn" style="display:none;">Amiḍan</span>
+
     <div id="accountBox">
       <p id="userEmail"></p>
       <button id="logoutBtn">Effeɣ</button>
@@ -359,98 +530,169 @@
 </nav>
 
 <div class="container">
-  <div class="video-container">
+
+  <!-- ZONE DU LECTEUR VIDEO SUR MESURE -->
+  <div class="video-container" id="videoContainer">
     <div class="video-thumb" id="thumb">
       <img src="arksm.jpg" alt="cover vidéo">
       <div class="play-btn"></div>
     </div>
 
-    <video id="player" class="artplayer-app" controls style="display:none;">
-      <source src="#">
-    </video>
+    <div class="custom-player" id="playerWrapper">
+      <div class="video-loader" id="videoLoader"></div>
+      
+      <video id="myVideo" playsinline preload="auto">
+        <source src="#" type="video/mp4">
+      </video>
+
+      <div class="custom-controls" id="customControls">
+        <!-- Jouer / Pause -->
+        <button class="ctrl-btn" id="playBtn" title="Seddu / Ḥbes">
+          <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+
+        <span class="time-display" id="timeDisplay">00:00:00 / 00:00:00</span>
+        
+        <!-- Barre de progression -->
+        <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1">
+        
+        <!-- Muet / Son -->
+        <button class="ctrl-btn" id="muteBtn" title="Ṣṣut">
+          <svg id="volumeIcon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+          <svg id="muteIcon" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+        </button>
+        
+        <!-- Vitesse -->
+        <select class="speed-select" id="speedSelect" title="Tazzla">
+          <option value="0.5">0.5x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2x</option>
+        </select>
+
+        <!-- Plein Écran -->
+        <button class="ctrl-btn" id="fullscreenBtn" title="Agdil aɣezfan">
+          <svg id="fsEnterIcon" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          <svg id="fsExitIcon" viewBox="0 0 24 24" style="display:none;"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
+        </button>
+      </div>
+    </div>
   </div>
 
+  <!-- PERSONNAGES AVEC SCROLL -->
   <div class="characters-wrapper">
-    <button class="scroll-btn left">&#10094;</button>
+    <button class="scroll-btn left" id="scrollLeft" aria-label="Scroll left">&#10094;</button>
+
     <div class="characters" id="characters">
       
-      <div class="character" onclick="showDesc('XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ','d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ" 
+           data-desc="d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.">
         <img src="Abdessah.jpg" alt="XERZI Ɛabdeṣṣaḥ">
         <div class="name">XERZI Ɛabdeṣṣaḥ</div>
         <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
       </div>
 
-      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ" 
+           data-desc="d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura">
         <img src="amazigh.jpg" alt="XERZI Amaziɣ">
         <div class="name">XERZI Amaziɣ</div>
         <div class="role">d asegbar</div>
       </div>
 
-      <div class="character" onclick="showDesc('MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⴷⵉ ⵎⴰⵀⴷⵉ ','D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⴷⵉ ⵎⴰⵀⴷⵉ" 
+           data-desc="D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.">
         <img src="MahdiMes.jpg" alt="MESƐUDI Mahdi">
         <div class="name">MESƐUDI Mahdi</div>
         <div class="role">d asegbar</div>
       </div>
-      
-      <div class="character" onclick="showDesc('MADI Ḥamza - ⵎⴰⴷⵉ ⵃⴰⵎⵣⴰ ','D ilemẓi anaẓuṛ, ilul ass 12 wanber 2006, ittcewwiq icewwiqen icennu, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+
+      <div class="character" tabindex="0" role="button" 
+           data-title="MADI Ḥamza - ⵎⴰⴷⵉ ⵃⴰⵎⵣⴰ" 
+           data-desc="D ilemẓi anaẓuṛ, ilul ass 12 wanber 2006, ittcewwiq icewwiqen icennu, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is">
         <img src="Hamzamadi.jpg" alt="MADI Ḥamza">
         <div class="name">MADI Ḥamza</div>
         <div class="role">d asegbar</div>
       </div>
-            <div class="character" onclick="showDesc('Nabila Ubaɛziz - ⵏⴰⴱⵉⵍⴰ ⵓⴱⴰⵄⵣⵓⵣ ','Nabila UBAƐZIZ, d tanelmadt di tseddawit Mulud At MƐEMMER, d  tilemẓit si Taddart At Gwaret, Taɣiwant n Timizar Sidi Menṣur, At Jennad. D tamarut, d tamedyazt, d timsuneɣt,  i tikkelt tamezwarut ideg itekka yid-neɣ deg usisleg n usaru n Kulla s taɣect-is')">
+
+      <div class="character" tabindex="0" role="button" 
+           data-title="Nabila Ubaɛziz - ⵏⴰⴱⵉⵍⴰ ⵓⴱⴰⵄⵣⵓⵣ" 
+           data-desc="Nabila UBAƐZIZ, d tanelmadt di tseddawit Mulud At MƐEMMER, d tilemẓit si Taddart At Gwaret, Taɣiwant n Timizar Sidi Menṣur, At Jennad. D tamarut, d tamedyazt, d timsuneɣt, i tikkelt tamezwarut ideg itekka yid-neɣ deg usisleg n usaru n Kulla s taɣect-is">
         <img src="NabilaUbaɛziz.jpg" alt="Nabila Ubaɛziz">
         <div class="name">Nabila Ubaɛziz</div>
         <div class="role">d tasegbart</div>
       </div>
-      
-      <div class="character" onclick="showDesc('Ṣalaḥ Labib - ⵚⴰⵍⴰⵃ ⵍⴰⴱⵉⴱ','Ilul ass n 19 furar 1994 Taddart n Ticci, taɣiwant n at muḥli agezdu n sṭif d imṣeḍsu, d aselway n tidukkla tadelsant IZUMAL, yewwi-d agerdas n master deg taɣult n tasnudert ( biologie ).')">
+
+      <div class="character" tabindex="0" role="button" 
+           data-title="Ṣalaḥ Labib - ⵚⴰⵍⴰⵃ ⵍⴰⴱⵉⴱ" 
+           data-desc="Ilul ass n 19 furar 1994 Taddart n Ticci, taɣiwant n at muḥli agezdu n sṭif d imṣeḍsu, d aselway n tidukkla tadelsant IZUMAL, yewwi-d agerdas n master deg taɣult n tasnudert ( biologie ).">
         <img src="ṣalaḥlabib.jpg" alt="Ṣalaḥ Labib">
         <div class="name">Ṣalaḥ Labib</div>
         <div class="role">d asegbar</div>
       </div>
 
-      <div class="character" onclick="showDesc('Redwan ḤARUS - ⵔⴻⴷⵡⴰⵏ ⵃⴰⵔⵓⵙ','Ilul ass n 4 furar 1991, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru Areksim s taɣect-is.')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="Redwan ḤARUS - ⵔⴻⴷⵡⴰⵏ ⵃⴰⵔⵓⵙ" 
+           data-desc="Ilul ass n 4 furar 1991, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru Areksim s taɣect-is.">
         <img src="redwanḥarus.jpg" alt="Redwan ḤARUS">
         <div class="name">Redwan ḤARUS</div>
         <div class="role">d asegbar</div>
       </div>
 
-      <div class="character" onclick="showDesc('BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻⵙ ','tamekfaḍut d tamedyazt d tamarut, d yelli-s n tɣiwant it Muḥli, tlul deg useggas n 2001 deg waɣir n it Wertilan agezdu n Ṣṭif. Tewwi-d agerdas n master deg taɣult n Tesnalmudt deg tutlayt d yidles Amaziɣ.')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻﺲ" 
+           data-desc="tamekfaḍut d tamedyazt d tamarut, d yelli-s n tɣiwant it Muḥli, tlul deg useggas n 2001 deg waɣir n it Wertilan agezdu n Ṣṭif. Tewwi-d agerdas n master deg taɣult n Tesnalmudt deg tutlayt d yidles Amaziɣ.">
         <img src="femme.png" alt="BEǦǦA Ṭawes">
         <div class="name">BEǦǦA Ṭawes</div>
         <div class="role">d tasegbart</div>
       </div>
-      
-      <div class="character" onclick="showDesc('MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⴷⵉ ⵃⴰⵏⴰⵏ ','D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+
+      <div class="character" tabindex="0" role="button" 
+           data-title="MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⴷⵉ ⵃⴰནⴰⵏ" 
+           data-desc="D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is">
         <img src="femme.png" alt="MESƐUDI Ḥanan">
         <div class="name">MESƐUDI Ḥanan</div>
         <div class="role">d tasegbart</div>
       </div>
 
-      <div class="character" onclick="showDesc('XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ','d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay.')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ" 
+           data-desc="d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay.">
         <img src="Abdelkader.jpg" alt="XERZI Ɛabdelqader">
         <div class="name">XERZI Ɛabdelqader</div>
         <div class="role">d asegbar</div>
       </div>
-      
-      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+
+      <div class="character" tabindex="0" role="button" 
+           data-title="MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ" 
+           data-desc="D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is">
         <img src="femme.png" alt="MESƐUDI Nawal">
         <div class="name">MESƐUDI Nawal</div>
         <div class="role">d tasegbart</div>
       </div>
-      
+
     </div>
-    <button class="scroll-btn right">&#10095;</button>
+
+    <button class="scroll-btn right" id="scrollRight" aria-label="Scroll right">&#10095;</button>
   </div>
 
+  <!-- INFOS DU FILM -->
   <div class="film-info">
     <h2>AREKSIM</h2>
-    <p><strong>Tawsit :</strong> Inig,Amuggan, Arrac</p>
+    <p><strong>Tawsit :</strong> Inig, Amuggan, Arrac</p>
     <p><strong>Azemz n usufeɣ :</strong> 2026</p>
-    <p><strong>Aglam n usaru :</strong> 
-Asaru-a yettmeslay-d ɣef Areksim. D aqcic i d-tesker terkeft n wuccanen deg teẓgi. Seg mi yella d agrud, d BUBBAZ ursel akked MAYAS Amayas i t-yesselmaden iṣudaf n teẓgi. AREKSIM ḥemmlen-t yakk yiɣersiwen siwa aɣilas amcum BUJƐIQ i yebɣan ad yeskef idammen-is wa ad ikedded iɣessan-is, almi d ass i yeḍra wayen yeḍran ifaq-d Areksim belli yekka-d seg yimdanen, ur yelli d aɣersiw.  </div>
+    <p><strong>Aglam n usaru :</strong><br>
+    Asaru-a yettmeslay-d ɣef Areksim. D aqcic i d-tesker terkeft n wuccanen deg teẓgi. Seg mi yella d agrud, d BUBBAZ ursel akked MAYAS Amayas i t-yesselmaden iṣudaf n teẓgi. AREKSIM ḥemmlen-t yakk yiɣersiwen siwa aɣilas amcum BUJƐIQ i yebɣan ad yeskef idammen-is wa ad ikedded iɣessan-is, almi d ass i yeḍra wayen yeḍran ifaq-d Areksim belli yekka-d seg yimdanen, ur yelli d aɣersiw.
+    </p>
+  </div>
+
 </div>
 
+<!-- MODAL DESCRIPTION -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <h3 id="modalTitle"></h3>
@@ -459,20 +701,162 @@ Asaru-a yettmeslay-d ɣef Areksim. D aqcic i d-tesker terkeft n wuccanen deg te�
   </div>
 </div>
 
-<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<!-- LOGIQUE DU LECTEUR VIDÉO SUR MESURE -->
 <script>
-  // Initialisation du lecteur vidéo
+  const videoContainer = document.getElementById("videoContainer");
   const thumb = document.getElementById("thumb");
-  const video = document.getElementById("player");
-  const player = new Plyr('#player');
+  const playerWrapper = document.getElementById("playerWrapper");
+  const video = document.getElementById("myVideo");
+  const videoLoader = document.getElementById("videoLoader");
 
+  const playBtn = document.getElementById("playBtn");
+  const playIcon = document.getElementById("playIcon");
+  const pauseIcon = document.getElementById("pauseIcon");
+
+  const timeDisplay = document.getElementById("timeDisplay");
+  const progressBar = document.getElementById("progressBar");
+
+  const muteBtn = document.getElementById("muteBtn");
+  const volumeIcon = document.getElementById("volumeIcon");
+  const muteIcon = document.getElementById("muteIcon");
+
+  const speedSelect = document.getElementById("speedSelect");
+  const fullscreenBtn = document.getElementById("fullscreenBtn");
+  const fsEnterIcon = document.getElementById("fsEnterIcon");
+  const fsExitIcon = document.getElementById("fsExitIcon");
+
+  // Démarrage de la vidéo au clic sur la miniature
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
-    video.style.display = "block";
-    player.play();
+    playerWrapper.style.display = "block";
+    video.play();
   });
 
-  // Gestion de la modale
+  // Basculer entre Lecture et Pause
+  function togglePlay() {
+    if (video.paused || video.ended) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  }
+
+  playBtn.addEventListener("click", togglePlay);
+  video.addEventListener("click", togglePlay);
+
+  video.addEventListener("play", () => {
+    playIcon.style.display = "none";
+    pauseIcon.style.display = "block";
+    playerWrapper.classList.remove("paused");
+  });
+
+  video.addEventListener("pause", () => {
+    playIcon.style.display = "block";
+    pauseIcon.style.display = "none";
+    playerWrapper.classList.add("paused");
+  });
+
+  // Formatage du temps au format 00:00:00
+  function formatTime(seconds) {
+    if (isNaN(seconds) || seconds === Infinity) return "00:00:00";
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+    const pad = (num) => String(num).padStart(2, '0');
+    return `${pad(h)}:${pad(m)}:${pad(s)}`;
+  }
+
+  // Mise à jour de la barre de progression et du temps
+  video.addEventListener("timeupdate", () => {
+    if (!isNaN(video.duration) && video.duration > 0) {
+      const pct = (video.currentTime / video.duration) * 100;
+      progressBar.value = pct;
+      timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+    }
+  });
+
+  // Navigation dans la vidéo avec le curseur
+  progressBar.addEventListener("input", () => {
+    if (!isNaN(video.duration) && video.duration > 0) {
+      const seekTime = (progressBar.value / 100) * video.duration;
+      video.currentTime = seekTime;
+    }
+  });
+
+  // Gestion de la mise en sourdine
+  muteBtn.addEventListener("click", () => {
+    video.muted = !video.muted;
+    if (video.muted) {
+      volumeIcon.style.display = "none";
+      muteIcon.style.display = "block";
+    } else {
+      volumeIcon.style.display = "block";
+      muteIcon.style.display = "none";
+    }
+  });
+
+  // Vitesse de lecture
+  speedSelect.addEventListener("change", (e) => {
+    video.playbackRate = parseFloat(e.target.value);
+  });
+
+  // Gestion du plein écran
+  function toggleFullscreen() {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+      if (videoContainer.requestFullscreen) {
+        videoContainer.requestFullscreen();
+      } else if (videoContainer.webkitRequestFullscreen) {
+        videoContainer.webkitRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    }
+  }
+
+  fullscreenBtn.addEventListener("click", toggleFullscreen);
+
+  const updateFsIcons = () => {
+    const isFS = document.fullscreenElement || document.webkitFullscreenElement;
+    if (isFS) {
+      fsEnterIcon.style.display = "none";
+      fsExitIcon.style.display = "block";
+    } else {
+      fsEnterIcon.style.display = "block";
+      fsExitIcon.style.display = "none";
+    }
+  };
+
+  document.addEventListener("fullscreenchange", updateFsIcons);
+  document.addEventListener("webkitfullscreenchange", updateFsIcons);
+
+  // Spinner de chargement
+  video.addEventListener("waiting", () => { videoLoader.style.display = "block"; });
+  video.addEventListener("playing", () => { videoLoader.style.display = "none"; });
+  video.addEventListener("canplay", () => { videoLoader.style.display = "none"; });
+
+  // Masquage automatique des contrôles en cours de lecture
+  let hideControlsTimeout;
+  function showControls() {
+    playerWrapper.classList.add("show-controls");
+    clearTimeout(hideControlsTimeout);
+    hideControlsTimeout = setTimeout(() => {
+      if (!video.paused) {
+        playerWrapper.classList.remove("show-controls");
+      }
+    }, 3000);
+  }
+
+  playerWrapper.addEventListener("mousemove", showControls);
+  playerWrapper.addEventListener("touchstart", showControls);
+
+  // Empêcher le menu contextuel sur la vidéo
+  playerWrapper.addEventListener("contextmenu", (e) => e.preventDefault());
+
+  // Modal Personnages
   function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalText").innerText = text;
@@ -483,27 +867,95 @@ Asaru-a yettmeslay-d ɣef Areksim. D aqcic i d-tesker terkeft n wuccanen deg te�
     document.getElementById("modal").style.display = "none";
   }
 
-  // Scroll des personnages
-  const charContainer = document.getElementById("characters");
-  const leftBtn = document.querySelector('.scroll-btn.left');
-  const rightBtn = document.querySelector('.scroll-btn.right');
-  const scrollAmount = 200;
+  document.querySelectorAll('.character').forEach(card => {
+    const handleOpen = () => {
+      const title = card.getAttribute('data-title');
+      const desc = card.getAttribute('data-desc');
+      showDesc(title, desc);
+    };
 
-  function updateButtons() {
-    leftBtn.disabled = charContainer.scrollLeft <= 0;
-    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth;
-  }
+    card.addEventListener('click', handleOpen);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleOpen();
+      }
+    });
+  });
+
+  window.addEventListener("click", (e) => {
+    const modal = document.getElementById("modal");
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Défilement du carrousel de personnages
+  const charContainer = document.getElementById("characters");
+  const leftBtn = document.getElementById("scrollLeft");
+  const rightBtn = document.getElementById("scrollRight");
+  const scrollAmount = 260;
 
   leftBtn.addEventListener('click', () => {
     charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    setTimeout(updateButtons, 300);
   });
 
   rightBtn.addEventListener('click', () => {
     charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    setTimeout(updateButtons, 300);
   });
-
-  // Mettre à jour l'état des boutons au chargement
-  updateButtons();
 </script>
+
+<!-- FIREBASE AUTHENTICATION -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+
+/* CONFIGURATION FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
+  authDomain: "test-2fdd3.firebaseapp.com",
+  projectId: "test-2fdd3",
+  appId: "1:244317844373:web:3a4e5b77c649f54d7fbc9c"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+/* ÉLÉMENTS DOM */
+const amidanBtn = document.getElementById("amidanBtn");
+const accountBox = document.getElementById("accountBox");
+const userEmail = document.getElementById("userEmail");
+const logoutBtn = document.getElementById("logoutBtn");
+
+/* GESTION SESSION ET REDIRECTION */
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+  } else {
+    amidanBtn.style.display = "inline";
+    userEmail.textContent = "Connecté : " + user.email;
+  }
+});
+
+/* MENU DE COMPTE */
+amidanBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  accountBox.style.display = accountBox.style.display === "block" ? "none" : "block";
+});
+
+/* DÉCONNEXION */
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "login.html";
+});
+
+/* FERMETURE DU MENU AU CLIC EXTERNE */
+document.addEventListener("click", (e) => {
+  if (!amidanBtn.contains(e.target) && !accountBox.contains(e.target)) {
+    accountBox.style.display = "none";
+  }
+});
+</script>
+
+</body>
+</html>
