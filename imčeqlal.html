@@ -101,7 +101,7 @@
       padding-bottom: 120px;
     }
 
-    /* ===== LECTEUR NETFLIX CORRIGÉ ===== */
+    /* ===== LECTEUR NETFLIX SÉCURISÉ ===== */
     .nflx-player-container {
       width: 100%;
       max-width: 900px;
@@ -112,7 +112,7 @@
       overflow: hidden;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
       user-select: none;
-      cursor: pointer; /* Indique que la zone est cliquable */
+      cursor: pointer;
     }
 
     .nflx-player-container:fullscreen,
@@ -146,14 +146,14 @@
       justify-content: center;
       z-index: 5;
       transition: opacity 0.2s, transform 0.2s;
-      pointer-events: none; /* Ne bloque pas le clic global */
+      pointer-events: none;
     }
     
     .center-play-btn svg {
       width: 40px;
       height: 40px;
       fill: #fff;
-      margin-left: 5px; /* Centrage optique du triangle */
+      margin-left: 5px;
     }
 
     .nflx-player-container:hover .center-play-btn {
@@ -179,7 +179,7 @@
 
     @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-    /* Overlay global (titre + contrôles) */
+    /* Overlay global */
     .nflx-overlay {
       position: absolute;
       inset: 0;
@@ -197,7 +197,6 @@
       opacity: 0;
       transition: opacity 0.3s ease;
       z-index: 10;
-      /* CORRECTION CAPITALE : Laisse passer les clics vers la vidéo */
       pointer-events: none; 
     }
 
@@ -207,7 +206,6 @@
       opacity: 1;
     }
 
-    /* Réactiver les clics UNIQUEMENT sur les boutons et les barres */
     .nflx-header, 
     .nflx-bottom-controls {
       pointer-events: auto; 
@@ -239,7 +237,6 @@
       padding-bottom: 5px;
     }
 
-    /* Barre de progression fluide */
     .nflx-progress-wrapper {
       width: 100%;
       display: flex;
@@ -298,7 +295,6 @@
       white-space: nowrap;
     }
 
-    /* Rangée de boutons */
     .nflx-buttons-row {
       display: flex;
       align-items: center;
@@ -335,7 +331,6 @@
       fill: currentColor;
     }
 
-    /* Groupe Volume */
     .nflx-volume-group {
       display: flex;
       align-items: center;
@@ -375,7 +370,6 @@
       border: none;
     }
 
-    /* Adaptation mobile */
     @media screen and (max-width: 600px) {
       .nflx-overlay { padding: 10px 15px; }
       .nflx-title { font-size: 0.9em; }
@@ -465,7 +459,7 @@
     }
     .film-info h2 { color: #ff0066; margin-top: 0; }
 
-    /* ===== MODAL DESCRIPTION ===== */
+    /* ===== MODAL ===== */
     .modal {
       position: fixed;
       inset: 0;
@@ -527,28 +521,25 @@
 
 <div class="container">
 
-  <!-- LECTEUR VIDÉO NETFLIX CORRIGÉ -->
+  <!-- LECTEUR VIDÉO NETFLIX PROTÉGÉ -->
   <div class="nflx-player-container" id="nflxContainer">
     
-    <!-- Spinner et Bouton Central -->
     <div class="loading-spinner" id="spinner"></div>
     <div class="center-play-btn" id="centerPlayBtn">
       <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
     </div>
 
-    <video id="nflxVideo" playsinline preload="metadata">
+    <!-- Protection anti-téléchargement et clic droit activée ici -->
+    <video id="nflxVideo" playsinline preload="metadata" oncontextmenu="return false;" controlsList="nodownload">
       <source src="https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4" type="video/mp4">
     </video>
 
-    <!-- Overlay Netflix -->
     <div class="nflx-overlay">
-      <!-- En-tête haut -->
       <div class="nflx-header">
         <span class="nflx-title">IMČEQLAL</span>
         <span class="nflx-subtitle">| Asaru</span>
       </div>
 
-      <!-- Contrôles bas -->
       <div class="nflx-bottom-controls">
         <div class="nflx-progress-wrapper">
           <div class="nflx-progress-container">
@@ -559,23 +550,19 @@
 
         <div class="nflx-buttons-row">
           <div class="nflx-left-controls">
-            <!-- Lecture / Pause -->
             <button class="nflx-btn" id="playBtn" title="Seddu / Ḥbes (Espace)">
               <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
               <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
             </button>
 
-            <!-- Reculer 10s -->
             <button class="nflx-btn" id="rewindBtn" title="Uɣal ddeffir s 10s">
               <svg viewBox="0 0 24 24"><path d="M12.5 3C7.8 3 4 6.8 4 11.5V12h-2l3 3.5 3-3.5h-2v-.5C6 8 8.9 5.1 12.5 5.1c3.6 0 6.5 2.9 6.5 6.5s-2.9 6.5-6.5 6.5c-1.8 0-3.4-.7-4.6-1.9l-1.4 1.4C8 20.1 10.1 21 12.5 21 17.7 21 22 16.7 22 11.5S17.7 3 12.5 3z"/></svg>
             </button>
 
-            <!-- Avancer 10s -->
             <button class="nflx-btn" id="forwardBtn" title="Zwer zdat s 10s">
               <svg viewBox="0 0 24 24"><path d="M11.5 3C16.2 3 20 6.8 20 11.5V12h2l-3 3.5-3-3.5h2v-.5C18 8 15.1 5.1 11.5 5.1 7.9 5.1 5 8 5 11.5S7.9 18 11.5 18c1.8 0 3.4-.7 4.6-1.9l1.4 1.4C16 20.1 13.9 21 11.5 21 6.3 21 2 16.7 2 11.5S6.3 3 11.5 3z"/></svg>
             </button>
 
-            <!-- Volume -->
             <div class="nflx-volume-group">
               <button class="nflx-btn" id="muteBtn" title="Ṣṣut (M)">
                 <svg id="volumeIcon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
@@ -586,7 +573,6 @@
           </div>
 
           <div class="nflx-right-controls">
-            <!-- Plein Écran -->
             <button class="nflx-btn" id="fsBtn" title="Agdil aɣezfan (F)">
               <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
             </button>
@@ -596,11 +582,10 @@
     </div>
   </div>
 
-  <!-- PERSONNAGES (Inchangé) -->
+  <!-- PERSONNAGES -->
   <div class="characters-wrapper">
     <button class="scroll-btn left" id="scrollLeft">&#10094;</button>
     <div class="characters" id="characters">
-      <!-- Mêmes personnages que dans votre code -->
       <div class="character" tabindex="0" role="button" data-title="XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ" data-desc="d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.">
         <img src="Abdessah.jpg" alt="XERZI Ɛabdeṣṣaḥ">
         <div class="name">XERZI Ɛabdeṣṣaḥ</div><div class="role">Anemhal anaẓuṛan n usisleg</div>
@@ -626,8 +611,8 @@
         <div class="name">MESƐUDI Mahdi</div><div class="role">d asegbar</div>
       </div>
       <div class="character" tabindex="0" role="button" data-title="XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ" data-desc="d anaẓuṛ, ilul ass 19 tuber 2013...">
-        <img src="amazigh.jpg" alt="XERZI Amaziɣ">
-        <div class="name">XERZI Amaziɣ</div><div class="role">d asegbar</div>
+        <img src="amazigh.jpg" alt="XERZI Amaziⵖ">
+        <div class="name">XERZI Amaziⵖ</div><div class="role">d asegbar</div>
       </div>
       <div class="character" tabindex="0" role="button" data-title="MADI Ḥamza - ⵎⴰⴷⵉ ⵃⴰⵎⵣⴰ" data-desc="D ilemẓi anaẓuṛ, ilul ass 12 wanber 2006...">
         <img src="Hamzamadi.jpg" alt="MADI Ḥamza">
@@ -657,7 +642,6 @@
     <button class="scroll-btn right" id="scrollRight">&#10095;</button>
   </div>
 
-  <!-- DETAILS DU FILM -->
   <div class="film-info">
     <h2>IMČEQLAL</h2>
     <p><strong>Tawsit :</strong> Inig, Taḍṣa, Arrac</p>
@@ -668,7 +652,6 @@
   </div>
 </div>
 
-<!-- MODAL DESCRIPTION -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <h3 id="modalTitle"></h3>
@@ -677,12 +660,10 @@
   </div>
 </div>
 
-<!-- LOGIQUE DU LECTEUR VIDÉO NETFLIX -->
 <script>
   const video = document.getElementById("nflxVideo");
   const container = document.getElementById("nflxContainer");
   
-  // Boutons et contrôles
   const centerPlayBtn = document.getElementById("centerPlayBtn");
   const spinner = document.getElementById("spinner");
   const playBtn = document.getElementById("playBtn");
@@ -698,20 +679,16 @@
   const muteIcon = document.getElementById("muteIcon");
   const fsBtn = document.getElementById("fsBtn");
 
-  // Fonction Lecture / Pause
   function togglePlay() {
     if (video.paused) video.play();
     else video.pause();
   }
 
-  // Clic sur l'ensemble du conteneur pour Play/Pause (grâce à pointer-events corrigé)
   container.addEventListener("click", (e) => {
-    // Si on a cliqué sur un bouton de la barre, on ignore pour éviter un double déclenchement
     if (e.target.closest('.nflx-bottom-controls')) return; 
     togglePlay();
   });
 
-  // Gestion de l'affichage Play/Pause/Loading
   video.addEventListener("play", () => {
     playIcon.style.display = "none";
     pauseIcon.style.display = "block";
@@ -726,16 +703,13 @@
     container.classList.add("paused");
   });
 
-  // Afficher le spinner quand Archive.org met du temps à charger
   video.addEventListener("waiting", () => { spinner.style.display = "block"; });
   video.addEventListener("playing", () => { spinner.style.display = "none"; });
   video.addEventListener("canplay", () => { spinner.style.display = "none"; });
 
-  // Reculer / Avancer de 10 secondes
   rewindBtn.addEventListener("click", () => { video.currentTime = Math.max(0, video.currentTime - 10); });
   forwardBtn.addEventListener("click", () => { video.currentTime = Math.min(video.duration, video.currentTime + 10); });
 
-  // Formatage du temps en HEURES (HH:MM:SS)
   function formatHours(seconds) {
     if (isNaN(seconds) || seconds === Infinity) return "00:00:00";
     const h = Math.floor(seconds / 3600);
@@ -758,7 +732,6 @@
     }
   });
 
-  // Gestion du volume et icônes
   function updateVolumeUI() {
     volumeSlider.value = video.muted ? 0 : video.volume;
     if (video.muted || video.volume === 0) {
@@ -781,18 +754,25 @@
     updateVolumeUI();
   });
 
-  // Plein écran
+  // Gestion du plein écran robuste (PC + Android + iPhone)
   fsBtn.addEventListener("click", () => {
     if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-      if (container.requestFullscreen) container.requestFullscreen();
-      else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+      if (container.requestFullscreen) {
+        container.requestFullscreen();
+      } else if (container.webkitRequestFullscreen) {
+        container.webkitRequestFullscreen();
+      } else if (video.webkitEnterFullscreen) {
+        video.webkitEnterFullscreen();
+      }
     } else {
-      if (document.exitFullscreen) document.exitFullscreen();
-      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
     }
   });
 
-  // Auto-masquage des contrôles en cours de lecture
   let hideControlsTimeout;
   function showControls() {
     container.classList.add("show-controls");
@@ -801,7 +781,7 @@
     hideControlsTimeout = setTimeout(() => {
       if (!video.paused) {
         container.classList.remove("show-controls");
-        document.body.style.cursor = "none"; // Cache la souris en plein écran
+        document.body.style.cursor = "none";
       }
     }, 2500);
   }
@@ -809,7 +789,6 @@
   container.addEventListener("mousemove", showControls);
   container.addEventListener("touchstart", showControls);
 
-  // Raccourcis Clavier
   document.addEventListener("keydown", (e) => {
     if (["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
     switch (e.key.toLowerCase()) {
@@ -821,7 +800,6 @@
     }
   });
 
-  // Modal Personnages
   function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalText").innerText = text;
@@ -834,9 +812,7 @@
 
   document.querySelectorAll('.character').forEach(card => {
     const handleOpen = () => {
-      const title = card.getAttribute('data-title');
-      const desc = card.getAttribute('data-desc');
-      showDesc(title, desc);
+      showDesc(card.getAttribute('data-title'), card.getAttribute('data-desc'));
     };
     card.addEventListener('click', handleOpen);
     card.addEventListener('keydown', (e) => {
@@ -845,20 +821,14 @@
   });
 
   window.addEventListener("click", (e) => {
-    const modal = document.getElementById("modal");
-    if (e.target === modal) closeModal();
+    if (e.target === document.getElementById("modal")) closeModal();
   });
 
-  // Défilement carrousel personnages
   const charContainer = document.getElementById("characters");
-  const leftBtn = document.getElementById("scrollLeft");
-  const rightBtn = document.getElementById("scrollRight");
-  
-  leftBtn.addEventListener('click', () => { charContainer.scrollBy({ left: -260, behavior: 'smooth' }); });
-  rightBtn.addEventListener('click', () => { charContainer.scrollBy({ left: 260, behavior: 'smooth' }); });
+  document.getElementById("scrollLeft").addEventListener('click', () => { charContainer.scrollBy({ left: -260, behavior: 'smooth' }); });
+  document.getElementById("scrollRight").addEventListener('click', () => { charContainer.scrollBy({ left: 260, behavior: 'smooth' }); });
 </script>
 
-<!-- FIREBASE AUTHENTICATION (Inchangé) -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
