@@ -268,7 +268,7 @@
     /* BARRE DE PROGRESSION FLUIDE */
     .progress-bar {
       flex: 1;
-      min-width: 40px;
+      min-width: 30px;
       -webkit-appearance: none;
       appearance: none;
       height: 5px;
@@ -310,26 +310,43 @@
       flex-shrink: 0;
     }
 
-    /* ADAPTATION SPÉCIFIQUE EN MODE PAYSAGE SUR MOBILE (ROTATION) */
+    /* ADAPTATION SPÉCIFIQUE MOBILE PORTRAIT & PAYSAGE */
+    @media screen and (max-width: 600px) {
+      .custom-controls {
+        gap: 5px;
+        padding: 8px 8px;
+      }
+      .ctrl-btn {
+        padding: 3px;
+      }
+      .ctrl-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .time-display {
+        font-size: 0.65em;
+      }
+      .speed-select {
+        font-size: 0.65em;
+        padding: 2px;
+      }
+    }
+
     @media screen and (max-height: 500px) and (orientation: landscape) {
       .custom-controls {
         padding: 6px 10px;
         gap: 6px;
       }
-
       .ctrl-btn {
         padding: 4px;
       }
-
       .ctrl-btn svg {
         width: 19px;
         height: 19px;
       }
-
       .time-display {
         font-size: 0.7em;
       }
-
       .speed-select {
         padding: 2px 3px;
         font-size: 0.7em;
@@ -559,7 +576,7 @@
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⵓⴷⵉ ⵃⴰⵏⴰⵏ ','D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+      <div class="character" onclick="showDesc('MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⴷⵉ ⵃⴰⵏⴰⵏ ','D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
         <img src="femme.png" alt="MESƐUDI Ḥanan">
         <div class="name">MESƐUDI Ḥanan</div>
         <div class="role">d tasegbart</div>
@@ -571,19 +588,19 @@
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
         <img src="femme.png" alt="MESƐUDI Nawal">
         <div class="name">MESƐUDI Nawal</div>
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⵓⴷⵉ ⵎⴰⵀⴷⵉ ','D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
+      <div class="character" onclick="showDesc('MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⴷⵉ ⵎⴰⵀⴷⵉ ','D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
         <img src="MahdiMes.jpg" alt="MESƐUDI Mahdi">
         <div class="name">MESƐUDI Mahdi</div>
         <div class="role">d asegbar</div>
       </div>
 
-      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
+      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
         <img src="amazigh.jpg" alt="XERZI Amaziɣ">
         <div class="name">XERZI Amaziɣ</div>
         <div class="role">d asegbar</div>
