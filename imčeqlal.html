@@ -521,7 +521,7 @@
 
 <div class="container">
 
-  <!-- LECTEUR VIDÉO NETFLIX PROTÉGÉ -->
+  <!-- LECTEUR VIDÉO NETFLIX PROTÉGÉ AVEC THUMBNAIL -->
   <div class="nflx-player-container" id="nflxContainer">
     
     <div class="loading-spinner" id="spinner"></div>
@@ -529,8 +529,8 @@
       <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
     </div>
 
-    <!-- Protection anti-téléchargement et clic droit activée ici -->
-    <video id="nflxVideo" playsinline preload="metadata" oncontextmenu="return false;" controlsList="nodownload">
+    <!-- Thumbnail (poster) et protection anti-téléchargement configurés -->
+    <video id="nflxVideo" playsinline preload="metadata" poster="imčqll.jpg" oncontextmenu="return false;" controlsList="nodownload">
       <source src="https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4" type="video/mp4">
     </video>
 
