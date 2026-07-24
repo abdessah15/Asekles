@@ -559,7 +559,7 @@
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⴷⵉ ⵃⴰⵏⴰⵏ ','D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+      <div class="character" onclick="showDesc('MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⵓⴷⵉ ⵃⴰⵏⴰⵏ ','D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
         <img src="femme.png" alt="MESƐUDI Ḥanan">
         <div class="name">MESƐUDI Ḥanan</div>
         <div class="role">d tasegbart</div>
@@ -571,19 +571,19 @@
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
         <img src="femme.png" alt="MESƐUDI Nawal">
         <div class="name">MESƐUDI Nawal</div>
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⴷⵉ ⵎⴰⵀⴷⵉ ','D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
+      <div class="character" onclick="showDesc('MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⵓⴷⵉ ⵎⴰⵀⴷⵉ ','D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
         <img src="MahdiMes.jpg" alt="MESƐUDI Mahdi">
         <div class="name">MESƐUDI Mahdi</div>
         <div class="role">d asegbar</div>
       </div>
 
-      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
+      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
         <img src="amazigh.jpg" alt="XERZI Amaziɣ">
         <div class="name">XERZI Amaziɣ</div>
         <div class="role">d asegbar</div>
@@ -732,11 +732,15 @@
     playerWrapper.classList.add("show-controls");
   });
 
-  // Formatage du temps
+  // Formatage du temps au format HH:MM:SS
   function formatTime(seconds) {
-    const min = Math.floor(seconds / 60) || 0;
-    const sec = Math.floor(seconds % 60) || 0;
-    return `${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`;
+    if (isNaN(seconds)) return "00:00:00";
+    const hrs = Math.floor(seconds / 3600);
+    const min = Math.floor((seconds % 3600) / 60);
+    const sec = Math.floor(seconds % 60);
+
+    const pad = (num) => String(num).padStart(2, '0');
+    return `${pad(hrs)}:${pad(min)}:${pad(sec)}`;
   }
 
   // Temps / barre
