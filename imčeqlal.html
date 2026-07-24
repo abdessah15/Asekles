@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Asekles - IMČEQLAL</title>
   <link rel="icon" href="Asekles.png" type="image/png">
 
@@ -99,19 +99,17 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
-    /* CSS PLEIN ÉCRAN FLUIDE */
+    /* STYLES DES MODE PLEIN ÉCRAN MOBILE ET DESKTOP */
     .video-container:fullscreen,
     .video-container:-webkit-full-screen {
       width: 100vw !important;
       height: 100vh !important;
       max-width: none !important;
       border-radius: 0 !important;
-    }
-
-    .video-container:fullscreen .custom-player,
-    .video-container:-webkit-full-screen .custom-player {
-      height: 100% !important;
-      aspect-ratio: auto !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: #000 !important;
     }
 
     .video-thumb {
@@ -155,13 +153,19 @@
       transform: translate(-50%, -50%) scale(1.1);
     }
 
-    /* ===== LECTEUR VIDEO PROFESSIONNEL ===== */
+    /* ===== LECTEUR VIDEO PRO ===== */
     .custom-player {
       display: none;
       position: relative;
       width: 100%;
+      height: 100%;
       aspect-ratio: 16/9;
       background: #000;
+    }
+
+    .video-container:fullscreen .custom-player,
+    .video-container:-webkit-full-screen .custom-player {
+      aspect-ratio: unset !important;
     }
 
     .custom-player video {
@@ -193,7 +197,7 @@
       100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
-    /* BARRE DE CONTRÔLES PROFESSIONNELLE */
+    /* BARRE DE CONTRÔLES PENSÉE POUR MOBILE ET DESKTOP */
     .custom-controls {
       position: absolute;
       bottom: 0;
@@ -202,16 +206,28 @@
       background: linear-gradient(transparent, rgba(0, 0, 0, 0.95));
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       padding: 10px 15px;
       opacity: 0;
       transition: opacity 0.3s ease;
-      z-index: 8;
+      z-index: 99999;
+      pointer-events: none;
+      box-sizing: border-box;
+    }
+
+    /* PRISE EN COMPTE DES BARRES SYSTEME EN PLEIN ÉCRAN MOBILE */
+    .video-container:fullscreen .custom-controls,
+    .video-container:-webkit-full-screen .custom-controls {
+      padding-bottom: max(15px, env(safe-area-inset-bottom));
+      padding-left: max(15px, env(safe-area-inset-left));
+      padding-right: max(15px, env(safe-area-inset-right));
     }
 
     .custom-player:hover .custom-controls,
-    .custom-player.paused .custom-controls {
+    .custom-player.paused .custom-controls,
+    .custom-player.show-controls .custom-controls {
       opacity: 1;
+      pointer-events: auto;
     }
 
     .ctrl-btn {
@@ -219,17 +235,17 @@
       border: none;
       color: #fff;
       cursor: pointer;
-      padding: 4px;
+      padding: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 4px;
-      transition: transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .ctrl-btn svg {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       fill: #ffffff;
       transition: fill 0.2s;
     }
@@ -239,7 +255,7 @@
     }
 
     .time-display {
-      font-size: 0.85em;
+      font-size: 0.8em;
       color: #ccc;
       white-space: nowrap;
       font-family: monospace;
@@ -255,47 +271,37 @@
       border-radius: 3px;
       outline: none;
       cursor: pointer;
-      transition: height 0.2s;
-    }
-
-    .progress-bar:hover {
-      height: 8px;
     }
 
     .progress-bar::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       background: #ff0066;
       cursor: pointer;
     }
 
     .progress-bar::-moz-range-thumb {
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       background: #ff0066;
       cursor: pointer;
       border: none;
     }
 
-    /* MENU VITESSE PRO */
+    /* MENU VITESSE */
     .speed-select {
       background: rgba(20, 20, 20, 0.8);
       color: #fff;
       border: 1px solid #444;
       border-radius: 4px;
-      padding: 3px 6px;
+      padding: 3px 4px;
       font-size: 0.8em;
       cursor: pointer;
       outline: none;
-    }
-
-    .speed-select:hover {
-      border-color: #ff0066;
-      color: #ff0066;
     }
 
     /* ===== PERSONNAGES ===== */
@@ -338,10 +344,6 @@
     .scroll-btn.left { left: -10px; }
     .scroll-btn.right { right: -10px; }
 
-    .scroll-btn:hover {
-      background: rgba(0,0,0,0.8);
-    }
-
     .character {
       text-align: center;
       cursor: pointer;
@@ -361,7 +363,6 @@
 
     .character:hover img {
       transform: scale(1.15);
-      box-shadow: 0 0 28px rgba(255,0,102,1);
     }
 
     .character .name {
@@ -459,7 +460,7 @@
 
 <div class="container">
 
-  <!-- LECTEUR PROPRIÉTAIRE DESIGN PRO -->
+  <!-- LECTEUR PROPRIÉTAIRE ERGONOMIQUE MOBILE & DESKTOP -->
   <div class="video-container" id="videoContainer">
     <div class="video-thumb" id="thumb">
       <img src="imčqll.jpg" alt="cover vidéo">
@@ -473,21 +474,20 @@
         <source src="https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4" type="video/mp4">
       </video>
 
-      <div class="custom-controls">
+      <div class="custom-controls" id="customControls">
         <!-- Bouton Jouer / Pause -->
         <button class="ctrl-btn" id="playBtn" title="Lecture / Pause">
           <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
         </button>
 
-        <!-- Temps au format HH:MM:SS -->
-        <span class="time-display" id="timeDisplay">00:00:00 / 00:00:00</span>
+        <span class="time-display" id="timeDisplay">00:00 / 00:00</span>
         
-        <!-- Barre de progression -->
+        <!-- Barre n progression -->
         <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1">
         
         <!-- Bouton Muet / Son -->
-        <button class="ctrl-btn" id="muteBtn" title="Couper/Activer le son">
+        <button class="ctrl-btn" id="muteBtn" title="Son">
           <svg id="volumeIcon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
           <svg id="muteIcon" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
         </button>
@@ -515,214 +515,239 @@
     <button class="scroll-btn left">&#10094;</button>
     <div class="characters" id="characters">
       
-      <div class="character" onclick="showDesc('XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ','Imseḍru deg usaru-a, d netta i d-ixelqen akk taḍṣa akked tulfizin n imčeqlal')">
-        <img src="Xerzi.png" alt="personnage 1">
+      <div class="character" onclick="showDesc('XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ','d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.')">
+        <img src="Abdessah.jpg" alt="XERZI Ɛabdeṣṣaḥ">
         <div class="name">XERZI Ɛabdeṣṣaḥ</div>
-        <div class="role">Xerzi . A</div>
+        <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
+      </div>
+      
+      <div class="character" onclick="showDesc('BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻⵙ ','tamekfaḍut d tamedyazt d tamarut, d yelli-s n tɣiwant it Muḥli, tlul deg useggas n 2001 deg waɣir n it Wertilan agezdu n Ṣṭif. Tewwi-d agerdas n master deg taɣult n Tesnalmudt deg tutlayt d yidles Amaziɣ.')">
+        <img src="femme.png" alt="BEǦǦA Ṭawes">
+        <div class="name">BEǦǦA Ṭawes</div>
+        <div class="role">d tasegbart</div>
+      </div>
+      
+      <div class="character" onclick="showDesc('MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⴷⵉ ⵃⴰⵏⴰⵏ ','D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+        <img src="femme.png" alt="MESƐUDI Ḥanan">
+        <div class="name">MESƐUDI Ḥanan</div>
+        <div class="role">d tasegbart</div>
+      </div>
+      
+      <div class="character" onclick="showDesc('BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰⵏⵉⵢⴰ ','D tilemẓit, tlul ass n 13 Furar 2007 deg Sidi Ɛic, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
+        <img src="femme.png" alt="BEṬṬAC Haniya">
+        <div class="name">BEṬṬAC Haniya</div>
+        <div class="role">d tasegbart</div>
+      </div>
+      
+      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+        <img src="femme.png" alt="MESƐUDI Nawal">
+        <div class="name">MESƐUDI Nawal</div>
+        <div class="role">d tasegbart</div>
+      </div>
+      
+      <div class="character" onclick="showDesc('MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⴷⵉ ⵎⴰⵀⴷⵉ ','D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
+        <img src="MahdiMes.jpg" alt="MESƐUDI Mahdi">
+        <div class="name">MESƐUDI Mahdi</div>
+        <div class="role">d asegbar</div>
       </div>
 
-      <div class="character" onclick="showDesc('BELƐIDI Sliman - ⴱⴻⵍⵄⵉⴷⵉ ⵙⵍⵉⵎⴰⵏ','Awrik ameqqran deg usaru n Imčeqlal, bab n teḍṣa akked tzuri.')">
-        <img src="Sliman.jpg" alt="personnage 2">
-        <div class="name">BELƐIDI Sliman</div>
-        <div class="role">Silman . B</div>
+      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
+        <img src="amazigh.jpg" alt="XERZI Amaziɣ">
+        <div class="name">XERZI Amaziɣ</div>
+        <div class="role">d asegbar</div>
       </div>
-
-      <div class="character" onclick="showDesc('LḤAǦ Muḥend - ⵍⵃⴰⴵ ⵎⵓⵃⴻⵏⴷ','Amusnaw d umsawel, yettwassen s tiḥḥerci-ines d teḍṣa.')">
-        <img src="Lhaǧ.jpg" alt="personnage 3">
-        <div class="name">LḤAǦ Muḥend</div>
-        <div class="role">Lḥaǧ . M</div>
+      
+      <div class="character" onclick="showDesc('MADI Ḥamza - ⵎⴰⴷⵉ ⵃⴰⵎⵣⴰ ','D ilemẓi anaẓuṛ, ilul ass 12 wanber 2006, ittcewwiq icewwiqen icennu, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+        <img src="Hamzamadi.jpg" alt="MADI Ḥamza">
+        <div class="name">MADI Ḥamza</div>
+        <div class="role">d asegbar</div>
       </div>
-
-      <div class="character" onclick="showDesc('SAƐDI Muḥend - ⵙⴰⵄⴷⵉ ⵎⵓⵃⴻⵏⴷ','Awrik meqren deg tzuri, yexdem aṭas n tmeqranin deg usaru.')">
-        <img src="Muḥ.jpg" alt="personnage 4">
-        <div class="name">SAƐDI Muḥend</div>
-        <div class="role">Muḥend . S</div>
+      
+      <div class="character" onclick="showDesc('Mariya ASIL ḤARRUS - ⵎⴰⵔⵉⵢⴰ ⴰⵙⵉⵍ ⵃⴰⵔⵔⵓⵙ ','d tagrudt n sin iseggasen, tlul ass 8 ctember 2023, deg ɛin lbenyan di ldzayer tamanaɣt, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+        <img src="maria.jpg" alt="Mariya ASIL ḤARRUS">
+        <div class="name">Mariya ASIL ḤARRUS</div>
+        <div class="role">d tasegbart</div>
       </div>
-
-      <div class="character" onclick="showDesc('IƐEZUZEN Djamel - ⵉⵄⴻⵣⵓⵣⴻⵏ ⴵⴰⵎⴻⵍ','Amsedru d awrik deg usaru, yefka-d aṭas i tzuri n leqbayer.')">
-        <img src="Djamel.jpg" alt="personnage 5">
-        <div class="name">IƐEZUZEN Djamel</div>
-        <div class="role">Djamel . I</div>
+      
+      <div class="character" onclick="showDesc('BENNUṚ Amina - ⴱⴻⵏⵏⵓⵕ ⴰⵎⵉⵏⴰ ','D taqcict, tlul 3 tuber 2016 deg Targa uzemmur Bgayet, D yellis n Ɛumar Bennuṛ, D tanelmadt deg uswir wis ukkuẓ deg uɣerbaz amenzu, d taɛeggalt deg ugraw ASIREM n tdukla tadelsant IZUMAL n taddart n Tici')">
+        <img src="femme.png" alt="BENNUṚ Amina">
+        <div class="name">BENNUṚ Amina</div>
+        <div class="role">d tasegbart</div>
       </div>
-
-      <div class="character" onclick="showDesc('ƐEBLA Said - ⵄⴻⴱⵍⴰ ⵙⴰⵢⵉⴷ','Awrik meqren deg tzuri, yexdem aṭas n tmeqranin deg usaru.')">
-        <img src="Sayid.jpg" alt="personnage 6">
-        <div class="name">ƐEBLA Said</div>
-        <div class="role">Said . Ɛ</div>
+      
+      <div class="character" onclick="showDesc('XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ','d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay.')">
+        <img src="Abdelkader.jpg" alt="XERZI Ɛabdelqader">
+        <div class="name">XERZI Ɛabdelqader</div>
+        <div class="role">d asegbar</div>
       </div>
-
+      
+      <div class="character" onclick="showDesc('TUMERT Ǧilali - ⵊⵉⵍⴰⵍⵉ ⵜⵓⵎⴻⵔⵜ','D anaẓur n asegber d acennay, yexdem aṭas n tezrarin d yisura s teqbaylit gar-asen-tt Tinifift, Rbiḥa, Tayri txidas d wiyaḍ nniḍen, ilul ass n 4 yulyu 1989 deg ugezdu n tizi wezzu, n Buɣni n taddart At ɛebdelmumen, yetteka yid-neɣ deg usaru n IMČEQLAL s snat n tezlatin n uḍebsi-ines 2020.')">
+        <img src="toumertdjilali.jpg" alt="TUMERT Ǧilali">
+        <div class="name">TUMERT Ǧilali</div>
+        <div class="role">d acennay</div>
+      </div> 
+      
+      <div class="character" onclick="showDesc('YUSFI Sadeq - ⵢⵓⵙⴼⵉ ⵙⴰⴷⴻⵇ','D anaẓur n umezgun, sinima akked ccna d uẓawan, yugmed yufrar-d seg yidles Amaziɣ. Yezuzzured leqdic-is deg YouTube, itekka d waṭas n temsufeɣ gar-asen-tt asaru n IMČEQLAL yid-neɣ s ccbaḥa n tezlatin-is.')">
+        <img src="sadekyousfi.jpg" alt="YUSFI Sadeq">
+        <div class="name">YUSFI Sadeq</div>
+        <div class="role">d acennay</div>
+      </div>
+      
     </div>
     <button class="scroll-btn right">&#10095;</button>
   </div>
 
+  <!-- DETAILS DU FILM -->
   <div class="film-info">
-    <h2>Gef usaru</h2>
-    <p>D asaru n teḍṣa d usewhem, yewwi-d ɣef tudert n leqbayer d wuguren n yal ass s wudem anfeḥli.</p>
+    <h2>IMČEQLAL</h2>
+    <p><strong>Tawsit :</strong> Inig, Taḍṣa, Arrac</p>
+    <p><strong>Azemz n usufeɣ :</strong> 2026</p>
+    <p><strong>Aglam n usaru :</strong><br>
+    Asaru-agi ad ken-yawi ɣer umaḍal n yinig d teḍsa. Čaqlala, d awtul yeččuren d tabɣest d twuɣa, maca ur d-kkint kan akka, d aseḥbiber ɣef tudert-is d tin n twacult-is iɣef yettḥebbir. Deg tmazirt n Muḥend Ukufi ideg tebda tmacahut, win i wumi semman awaɣzen, maca tella Tamilla i yellan ḥninet ɣur-sen, yis-s i d-selken acḥal d abrid, maca yiwet n tikkelt yemmut uwaɣzen, yewret-it mmi-s n gma-s, dɣa da i yebda yinig...
+    </p>
   </div>
-
 </div>
 
 <!-- MODAL DESCRIPTION -->
 <div class="modal" id="modal">
   <div class="modal-content">
-    <h3 id="modalName"></h3>
-    <p id="modalDesc"></p>
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
     <button class="close" onclick="closeModal()">Mdel</button>
   </div>
 </div>
 
 <script>
-  // Dynamic Scroll Characters
-  const characters = document.getElementById('characters');
-  const btnLeft = document.querySelector('.scroll-btn.left');
-  const btnRight = document.querySelector('.scroll-btn.right');
+  // DOM Elements
+  const thumb = document.getElementById("thumb");
+  const playerWrapper = document.getElementById("playerWrapper");
+  const videoContainer = document.getElementById("videoContainer");
+  const video = document.getElementById("myVideo");
+  const videoLoader = document.getElementById("videoLoader");
+  const customControls = document.getElementById("customControls");
+  
+  const playBtn = document.getElementById("playBtn");
+  const playIcon = document.getElementById("playIcon");
+  const pauseIcon = document.getElementById("pauseIcon");
+  
+  const muteBtn = document.getElementById("muteBtn");
+  const volumeIcon = document.getElementById("volumeIcon");
+  const muteIcon = document.getElementById("muteIcon");
+  
+  const timeDisplay = document.getElementById("timeDisplay");
+  const progressBar = document.getElementById("progressBar");
+  const speedSelect = document.getElementById("speedSelect");
+  
+  const fullBtn = document.getElementById("fullBtn");
+  const fullscreenIcon = document.getElementById("fullscreenIcon");
+  const exitFullscreenIcon = document.getElementById("exitFullscreenIcon");
 
-  btnLeft.addEventListener('click', () => characters.scrollBy({ left: -200, behavior: 'smooth' }));
-  btnRight.addEventListener('click', () => characters.scrollBy({ left: 200, behavior: 'smooth' }));
+  let controlsTimer;
 
-  // Modal
-  function showDesc(name, desc){
-    document.getElementById('modalName').innerText = name;
-    document.getElementById('modalDesc').innerText = desc;
-    document.getElementById('modal').style.display = 'flex';
-  }
-  function closeModal(){
-    document.getElementById('modal').style.display = 'none';
-  }
-
-  // Account system
-  const amidanBtn = document.getElementById('amidanBtn');
-  const accountBox = document.getElementById('accountBox');
-  const userEmail = document.getElementById('userEmail');
-  const logoutBtn = document.getElementById('logoutBtn');
-
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  if (currentUser) {
-    userEmail.textContent = currentUser.email;
-    amidanBtn.style.display = 'inline';
-  }
-
-  amidanBtn.addEventListener('click', () => {
-    accountBox.style.display = accountBox.style.display === 'block' ? 'none' : 'block';
-  });
-
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('currentUser');
-    window.location.reload();
-  });
-
-  // ===== GESTION LECTEUR VIDEO PRO =====
-  const thumb = document.getElementById('thumb');
-  const playerWrapper = document.getElementById('playerWrapper');
-  const video = document.getElementById('myVideo');
-  const playBtn = document.getElementById('playBtn');
-  const playIcon = document.getElementById('playIcon');
-  const pauseIcon = document.getElementById('pauseIcon');
-  const progressBar = document.getElementById('progressBar');
-  const timeDisplay = document.getElementById('timeDisplay');
-  const muteBtn = document.getElementById('muteBtn');
-  const volumeIcon = document.getElementById('volumeIcon');
-  const muteIcon = document.getElementById('muteIcon');
-  const fullBtn = document.getElementById('fullBtn');
-  const fullscreenIcon = document.getElementById('fullscreenIcon');
-  const exitFullscreenIcon = document.getElementById('exitFullscreenIcon');
-  const speedSelect = document.getElementById('speedSelect');
-  const videoContainer = document.getElementById('videoContainer');
-  const videoLoader = document.getElementById('videoLoader');
-
-  // Formatage du temps en HH:MM:SS
-  function formatTime(seconds) {
-    if (isNaN(seconds) || seconds < 0) return "00:00:00";
-    const h = Math.floor(seconds / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
-    const s = Math.floor(seconds % 60);
-
-    const hStr = h < 10 ? '0' + h : h;
-    const mStr = m < 10 ? '0' + m : m;
-    const sStr = s < 10 ? '0' + s : s;
-
-    return `${hStr}:${mStr}:${sStr}`;
-  }
-
-  // Lancement de la vidéo
-  thumb.addEventListener('click', () => {
-    thumb.style.display = 'none';
-    playerWrapper.style.display = 'block';
-    videoLoader.style.display = 'block';
+  // Lancer la vidéo au clic sur la miniature
+  thumb.addEventListener("click", () => {
+    thumb.style.display = "none";
+    playerWrapper.style.display = "block";
     video.play();
+    showControlsTemporarily();
   });
 
-  // Action Lecture / Pause
+  // GESTION DU TACTILE SUR MOBILE (Tap pour afficher/masquer les contrôles)
+  video.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (playerWrapper.classList.contains("show-controls")) {
+      playerWrapper.classList.remove("show-controls");
+    } else {
+      showControlsTemporarily();
+    }
+  });
+
+  function showControlsTemporarily() {
+    playerWrapper.classList.add("show-controls");
+    clearTimeout(controlsTimer);
+    if (!video.paused) {
+      controlsTimer = setTimeout(() => {
+        playerWrapper.classList.remove("show-controls");
+      }, 3000);
+    }
+  }
+
+  // Play / Pause
   function togglePlay() {
     if (video.paused) {
       video.play();
     } else {
       video.pause();
     }
+    showControlsTemporarily();
   }
 
-  playBtn.addEventListener('click', togglePlay);
-  video.addEventListener('click', togglePlay);
-
-  video.addEventListener('play', () => {
-    playIcon.style.display = 'none';
-    pauseIcon.style.display = 'block';
-    playerWrapper.classList.remove('paused');
+  playBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    togglePlay();
   });
 
-  video.addEventListener('pause', () => {
-    playIcon.style.display = 'block';
-    pauseIcon.style.display = 'none';
-    playerWrapper.classList.add('paused');
+  video.addEventListener("play", () => {
+    playIcon.style.display = "none";
+    pauseIcon.style.display = "block";
+    playerWrapper.classList.remove("paused");
   });
 
-  // Gérer l'état de chargement
-  video.addEventListener('waiting', () => {
-    videoLoader.style.display = 'block';
+  video.addEventListener("pause", () => {
+    playIcon.style.display = "block";
+    pauseIcon.style.display = "none";
+    playerWrapper.classList.add("paused");
+    playerWrapper.classList.add("show-controls");
   });
 
-  video.addEventListener('canplay', () => {
-    videoLoader.style.display = 'none';
-  });
+  // Formatage du temps (MM:SS)
+  function formatTime(seconds) {
+    const min = Math.floor(seconds / 60) || 0;
+    const sec = Math.floor(seconds % 60) || 0;
+    return `${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`;
+  }
 
-  video.addEventListener('playing', () => {
-    videoLoader.style.display = 'none';
-  });
-
-  // Mise à jour de la barre de progression et du temps (HH:MM:SS)
-  video.addEventListener('timeupdate', () => {
-    if (!isNaN(video.duration) && video.duration > 0) {
-      const progress = (video.currentTime / video.duration) * 100;
-      progressBar.value = progress;
-      timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+  // Mise à jour du temps et de la barre
+  video.addEventListener("timeupdate", () => {
+    if (!isNaN(video.duration)) {
+      const current = formatTime(video.currentTime);
+      const total = formatTime(video.duration);
+      timeDisplay.textContent = `${current} / ${total}`;
+      progressBar.value = (video.currentTime / video.duration) * 100;
     }
   });
 
-  // Navigation dans la vidéo (Seek)
-  progressBar.addEventListener('input', () => {
+  // Recherche dans la vidéo
+  progressBar.addEventListener("input", (e) => {
+    e.stopPropagation();
     if (!isNaN(video.duration)) {
       video.currentTime = (progressBar.value / 100) * video.duration;
     }
+    showControlsTemporarily();
   });
 
-  // Contrôle du Son
-  muteBtn.addEventListener('click', () => {
+  // Mute / Unmute
+  muteBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
     video.muted = !video.muted;
     if (video.muted) {
-      volumeIcon.style.display = 'none';
-      muteIcon.style.display = 'block';
+      volumeIcon.style.display = "none";
+      muteIcon.style.display = "block";
     } else {
-      volumeIcon.style.display = 'block';
-      muteIcon.style.display = 'none';
+      volumeIcon.style.display = "block";
+      muteIcon.style.display = "none";
     }
+    showControlsTemporarily();
   });
 
-  // Contrôle de la vitesse
-  speedSelect.addEventListener('change', (e) => {
+  // Changer la vitesse
+  speedSelect.addEventListener("change", (e) => {
+    e.stopPropagation();
     video.playbackRate = parseFloat(e.target.value);
+    showControlsTemporarily();
   });
 
-  // Mode Plein Écran
+  // GESTION COMPLÈTE DU PLEIN ÉCRAN UNIVERSEL (IOS, ANDROID ET DESKTOP)
   function toggleFullscreen() {
     if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
       if (videoContainer.requestFullscreen) {
@@ -731,7 +756,7 @@
         videoContainer.webkitRequestFullscreen();
       } else if (videoContainer.msRequestFullscreen) {
         videoContainer.msRequestFullscreen();
-      } else if (video.webkitEnterFullscreen) {
+      } else if (video.webkitEnterFullscreen) { // Safari iOS
         video.webkitEnterFullscreen();
       }
     } else {
@@ -743,26 +768,121 @@
         document.msExitFullscreen();
       }
     }
+    showControlsTemporarily();
   }
 
-  fullBtn.addEventListener('click', toggleFullscreen);
+  fullBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleFullscreen();
+  });
 
-  // Mettre à jour l'icône de plein écran
-  function updateFullscreenIcons() {
+  function onFullscreenChange() {
     const isFS = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
     if (isFS) {
-      fullscreenIcon.style.display = 'none';
-      exitFullscreenIcon.style.display = 'block';
+      fullscreenIcon.style.display = "none";
+      exitFullscreenIcon.style.display = "block";
     } else {
-      fullscreenIcon.style.display = 'block';
-      exitFullscreenIcon.style.display = 'none';
+      fullscreenIcon.style.display = "block";
+      exitFullscreenIcon.style.display = "none";
     }
   }
 
-  document.addEventListener('fullscreenchange', updateFullscreenIcons);
-  document.addEventListener('webkitfullscreenchange', updateFullscreenIcons);
-  document.addEventListener('msfullscreenchange', updateFullscreenIcons);
+  document.addEventListener("fullscreenchange", onFullscreenChange);
+  document.addEventListener("webkitfullscreenchange", onFullscreenChange);
+  document.addEventListener("msfullscreenchange", onFullscreenChange);
+
+  // Charger Indicator
+  video.addEventListener("waiting", () => videoLoader.style.display = "block");
+  video.addEventListener("playing", () => videoLoader.style.display = "none");
+  video.addEventListener("canplay", () => videoLoader.style.display = "none");
+
+  // Bloquer le menu contextuel
+  video.addEventListener("contextmenu", (e) => e.preventDefault());
+
+  // Modale Personnages
+  function showDesc(title, text) {
+    document.getElementById("modalTitle").innerText = title;
+    document.getElementById("modalText").innerText = text;
+    document.getElementById("modal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("modal").style.display = "none";
+  }
+
+  // Defilement fluide personnages
+  const charContainer = document.getElementById("characters");
+  const leftBtn = document.querySelector('.scroll-btn.left');
+  const rightBtn = document.querySelector('.scroll-btn.right');
+  const scrollAmount = 250;
+
+  function updateButtons() {
+    leftBtn.disabled = charContainer.scrollLeft <= 2;
+    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth - 2;
+  }
+
+  leftBtn.addEventListener('click', () => {
+    charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  });
+
+  rightBtn.addEventListener('click', () => {
+    charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  });
+
+  charContainer.addEventListener('scroll', updateButtons);
+  window.addEventListener('resize', updateButtons);
+  setTimeout(updateButtons, 500);
 </script>
 
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+
+/* 🔥 FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
+  authDomain: "test-2fdd3.firebaseapp.com",
+  projectId: "test-2fdd3",
+  appId: "1:244317844373:web:3a4e5b77c649f54d7fbc9c"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+/* 🎯 ELEMENTS */
+const amidanBtn = document.getElementById("amidanBtn");
+const accountBox = document.getElementById("accountBox");
+const userEmail = document.getElementById("userEmail");
+const logoutBtn = document.getElementById("logoutBtn");
+
+/* 🔐 PROTECTION PAGE */
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+  } else {
+    amidanBtn.style.display = "inline";
+    userEmail.textContent = "Connecté : " + user.email;
+  }
+});
+
+/* 👤 OUVRIR / FERMER AMIDAN */
+amidanBtn.addEventListener("click", () => {
+  accountBox.style.display =
+    accountBox.style.display === "block" ? "none" : "block";
+});
+
+/* 🚪 DÉCONNEXION */
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "login.html";
+});
+
+/* ❌ FERMER SI CLIC AILLEURS */
+document.addEventListener("click", (e) => {
+  if (!amidanBtn.contains(e.target) && !accountBox.contains(e.target)) {
+    accountBox.style.display = "none";
+  }
+});
+</script>
 </body>
 </html>
