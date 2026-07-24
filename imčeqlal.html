@@ -7,28 +7,35 @@
   <link rel="icon" href="Asekles.png" type="image/png">
 
   <style>
+    :root {
+      --nflx-red: #e50914;
+      --nflx-bg: #000000;
+      --nflx-text: #ffffff;
+      --nflx-subtext: #aaaaaa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      background-color: #141414;
-      color: #fff;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #f1f1f1;
     }
 
     /* ===== HEADER ===== */
     header {
-      background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(20,20,20,1) 100%);
-      padding: 20px;
+      background: linear-gradient(45deg, #ff0066, #6600ff);
+      padding: 15px;
       text-align: center;
-      border-bottom: 1px solid #222;
     }
 
     header h1 {
       margin: 0;
-      font-size: 2.2em;
-      color: #e50914;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-weight: 800;
+      font-size: 2em;
+      color: #fff;
     }
 
     /* ===== NAV ===== */
@@ -36,25 +43,23 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 25px;
-      padding: 12px;
-      background: #141414;
+      gap: 20px;
+      padding: 10px;
+      background: #111;
       flex-wrap: wrap;
     }
 
     nav a,
     #amidanBtn {
-      color: #e5e5e5;
+      color: #fff;
       text-decoration: none;
       font-weight: bold;
       cursor: pointer;
-      transition: color 0.2s ease;
-      font-size: 0.95em;
     }
 
     nav a:hover,
     #amidanBtn:hover {
-      color: #e50914;
+      color: #ff0066;
     }
 
     /* ===== AMIDAN ===== */
@@ -65,31 +70,25 @@
     #accountBox {
       display: none;
       position: absolute;
-      top: 35px;
+      top: 32px;
       right: 0;
-      background: rgba(0, 0, 0, 0.9);
-      border: 1px solid #333;
+      background: #111;
+      border: 2px solid #ff0066;
       padding: 15px;
-      border-radius: 4px;
+      border-radius: 10px;
       min-width: 220px;
       z-index: 999;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.8);
     }
 
     #logoutBtn {
-      background: #e50914;
+      background: #ff0066;
       color: #fff;
       border: none;
       padding: 8px 12px;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
       width: 100%;
       font-weight: bold;
-      transition: background 0.2s;
-    }
-
-    #logoutBtn:hover {
-      background: #f40612;
     }
 
     /* ===== CONTENT ===== */
@@ -97,287 +96,250 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 30px;
+      gap: 25px;
       padding: 20px;
       padding-bottom: 120px;
     }
 
-    /* ===== NETFLIX PLAYER CONTAINER ===== */
-    .video-container {
+    /* ===== LECTEUR NETFLIX ===== */
+    .nflx-player-container {
       width: 100%;
-      max-width: 960px;
+      max-width: 900px;
       position: relative;
-      background: #000;
-      border-radius: 8px;
+      background-color: #000;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      user-select: none;
     }
 
-    /* FULLSCREEN RESPONSIVE */
-    .video-container:fullscreen,
-    .video-container:-webkit-full-screen {
+    .nflx-player-container:fullscreen,
+    .nflx-player-container:-webkit-full-screen {
       width: 100vw !important;
       height: 100vh !important;
       max-width: none !important;
       border-radius: 0 !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      background: #000 !important;
-    }
-
-    /* NETFLIX THUMBNAIL WRAPPER */
-    .video-thumb {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16/9;
-      cursor: pointer;
-      overflow: hidden;
-      background: #000;
-    }
-
-    .video-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
-    }
-
-    .video-thumb::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
-      transition: opacity 0.3s ease;
-    }
-
-    .video-thumb:hover img {
-      transform: scale(1.03);
-    }
-
-    /* NETFLIX RED PLAY BUTTON */
-    .play-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 70px;
-      height: 70px;
-      background: #e50914;
-      border-radius: 50%;
-      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
-      z-index: 2;
-      box-shadow: 0 4px 20px rgba(229, 9, 20, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .play-btn::after {
-      content: "";
-      position: absolute;
-      left: 27px;
-      border-style: solid;
-      border-width: 12px 0 12px 20px;
-      border-color: transparent transparent transparent #fff;
-    }
-
-    .video-thumb:hover .play-btn {
-      transform: translate(-50%, -50%) scale(1.15);
-      background: #f40612;
-    }
-
-    /* ===== CUSTOM PLAYER ===== */
-    .custom-player {
-      display: none;
-      position: relative;
-      width: 100%;
-      height: 100%;
-      aspect-ratio: 16/9;
-      background: #000;
-    }
-
-    .video-container:fullscreen .custom-player,
-    .video-container:-webkit-full-screen .custom-player {
       aspect-ratio: unset !important;
     }
 
-    .custom-player video {
+    .nflx-player-container video {
       width: 100%;
       height: 100%;
       object-fit: contain;
       display: block;
     }
 
-    /* NETFLIX SPINNER */
-    .video-loader {
-      display: none;
+    /* Overlay global (titre + contrôles) */
+    .nflx-overlay {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border: 4px solid rgba(255,255,255,0.15);
-      border-top: 4px solid #e50914;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 0.8s linear infinite;
-      z-index: 10;
-      pointer-events: none;
-    }
-
-    @keyframes spin {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-
-    /* BARRE DE CONTRÔLES NETFLIX */
-    .custom-controls {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(0deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 60%, transparent 100%);
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.7) 0%,
+        transparent 20%,
+        transparent 70%,
+        rgba(0, 0, 0, 0.85) 100%
+      );
       display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 18px;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 30px;
       opacity: 0;
       transition: opacity 0.3s ease;
-      z-index: 99999;
-      pointer-events: none;
-      box-sizing: border-box;
-      width: 100%;
+      z-index: 10;
     }
 
-    .video-container:fullscreen .custom-controls,
-    .video-container:-webkit-full-screen .custom-controls {
-      padding-bottom: max(16px, env(safe-area-inset-bottom));
-      padding-left: max(20px, env(safe-area-inset-left));
-      padding-right: max(20px, env(safe-area-inset-right));
-      padding-top: 12px;
-    }
-
-    .custom-player:hover .custom-controls,
-    .custom-player.paused .custom-controls,
-    .custom-player.show-controls .custom-controls {
+    .nflx-player-container:hover .nflx-overlay,
+    .nflx-player-container.paused .nflx-overlay,
+    .nflx-player-container.show-controls .nflx-overlay {
       opacity: 1;
-      pointer-events: auto;
     }
 
-    .ctrl-btn {
-      background: none;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      padding: 6px;
+    /* En-tête : Titre Netflix */
+    .nflx-header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      flex-shrink: 0;
-      -webkit-tap-highlight-color: transparent;
-      transition: transform 0.15s ease;
+      gap: 15px;
     }
 
-    .ctrl-btn:hover {
-      transform: scale(1.1);
+    .nflx-title {
+      font-size: 1.2em;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
 
-    .ctrl-btn svg {
-      width: 22px;
-      height: 22px;
-      fill: #ffffff;
-      transition: fill 0.2s;
+    .nflx-subtitle {
+      font-size: 0.9em;
+      color: var(--nflx-subtext);
     }
 
-    .ctrl-btn:hover svg {
-      fill: #e50914;
+    /* Contrôles du bas */
+    .nflx-bottom-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .time-display {
-      font-size: 0.8em;
-      color: #aaa;
-      white-space: nowrap;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      flex-shrink: 0;
-      font-weight: 500;
+    /* Barre de progression fluide */
+    .nflx-progress-wrapper {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
 
-    /* PROGRESS BAR STYLE NETFLIX */
-    .progress-bar {
+    .nflx-progress-container {
       flex: 1;
-      min-width: 30px;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .nflx-progress-bar {
+      width: 100%;
       -webkit-appearance: none;
       appearance: none;
       height: 4px;
       background: rgba(255, 255, 255, 0.3);
-      border-radius: 2px;
       outline: none;
-      cursor: pointer;
+      border-radius: 2px;
       transition: height 0.15s ease;
     }
 
-    .progress-bar:hover {
-      height: 7px;
+    .nflx-progress-container:hover .nflx-progress-bar {
+      height: 8px;
     }
 
-    .progress-bar::-webkit-slider-thumb {
+    .nflx-progress-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--nflx-red);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(229, 9, 20, 0.8);
+    }
+
+    .nflx-progress-bar::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--nflx-red);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(229, 9, 20, 0.8);
+      border: none;
+    }
+
+    .nflx-time {
+      font-size: 0.85em;
+      color: var(--nflx-subtext);
+      font-weight: 500;
+      font-family: monospace;
+      white-space: nowrap;
+    }
+
+    /* Rangée de boutons */
+    .nflx-buttons-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nflx-left-controls, .nflx-right-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nflx-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease, color 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nflx-btn:hover {
+      transform: scale(1.15);
+      color: var(--nflx-red);
+    }
+
+    .nflx-btn svg {
+      width: 28px;
+      height: 28px;
+      fill: currentColor;
+    }
+
+    /* Groupe Volume */
+    .nflx-volume-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nflx-volume-slider {
+      width: 0;
+      opacity: 0;
       -webkit-appearance: none;
       appearance: none;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: #e50914;
+      height: 4px;
+      background: #fff;
+      border-radius: 2px;
+      transition: width 0.25s ease, opacity 0.25s ease;
       cursor: pointer;
-      box-shadow: 0 0 8px rgba(0,0,0,0.5);
     }
 
-    .progress-bar::-moz-range-thumb {
-      width: 14px;
-      height: 14px;
+    .nflx-volume-group:hover .nflx-volume-slider {
+      width: 70px;
+      opacity: 1;
+    }
+
+    .nflx-volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
-      background: #e50914;
-      cursor: pointer;
+      background: #fff;
+    }
+
+    .nflx-volume-slider::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fff;
       border: none;
-      box-shadow: 0 0 8px rgba(0,0,0,0.5);
     }
 
-    /* MENU VITESSE COMPACT */
-    .speed-select {
-      background: rgba(0, 0, 0, 0.6);
-      color: #fff;
-      border: 1px solid #444;
-      border-radius: 4px;
-      padding: 3px 6px;
-      font-size: 0.75em;
-      cursor: pointer;
-      outline: none;
-      flex-shrink: 0;
-      transition: border-color 0.2s;
-    }
-
-    .speed-select:hover {
-      border-color: #e50914;
-    }
-
-    /* ADAPTATION MOBILE ET PAYSAGE */
+    /* Adaptation mobile des contrôles Netflix */
     @media screen and (max-width: 600px) {
-      .custom-controls {
-        gap: 6px;
-        padding: 8px 10px;
+      .nflx-overlay {
+        padding: 10px 15px;
       }
-      .ctrl-btn svg {
-        width: 18px;
-        height: 18px;
+      .nflx-title {
+        font-size: 0.9em;
       }
-      .time-display {
-        font-size: 0.68em;
+      .nflx-subtitle {
+        font-size: 0.75em;
       }
-      .speed-select {
-        font-size: 0.65em;
-        padding: 2px 4px;
+      .nflx-left-controls, .nflx-right-controls {
+        gap: 10px;
+      }
+      .nflx-btn svg {
+        width: 22px;
+        height: 22px;
+      }
+      .nflx-time {
+        font-size: 0.7em;
+      }
+      .nflx-volume-group:hover .nflx-volume-slider {
+        width: 45px;
       }
     }
 
@@ -387,8 +349,8 @@
       display: flex;
       align-items: center;
       width: 100%;
-      max-width: 960px;
-      margin: 10px auto 0;
+      max-width: 900px;
+      margin: 20px auto 0;
     }
 
     .characters {
@@ -408,28 +370,28 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0,0,0,0.7);
-      color: #fff;
-      border: 1px solid #333;
-      font-size: 1.2em;
+      background: rgba(0,0,0,0.8);
+      color: #ff0066;
+      border: 1px solid #ff0066;
+      font-size: 1.5em;
       cursor: pointer;
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s, border-color 0.2s;
+      transition: background 0.2s, color 0.2s;
     }
 
     .scroll-btn:hover {
-      background: #e50914;
-      border-color: #e50914;
+      background: #ff0066;
+      color: #fff;
     }
 
-    .scroll-btn.left { left: -10px; }
-    .scroll-btn.right { right: -10px; }
+    .scroll-btn.left { left: 5px; }
+    .scroll-btn.right { right: 5px; }
 
     .character {
       text-align: center;
@@ -440,49 +402,46 @@
     }
 
     .character img {
-      width: 90px;
-      height: 90px;
+      width: 95px;
+      height: 95px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid #333;
-      transition: transform .3s, border-color .3s;
+      border: 3px solid #ff0066;
+      box-shadow: 0 0 15px rgba(255,0,102,.5);
+      transition: transform .3s;
     }
 
     .character:hover img,
     .character:focus img {
-      transform: scale(1.08);
-      border-color: #e50914;
+      transform: scale(1.1);
     }
 
     .character .name {
       margin-top: 8px;
-      font-weight: 600;
+      font-weight: bold;
       font-size: 0.85em;
-      color: #e5e5e5;
     }
 
     .character .role {
       font-size: .75em;
-      color: #808080;
+      color: #bbb;
     }
 
     /* ===== FILM INFO ===== */
     .film-info {
-      background-color: #181818;
-      padding: 24px;
-      border-radius: 8px;
-      max-width: 960px;
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 900px;
       line-height: 1.6;
       width: 100%;
       box-sizing: border-box;
-      border: 1px solid #262626;
+      border: 1px solid #333;
     }
 
     .film-info h2 {
-      color: #fff;
+      color: #ff0066;
       margin-top: 0;
-      font-size: 1.6em;
-      letter-spacing: 0.5px;
     }
 
     /* ===== MODAL DESCRIPTION ===== */
@@ -498,45 +457,40 @@
     }
 
     .modal-content {
-      background: #181818;
+      background: #1a1a1a;
       padding: 25px;
-      border-radius: 8px;
+      border-radius: 12px;
       max-width: 450px;
       width: 100%;
       text-align: center;
-      border: 1px solid #333;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+      border: 1px solid #ff0066;
+      box-shadow: 0 0 20px rgba(255, 0, 102, 0.4);
     }
 
     .modal-content h3 {
-      color: #e50914;
+      color: #ff0066;
       margin-top: 0;
     }
 
     .modal-content p {
       line-height: 1.5;
-      color: #cccccc;
+      color: #ddd;
       font-size: 0.95em;
     }
 
     .close {
       margin-top: 15px;
-      padding: 8px 24px;
-      background: #e50914;
+      padding: 8px 20px;
+      background: #ff0066;
       border: none;
       color: #fff;
       cursor: pointer;
-      border-radius: 4px;
+      border-radius: 6px;
       font-weight: bold;
-      transition: background 0.2s;
-    }
-
-    .close:hover {
-      background: #f40612;
     }
 
     @supports not (aspect-ratio: 16/9) {
-      .video-thumb, .custom-player {
+      .nflx-player-container {
         height: calc(100vw * 9 / 16);
       }
     }
@@ -565,52 +519,66 @@
 
 <div class="container">
 
-  <!-- LECTEUR VIDEO STYLE NETFLIX -->
-  <div class="video-container" id="videoContainer">
-    <div class="video-thumb" id="thumb">
-      <img src="imčqll.jpg" alt="cover vidéo">
-      <div class="play-btn"></div>
-    </div>
+  <!-- LECTEUR VIDÉO NETFLIX -->
+  <div class="nflx-player-container" id="nflxContainer">
+    <video id="nflxVideo" playsinline preload="metadata">
+      <source src="https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4" type="video/mp4">
+    </video>
 
-    <div class="custom-player" id="playerWrapper">
-      <div class="video-loader" id="videoLoader"></div>
-      
-      <video id="myVideo" playsinline preload="auto">
-        <source src="https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4" type="video/mp4">
-      </video>
+    <!-- Overlay Netflix -->
+    <div class="nflx-overlay">
+      <!-- En-tête haut -->
+      <div class="nflx-header">
+        <span class="nflx-title">IMČEQLAL</span>
+        <span class="nflx-subtitle">| Asaru</span>
+      </div>
 
-      <div class="custom-controls" id="customControls">
-        <!-- Jouer / Pause -->
-        <button class="ctrl-btn" id="playBtn" title="Seddu / Ḥbes">
-          <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-        </button>
+      <!-- Contrôles bas -->
+      <div class="nflx-bottom-controls">
+        <!-- Barre de progression + temps en HEURES -->
+        <div class="nflx-progress-wrapper">
+          <div class="nflx-progress-container">
+            <input type="range" class="nflx-progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1">
+          </div>
+          <span class="nflx-time" id="timeDisplay">00:00:00 / 00:00:00</span>
+        </div>
 
-        <span class="time-display" id="timeDisplay">00:00:00 / 00:00:00</span>
-        
-        <!-- Barre de progression -->
-        <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1">
-        
-        <!-- Muet / Son -->
-        <button class="ctrl-btn" id="muteBtn" title="Ṣṣut">
-          <svg id="volumeIcon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-          <svg id="muteIcon" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-        </button>
-        
-        <!-- Vitesse -->
-        <select class="speed-select" id="speedSelect" title="Tazzla">
-          <option value="0.5">0.5x</option>
-          <option value="1" selected>1x</option>
-          <option value="1.25">1.25x</option>
-          <option value="1.5">1.5x</option>
-          <option value="2">2x</option>
-        </select>
+        <!-- Boutons de commande -->
+        <div class="nflx-buttons-row">
+          <div class="nflx-left-controls">
+            <!-- Lecture / Pause -->
+            <button class="nflx-btn" id="playBtn" title="Seddu / Ḥbes (Espace)">
+              <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
 
-        <!-- Plein Écran -->
-        <button class="ctrl-btn" id="fullscreenBtn" title="Agdil aɣezfan">
-          <svg id="fsEnterIcon" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-          <svg id="fsExitIcon" viewBox="0 0 24 24" style="display:none;"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
-        </button>
+            <!-- Reculer 10s -->
+            <button class="nflx-btn" id="rewindBtn" title="Uɣal ddeffir s 10s">
+              <svg viewBox="0 0 24 24"><path d="M12.5 3C7.8 3 4 6.8 4 11.5V12h-2l3 3.5 3-3.5h-2v-.5C6 8 8.9 5.1 12.5 5.1c3.6 0 6.5 2.9 6.5 6.5s-2.9 6.5-6.5 6.5c-1.8 0-3.4-.7-4.6-1.9l-1.4 1.4C8 20.1 10.1 21 12.5 21 17.7 21 22 16.7 22 11.5S17.7 3 12.5 3z"/></svg>
+            </button>
+
+            <!-- Avancer 10s -->
+            <button class="nflx-btn" id="forwardBtn" title="Zwer zdat s 10s">
+              <svg viewBox="0 0 24 24"><path d="M11.5 3C16.2 3 20 6.8 20 11.5V12h2l-3 3.5-3-3.5h2v-.5C18 8 15.1 5.1 11.5 5.1 7.9 5.1 5 8 5 11.5S7.9 18 11.5 18c1.8 0 3.4-.7 4.6-1.9l1.4 1.4C16 20.1 13.9 21 11.5 21 6.3 21 2 16.7 2 11.5S6.3 3 11.5 3z"/></svg>
+            </button>
+
+            <!-- Volume -->
+            <div class="nflx-volume-group">
+              <button class="nflx-btn" id="muteBtn" title="Ṣṣut (M)">
+                <svg id="volumeIcon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                <svg id="muteIcon" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+              </button>
+              <input type="range" class="nflx-volume-slider" id="volumeSlider" min="0" max="1" step="0.05" value="1">
+            </div>
+          </div>
+
+          <div class="nflx-right-controls">
+            <!-- Plein Écran -->
+            <button class="nflx-btn" id="fsBtn" title="Agdil aɣezfan (F)">
+              <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -638,7 +606,7 @@
       </div>
       
       <div class="character" tabindex="0" role="button" 
-           data-title="MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⵓⴷⵉ ⵃⴰⴰⵏⴰⵏ" 
+           data-title="MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⵓⴷⵉ ⵃⴰⵏⴰⵏ" 
            data-desc="D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is">
         <img src="femme.png" alt="MESƐUDI Ḥanan">
         <div class="name">MESƐUDI Ḥanan</div>
@@ -670,7 +638,7 @@
       </div>
 
       <div class="character" tabindex="0" role="button" 
-           data-title="XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⴰⵣⵉⵖ" 
+           data-title="XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ" 
            data-desc="d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura">
         <img src="amazigh.jpg" alt="XERZI Amaziɣ">
         <div class="name">XERZI Amaziɣ</div>
@@ -750,44 +718,26 @@
   </div>
 </div>
 
-<!-- LOGIQUE DU LECTEUR VIDÉO -->
+<!-- LOGIQUE DU LECTEUR VIDÉO NETFLIX -->
 <script>
-  const videoContainer = document.getElementById("videoContainer");
-  const thumb = document.getElementById("thumb");
-  const playerWrapper = document.getElementById("playerWrapper");
-  const video = document.getElementById("myVideo");
-  const videoLoader = document.getElementById("videoLoader");
-
+  const video = document.getElementById("nflxVideo");
+  const container = document.getElementById("nflxContainer");
   const playBtn = document.getElementById("playBtn");
   const playIcon = document.getElementById("playIcon");
   const pauseIcon = document.getElementById("pauseIcon");
-
-  const timeDisplay = document.getElementById("timeDisplay");
+  const rewindBtn = document.getElementById("rewindBtn");
+  const forwardBtn = document.getElementById("forwardBtn");
   const progressBar = document.getElementById("progressBar");
-
+  const timeDisplay = document.getElementById("timeDisplay");
+  const volumeSlider = document.getElementById("volumeSlider");
   const muteBtn = document.getElementById("muteBtn");
   const volumeIcon = document.getElementById("volumeIcon");
   const muteIcon = document.getElementById("muteIcon");
+  const fsBtn = document.getElementById("fsBtn");
 
-  const speedSelect = document.getElementById("speedSelect");
-  const fullscreenBtn = document.getElementById("fullscreenBtn");
-  const fsEnterIcon = document.getElementById("fsEnterIcon");
-  const fsExitIcon = document.getElementById("fsExitIcon");
-
-  // Démarrage de la vidéo
-  thumb.addEventListener("click", () => {
-    thumb.style.display = "none";
-    playerWrapper.style.display = "block";
-    video.play();
-  });
-
-  // Toggle Lecture / Pause
   function togglePlay() {
-    if (video.paused || video.ended) {
-      video.play();
-    } else {
-      video.pause();
-    }
+    if (video.paused) video.play();
+    else video.pause();
   }
 
   playBtn.addEventListener("click", togglePlay);
@@ -796,43 +746,53 @@
   video.addEventListener("play", () => {
     playIcon.style.display = "none";
     pauseIcon.style.display = "block";
-    playerWrapper.classList.remove("paused");
+    container.classList.remove("paused");
   });
 
   video.addEventListener("pause", () => {
     playIcon.style.display = "block";
     pauseIcon.style.display = "none";
-    playerWrapper.classList.add("paused");
+    container.classList.add("paused");
   });
 
-  // Formater le temps
-  function formatTime(seconds) {
+  // Reculer / Avancer de 10 secondes
+  rewindBtn.addEventListener("click", () => {
+    video.currentTime = Math.max(0, video.currentTime - 10);
+  });
+
+  forwardBtn.addEventListener("click", () => {
+    video.currentTime = Math.min(video.duration, video.currentTime + 10);
+  });
+
+  // Formatage du temps en HEURES (HH:MM:SS)
+  function formatHours(seconds) {
     if (isNaN(seconds) || seconds === Infinity) return "00:00:00";
+    
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
     const s = Math.floor(seconds % 60);
+    
     const pad = (num) => String(num).padStart(2, '0');
+    
     return `${pad(h)}:${pad(m)}:${pad(s)}`;
   }
 
-  // Barre de progression
   video.addEventListener("timeupdate", () => {
     if (!isNaN(video.duration) && video.duration > 0) {
-      const pct = (video.currentTime / video.duration) * 100;
-      progressBar.value = pct;
-      timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+      progressBar.value = (video.currentTime / video.duration) * 100;
+      timeDisplay.textContent = `${formatHours(video.currentTime)} / ${formatHours(video.duration)}`;
     }
   });
 
   progressBar.addEventListener("input", () => {
     if (!isNaN(video.duration) && video.duration > 0) {
-      const seekTime = (progressBar.value / 100) * video.duration;
-      video.currentTime = seekTime;
+      video.currentTime = (progressBar.value / 100) * video.duration;
     }
   });
 
-  // Gestion volume
+  // Gestion du volume et icônes
   function updateVolumeUI() {
+    volumeSlider.value = video.muted ? 0 : video.volume;
     if (video.muted || video.volume === 0) {
       volumeIcon.style.display = "none";
       muteIcon.style.display = "block";
@@ -842,71 +802,54 @@
     }
   }
 
+  volumeSlider.addEventListener("input", (e) => {
+    video.volume = e.target.value;
+    video.muted = e.target.value == 0;
+    updateVolumeUI();
+  });
+
   muteBtn.addEventListener("click", () => {
     video.muted = !video.muted;
     updateVolumeUI();
   });
 
-  video.addEventListener("volumechange", updateVolumeUI);
-
-  // Vitesse de lecture
-  speedSelect.addEventListener("change", (e) => {
-    video.playbackRate = parseFloat(e.target.value);
+  // Plein écran
+  fsBtn.addEventListener("click", () => {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+      if (container.requestFullscreen) container.requestFullscreen();
+      else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+    } else {
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    }
   });
 
-  // Plein Écran
-  function toggleFullscreen() {
-    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-      if (videoContainer.requestFullscreen) {
-        videoContainer.requestFullscreen();
-      } else if (videoContainer.webkitRequestFullscreen) {
-        videoContainer.webkitRequestFullscreen();
-      }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      }
-    }
-  }
-
-  fullscreenBtn.addEventListener("click", toggleFullscreen);
-
-  const updateFsIcons = () => {
-    const isFS = document.fullscreenElement || document.webkitFullscreenElement;
-    if (isFS) {
-      fsEnterIcon.style.display = "none";
-      fsExitIcon.style.display = "block";
-    } else {
-      fsEnterIcon.style.display = "block";
-      fsExitIcon.style.display = "none";
-    }
-  };
-
-  document.addEventListener("fullscreenchange", updateFsIcons);
-  document.addEventListener("webkitfullscreenchange", updateFsIcons);
-
-  // Spinner
-  video.addEventListener("waiting", () => { videoLoader.style.display = "block"; });
-  video.addEventListener("playing", () => { videoLoader.style.display = "none"; });
-  video.addEventListener("canplay", () => { videoLoader.style.display = "none"; });
-
-  // Masquage auto des contrôles
+  // Auto-masquage des contrôles en cours de lecture
   let hideControlsTimeout;
   function showControls() {
-    playerWrapper.classList.add("show-controls");
+    container.classList.add("show-controls");
     clearTimeout(hideControlsTimeout);
     hideControlsTimeout = setTimeout(() => {
       if (!video.paused) {
-        playerWrapper.classList.remove("show-controls");
+        container.classList.remove("show-controls");
       }
     }, 3000);
   }
 
-  playerWrapper.addEventListener("mousemove", showControls);
-  playerWrapper.addEventListener("touchstart", showControls);
-  playerWrapper.addEventListener("contextmenu", (e) => e.preventDefault());
+  container.addEventListener("mousemove", showControls);
+  container.addEventListener("touchstart", showControls);
+
+  // Raccourcis Clavier
+  document.addEventListener("keydown", (e) => {
+    if (["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
+    switch (e.key.toLowerCase()) {
+      case " ": case "k": e.preventDefault(); togglePlay(); break;
+      case "f": e.preventDefault(); fsBtn.click(); break;
+      case "m": e.preventDefault(); muteBtn.click(); break;
+      case "arrowleft": e.preventDefault(); rewindBtn.click(); break;
+      case "arrowright": e.preventDefault(); forwardBtn.click(); break;
+    }
+  });
 
   // Modal Personnages
   function showDesc(title, text) {
@@ -942,7 +885,7 @@
     }
   });
 
-  // Carousel Personnages
+  // Défilement carrousel personnages
   const charContainer = document.getElementById("characters");
   const leftBtn = document.getElementById("scrollLeft");
   const rightBtn = document.getElementById("scrollRight");
