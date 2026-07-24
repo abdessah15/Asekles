@@ -99,7 +99,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
-    /* STYLES DES MODE PLEIN ÉCRAN MOBILE ET DESKTOP */
+    /* PLEIN ÉCRAN MOBILE & DESKTOP */
     .video-container:fullscreen,
     .video-container:-webkit-full-screen {
       width: 100vw !important;
@@ -153,7 +153,7 @@
       transform: translate(-50%, -50%) scale(1.1);
     }
 
-    /* ===== LECTEUR VIDEO PRO ===== */
+    /* ===== LECTEUR VIDEO ===== */
     .custom-player {
       display: none;
       position: relative;
@@ -197,7 +197,7 @@
       100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
-    /* BARRE DE CONTRÔLES PENSÉE POUR MOBILE ET DESKTOP */
+    /* BARRE DE CONTRÔLES DYNAMIQUE */
     .custom-controls {
       position: absolute;
       bottom: 0;
@@ -206,21 +206,23 @@
       background: linear-gradient(transparent, rgba(0, 0, 0, 0.95));
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 15px;
+      gap: 8px;
+      padding: 10px 12px;
       opacity: 0;
       transition: opacity 0.3s ease;
       z-index: 99999;
       pointer-events: none;
       box-sizing: border-box;
+      width: 100%;
     }
 
-    /* PRISE EN COMPTE DES BARRES SYSTEME EN PLEIN ÉCRAN MOBILE */
+    /* MARGES DE SÉCURITÉ EN PLEIN ÉCRAN / ROTATION (NOTCH ET BARRE HOME) */
     .video-container:fullscreen .custom-controls,
     .video-container:-webkit-full-screen .custom-controls {
-      padding-bottom: max(15px, env(safe-area-inset-bottom));
-      padding-left: max(15px, env(safe-area-inset-left));
-      padding-right: max(15px, env(safe-area-inset-right));
+      padding-bottom: max(12px, env(safe-area-inset-bottom));
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+      padding-top: 10px;
     }
 
     .custom-player:hover .custom-controls,
@@ -240,12 +242,13 @@
       align-items: center;
       justify-content: center;
       border-radius: 4px;
+      flex-shrink: 0;
       -webkit-tap-highlight-color: transparent;
     }
 
     .ctrl-btn svg {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       fill: #ffffff;
       transition: fill 0.2s;
     }
@@ -255,15 +258,17 @@
     }
 
     .time-display {
-      font-size: 0.8em;
+      font-size: 0.78em;
       color: #ccc;
       white-space: nowrap;
       font-family: monospace;
+      flex-shrink: 0;
     }
 
-    /* BARRE DE PROGRESSION */
+    /* BARRE DE PROGRESSION FLUIDE */
     .progress-bar {
       flex: 1;
+      min-width: 40px;
       -webkit-appearance: none;
       appearance: none;
       height: 5px;
@@ -276,32 +281,59 @@
     .progress-bar::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
       border-radius: 50%;
       background: #ff0066;
       cursor: pointer;
     }
 
     .progress-bar::-moz-range-thumb {
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
       border-radius: 50%;
       background: #ff0066;
       cursor: pointer;
       border: none;
     }
 
-    /* MENU VITESSE */
+    /* MENU VITESSE COMPACT */
     .speed-select {
       background: rgba(20, 20, 20, 0.8);
       color: #fff;
       border: 1px solid #444;
       border-radius: 4px;
       padding: 3px 4px;
-      font-size: 0.8em;
+      font-size: 0.75em;
       cursor: pointer;
       outline: none;
+      flex-shrink: 0;
+    }
+
+    /* ADAPTATION SPÉCIFIQUE EN MODE PAYSAGE SUR MOBILE (ROTATION) */
+    @media screen and (max-height: 500px) and (orientation: landscape) {
+      .custom-controls {
+        padding: 6px 10px;
+        gap: 6px;
+      }
+
+      .ctrl-btn {
+        padding: 4px;
+      }
+
+      .ctrl-btn svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .time-display {
+        font-size: 0.7em;
+      }
+
+      .speed-select {
+        padding: 2px 3px;
+        font-size: 0.7em;
+      }
     }
 
     /* ===== PERSONNAGES ===== */
@@ -460,7 +492,7 @@
 
 <div class="container">
 
-  <!-- LECTEUR PROPRIÉTAIRE ERGONOMIQUE MOBILE & DESKTOP -->
+  <!-- LECTEUR PROPRIÉTAIRE ADAPTÉ ROTATION ET MOBILE -->
   <div class="video-container" id="videoContainer">
     <div class="video-thumb" id="thumb">
       <img src="imčqll.jpg" alt="cover vidéo">
@@ -475,7 +507,7 @@
       </video>
 
       <div class="custom-controls" id="customControls">
-        <!-- Bouton Jouer / Pause -->
+        <!-- Jouer / Pause -->
         <button class="ctrl-btn" id="playBtn" title="Lecture / Pause">
           <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
@@ -483,10 +515,10 @@
 
         <span class="time-display" id="timeDisplay">00:00 / 00:00</span>
         
-        <!-- Barre n progression -->
+        <!-- Barre de progression -->
         <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1">
         
-        <!-- Bouton Muet / Son -->
+        <!-- Muet / Son -->
         <button class="ctrl-btn" id="muteBtn" title="Son">
           <svg id="volumeIcon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
           <svg id="muteIcon" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
@@ -501,7 +533,7 @@
           <option value="2">2x</option>
         </select>
 
-        <!-- Bouton Plein Écran -->
+        <!-- Plein Écran -->
         <button class="ctrl-btn" id="fullBtn" title="Plein écran">
           <svg id="fullscreenIcon" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
           <svg id="exitFullscreenIcon" viewBox="0 0 24 24" style="display:none;"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
@@ -652,7 +684,7 @@
     showControlsTemporarily();
   });
 
-  // GESTION DU TACTILE SUR MOBILE (Tap pour afficher/masquer les contrôles)
+  // GESTION DU TACTILE SUR MOBILE
   video.addEventListener("click", (e) => {
     e.stopPropagation();
     if (playerWrapper.classList.contains("show-controls")) {
@@ -700,14 +732,14 @@
     playerWrapper.classList.add("show-controls");
   });
 
-  // Formatage du temps (MM:SS)
+  // Formatage du temps
   function formatTime(seconds) {
     const min = Math.floor(seconds / 60) || 0;
     const sec = Math.floor(seconds % 60) || 0;
     return `${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`;
   }
 
-  // Mise à jour du temps et de la barre
+  // Temps / barre
   video.addEventListener("timeupdate", () => {
     if (!isNaN(video.duration)) {
       const current = formatTime(video.currentTime);
@@ -747,7 +779,7 @@
     showControlsTemporarily();
   });
 
-  // GESTION COMPLÈTE DU PLEIN ÉCRAN UNIVERSEL (IOS, ANDROID ET DESKTOP)
+  // GESTION PLEIN ÉCRAN
   function toggleFullscreen() {
     if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
       if (videoContainer.requestFullscreen) {
@@ -756,7 +788,7 @@
         videoContainer.webkitRequestFullscreen();
       } else if (videoContainer.msRequestFullscreen) {
         videoContainer.msRequestFullscreen();
-      } else if (video.webkitEnterFullscreen) { // Safari iOS
+      } else if (video.webkitEnterFullscreen) {
         video.webkitEnterFullscreen();
       }
     } else {
@@ -796,7 +828,7 @@
   video.addEventListener("playing", () => videoLoader.style.display = "none");
   video.addEventListener("canplay", () => videoLoader.style.display = "none");
 
-  // Bloquer le menu contextuel
+  // Bloquer menu contextuel
   video.addEventListener("contextmenu", (e) => e.preventDefault());
 
   // Modale Personnages
