@@ -99,6 +99,21 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
+    /* CSS PLEIN ÉCRAN FLUIDE */
+    .video-container:fullscreen,
+    .video-container:-webkit-full-screen {
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: none !important;
+      border-radius: 0 !important;
+    }
+
+    .video-container:fullscreen .custom-player,
+    .video-container:-webkit-full-screen .custom-player {
+      height: 100% !important;
+      aspect-ratio: auto !important;
+    }
+
     .video-thumb {
       position: relative;
       width: 100%;
@@ -444,7 +459,7 @@
 
 <div class="container">
 
-  <!-- LECTEUR PROPRIÉTAIRE DESIGN PRO (ICÔNES SVG) -->
+  <!-- LECTEUR PROPRIÉTAIRE DESIGN PRO -->
   <div class="video-container" id="videoContainer">
     <div class="video-thumb" id="thumb">
       <img src="imčqll.jpg" alt="cover vidéo">
@@ -459,18 +474,19 @@
       </video>
 
       <div class="custom-controls">
-        <!-- Bouton Jouer / Pause (SVG) -->
+        <!-- Bouton Jouer / Pause -->
         <button class="ctrl-btn" id="playBtn" title="Lecture / Pause">
           <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
         </button>
 
-        <span class="time-display" id="timeDisplay">00:00 / 00:00</span>
+        <!-- Temps au format HH:MM:SS -->
+        <span class="time-display" id="timeDisplay">00:00:00 / 00:00:00</span>
         
         <!-- Barre de progression -->
         <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1">
         
-        <!-- Bouton Muet / Son (SVG) -->
+        <!-- Bouton Muet / Son -->
         <button class="ctrl-btn" id="muteBtn" title="Couper/Activer le son">
           <svg id="volumeIcon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
           <svg id="muteIcon" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
@@ -485,7 +501,7 @@
           <option value="2">2x</option>
         </select>
 
-        <!-- Bouton Plein Écran (SVG) -->
+        <!-- Bouton Plein Écran -->
         <button class="ctrl-btn" id="fullBtn" title="Plein écran">
           <svg id="fullscreenIcon" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
           <svg id="exitFullscreenIcon" viewBox="0 0 24 24" style="display:none;"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
@@ -499,140 +515,144 @@
     <button class="scroll-btn left">&#10094;</button>
     <div class="characters" id="characters">
       
-      <div class="character" onclick="showDesc('XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ','d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.')">
-        <img src="Abdessah.jpg" alt="XERZI Ɛabdeṣṣaḥ">
+      <div class="character" onclick="showDesc('XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ','Imseḍru deg usaru-a, d netta i d-ixelqen akk taḍṣa akked tulfizin n imčeqlal')">
+        <img src="Xerzi.png" alt="personnage 1">
         <div class="name">XERZI Ɛabdeṣṣaḥ</div>
-        <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
-      </div>
-      
-      <div class="character" onclick="showDesc('BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻⵙ ','tamekfaḍut d tamedyazt d tamarut, d yelli-s n tɣiwant it Muḥli, tlul deg useggas n 2001 deg waɣir n it Wertilan agezdu n Ṣṭif. Tewwi-d agerdas n master deg taɣult n Tesnalmudt deg tutlayt d yidles Amaziɣ.')">
-        <img src="femme.png" alt="BEǦǦA Ṭawes">
-        <div class="name">BEǦǦA Ṭawes</div>
-        <div class="role">d tasegbart</div>
-      </div>
-      
-      <div class="character" onclick="showDesc('MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⴷⵉ ⵃⴰⵏⴰⵏ ','D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
-        <img src="femme.png" alt="MESƐUDI Ḥanan">
-        <div class="name">MESƐUDI Ḥanan</div>
-        <div class="role">d tasegbart</div>
-      </div>
-      
-      <div class="character" onclick="showDesc('BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰⵏⵉⵢⴰ ','D tilemẓit, tlul ass n 13 Furar 2007 deg Sidi Ɛic, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
-        <img src="femme.png" alt="BEṬṬAC Haniya">
-        <div class="name">BEṬṬAC Haniya</div>
-        <div class="role">d tasegbart</div>
-      </div>
-      
-      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
-        <img src="femme.png" alt="MESƐUDI Nawal">
-        <div class="name">MESƐUDI Nawal</div>
-        <div class="role">d tasegbart</div>
-      </div>
-      
-      <div class="character" onclick="showDesc('MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⴷⵉ ⵎⴰⵀⴷⵉ ','D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
-        <img src="MahdiMes.jpg" alt="MESƐUDI Mahdi">
-        <div class="name">MESƐUDI Mahdi</div>
-        <div class="role">d asegbar</div>
+        <div class="role">Xerzi . A</div>
       </div>
 
-      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
-        <img src="amazigh.jpg" alt="XERZI Amaziɣ">
-        <div class="name">XERZI Amaziɣ</div>
-        <div class="role">d asegbar</div>
+      <div class="character" onclick="showDesc('BELƐIDI Sliman - ⴱⴻⵍⵄⵉⴷⵉ ⵙⵍⵉⵎⴰⵏ','Awrik ameqqran deg usaru n Imčeqlal, bab n teḍṣa akked tzuri.')">
+        <img src="Sliman.jpg" alt="personnage 2">
+        <div class="name">BELƐIDI Sliman</div>
+        <div class="role">Silman . B</div>
       </div>
-      
-      <div class="character" onclick="showDesc('MADI Ḥamza - ⵎⴰⴷⵉ ⵃⴰⵎⵣⴰ ','D ilemẓi anaẓuṛ, ilul ass 12 wanber 2006, ittcewwiq icewwiqen icennu, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
-        <img src="Hamzamadi.jpg" alt="MADI Ḥamza">
-        <div class="name">MADI Ḥamza</div>
-        <div class="role">d asegbar</div>
+
+      <div class="character" onclick="showDesc('LḤAǦ Muḥend - ⵍⵃⴰⴵ ⵎⵓⵃⴻⵏⴷ','Amusnaw d umsawel, yettwassen s tiḥḥerci-ines d teḍṣa.')">
+        <img src="Lhaǧ.jpg" alt="personnage 3">
+        <div class="name">LḤAǦ Muḥend</div>
+        <div class="role">Lḥaǧ . M</div>
       </div>
-      
-      <div class="character" onclick="showDesc('Mariya ASIL ḤARRUS - ⵎⴰⵔⵉⵢⴰ ⴰⵙⵉⵍ ⵃⴰⵔⵔⵓⵙ ','d tagrudt n sin iseggasen, tlul ass 8 ctember 2023, deg ɛin lbenyan di ldzayer tamanaɣt, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
-        <img src="maria.jpg" alt="Mariya ASIL ḤARRUS">
-        <div class="name">Mariya ASIL ḤARRUS</div>
-        <div class="role">d tasegbart</div>
+
+      <div class="character" onclick="showDesc('SAƐDI Muḥend - ⵙⴰⵄⴷⵉ ⵎⵓⵃⴻⵏⴷ','Awrik meqren deg tzuri, yexdem aṭas n tmeqranin deg usaru.')">
+        <img src="Muḥ.jpg" alt="personnage 4">
+        <div class="name">SAƐDI Muḥend</div>
+        <div class="role">Muḥend . S</div>
       </div>
-      
-      <div class="character" onclick="showDesc('BENNUṚ Amina - ⴱⴻⵏⵏⵓⵕ ⴰⵎⵉⵏⴰ ','D taqcict, tlul 3 tuber 2016 deg Targa uzemmur Bgayet, D yellis n Ɛumar Bennuṛ, D tanelmadt deg uswir wis ukkuẓ deg uɣerbaz amenzu, d taɛeggalt deg ugraw ASIREM n tdukla tadelsant IZUMAL n taddart n Tici')">
-        <img src="femme.png" alt="BENNUṚ Amina">
-        <div class="name">BENNUṚ Amina</div>
-        <div class="role">d tasegbart</div>
+
+      <div class="character" onclick="showDesc('IƐEZUZEN Djamel - ⵉⵄⴻⵣⵓⵣⴻⵏ ⴵⴰⵎⴻⵍ','Amsedru d awrik deg usaru, yefka-d aṭas i tzuri n leqbayer.')">
+        <img src="Djamel.jpg" alt="personnage 5">
+        <div class="name">IƐEZUZEN Djamel</div>
+        <div class="role">Djamel . I</div>
       </div>
-      
-      <div class="character" onclick="showDesc('XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ','d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay.')">
-        <img src="Abdelkader.jpg" alt="XERZI Ɛabdelqader">
-        <div class="name">XERZI Ɛabdelqader</div>
-        <div class="role">d asegbar</div>
+
+      <div class="character" onclick="showDesc('ƐEBLA Said - ⵄⴻⴱⵍⴰ ⵙⴰⵢⵉⴷ','Awrik meqren deg tzuri, yexdem aṭas n tmeqranin deg usaru.')">
+        <img src="Sayid.jpg" alt="personnage 6">
+        <div class="name">ƐEBLA Said</div>
+        <div class="role">Said . Ɛ</div>
       </div>
-      
-      <div class="character" onclick="showDesc('TUMERT Ǧilali - ⵊⵉⵍⴰⵍⵉ ⵜⵓⵎⴻⵔⵜ','D anaẓur n asegber d acennay, yexdem aṭas n tezrarin d yisura s teqbaylit gar-asen-tt Tinifift, Rbiḥa, Tayri txidas d wiyaḍ nniḍen, ilul ass n 4 yulyu 1989 deg ugezdu n tizi wezzu, n Buɣni n taddart At ɛebdelmumen, yetteka yid-neɣ deg usaru n IMČEQLAL s snat n tezlatin n uḍebsi-ines 2020.')">
-        <img src="toumertdjilali.jpg" alt="TUMERT Ǧilali">
-        <div class="name">TUMERT Ǧilali</div>
-        <div class="role">d acennay</div>
-      </div> 
-      
-      <div class="character" onclick="showDesc('YUSFI Sadeq - ⵢⵓⵙⴼⵉ ⵙⴰⴷⴻⵇ','D anaẓur n umezgun, sinima akked ccna d uẓawan, yugmed yufrar-d seg yidles Amaziɣ. Yezuzzured leqdic-is deg YouTube, itekka d waṭas n temsufeɣ gar-asen-tt asaru n IMČEQLAL yid-neɣ s ccbaḥa n tezlatin-is.')">
-        <img src="sadekyousfi.jpg" alt="YUSFI Sadeq">
-        <div class="name">YUSFI Sadeq</div>
-        <div class="role">d acennay</div>
-      </div>
-      
+
     </div>
     <button class="scroll-btn right">&#10095;</button>
   </div>
 
-  <!-- DETAILS DU FILM -->
   <div class="film-info">
-    <h2>IMČEQLAL</h2>
-    <p><strong>Tawsit :</strong> Inig, Taḍṣa, Arrac</p>
-    <p><strong>Azemz n usufeɣ :</strong> 2026</p>
-    <p><strong>Aglam n usaru :</strong><br>
-    Asaru-agi ad ken-yawi ɣer umaḍal n yinig d teḍsa. Čaqlala, d awtul yeččuren d tabɣest d twuɣa, maca ur d-kkint kan akka, d aseḥbiber ɣef tudert-is d tin n twacult-is iɣef yettḥebbir. Deg tmazirt n Muḥend Ukufi ideg tebda tmacahut, win i wumi semman awaɣzen, maca tella Tamilla i yellan ḥninet ɣur-sen, yis-s i d-selken acḥal d abrid, maca yiwet n tikkelt yemmut uwaɣzen, yewret-it mmi-s n gma-s, dɣa da i yebda yinig...
-    </p>
+    <h2>Gef usaru</h2>
+    <p>D asaru n teḍṣa d usewhem, yewwi-d ɣef tudert n leqbayer d wuguren n yal ass s wudem anfeḥli.</p>
   </div>
+
 </div>
 
 <!-- MODAL DESCRIPTION -->
 <div class="modal" id="modal">
   <div class="modal-content">
-    <h3 id="modalTitle"></h3>
-    <p id="modalText"></p>
+    <h3 id="modalName"></h3>
+    <p id="modalDesc"></p>
     <button class="close" onclick="closeModal()">Mdel</button>
   </div>
 </div>
 
 <script>
-  // DOM Elements
-  const thumb = document.getElementById("thumb");
-  const playerWrapper = document.getElementById("playerWrapper");
-  const videoContainer = document.getElementById("videoContainer");
-  const video = document.getElementById("myVideo");
-  const videoLoader = document.getElementById("videoLoader");
-  
-  const playBtn = document.getElementById("playBtn");
-  const playIcon = document.getElementById("playIcon");
-  const pauseIcon = document.getElementById("pauseIcon");
-  
-  const muteBtn = document.getElementById("muteBtn");
-  const volumeIcon = document.getElementById("volumeIcon");
-  const muteIcon = document.getElementById("muteIcon");
-  
-  const timeDisplay = document.getElementById("timeDisplay");
-  const progressBar = document.getElementById("progressBar");
-  const speedSelect = document.getElementById("speedSelect");
-  
-  const fullBtn = document.getElementById("fullBtn");
-  const fullscreenIcon = document.getElementById("fullscreenIcon");
-  const exitFullscreenIcon = document.getElementById("exitFullscreenIcon");
+  // Dynamic Scroll Characters
+  const characters = document.getElementById('characters');
+  const btnLeft = document.querySelector('.scroll-btn.left');
+  const btnRight = document.querySelector('.scroll-btn.right');
 
-  // Initialisation sur clic miniature
-  thumb.addEventListener("click", () => {
-    thumb.style.display = "none";
-    playerWrapper.style.display = "block";
+  btnLeft.addEventListener('click', () => characters.scrollBy({ left: -200, behavior: 'smooth' }));
+  btnRight.addEventListener('click', () => characters.scrollBy({ left: 200, behavior: 'smooth' }));
+
+  // Modal
+  function showDesc(name, desc){
+    document.getElementById('modalName').innerText = name;
+    document.getElementById('modalDesc').innerText = desc;
+    document.getElementById('modal').style.display = 'flex';
+  }
+  function closeModal(){
+    document.getElementById('modal').style.display = 'none';
+  }
+
+  // Account system
+  const amidanBtn = document.getElementById('amidanBtn');
+  const accountBox = document.getElementById('accountBox');
+  const userEmail = document.getElementById('userEmail');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  if (currentUser) {
+    userEmail.textContent = currentUser.email;
+    amidanBtn.style.display = 'inline';
+  }
+
+  amidanBtn.addEventListener('click', () => {
+    accountBox.style.display = accountBox.style.display === 'block' ? 'none' : 'block';
+  });
+
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('currentUser');
+    window.location.reload();
+  });
+
+  // ===== GESTION LECTEUR VIDEO PRO =====
+  const thumb = document.getElementById('thumb');
+  const playerWrapper = document.getElementById('playerWrapper');
+  const video = document.getElementById('myVideo');
+  const playBtn = document.getElementById('playBtn');
+  const playIcon = document.getElementById('playIcon');
+  const pauseIcon = document.getElementById('pauseIcon');
+  const progressBar = document.getElementById('progressBar');
+  const timeDisplay = document.getElementById('timeDisplay');
+  const muteBtn = document.getElementById('muteBtn');
+  const volumeIcon = document.getElementById('volumeIcon');
+  const muteIcon = document.getElementById('muteIcon');
+  const fullBtn = document.getElementById('fullBtn');
+  const fullscreenIcon = document.getElementById('fullscreenIcon');
+  const exitFullscreenIcon = document.getElementById('exitFullscreenIcon');
+  const speedSelect = document.getElementById('speedSelect');
+  const videoContainer = document.getElementById('videoContainer');
+  const videoLoader = document.getElementById('videoLoader');
+
+  // Formatage du temps en HH:MM:SS
+  function formatTime(seconds) {
+    if (isNaN(seconds) || seconds < 0) return "00:00:00";
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+
+    const hStr = h < 10 ? '0' + h : h;
+    const mStr = m < 10 ? '0' + m : m;
+    const sStr = s < 10 ? '0' + s : s;
+
+    return `${hStr}:${mStr}:${sStr}`;
+  }
+
+  // Lancement de la vidéo
+  thumb.addEventListener('click', () => {
+    thumb.style.display = 'none';
+    playerWrapper.style.display = 'block';
+    videoLoader.style.display = 'block';
     video.play();
   });
 
-  // Play / Pause
+  // Action Lecture / Pause
   function togglePlay() {
     if (video.paused) {
       video.play();
@@ -641,63 +661,68 @@
     }
   }
 
-  playBtn.addEventListener("click", togglePlay);
-  video.addEventListener("click", togglePlay);
+  playBtn.addEventListener('click', togglePlay);
+  video.addEventListener('click', togglePlay);
 
-  video.addEventListener("play", () => {
-    playIcon.style.display = "none";
-    pauseIcon.style.display = "block";
-    playerWrapper.classList.remove("paused");
+  video.addEventListener('play', () => {
+    playIcon.style.display = 'none';
+    pauseIcon.style.display = 'block';
+    playerWrapper.classList.remove('paused');
   });
 
-  video.addEventListener("pause", () => {
-    playIcon.style.display = "block";
-    pauseIcon.style.display = "none";
-    playerWrapper.classList.add("paused");
+  video.addEventListener('pause', () => {
+    playIcon.style.display = 'block';
+    pauseIcon.style.display = 'none';
+    playerWrapper.classList.add('paused');
   });
 
-  // Formatage du temps (MM:SS)
-  function formatTime(seconds) {
-    const min = Math.floor(seconds / 60) || 0;
-    const sec = Math.floor(seconds % 60) || 0;
-    return `${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`;
-  }
+  // Gérer l'état de chargement
+  video.addEventListener('waiting', () => {
+    videoLoader.style.display = 'block';
+  });
 
-  // Mise à jour du temps et de la barre
-  video.addEventListener("timeupdate", () => {
-    if (!isNaN(video.duration)) {
-      const current = formatTime(video.currentTime);
-      const total = formatTime(video.duration);
-      timeDisplay.textContent = `${current} / ${total}`;
-      progressBar.value = (video.currentTime / video.duration) * 100;
+  video.addEventListener('canplay', () => {
+    videoLoader.style.display = 'none';
+  });
+
+  video.addEventListener('playing', () => {
+    videoLoader.style.display = 'none';
+  });
+
+  // Mise à jour de la barre de progression et du temps (HH:MM:SS)
+  video.addEventListener('timeupdate', () => {
+    if (!isNaN(video.duration) && video.duration > 0) {
+      const progress = (video.currentTime / video.duration) * 100;
+      progressBar.value = progress;
+      timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
     }
   });
 
-  // Recherche dans la vidéo (Seek)
-  progressBar.addEventListener("input", () => {
+  // Navigation dans la vidéo (Seek)
+  progressBar.addEventListener('input', () => {
     if (!isNaN(video.duration)) {
       video.currentTime = (progressBar.value / 100) * video.duration;
     }
   });
 
-  // Mute / Unmute
-  muteBtn.addEventListener("click", () => {
+  // Contrôle du Son
+  muteBtn.addEventListener('click', () => {
     video.muted = !video.muted;
     if (video.muted) {
-      volumeIcon.style.display = "none";
-      muteIcon.style.display = "block";
+      volumeIcon.style.display = 'none';
+      muteIcon.style.display = 'block';
     } else {
-      volumeIcon.style.display = "block";
-      muteIcon.style.display = "none";
+      volumeIcon.style.display = 'block';
+      muteIcon.style.display = 'none';
     }
   });
 
-  // Changer la vitesse de lecture
-  speedSelect.addEventListener("change", (e) => {
+  // Contrôle de la vitesse
+  speedSelect.addEventListener('change', (e) => {
     video.playbackRate = parseFloat(e.target.value);
   });
 
-  // PLEIN ÉCRAN MULTI-NAVIGATEUR
+  // Mode Plein Écran
   function toggleFullscreen() {
     if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
       if (videoContainer.requestFullscreen) {
@@ -706,7 +731,7 @@
         videoContainer.webkitRequestFullscreen();
       } else if (videoContainer.msRequestFullscreen) {
         videoContainer.msRequestFullscreen();
-      } else if (video.webkitEnterFullscreen) { // Pour iOS Safari
+      } else if (video.webkitEnterFullscreen) {
         video.webkitEnterFullscreen();
       }
     } else {
@@ -720,116 +745,24 @@
     }
   }
 
-  fullBtn.addEventListener("click", toggleFullscreen);
+  fullBtn.addEventListener('click', toggleFullscreen);
 
   // Mettre à jour l'icône de plein écran
-  function onFullscreenChange() {
+  function updateFullscreenIcons() {
     const isFS = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
     if (isFS) {
-      fullscreenIcon.style.display = "none";
-      exitFullscreenIcon.style.display = "block";
+      fullscreenIcon.style.display = 'none';
+      exitFullscreenIcon.style.display = 'block';
     } else {
-      fullscreenIcon.style.display = "block";
-      exitFullscreenIcon.style.display = "none";
+      fullscreenIcon.style.display = 'block';
+      exitFullscreenIcon.style.display = 'none';
     }
   }
 
-  document.addEventListener("fullscreenchange", onFullscreenChange);
-  document.addEventListener("webkitfullscreenchange", onFullscreenChange);
-  document.addEventListener("msfullscreenchange", onFullscreenChange);
-
-  // Gestion de la roue de chargement (Loader)
-  video.addEventListener("waiting", () => videoLoader.style.display = "block");
-  video.addEventListener("playing", () => videoLoader.style.display = "none");
-  video.addEventListener("canplay", () => videoLoader.style.display = "none");
-
-  // Protection contre le clic droit sur la vidéo
-  video.addEventListener("contextmenu", (e) => e.preventDefault());
-
-  // Modale Personnages
-  function showDesc(title, text) {
-    document.getElementById("modalTitle").innerText = title;
-    document.getElementById("modalText").innerText = text;
-    document.getElementById("modal").style.display = "flex";
-  }
-
-  function closeModal() {
-    document.getElementById("modal").style.display = "none";
-  }
-
-  // Defilement fluide personnages
-  const charContainer = document.getElementById("characters");
-  const leftBtn = document.querySelector('.scroll-btn.left');
-  const rightBtn = document.querySelector('.scroll-btn.right');
-  const scrollAmount = 250;
-
-  function updateButtons() {
-    leftBtn.disabled = charContainer.scrollLeft <= 2;
-    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth - 2;
-  }
-
-  leftBtn.addEventListener('click', () => {
-    charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-  });
-
-  rightBtn.addEventListener('click', () => {
-    charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-  });
-
-  charContainer.addEventListener('scroll', updateButtons);
-  window.addEventListener('resize', updateButtons);
-  setTimeout(updateButtons, 500);
+  document.addEventListener('fullscreenchange', updateFullscreenIcons);
+  document.addEventListener('webkitfullscreenchange', updateFullscreenIcons);
+  document.addEventListener('msfullscreenchange', updateFullscreenIcons);
 </script>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
-
-/* 🔥 FIREBASE CONFIG */
-const firebaseConfig = {
-  apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
-  authDomain: "test-2fdd3.firebaseapp.com",
-  projectId: "test-2fdd3",
-  appId: "1:244317844373:web:3a4e5b77c649f54d7fbc9c"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-/* 🎯 ELEMENTS */
-const amidanBtn = document.getElementById("amidanBtn");
-const accountBox = document.getElementById("accountBox");
-const userEmail = document.getElementById("userEmail");
-const logoutBtn = document.getElementById("logoutBtn");
-
-/* 🔐 PROTECTION PAGE */
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    window.location.href = "login.html";
-  } else {
-    amidanBtn.style.display = "inline";
-    userEmail.textContent = "Connecté : " + user.email;
-  }
-});
-
-/* 👤 OUVRIR / FERMER AMIDAN */
-amidanBtn.addEventListener("click", () => {
-  accountBox.style.display =
-    accountBox.style.display === "block" ? "none" : "block";
-});
-
-/* 🚪 DÉCONNEXION */
-logoutBtn.addEventListener("click", async () => {
-  await signOut(auth);
-  window.location.href = "login.html";
-});
-
-/* ❌ FERMER SI CLIC AILLEURS */
-document.addEventListener("click", (e) => {
-  if (!amidanBtn.contains(e.target) && !accountBox.contains(e.target)) {
-    accountBox.style.display = "none";
-  }
-});
-</script>
 </body>
 </html>
