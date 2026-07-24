@@ -132,7 +132,7 @@
       height: 80px;
       background: rgba(255, 0, 102, 0.85);
       border-radius: 50%;
-      transition: 0.3s;
+      transition: transform 0.3s ease;
       z-index: 2;
     }
 
@@ -187,7 +187,7 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.8);
       color: #ff0066;
       border: 1px solid #ff0066;
       font-size: 1.5em;
@@ -199,7 +199,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: 0.2s;
+      transition: background 0.2s, color 0.2s;
     }
 
     .scroll-btn:hover {
@@ -207,14 +207,15 @@
       color: #fff;
     }
 
-    .scroll-btn.left { left: -15px; }
-    .scroll-btn.right { right: -15px; }
+    .scroll-btn.left { left: 5px; }
+    .scroll-btn.right { right: 5px; }
 
     .character {
       text-align: center;
       cursor: pointer;
       flex: 0 0 auto;
       width: 110px;
+      outline: none;
     }
 
     .character img {
@@ -227,7 +228,8 @@
       transition: transform .3s;
     }
 
-    .character:hover img {
+    .character:hover img,
+    .character:focus img {
       transform: scale(1.1);
     }
 
@@ -344,89 +346,117 @@
 
   <!-- PERSONNAGES AVEC SCROLL -->
   <div class="characters-wrapper">
-    <button class="scroll-btn left" id="scrollLeft">&#10094;</button>
+    <button class="scroll-btn left" id="scrollLeft" aria-label="Scroll left">&#10094;</button>
+    
     <div class="characters" id="characters">
       
-      <div class="character" onclick="showDesc('XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ','d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ" 
+           data-desc="d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.">
         <img src="Abdessah.jpg" alt="XERZI Ɛabdeṣṣaḥ">
         <div class="name">XERZI Ɛabdeṣṣaḥ</div>
         <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
       </div>
       
-      <div class="character" onclick="showDesc('BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻⵙ','tamekfaḍut d tamedyazt d tamarut, d yelli-s n tɣiwant it Muḥli, tlul deg useggas n 2001 deg waɣir n it Wertilan agezdu n Ṣṭif. Tewwi-d agerdas n master deg taɣult n Tesnalmudt deg tutlayt d yidles Amaziɣ.')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻⵙ" 
+           data-desc="tamekfaḍut d tamedyazt d tamarut, d yelli-s n tɣiwant it Muḥli, tlul deg useggas n 2001 deg waɣir n it Wertilan agezdu n Ṣṭif. Tewwi-d agerdas n master deg taɣult n Tesnalmudt deg tutlayt d yidles Amaziɣ.">
         <img src="femme.png" alt="BEǦǦA Ṭawes">
         <div class="name">BEǦǦA Ṭawes</div>
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⵓⴷⵉ ⵃⴰⵏⴰⵏ','D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⵓⴷⵉ ⵃⴰⵏⴰⵏ" 
+           data-desc="D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is">
         <img src="femme.png" alt="MESƐUDI Ḥanan">
         <div class="name">MESƐUDI Ḥanan</div>
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰⵏⵉⵢⴰ','D tilemẓit, tlul ass n 13 Furar 2007 deg Sidi Ɛic, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰⵏⵉⵢⴰ" 
+           data-desc="D tilemẓit, tlul ass n 13 Furar 2007 deg Sidi Ɛic, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is.">
         <img src="femme.png" alt="BEṬṬAC Haniya">
         <div class="name">BEṬṬAC Haniya</div>
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ" 
+           data-desc="D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is">
         <img src="femme.png" alt="MESƐUDI Nawal">
         <div class="name">MESƐUDI Nawal</div>
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⴷⵉ ⵎⴰⵀⴷⵉ','D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⴷⵉ ⵎⴰⵀⴷⵉ" 
+           data-desc="D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.">
         <img src="MahdiMes.jpg" alt="MESƐUDI Mahdi">
         <div class="name">MESƐUDI Mahdi</div>
         <div class="role">d asegbar</div>
       </div>
 
-      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ" 
+           data-desc="d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura">
         <img src="amazigh.jpg" alt="XERZI Amaziɣ">
         <div class="name">XERZI Amaziɣ</div>
         <div class="role">d asegbar</div>
       </div>
       
-      <div class="character" onclick="showDesc('MADI Ḥamza - ⵎⴰⴷⵉ ⵃⴰⵎⵣⴰ','D ilemẓi anaẓuṛ, ilul ass 12 wanber 2006, ittcewwiq icewwiqen icennu, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="MADI Ḥamza - ⵎⴰⴷⵉ ⵃⴰⵎⵣⴰ" 
+           data-desc="D ilemẓi anaẓuṛ, ilul ass 12 wanber 2006, ittcewwiq icewwiqen icennu, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is">
         <img src="Hamzamadi.jpg" alt="MADI Ḥamza">
         <div class="name">MADI Ḥamza</div>
         <div class="role">d asegbar</div>
       </div>
       
-      <div class="character" onclick="showDesc('Mariya ASIL ḤARRUS - ⵎⴰⵔⵉⵢⴰ ⴰⵙⵉⵍ ⵃⴰⵔⵔⵓⵙ','d tagrudt n sin iseggasen, tlul ass 8 ctember 2023, deg ɛin lbenyan di ldzayer tamanaɣt, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="Mariya ASIL ḤARRUS - ⵎⴰⵔⵉⵢⴰ ⴰⵙⵉⵍ ⵃⴰⵔⵔⵓⵙ" 
+           data-desc="d tagrudt n sin iseggasen, tlul ass 8 ctember 2023, deg ɛin lbenyan di ldzayer tamanaɣt, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is">
         <img src="maria.jpg" alt="Mariya ASIL ḤARRUS">
         <div class="name">Mariya ASIL ḤARRUS</div>
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('BENNUṚ Amina - ⴱⴻⵏⵏⵓⵕ ⴰⵎⵉⵏⴰ','D taqcict, tlul 3 tuber 2016 deg Targa uzemmur Bgayet, D yellis n Ɛumar Bennuṛ, D tanelmadt deg uswir wis ukkuẓ deg uɣerbaz amenzu, d taɛeggalt deg ugraw ASIREM n tdukla tadelsant IZUMAL n taddart n Tici')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="BENNUṚ Amina - ⴱⴻⵏⵏⵓⵕ ⴰⵎⵉⵏⴰ" 
+           data-desc="D taqcict, tlul 3 tuber 2016 deg Targa uzemmur Bgayet, D yellis n Ɛumar Bennuṛ, D tanelmadt deg uswir wis ukkuẓ deg uɣerbaz amenzu, d taɛeggalt deg ugraw ASIREM n tdukla tadelsant IZUMAL n taddart n Tici">
         <img src="femme.png" alt="BENNUṚ Amina">
         <div class="name">BENNUṚ Amina</div>
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ','d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay.')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ" 
+           data-desc="d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay.">
         <img src="Abdelkader.jpg" alt="XERZI Ɛabdelqader">
         <div class="name">XERZI Ɛabdelqader</div>
         <div class="role">d asegbar</div>
       </div>
       
-      <div class="character" onclick="showDesc('TUMERT Ǧilali - ⵊⵉⵍⴰⵍⵉ ⵜⵓⵎⴻⵔⵜ','D anaẓur n asegber d acennay, yexdem aṭas n tezrarin d yisura s teqbaylit gar-asen-tt Tinifift, Rbiḥa, Tayri txidas d wiyaḍ nniḍen, ilul ass n 4 yulyu 1989 deg ugezdu n tizi wezzu, n Buɣni n taddart At ɛebdelmumen, yetteka yid-neɣ deg usaru n IMČEQLAL s snat n tezlatin n uḍebsi-ines 2020.')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="TUMERT Ǧilali - ⵊⵉⵍⴰⵍⵉ ⵜⵓⵎⴻⵔⵜ" 
+           data-desc="D anaẓur n asegber d acennay, yexdem aṭas n tezrarin d yisura s teqbaylit gar-asen-tt Tinifift, Rbiḥa, Tayri txidas d wiyaḍ nniḍen, ilul ass n 4 yulyu 1989 deg ugezdu n tizi wezzu, n Buɣni n taddart At ɛebdelmumen, yetteka yid-neɣ deg usaru n IMČEQLAL s snat n tezlatin n uḍebsi-ines 2020.">
         <img src="toumertdjilali.jpg" alt="TUMERT Ǧilali">
         <div class="name">TUMERT Ǧilali</div>
         <div class="role">d acennay</div>
       </div> 
       
-      <div class="character" onclick="showDesc('YUSFI Sadeq - ⵢⵓⵙⴼⵉ ⵙⴰⴷⴻⵇ','D anaẓur n umezgun, sinima akked ccna d uẓawan, yugmed yufrar-d seg yidles Amaziɣ. Yezuzzured leqdic-is deg YouTube, itekka d waṭas n temsufeɣ gar-asen-tt asaru n IMČEQLAL yid-neɣ s ccbaḥa n tezlatin-is.')">
+      <div class="character" tabindex="0" role="button" 
+           data-title="YUSFI Sadeq - ⵢⵓⵙⴼⵉ ⵙⴰⴷⴻⵇ" 
+           data-desc="D anaẓur n umezgun, sinima akked ccna d uẓawan, yugmed yufrar-d seg yidles Amaziɣ. Yezuzzured leqdic-is deg YouTube, itekka d waṭas n temsufeɣ gar-asen-tt asaru n IMČEQLAL yid-neɣ s ccbaḥa n tezlatin-is.">
         <img src="sadekyousfi.jpg" alt="YUSFI Sadeq">
         <div class="name">YUSFI Sadeq</div>
         <div class="role">d acennay</div>
       </div>
       
     </div>
-    <button class="scroll-btn right" id="scrollRight">&#10095;</button>
+    
+    <button class="scroll-btn right" id="scrollRight" aria-label="Scroll right">&#10095;</button>
   </div>
 
   <!-- DETAILS DU FILM -->
@@ -480,7 +510,7 @@
     speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] }
   });
 
-  // Gestion de la miniature et du lancement de la vidéo
+  // Gestion n miniature d usenker n tvideo
   const thumb = document.getElementById("thumb");
   const playerWrapper = document.getElementById("playerWrapper");
 
@@ -490,10 +520,10 @@
     player.play();
   });
 
-  // Protection : Désactiver le menu contextuel (clic droit) sur le lecteur
+  // Kkes clic droit ɣef uselkay
   playerWrapper.addEventListener("contextmenu", (e) => e.preventDefault());
 
-  // Modal Personnages
+  // Modal Personnages (Dynamic Data Handling)
   function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalText").innerText = text;
@@ -503,6 +533,23 @@
   function closeModal() {
     document.getElementById("modal").style.display = "none";
   }
+
+  // Attach dynamic event listeners to character cards
+  document.querySelectorAll('.character').forEach(card => {
+    const handleOpen = () => {
+      const title = card.getAttribute('data-title');
+      const desc = card.getAttribute('data-desc');
+      showDesc(title, desc);
+    };
+
+    card.addEventListener('click', handleOpen);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleOpen();
+      }
+    });
+  });
 
   // Fermer la modale en cliquant à l'extérieur
   window.addEventListener("click", (e) => {
