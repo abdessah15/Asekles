@@ -5,15 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asekles - IMČEQLAL</title>
   <link rel="icon" href="Asekles.png" type="image/png">
-  
-  <!-- CSS Plyr -->
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
 
   <style>
-    :root { 
-      --plyr-color-main: #ff0066; 
-    }
-
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -147,28 +140,8 @@
       transform: translate(-50%, -50%) scale(1.1);
     }
 
-    /* ===== CERCLE DE CHARGEMENT (SPINNER) ===== */
-    .loader {
-      display: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border: 6px solid rgba(255, 255, 255, 0.2);
-      border-top: 6px solid #ff0066;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-      z-index: 10;
-    }
-
-    @keyframes spin {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-
-    .plyr-box {
+    /* BOÎTE ARTPLAYER */
+    .artplayer-box {
       width: 100%;
       aspect-ratio: 16/9;
       display: none;
@@ -319,7 +292,7 @@
     }
 
     @supports not (aspect-ratio: 16/9) {
-      .video-thumb, .plyr-box {
+      .video-thumb, .artplayer-box {
         height: calc(100vw * 9 / 16);
       }
     }
@@ -348,21 +321,14 @@
 
 <div class="container">
 
-  <!-- ZONE LECTEUR VIDEO -->
+  <!-- ZONE LECTEUR VIDEO ARTPLAYER -->
   <div class="video-container">
     <div class="video-thumb" id="thumb">
       <img src="imčqll.jpg" alt="cover vidéo">
       <div class="play-btn"></div>
     </div>
 
-    <!-- Cercle de chargement -->
-    <div class="loader" id="videoLoader"></div>
-
-    <div class="plyr-box" id="playerWrapper">
-      <video id="player" controls playsinline preload="auto">
-        <source src="https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4" type="video/mp4">
-      </video>
-    </div>
+    <div class="artplayer-box" id="artplayer"></div>
   </div>
 
   <!-- PERSONNAGES AVEC SCROLL -->
@@ -388,7 +354,7 @@
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰⵏⵉⵢⴰ ','D tilemẓit, tlul ass n 13 Furar 2007 deg Sidi Ɛic, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
+      <div class="character" onclick="showDesc('BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰ蛸ⵉⵢⴰ ','D tilemẓit, tlul ass n 13 Furar 2007 deg Sidi Ɛic, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
         <img src="femme.png" alt="BEṬṬAC Haniya">
         <div class="name">BEṬṬAC Haniya</div>
         <div class="role">d tasegbart</div>
@@ -472,41 +438,50 @@
   </div>
 </div>
 
-<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<!-- SCRIPT ARTPLAYER (Ultra rapide & fluide) -->
+<script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
 <script>
   const thumb = document.getElementById("thumb");
-  const playerWrapper = document.getElementById("playerWrapper");
-  const videoElement = document.getElementById("player");
-  const loader = document.getElementById("videoLoader");
-  let player;
+  const playerWrapper = document.getElementById("artplayer");
+  let art;
 
-  // Initialisation Plyr au premier clic
+  const videoUrl = "https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4";
+
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
     playerWrapper.style.display = "block";
-    loader.style.display = "block";
 
-    player = new Plyr('#player', {
-      controls: [
-        'play-large', 'play', 'progress', 'current-time', 'duration', 
-        'mute', 'volume', 'settings', 'fullscreen'
-      ],
-      settings: ['speed'],
-      speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] },
-      ratio: '16:9'
+    art = new Artplayer({
+      container: '#artplayer',
+      url: videoUrl,
+      poster: 'imčqll.jpg',
+      autoplay: true,
+      volume: 0.8,
+      isLive: false,
+      muted: false,
+      setting: true,
+      loop: false,
+      flip: true,
+      playbackRate: true,
+      aspectRatio: true,
+      fullscreen: true,
+      fullscreenWeb: true,
+      miniProgressBar: true,
+      playsInline: true,
+      autoPlayback: true,
+      theme: '#ff0066',
+      icons: {
+        loading: '<div style="border: 4px solid rgba(255,255,255,0.2); border-top: 4px solid #ff0066; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;"></div>'
+      }
     });
 
-    player.once('ready', () => {
-      player.play();
+    // Empêcher le menu contextuel clic droit sur la vidéo
+    art.on('ready', () => {
+      art.video.addEventListener('contextmenu', (e) => e.preventDefault());
     });
-
-    // Gestion du spinner de chargement
-    player.on('playing', () => { loader.style.display = "none"; });
-    player.on('canplay', () => { loader.style.display = "none"; });
-    player.on('waiting', () => { loader.style.display = "block"; });
   });
 
-  // Gestion des modales d'information
+  // Modale
   function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalText").innerText = text;
@@ -517,7 +492,7 @@
     document.getElementById("modal").style.display = "none";
   }
 
-  // Défilement fluide de la liste des personnages
+  // Scroll personnages
   const charContainer = document.getElementById("characters");
   const leftBtn = document.querySelector('.scroll-btn.left');
   const rightBtn = document.querySelector('.scroll-btn.right');
@@ -539,11 +514,6 @@
   charContainer.addEventListener('scroll', updateButtons);
   window.addEventListener('resize', updateButtons);
   setTimeout(updateButtons, 500);
-
-  // Empêcher le menu contextuel clic droit sur la vidéo
-  videoElement.addEventListener("contextmenu", function(e) {
-    e.preventDefault();
-  });
 </script>
 
 <script type="module">
