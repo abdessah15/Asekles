@@ -6,9 +6,6 @@
   <title>Asekles - IMČEQLAL</title>
   <link rel="icon" href="Asekles.png" type="image/png">
 
-  <!-- CSS Video.js (Lecteur clean et rapide) -->
-  <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-
   <style>
     body {
       margin: 0;
@@ -143,20 +140,131 @@
       transform: translate(-50%, -50%) scale(1.1);
     }
 
-    /* ZONE DU LECTEUR VIDEO.JS */
-    .video-box {
-      width: 100%;
+    /* ===== LECTEUR VIDEO SUR-MESURE ===== */
+    .custom-player {
       display: none;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
     }
 
-    /* Personnalisation couleur Video.js */
-    .video-js .vjs-play-progress,
-    .video-js .vjs-volume-level,
-    .video-js .vjs-slider-bar {
-      background: #ff0066 !important;
+    .custom-player video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
-    .video-js .vjs-control-bar {
-      background-color: rgba(17, 17, 17, 0.85) !important;
+
+    /* SPINNER DE CHARGEMENT */
+    .video-loader {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 5px solid rgba(255,255,255,0.2);
+      border-top: 5px solid #ff0066;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 0.8s linear infinite;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* BARRE DE CONTRÔLES ÉPURÉE */
+    .custom-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.95));
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 15px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 8;
+    }
+
+    .custom-player:hover .custom-controls,
+    .custom-player.paused .custom-controls {
+      opacity: 1;
+    }
+
+    .ctrl-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.1em;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .ctrl-btn:hover {
+      color: #ff0066;
+    }
+
+    .time-display {
+      font-size: 0.85em;
+      color: #ccc;
+      white-space: nowrap;
+    }
+
+    /* BARRE DE PROGRESSION */
+    .progress-bar {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .progress-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ff0066;
+      cursor: pointer;
+    }
+
+    .progress-bar::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ff0066;
+      cursor: pointer;
+      border: none;
+    }
+
+    /* MENU VITESSE */
+    .speed-select {
+      background: #111;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 0.85em;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .speed-select:hover {
+      border-color: #ff0066;
     }
 
     /* ===== PERSONNAGES ===== */
@@ -290,21 +398,8 @@
       color: inherit;
     }
 
-    /* ===== FOOTER ===== */
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #111;
-      text-align: center;
-      padding: 8px;
-      font-size: .9em;
-      z-index: 100;
-    }
-
     @supports not (aspect-ratio: 16/9) {
-      .video-thumb {
+      .video-thumb, .custom-player {
         height: calc(100vw * 9 / 16);
       }
     }
@@ -314,7 +409,7 @@
 <body>
 
 <header>
-  <h1>IMČEQLAL - ⵉ幕ⴻⵇⵍⴰⵍ</h1>
+  <h1>IMČEQLAL - ⵉⵎⵞⴻⵇⵍⴰⵍ</h1>
 </header>
 
 <nav>
@@ -333,17 +428,37 @@
 
 <div class="container">
 
-  <!-- ZONE LECTEUR VIDEO -->
+  <!-- LECTEUR PROPRIÉTAIRE ÉPURÉ (SANS INFO PARASITE) -->
   <div class="video-container">
     <div class="video-thumb" id="thumb">
       <img src="imčqll.jpg" alt="cover vidéo">
       <div class="play-btn"></div>
     </div>
 
-    <div class="video-box" id="playerWrapper">
-      <video id="my-video" class="video-js vjs-default-skin vjs-16-9" controls preload="auto">
+    <div class="custom-player" id="playerWrapper">
+      <div class="video-loader" id="videoLoader"></div>
+      
+      <video id="myVideo" playsinline preload="auto">
         <source src="https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4" type="video/mp4">
       </video>
+
+      <div class="custom-controls">
+        <button class="ctrl-btn" id="playBtn">▶</button>
+        <span class="time-display" id="timeDisplay">0:00 / 0:00</span>
+        <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1">
+        
+        <button class="ctrl-btn" id="muteBtn">🔊</button>
+        
+        <select class="speed-select" id="speedSelect">
+          <option value="0.5">0.5x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2x</option>
+        </select>
+
+        <button class="ctrl-btn" id="fullBtn">⛶</button>
+      </div>
     </div>
   </div>
 
@@ -370,13 +485,13 @@
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰⵏⵉⵢ加 ','D tilemẓit, tlul ass n 13 Furar 2007 deg Sidi Ɛic, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
+      <div class="character" onclick="showDesc('BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰⵏⵉⵢⴰ ','D tilemẓit, tlul ass n 13 Furar 2007 deg Sidi Ɛic, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
         <img src="femme.png" alt="BEṬṬAC Haniya">
         <div class="name">BEṬṬAC Haniya</div>
         <div class="role">d tasegbart</div>
       </div>
       
-      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰ立 ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
         <img src="femme.png" alt="MESƐUDI Nawal">
         <div class="name">MESƐUDI Nawal</div>
         <div class="role">d tasegbart</div>
@@ -400,7 +515,7 @@
         <div class="role">d asegbar</div>
       </div>
       
-      <div class="character" onclick="showDesc('Mariya ASIL ḤARRUS - ⵎⴰⵉⵢⴰ ⴰսⵉⵍ ⵃⴰⵔⵔⵓⵙ ','d tagrudt n sin iseggasen, tlul ass 8 ctember 2023, deg ɛin lbenyan di ldzayer tamanaɣt, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
+      <div class="character" onclick="showDesc('Mariya ASIL ḤARRUS - ⵎⴰⵔⵉⵢⴰ ⴰⵙⵉⵍ ⵃⴰⵔⵔⵓⵙ ','d tagrudt n sin iseggasen, tlul ass 8 ctember 2023, deg ɛin lbenyan di ldzayer tamanaɣt, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
         <img src="maria.jpg" alt="Mariya ASIL ḤARRUS">
         <div class="name">Mariya ASIL ḤARRUS</div>
         <div class="role">d tasegbart</div>
@@ -418,7 +533,7 @@
         <div class="role">d asegbar</div>
       </div>
       
-      <div class="character" onclick="showDesc('TUMERT Ǧilali - ⵊⵉ黎ⴰⵍⵉ ⵜⵓⵎⴻⵔⵜ','D anaẓur n asegber d acennay, yexdem aṭas n tezrarin d yisura s teqbaylit gar-asen-tt Tinifift, Rbiḥa, Tayri txidas d wiyaḍ nniḍen, ilul ass n 4 yulyu 1989 deg ugezdu n tizi wezzu, n Buɣni n taddart At ɛebdelmumen, yetteka yid-neɣ deg usaru n IMČEQLAL s snat n tezlatin n uḍebsi-ines 2020.')">
+      <div class="character" onclick="showDesc('TUMERT Ǧilali - ⵊⵉⵍⴰⵍⵉ ⵜⵓⵎⴻⵔⵜ','D anaẓur n asegber d acennay, yexdem aṭas n tezrarin d yisura s teqbaylit gar-asen-tt Tinifift, Rbiḥa, Tayri txidas d wiyaḍ nniḍen, ilul ass n 4 yulyu 1989 deg ugezdu n tizi wezzu, n Buɣni n taddart At ɛebdelmumen, yetteka yid-neɣ deg usaru n IMČEQLAL s snat n tezlatin n uḍebsi-ines 2020.')">
         <img src="toumertdjilali.jpg" alt="TUMERT Ǧilali">
         <div class="name">TUMERT Ǧilali</div>
         <div class="role">d acennay</div>
@@ -454,35 +569,103 @@
   </div>
 </div>
 
-<!-- SCRIPT VIDEO.JS -->
-<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 <script>
+  // DOM Elements
   const thumb = document.getElementById("thumb");
   const playerWrapper = document.getElementById("playerWrapper");
-  let mainPlayer;
+  const video = document.getElementById("myVideo");
+  const videoLoader = document.getElementById("videoLoader");
+  const playBtn = document.getElementById("playBtn");
+  const muteBtn = document.getElementById("muteBtn");
+  const timeDisplay = document.getElementById("timeDisplay");
+  const progressBar = document.getElementById("progressBar");
+  const speedSelect = document.getElementById("speedSelect");
+  const fullBtn = document.getElementById("fullBtn");
 
+  // Initialisation sur clic miniature
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
     playerWrapper.style.display = "block";
-
-    // Initialisation fluide avec option de vitesse intégrée
-    mainPlayer = videojs('my-video', {
-      playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 2],
-      fluid: true,
-      responsive: true
-    });
-
-    mainPlayer.ready(function() {
-      mainPlayer.play();
-    });
-
-    // Blocage du clic droit sur la zone vidéo
-    mainPlayer.on('contextmenu', function(e) {
-      e.preventDefault();
-    });
+    video.play();
   });
 
-  // Gestion des modales d'information
+  // Play / Pause
+  function togglePlay() {
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  }
+
+  playBtn.addEventListener("click", togglePlay);
+  video.addEventListener("click", togglePlay);
+
+  video.addEventListener("play", () => {
+    playBtn.textContent = "❚❚";
+    playerWrapper.classList.remove("paused");
+  });
+
+  video.addEventListener("pause", () => {
+    playBtn.textContent = "▶";
+    playerWrapper.classList.add("paused");
+  });
+
+  // Formatage du temps (MM:SS)
+  function formatTime(seconds) {
+    const min = Math.floor(seconds / 60) || 0;
+    const sec = Math.floor(seconds % 60) || 0;
+    return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+  }
+
+  // Mise à jour du temps et de la barre
+  video.addEventListener("timeupdate", () => {
+    if (!isNaN(video.duration)) {
+      const current = formatTime(video.currentTime);
+      const total = formatTime(video.duration);
+      timeDisplay.textContent = `${current} / ${total}`;
+      progressBar.value = (video.currentTime / video.duration) * 100;
+    }
+  });
+
+  // Recherche dans la vidéo (Seek)
+  progressBar.addEventListener("input", () => {
+    if (!isNaN(video.duration)) {
+      video.currentTime = (progressBar.value / 100) * video.duration;
+    }
+  });
+
+  // Mute / Unmute
+  muteBtn.addEventListener("click", () => {
+    video.muted = !video.muted;
+    muteBtn.textContent = video.muted ? "🔇" : "🔊";
+  });
+
+  // Changer la vitesse de lecture
+  speedSelect.addEventListener("change", (e) => {
+    video.playbackRate = parseFloat(e.target.value);
+  });
+
+  // Plein écran
+  fullBtn.addEventListener("click", () => {
+    if (!document.fullscreenElement) {
+      playerWrapper.requestFullscreen().catch(err => {
+        if(video.webkitEnterFullscreen) video.webkitEnterFullscreen();
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  });
+
+  // Gestion de la roue de chargement (Loader)
+  video.addEventListener("waiting", () => videoLoader.style.display = "block");
+  video.addEventListener("playing", () => videoLoader.style.display = "none");
+  video.addEventListener("canplay", () => videoLoader.style.display = "none");
+
+  // Protection contre le clic droit sur la vidéo
+  video.addEventListener("contextmenu", (e) => e.preventDefault());
+
+  // Modale Personnages
   function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalText").innerText = text;
@@ -493,7 +676,7 @@
     document.getElementById("modal").style.display = "none";
   }
 
-  // Défilement de la liste des personnages
+  // Defilement fluide personnages
   const charContainer = document.getElementById("characters");
   const leftBtn = document.querySelector('.scroll-btn.left');
   const rightBtn = document.querySelector('.scroll-btn.right');
