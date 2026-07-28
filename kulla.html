@@ -5,50 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Asekles - KULLA</title>
   <link rel="icon" href="Asekles.png" type="image/png">
+  
+  <!-- Nouvelle police moderne -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --primary: #ff0066;
+      --primary-hover: #ff3385;
+      --secondary: #6600ff;
+      --bg-color: #0a0a0f;
+      --surface-color: rgba(255, 255, 255, 0.05);
+      --surface-border: rgba(255, 255, 255, 0.1);
+      --text-main: #f8f9fa;
+      --text-muted: #a0a0a0;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #000;
-      color: #f1f1f1;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      overflow-x: hidden;
     }
 
-    /* ===== HEADER ===== */
-    header {
-      background: linear-gradient(45deg, #ff0066, #6600ff);
-      padding: 15px;
-      text-align: center;
+    /* ===== HEADER & NAV COMBINED (GLASSMORPHISM) ===== */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 5%;
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--surface-border);
     }
 
-    header h1 {
+    .top-bar h1 {
       margin: 0;
-      font-size: 2em;
-      color: #fff;
+      font-size: 1.5em;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
     }
 
-    /* ===== NAV ===== */
     nav {
       display: flex;
-      justify-content: center;
+      gap: 30px;
       align-items: center;
-      gap: 20px;
-      padding: 10px;
-      background: #111;
-      flex-wrap: wrap;
     }
 
-    nav a,
-    #amidanBtn {
-      color: #fff;
+    nav a, #amidanBtn {
+      color: var(--text-main);
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 0.95em;
       cursor: pointer;
+      transition: color 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    nav a:hover,
-    #amidanBtn:hover {
-      color: #ff0066;
+    nav a:hover, #amidanBtn:hover {
+      color: var(--primary);
+      text-shadow: 0 0 10px rgba(255, 0, 102, 0.4);
     }
 
     /* ===== AMIDAN ===== */
@@ -59,24 +86,40 @@
     #accountBox {
       display: none;
       position: absolute;
-      top: 32px;
+      top: 45px;
       right: 0;
-      background: #111;
-      border: 2px solid #ff0066;
-      padding: 15px;
-      border-radius: 10px;
-      min-width: 220px;
+      background: rgba(20, 20, 25, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--surface-border);
+      padding: 20px;
+      border-radius: 12px;
+      min-width: 240px;
       z-index: 999;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    
+    #userEmail {
+      margin-top: 0;
+      font-size: 0.9em;
+      color: var(--text-muted);
+      word-break: break-all;
     }
 
     #logoutBtn {
-      background: #ff0066;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
       color: #fff;
       border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
+      padding: 10px 15px;
+      border-radius: 8px;
       cursor: pointer;
       width: 100%;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    #logoutBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 0, 102, 0.4);
     }
 
     /* ===== CONTENT ===== */
@@ -84,19 +127,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 25px;
-      padding: 20px;
-      padding-bottom: 120px;
+      gap: 40px;
+      padding: 40px 20px 120px;
     }
 
     .video-container {
       width: 100%;
-      max-width: 900px;
+      max-width: 1000px;
       position: relative;
       background: #000;
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 0 1px var(--surface-border);
     }
 
     /* PLEIN ÉCRAN MOBILE & DESKTOP */
@@ -124,6 +166,11 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      transition: transform 0.5s ease;
+    }
+    
+    .video-thumb:hover img {
+      transform: scale(1.02);
     }
 
     .play-btn {
@@ -131,26 +178,28 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%,-50%);
-      width: 80px;
-      height: 80px;
-      background: rgba(255,0,102,0.85);
+      width: 70px;
+      height: 70px;
+      background: rgba(255, 0, 102, 0.9);
       border-radius: 50%;
-      transition: 0.3s;
+      transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       z-index: 2;
+      box-shadow: 0 0 20px rgba(255, 0, 102, 0.5);
     }
 
     .play-btn::after {
       content: "";
       position: absolute;
-      left: 32px;
+      left: 28px;
       top: 22px;
       border-style: solid;
-      border-width: 18px 0 18px 30px;
+      border-width: 14px 0 14px 22px;
       border-color: transparent transparent transparent white;
     }
 
     .video-thumb:hover .play-btn {
-      transform: translate(-50%, -50%) scale(1.1);
+      transform: translate(-50%, -50%) scale(1.15);
+      box-shadow: 0 0 30px rgba(255, 0, 102, 0.8);
     }
 
     /* ===== LECTEUR VIDEO SUR MESURE ===== */
@@ -182,12 +231,12 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      border: 4px solid rgba(255,255,255,0.2);
-      border-top: 4px solid #ff0066;
+      border: 4px solid rgba(255,255,255,0.1);
+      border-top: 4px solid var(--primary);
       border-radius: 50%;
       width: 50px;
       height: 50px;
-      animation: spin 0.8s linear infinite;
+      animation: spin 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) infinite;
       z-index: 10;
       pointer-events: none;
     }
@@ -203,26 +252,24 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(transparent, rgba(0, 0, 0, 0.95));
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.95) 90%);
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
+      gap: 12px;
+      padding: 20px 20px 15px;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease;
       z-index: 99999;
       pointer-events: none;
       box-sizing: border-box;
       width: 100%;
     }
 
-    /* MARGES DE SÉCURITÉ PLEIN ÉCRAN / ROTATION */
     .video-container:fullscreen .custom-controls,
     .video-container:-webkit-full-screen .custom-controls {
-      padding-bottom: max(12px, env(safe-area-inset-bottom));
-      padding-left: max(16px, env(safe-area-inset-left));
-      padding-right: max(16px, env(safe-area-inset-right));
-      padding-top: 10px;
+      padding-bottom: max(20px, env(safe-area-inset-bottom));
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
     }
 
     .custom-player:hover .custom-controls,
@@ -241,29 +288,35 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 4px;
+      border-radius: 6px;
       flex-shrink: 0;
+      transition: background 0.2s;
       -webkit-tap-highlight-color: transparent;
     }
 
+    .ctrl-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
     .ctrl-btn svg {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       fill: #ffffff;
       transition: fill 0.2s;
     }
 
     .ctrl-btn:hover svg {
-      fill: #ff0066;
+      fill: var(--primary);
     }
 
-.time-display {
-  font-size: 0.78em;
-  color: #ccc;
-  white-space: nowrap;
-  font-family: Arial, sans-serif; 
-  flex-shrink: 0;
-}
+    .time-display {
+      font-size: 0.85em;
+      color: #ddd;
+      white-space: nowrap;
+      font-weight: 600;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+    }
 
     /* BARRE DE PROGRESSION FLUIDE */
     .progress-bar {
@@ -271,86 +324,55 @@
       min-width: 30px;
       -webkit-appearance: none;
       appearance: none;
-      height: 5px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 3px;
+      height: 6px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
       outline: none;
       cursor: pointer;
+      transition: height 0.2s;
+    }
+    
+    .progress-bar:hover {
+      height: 8px;
     }
 
     .progress-bar::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 15px;
-      height: 15px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: #ff0066;
+      background: var(--primary);
       cursor: pointer;
+      box-shadow: 0 0 10px rgba(255,0,102,0.6);
+      transition: transform 0.2s;
+    }
+    
+    .progress-bar::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
     }
 
     .progress-bar::-moz-range-thumb {
-      width: 15px;
-      height: 15px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: #ff0066;
+      background: var(--primary);
       cursor: pointer;
       border: none;
+      box-shadow: 0 0 10px rgba(255,0,102,0.6);
     }
 
-    /* MENU VITESSE COMPACT */
     .speed-select {
       background: rgba(20, 20, 20, 0.8);
       color: #fff;
-      border: 1px solid #444;
-      border-radius: 4px;
-      padding: 3px 4px;
-      font-size: 0.75em;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      font-weight: 600;
       cursor: pointer;
       outline: none;
       flex-shrink: 0;
-    }
-
-    /* ADAPTATION MOBILE ET PAYSAGE */
-    @media screen and (max-width: 600px) {
-      .custom-controls {
-        gap: 4px;
-        padding: 6px 8px;
-      }
-      .ctrl-btn {
-        padding: 2px;
-      }
-      .ctrl-btn svg {
-        width: 18px;
-        height: 18px;
-      }
-      .time-display {
-        font-size: 0.65em;
-      }
-      .speed-select {
-        font-size: 0.65em;
-        padding: 2px;
-      }
-    }
-
-    @media screen and (max-height: 500px) and (orientation: landscape) {
-      .custom-controls {
-        padding: 6px 10px;
-        gap: 6px;
-      }
-      .ctrl-btn {
-        padding: 4px;
-      }
-      .ctrl-btn svg {
-        width: 19px;
-        height: 19px;
-      }
-      .time-display {
-        font-size: 0.7em;
-      }
-      .speed-select {
-        padding: 2px 3px;
-        font-size: 0.7em;
-      }
     }
 
     /* ===== PERSONNAGES ===== */
@@ -359,16 +381,16 @@
       display: flex;
       align-items: center;
       width: 100%;
-      max-width: 900px;
-      margin: 20px auto 0;
+      max-width: 1000px;
+      margin-top: 10px;
     }
 
     .characters {
       display: flex;
-      gap: 20px;
+      gap: 25px;
       overflow-x: auto;
       scroll-behavior: smooth;
-      padding: 10px 0;
+      padding: 20px 5px;
       width: 100%;
     }
 
@@ -380,137 +402,195 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      color: #ff0066;
-      border: none;
-      font-size: 2em;
+      background: rgba(20, 20, 25, 0.8);
+      backdrop-filter: blur(5px);
+      color: var(--text-main);
+      border: 1px solid var(--surface-border);
+      font-size: 1.5em;
       cursor: pointer;
-      padding: 5px 10px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
 
-    .scroll-btn.left { left: -10px; }
-    .scroll-btn.right { right: -10px; }
+    .scroll-btn.left { left: -20px; }
+    .scroll-btn.right { right: -20px; }
 
     .scroll-btn:hover {
-      background: rgba(0,0,0,0.8);
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(255,0,102,0.5);
     }
 
     .character {
       text-align: center;
       cursor: pointer;
       flex: 0 0 auto;
-      width: 110px;
+      width: 120px;
+      transition: transform 0.3s ease;
+    }
+
+    .character:hover {
+      transform: translateY(-5px);
     }
 
     .character img {
-      width: 95px;
-      height: 95px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #ff0066;
-      box-shadow: 0 0 18px rgba(255,0,102,.6);
-      transition: .3s;
+      border: 3px solid transparent;
+      background: linear-gradient(var(--bg-color), var(--bg-color)) padding-box,
+                  linear-gradient(45deg, var(--primary), var(--secondary)) border-box;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      transition: 0.3s ease;
     }
 
     .character:hover img {
-      transform: scale(1.15);
-      box-shadow: 0 0 28px rgba(255,0,102,1);
+      box-shadow: 0 0 25px rgba(255,0,102,0.6);
+      transform: scale(1.05);
     }
 
     .character .name {
-      margin-top: 8px;
-      font-weight: bold;
+      margin-top: 12px;
+      font-weight: 800;
       font-size: 0.9em;
+      color: var(--text-main);
     }
 
     .character .role {
-      font-size: .8em;
-      color: #bbb;
+      font-size: 0.75em;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 600;
     }
 
+    /* ===== FILM INFO ===== */
     .film-info {
-      background-color: #1a1a1a;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 900px;
-      line-height: 1.6;
+      background: var(--surface-color);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--surface-border);
+      padding: 30px;
+      border-radius: 16px;
+      max-width: 1000px;
+      line-height: 1.8;
       width: 100%;
       box-sizing: border-box;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
     }
 
     .film-info h2 {
-      color: #ff0066;
+      font-size: 2em;
+      background: linear-gradient(90deg, var(--primary), #ffa3c2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin-top: 0;
+      margin-bottom: 20px;
+    }
+    
+    .film-info strong {
+      color: #fff;
     }
 
     /* ===== MODAL DESCRIPTION ===== */
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.85);
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(5px);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 999;
+      z-index: 1000;
+      padding: 20px;
     }
 
     .modal-content {
-      background: #1a1a1a;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 400px;
+      background: #111116;
+      padding: 30px;
+      border-radius: 16px;
+      max-width: 450px;
       text-align: center;
-      border: 1px solid #ff0066;
+      border: 1px solid rgba(255, 0, 102, 0.3);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      animation: modalFadeIn 0.3s ease;
+    }
+    
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .modal-content h3 {
-      color: #ff0066;
+      color: #fff;
+      font-size: 1.4em;
+      margin-top: 0;
+    }
+    
+    .modal-content p {
+      color: var(--text-muted);
+      line-height: 1.6;
     }
 
     .close {
-      margin-top: 15px;
-      padding: 8px 15px;
-      background: #ff0066;
+      margin-top: 25px;
+      padding: 10px 25px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-hover));
       border: none;
       color: #fff;
+      font-weight: 800;
       cursor: pointer;
-      border-radius: 6px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    
+    .close:hover {
+      box-shadow: 0 5px 15px rgba(255,0,102,0.4);
+      transform: translateY(-2px);
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
+    /* RESPONSIVE AJUSTEMENTS */
+    @media screen and (max-width: 768px) {
+      .top-bar { flex-direction: column; gap: 15px; padding: 15px; }
+      .scroll-btn { display: none; } /* Cache les boutons sur mobile pour laisser le swipe */
+      .characters-wrapper { padding: 0 10px; }
+      .film-info { padding: 20px; }
     }
-
-    @supports not (aspect-ratio: 16/9) {
-      .video-thumb, .custom-player {
-        height: calc(100vw * 9 / 16);
-      }
+    
+    @media screen and (max-width: 600px) {
+      .custom-controls { gap: 6px; padding: 10px 12px; }
+      .ctrl-btn { padding: 4px; }
+      .ctrl-btn svg { width: 20px; height: 20px; }
+      .time-display, .speed-select { font-size: 0.75em; }
     }
   </style>
 </head>
 
 <body>
 
-<header>
+<div class="top-bar">
   <h1>KULLA - ⴽⵓⵍⵍⴰ</h1>
-</header>
+  <nav>
+    <a href="index.html">Axxam</a>
+    <a href="isura.html">Isura</a>
+    <a href="tizrarin.html">Tizrarin</a>
 
-<nav>
-  <a href="index.html">Axxam</a>
-  <a href="isura.html">Isura</a>
-  <a href="tizrarin.html">Tizrarin</a>
-
-  <div class="account-wrapper">
-    <span id="amidanBtn" style="display:none;">Amiḍan</span>
-    <div id="accountBox">
-      <p id="userEmail"></p>
-      <button id="logoutBtn">Effeɣ</button>
+    <div class="account-wrapper">
+      <span id="amidanBtn" style="display:none;">Amiḍan</span>
+      <div id="accountBox">
+        <p id="userEmail"></p>
+        <button id="logoutBtn">Effeɣ</button>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</div>
 
 <div class="container">
 
@@ -535,7 +615,7 @@
           <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
         </button>
 
-        <span class="time-display" id="timeDisplay">00:00:00 / 00:00:00</span>
+        <span class="time-display" id="timeDisplay">00:00 / 00:00</span>
         
         <!-- Barre de progression -->
         <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1">
@@ -572,13 +652,13 @@
       <div class="character" onclick="showDesc('XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ','d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.')">
         <img src="Abdessah.jpg" alt="XERZI Ɛabdeṣṣaḥ">
         <div class="name">XERZI Ɛabdeṣṣaḥ</div>
-        <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
+        <div class="role">Anemhal anaẓuṛan, asegbar</div>
       </div>
       
       <div class="character" onclick="showDesc('BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻⵙ ','tamekfaḍut d tamedyazt d tamarut, d yelli-s n tɣiwant it Muḥli, tlul deg useggas n 2001 deg waɣir n it Wertilan agezdu n Ṣṭif. Tewwi-d agerdas n master deg taɣult n Tesnalmudt deg tutlayt d yidles Amaziɣ.')">
         <img src="femme.png" alt="BEǦǦA Ṭawes">
         <div class="name">BEǦǦA Ṭawes</div>
-        <div class="role">tanemhalt tanaẓuṛant n usisleg, d tasegbart</div>
+        <div class="role">tanemhalt tanaẓuṛant, tasegbart</div>
       </div>
       
       <div class="character" onclick="showDesc('MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⴷⵉ ⵃⴰⵏⴰⵏ ','D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
@@ -638,15 +718,13 @@
     </div>
     <button class="scroll-btn right">&#10095;</button>
   </div>
-
-  <!-- DETAILS DU FILM -->
+  
   <div class="film-info">
     <h2>KULLA</h2>
     <p><strong>Tawsit :</strong> Inig, Taḍṣa, Amuggan, Arrac</p>
     <p><strong>Azemz n usufeɣ :</strong> 2026</p>
     <p><strong>Aglam n usaru :</strong><br>
-    Asaru n Kulla d tamacahut n tilawt rẓagen, taqcict yellan ɛzizet ɣer yimawlan-is teggra-d ger yifassen n temcumt n Ɛdidi d yessi-s , ḥermen-tt seg kra yellan, maca win iṣebren yettaf yettawi deg taggara, ad d-nwali amek i d-as-teflali tafat i Kulla tewweḍ ɣer wayen tessaram !
-    </p>
+    Asaru n Kulla d tamacahut n tilawt rẓagen, taqcict yellan ɛzizet ɣer yimawlan-is teggra-d ger yifassen n temcumt n Ɛdidi d yessi-s , ḥermen-tt seg kra yellan, maca win iṣebren yettaf yettawi deg taggara, ad d-nwali amek i d-as-teflali tafat i Kulla tewweḍ ɣer wayen tessaram !</p>
   </div>
 </div>
 
@@ -742,15 +820,15 @@
     playerWrapper.classList.add("show-controls");
   });
 
-  // Temps HH:MM:SS
+  // Temps (format court MM:SS si - d'1h)
   function formatTime(seconds) {
-    if (isNaN(seconds)) return "00:00:00";
+    if (isNaN(seconds)) return "00:00";
     const hrs = Math.floor(seconds / 3600);
     const min = Math.floor((seconds % 3600) / 60);
     const sec = Math.floor(seconds % 60);
-
     const pad = (num) => String(num).padStart(2, '0');
-    return `${pad(hrs)}:${pad(min)}:${pad(sec)}`;
+    if (hrs > 0) return `${pad(hrs)}:${pad(min)}:${pad(sec)}`;
+    return `${pad(min)}:${pad(sec)}`;
   }
 
   // Progression
@@ -859,11 +937,17 @@
   const charContainer = document.getElementById("characters");
   const leftBtn = document.querySelector('.scroll-btn.left');
   const rightBtn = document.querySelector('.scroll-btn.right');
-  const scrollAmount = 250;
+  const scrollAmount = 300;
 
   function updateButtons() {
     leftBtn.disabled = charContainer.scrollLeft <= 2;
     rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth - 2;
+    
+    // Style visuel du bouton désactivé
+    leftBtn.style.opacity = leftBtn.disabled ? '0.3' : '1';
+    rightBtn.style.opacity = rightBtn.disabled ? '0.3' : '1';
+    leftBtn.style.cursor = leftBtn.disabled ? 'default' : 'pointer';
+    rightBtn.style.cursor = rightBtn.disabled ? 'default' : 'pointer';
   }
 
   leftBtn.addEventListener('click', () => {
