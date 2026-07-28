@@ -99,7 +99,7 @@ input::placeholder {
   color: var(--text-muted);
 }
 
-/* Conteneur pour le mot de passe et l'œil */
+/* Conteneur pour le mot de passe et l'icône SVG */
 .password-container {
   position: relative;
   width: 100%;
@@ -118,19 +118,32 @@ input::placeholder {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 18px;
   padding: 0;
   margin: 0;
   width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--text-muted);
   transition: color 0.3s;
 }
 
 #togglePassword:hover {
   color: var(--text-main);
-  transform: translateY(-50%);
-  box-shadow: none;
 }
+
+#togglePassword svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* Gestion de l'affichage des icônes SVG */
+.eye-open { display: block; }
+.eye-closed { display: none; }
+
+.password-container.show-pwd .eye-open { display: none; }
+.password-container.show-pwd .eye-closed { display: block; }
 
 /* 🔘 Buttons */
 button {
@@ -194,9 +207,14 @@ button:hover {
   <!-- 🔐 Login Form -->
   <input id="email" type="email" placeholder="Isem n umiḍan">
   
-  <div class="password-container">
+  <div class="password-container" id="pwdContainer">
     <input id="password" type="password" placeholder="Tasarut">
-    <button type="button" id="togglePassword" title="Ẓer tasarut">👁️</button>
+    <button type="button" id="togglePassword" title="Ẓer tasarut">
+      <!-- Icône SVG œil ouvert -->
+      <svg class="eye-open" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+      <!-- Icône SVG œil barré (masqué) -->
+      <svg class="eye-closed" viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2.81 2.81L1.39 4.22l3.65 3.65C3.4 9.03 2.15 10.42 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l4.42 4.42 1.41-1.41L2.81 2.81zM12 15c-1.66 0-3-1.34-3-3 0-.35.07-.69.18-1l3.82 3.82c-.31.11-.65.18-1 .18z"/></svg>
+    </button>
   </div>
 
   <button id="loginBtn">Kcem</button>
@@ -212,6 +230,7 @@ import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/fir
 const firebaseConfig = {
   apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
   authDomain: "test-2fdd3.firebaseapp.com",
+  databaseURL: "https://test-2fdd3-default-rtdb.firebaseio.com",
   projectId: "test-2fdd3",
   appId: "1:244317844373:web:3a4e5b77c649f54d7fbc9c"
 };
@@ -219,17 +238,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-/* 👁️ Voir / Cacher le mot de passe */
+/* 👁️ Bascule affichage mot de passe avec SVG */
 const passwordInput = document.getElementById("password");
 const togglePasswordBtn = document.getElementById("togglePassword");
+const pwdContainer = document.getElementById("pwdContainer");
 
 togglePasswordBtn.onclick = () => {
   if (passwordInput.type === "password") {
     passwordInput.type = "text";
-    togglePasswordBtn.textContent = "🙈";
+    pwdContainer.classList.add("show-pwd");
   } else {
     passwordInput.type = "password";
-    togglePasswordBtn.textContent = "👁️";
+    pwdContainer.classList.remove("show-pwd");
   }
 };
 
