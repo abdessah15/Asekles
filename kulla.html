@@ -224,7 +224,7 @@
       display: block;
     }
 
-    /* SPINNER DE CHARGEMENT */
+    /* SPINNER DE CHARGEMENT AMÉLIORÉ */
     .video-loader {
       display: none;
       position: absolute;
@@ -234,11 +234,12 @@
       border: 4px solid rgba(255,255,255,0.1);
       border-top: 4px solid var(--primary);
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       animation: spin 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) infinite;
-      z-index: 10;
+      z-index: 20;
       pointer-events: none;
+      box-shadow: 0 0 20px rgba(255,0,102,0.4);
     }
 
     @keyframes spin {
@@ -259,7 +260,7 @@
       padding: 20px 20px 15px;
       opacity: 0;
       transition: opacity 0.4s ease;
-      z-index: 99999;
+      z-index: 10;
       pointer-events: none;
       box-sizing: border-box;
       width: 100%;
@@ -499,7 +500,7 @@
       color: #fff;
     }
 
-    /* ===== MODAL DESCRIPTION ===== */
+    /* ===== MODAL DESCRIPTION (Z-INDEX CORRIGÉ POUR PASSER DEVANT) ===== */
     .modal {
       position: fixed;
       inset: 0;
@@ -508,7 +509,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
+      z-index: 100000; /* Assure que la modale est toujours au-dessus du lecteur et de ses contrôles */
       padding: 20px;
     }
 
@@ -559,7 +560,7 @@
     /* RESPONSIVE AJUSTEMENTS */
     @media screen and (max-width: 768px) {
       .top-bar { flex-direction: column; gap: 15px; padding: 15px; }
-      .scroll-btn { display: none; } /* Cache les boutons sur mobile pour laisser le swipe */
+      .scroll-btn { display: none; }
       .characters-wrapper { padding: 0 10px; }
       .film-info { padding: 20px; }
     }
@@ -602,6 +603,7 @@
     </div>
 
     <div class="custom-player" id="playerWrapper">
+      <!-- SPINNER DE CHARGEMENT INTÉGRÉ -->
       <div class="video-loader" id="videoLoader"></div>
       
       <video id="myVideo" playsinline preload="auto">
@@ -768,6 +770,7 @@
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
     playerWrapper.style.display = "block";
+    videoLoader.style.display = "block"; // Affiche le loader au démarrage
     video.play();
     showControlsTemporarily();
   });
@@ -914,10 +917,12 @@
   document.addEventListener("webkitfullscreenchange", onFullscreenChange);
   document.addEventListener("msfullscreenchange", onFullscreenChange);
 
-  // Spinner State
+  // Spinner State (Gestion dynamique du loader)
   video.addEventListener("waiting", () => videoLoader.style.display = "block");
+  video.addEventListener("seeking", () => videoLoader.style.display = "block");
   video.addEventListener("playing", () => videoLoader.style.display = "none");
   video.addEventListener("canplay", () => videoLoader.style.display = "none");
+  video.addEventListener("loadeddata", () => videoLoader.style.display = "none");
 
   // Anti-clic droit sur la vidéo
   videoContainer.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -943,7 +948,6 @@
     leftBtn.disabled = charContainer.scrollLeft <= 2;
     rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth - 2;
     
-    // Style visuel du bouton désactivé
     leftBtn.style.opacity = leftBtn.disabled ? '0.3' : '1';
     rightBtn.style.opacity = rightBtn.disabled ? '0.3' : '1';
     leftBtn.style.cursor = leftBtn.disabled ? 'default' : 'pointer';
