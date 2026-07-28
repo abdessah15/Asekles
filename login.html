@@ -50,7 +50,7 @@ body::before {
   inset: 0;
   background: url("fond.png") center / cover no-repeat;
   filter: blur(12px);
-  transform: scale(1.1); /* évite les bords flous visibles */
+  transform: scale(1.1);
   z-index: -1;
 }
 
@@ -97,6 +97,39 @@ input:focus {
 
 input::placeholder {
   color: var(--text-muted);
+}
+
+/* Conteneur pour le mot de passe et l'œil */
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-container input {
+  margin-bottom: 0;
+  padding-right: 45px;
+}
+
+#togglePassword {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  color: var(--text-muted);
+  transition: color 0.3s;
+}
+
+#togglePassword:hover {
+  color: var(--text-main);
+  transform: translateY(-50%);
+  box-shadow: none;
 }
 
 /* 🔘 Buttons */
@@ -158,9 +191,13 @@ button:hover {
 
   <hr style="margin:20px 0; border:none; border-top:1px solid var(--surface-border);">
 
-  <!-- 🔐 Login -->
+  <!-- 🔐 Login Form -->
   <input id="email" type="email" placeholder="Isem n umiḍan">
-  <input id="password" type="password" placeholder="Tasarut">
+  
+  <div class="password-container">
+    <input id="password" type="password" placeholder="Tasarut">
+    <button type="button" id="togglePassword" title="Ẓer tasarut">👁️</button>
+  </div>
 
   <button id="loginBtn">Kcem</button>
 
@@ -182,6 +219,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+/* 👁️ Voir / Cacher le mot de passe */
+const passwordInput = document.getElementById("password");
+const togglePasswordBtn = document.getElementById("togglePassword");
+
+togglePasswordBtn.onclick = () => {
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    togglePasswordBtn.textContent = "🙈";
+  } else {
+    passwordInput.type = "password";
+    togglePasswordBtn.textContent = "👁️";
+  }
+};
+
 /* 📩 Messenger */
 messengerBtn.onclick = () => {
   const msg = `Azul 👋`;
@@ -192,15 +243,31 @@ messengerBtn.onclick = () => {
   );
 };
 
-/* 🔑 Login */
-loginBtn.onclick = async () => {
+/* 🔑 Fonction de connexion partagée */
+async function handleLogin() {
   try {
     await signInWithEmailAndPassword(auth, email.value, password.value);
     window.location.href = "index.html";
   } catch {
     error.innerText = "Tuccḍa deg tsarut !";
   }
-};
+}
+
+/* Clic sur le bouton de connexion */
+loginBtn.onclick = handleLogin;
+
+/* ⌨️ Raccourci clavier "Entrée" sur les champs de saisie */
+email.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    handleLogin();
+  }
+});
+
+password.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    handleLogin();
+  }
+});
 </script>
 
 </body>
