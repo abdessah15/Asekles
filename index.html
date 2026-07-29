@@ -1,11 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ⵣ Asekles - ⴰⵙⴻⴽⵍⴻⵙ ⵣ</title>
+<link rel="icon" href="Asekles.png" type="image/png">
+
+<!-- Nouvelle police moderne -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --primary: #ff0066;
+    --primary-hover: #ff3385;
+    --secondary: #6600ff;
+    --bg-color: #0a0a0f;
+    --surface-color: rgba(255, 255, 255, 0.05);
+    --surface-border: rgba(255, 255, 255, 0.1);
+    --text-main: #f8f9fa;
+    --text-muted: #a0a0a0;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow-x: hidden;
+  }
+
+  /* ===== LOADER ===== */
+  #loader {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid var(--surface-border);
+    border-top: 6px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    box-shadow: 0 0 20px rgba(255, 0, 102, 0.3);
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ===== HEADER & NAV COMBINED (GLASSMORPHISM) ===== */
+  .top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background: rgba(10, 10, 15, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--surface-border);
+  }
+
+  .top-bar h1 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  /* ===== SEARCH BAR ===== */
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background: var(--surface-color);
+    border: 1px solid var(--surface-border);
+    border-radius: 25px;
+    padding: 8px 15px;
+    margin: 0 20px;
+    flex-grow: 1;
+    max-width: 400px;
+    transition: all 0.3s ease;
+  }
+
+  .search-bar:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(255, 0, 102, 0.2);
+    background: rgba(20, 20, 25, 0.9);
+  }
+
+  .search-bar input {
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.95em;
+    width: 100%;
+    outline: none;
+  }
+
+  .search-bar input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .search-bar button {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-left: 10px;
+    transition: color 0.3s, transform 0.2s;
+  }
+
+  .search-bar button:hover {
+    color: var(--primary);
+    transform: scale(1.1);
+  }
+
+  nav {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  nav a,
+  #amidanBtn {
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  nav a:hover,
+  #amidanBtn:hover {
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(255, 0, 102, 0.4);
+  }
+
+  /* ===== AMIDAN ===== */
+  .account-wrapper {
+    position: relative;
+  }
+
+  #accountBox {
+    display: none;
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: rgba(20, 20, 25, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--surface-border);
+    padding: 20px;
+    border-radius: 12px;
+    min-width: 240px;
+    z-index: 999;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  #userEmail {
+    margin-top: 0;
+    font-size: 0.9em;
+    color: var(--text-muted);
+    word-break: break-all;
+  }
+
+  #userExpire {
+    color: #ffcc00;
+    font-size: 0.85em;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  #logoutBtn {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  #logoutBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 0, 102, 0.4);
+  }
+
+  /* ===== CONTENT ===== */
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 120px;
+  }
+
+  .content h2 {
+    font-size: 1.8em;
+    margin-bottom: 30px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #fff, var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+  }
+
+  .movie-item {
+    background: var(--surface-color);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--surface-border);
+    padding: 12px;
+    border-radius: 16px;
+    text-align: center;
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+
+  .movie-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(255, 0, 102, 0.25);
+    border-color: rgba(255, 0, 102, 0.4);
+  }
+
+  .movie-item img {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  }
+
+  .movie-item h3 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 1.05em;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--surface-border);
+    text-align: center;
+    padding: 12px;
+    font-size: .85em;
+    color: var(--text-muted);
+    z-index: 800;
+  }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 768px) {
+    .top-bar {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      padding: 15px;
+    }
+    .top-bar h1 {
+      order: 1;
+      width: 100%;
+      text-align: center;
+    }
+    nav {
+      order: 2;
+      width: 100%;
+      justify-content: center;
+    }
+    .search-bar {
+      order: 3;
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+    }
+    .movie-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+    .content {
+      padding: 20px 15px 100px;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- 🔄 LOADER -->
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
 <div class="top-bar">
   <h1>ⵣ Asekles - ⴰⵙⴻⴽⵍⴻⵙ ⵣ</h1>
 
-  <!-- Nouvelle barre de recherche -->
+  <!-- BARRE DE RECHERCHE -->
   <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Nadi..." autocomplete="off">
     <button id="searchBtn" type="button" aria-label="Rechercher">
-      <!-- Icône SVG professionnelle au lieu d'un emoji -->
+      <!-- Icône SVG professionnelle -->
       <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -28,3 +358,121 @@
     </div>
   </nav>
 </div>
+
+<div class="content">
+  <h2>I kunwi d kunemti</h2>
+
+  <div class="movie-grid">
+    <div class="movie-item"><a href="kulla.html"><img src="kl.jpg" alt="Kulla"><h3>Kulla</h3></a></div>
+    <div class="movie-item"><a href="imčeqlal.html"><img src="B2I.jpg" alt="Imčeqlal"><h3>Imčeqlal</h3></a></div>
+    <div class="movie-item"><a href="bds.html"><img src="bdsa.jpg" alt="Berhuc d Salas"><h3>Berhuc d Salas</h3></a></div>
+    <div class="movie-item"><a href="amghar-aneghrum.html"><img src="photo.jpg" alt="Amɣar aneɣrum"><h3>Amɣar aneɣrum</h3></a></div>
+    <div class="movie-item"><a href="imuhucen.html"><img src="imuhuchen.jpg" alt="Imuḥucen"><h3>Imuḥucen</h3></a></div>
+    <div class="movie-item"><a href="film10.html"><img src="hmimi.jpg" alt="Ḥmimi d Lyes"><h3>Ḥmimi d Lyes</h3></a></div>
+    <div class="movie-item"><a href="film1.html"><img src="Sans titre2.jpg" alt="Sirta"><h3>Sirta</h3></a></div>
+    <div class="movie-item"><a href="film2.html"><img src="Sans titre.jpg" alt="Amezruy n tmurt"><h3>Amezruy n tmurt</h3></a></div>
+    <div class="movie-item"><a href="film3.html"><img src="Sans titre3.jpg" alt="Tamacahut n Wakli"><h3>Tamacahut n Wakli</h3></a></div>
+    <div class="movie-item"><a href="film4.html"><img src="Sans titre4.jpg" alt="Waɛli ak d tzizwit"><h3>Waɛli ak d tzizwit</h3></a></div>
+    <div class="movie-item"><a href="film5.html"><img src="Sans titre5.jpg" alt="Zorro"><h3>Zorro</h3></a></div>
+    <div class="movie-item"><a href="film8.html"><img src="ikerri.jpg" alt="Ikerri izimer"><h3>Ikerri izimer</h3></a></div>
+    <div class="movie-item"><a href="film9.html"><img src="IMG_1264.jpeg" alt="Targit"><h3>Targit</h3></a></div>
+    <div class="movie-item"><a href="film7.html"><img src="Sans titre11.jpg" alt="Ṭum ak d Jerry"><h3>Ṭum ak d Jerry</h3></a></div>
+    <div class="movie-item"><a href="film6.html"><img src="Sans titre6.jpg" alt="Maca ak d Micka"><h3>Maca ak d Micka</h3></a></div>
+  </div>
+</div>
+
+<footer>© Asekles</footer>
+
+<!-- 🔥 FIREBASE v8 -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+var firebaseConfig = {
+  apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
+  authDomain: "test-2fdd3.firebaseapp.com",
+  databaseURL: "https://test-2fdd3-default-rtdb.firebaseio.com",
+  projectId: "test-2fdd3",
+  appId: "1:244317844373:web:3a4e5b77c649f54d7fbc9c"
+};
+
+firebase.initializeApp(firebaseConfig);
+var auth = firebase.auth();
+
+var loader = document.getElementById("loader");
+var amidanBtn = document.getElementById("amidanBtn");
+var accountBox = document.getElementById("accountBox");
+var userEmail = document.getElementById("userEmail");
+var userExpire = document.getElementById("userExpire");
+var logoutBtn = document.getElementById("logoutBtn");
+
+auth.onAuthStateChanged(function(user) {
+  if (!user) {
+    location.replace("login.html");
+    return;
+  }
+
+  firebase.database().ref("users/" + user.uid).once("value").then(function(snap) {
+    if (!snap.exists()) {
+      auth.signOut();
+      location.replace("login.html");
+      return;
+    }
+
+    var data = snap.val();
+    var today = new Date().toISOString().split("T")[0];
+
+    if (data.expiresAt < today) {
+      alert("Amiḍan yekfa");
+      auth.signOut();
+      location.replace("login.html");
+      return;
+    }
+
+    loader.style.display = "none";
+    amidanBtn.style.display = "inline";
+    userEmail.textContent = "Isem n umiḍan : " + data.email;
+    userExpire.textContent = "Azemz n tagara : " + data.expiresAt;
+  });
+});
+
+amidanBtn.onclick = function(e) {
+  e.stopPropagation();
+  accountBox.style.display =
+    accountBox.style.display === "block" ? "none" : "block";
+};
+
+logoutBtn.onclick = function() {
+  auth.signOut().then(function() {
+    location.replace("login.html");
+  });
+};
+
+document.onclick = function() {
+  accountBox.style.display = "none";
+};
+
+// ==========================================
+// SCRIPT DE RECHERCHE DYNAMIQUE (FILTRE)
+// ==========================================
+document.getElementById('searchInput').addEventListener('input', function(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  const movies = document.querySelectorAll('.movie-item');
+
+  movies.forEach(movie => {
+    // Récupère le titre du film (ex: Kulla, Zorro, etc.)
+    const title = movie.querySelector('h3').textContent.toLowerCase();
+    
+    // Affiche ou masque l'élément selon la recherche
+    if (title.includes(searchTerm)) {
+      movie.style.display = 'block';
+    } else {
+      movie.style.display = 'none';
+    }
+  });
+});
+</script>
+
+</body>
+</html>
