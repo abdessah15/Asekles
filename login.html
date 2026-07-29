@@ -6,7 +6,8 @@
 <!-- 📱 Mobile friendly (empêche le zoom auto) -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>Anekcum – Asekles</title>
+<title>ⵣ Anekcum & Isura - ⵉⵙⵓⵔⴰ ⵣ</title>
+<link rel="icon" href="Asekles.png" type="image/png">
 
 <!-- Nouvelle police moderne -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,22 +32,18 @@
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
   margin: 0;
-  padding: 15px;
-  overflow: hidden;
-  position: relative;
   background-color: var(--bg-color);
   color: var(--text-main);
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
 }
 
 /* 🌫️ Image de fond floutée */
 body::before {
   content: "";
-  position: absolute;
+  position: fixed;
   inset: 0;
   background: url("fond.png") center / cover no-repeat;
   filter: blur(12px);
@@ -54,29 +51,235 @@ body::before {
   z-index: -1;
 }
 
-.box {
+/* ===== HEADER & SEARCH BAR ===== */
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.top-bar h1 {
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
   background: var(--surface-color);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--surface-border);
+  border-radius: 25px;
+  padding: 8px 15px;
+  margin: 0 20px;
+  flex-grow: 1;
+  max-width: 400px;
+  transition: all 0.3s ease;
+}
+
+.search-bar:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(255, 0, 102, 0.2);
+}
+
+.search-bar input {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.95em;
+  width: 100%;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
+.search-bar input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-bar button {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin-left: 10px;
+  width: auto;
+  transition: color 0.3s;
+}
+
+.search-bar button:hover {
+  color: var(--primary);
+  transform: none;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+#messengerTopBtn {
+  background: #0084FF;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(0, 132, 255, 0.3);
+}
+
+#messengerTopBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 132, 255, 0.5);
+}
+
+/* ===== CONTENT & GRID ===== */
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 100px;
+}
+
+.content h2 {
+  font-size: 1.8em;
+  margin-bottom: 30px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #fff, var(--text-muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 25px;
+}
+
+.movie-item {
+  background: var(--surface-color);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--surface-border);
+  padding: 12px;
+  border-radius: 16px;
+  text-align: center;
+  position: relative;
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+
+.movie-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(255, 0, 102, 0.25);
+  border-color: rgba(255, 0, 102, 0.4);
+}
+
+.movie-item img {
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.movie-item h3 {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 1.05em;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* Badge VIP */
+.badge-vip {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(90deg, #ffcc00, #ff9900);
+  color: #000;
+  padding: 4px 10px;
+  font-size: 0.7em;
+  font-weight: 800;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ===== MODAL DE CONNEXION ===== */
+#loginModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.modal-content {
+  background: rgba(20, 20, 25, 0.95);
   border: 1px solid var(--surface-border);
   padding: 30px 25px;
   border-radius: 20px;
   width: 100%;
   max-width: 380px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  position: relative;
 }
 
-h2 {
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 1.5em;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-btn:hover {
+  color: var(--primary);
+}
+
+.modal-content h3 {
   margin: 0 0 20px;
   color: var(--text-main);
   font-weight: 800;
-  font-size: 1.5em;
-  letter-spacing: 0.5px;
+  font-size: 1.4em;
 }
 
-/* 🔵 Inputs (no zoom mobile) */
-input {
+.modal-content input {
   width: 100%;
   padding: 14px;
   margin: 10px 0;
@@ -86,20 +289,19 @@ input {
   color: var(--text-main);
   font-size: 16px;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  outline: none;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-input:focus {
-  outline: none;
+.modal-content input:focus {
   border-color: var(--primary);
   box-shadow: 0 0 10px rgba(255, 0, 102, 0.3);
 }
 
-input::placeholder {
+.modal-content input::placeholder {
   color: var(--text-muted);
 }
 
-/* Conteneur pour le mot de passe et l'icône SVG */
 .password-container {
   position: relative;
   width: 100%;
@@ -138,50 +340,29 @@ input::placeholder {
   fill: currentColor;
 }
 
-/* Gestion de l'affichage des icônes SVG */
 .eye-open { display: block; }
 .eye-closed { display: none; }
-
 .password-container.show-pwd .eye-open { display: none; }
 .password-container.show-pwd .eye-closed { display: block; }
 
-/* 🔘 Buttons */
-button {
+.modal-content button#modalLoginBtn {
   width: 100%;
   padding: 14px;
-  margin-top: 12px;
+  margin-top: 15px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-button:hover {
-  transform: translateY(-2px);
-}
-
-/* Messenger */
-#messengerBtn {
-  background: #0084FF;
-  color: white;
-  box-shadow: 0 4px 15px rgba(0, 132, 255, 0.3);
-}
-
-#messengerBtn:hover {
-  box-shadow: 0 6px 20px rgba(0, 132, 255, 0.5);
-}
-
-/* Login */
-#loginBtn {
   background: linear-gradient(90deg, var(--primary), var(--secondary));
   color: white;
   box-shadow: 0 4px 15px rgba(255, 0, 102, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-#loginBtn:hover {
+.modal-content button#modalLoginBtn:hover {
+  transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 0, 102, 0.5);
 }
 
@@ -191,42 +372,180 @@ button:hover {
   font-size: 14px;
   font-weight: 600;
 }
+
+/* ===== FOOTER ===== */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--surface-border);
+  text-align: center;
+  padding: 12px;
+  font-size: .85em;
+  color: var(--text-muted);
+  z-index: 800;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .top-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+  }
+  .top-bar h1 {
+    order: 1;
+    width: 100%;
+    text-align: center;
+  }
+  .search-bar {
+    order: 2;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+  nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  .content {
+    padding: 20px 15px 100px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="box">
-  <h2>Kcem s tsarut</h2>
+<div class="top-bar">
+  <h1>ⵣ Isura - ⵉⵙⵓⵔⴰ ⵣ</h1>
 
-  <!-- 🔵 Messenger -->
-  <button id="messengerBtn">Aɣ-d tasarut</button>
-
-  <hr style="margin:20px 0; border:none; border-top:1px solid var(--surface-border);">
-
-  <!-- 🔐 Login Form -->
-  <input id="email" type="email" placeholder="Isem n umiḍan">
-  
-  <div class="password-container" id="pwdContainer">
-    <input id="password" type="password" placeholder="Tasarut">
-    <button type="button" id="togglePassword" title="Ẓer tasarut">
-      <!-- Icône SVG œil ouvert -->
-      <svg class="eye-open" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-      <!-- Icône SVG œil barré (masqué) -->
-      <svg class="eye-closed" viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2.81 2.81L1.39 4.22l3.65 3.65C3.4 9.03 2.15 10.42 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l4.42 4.42 1.41-1.41L2.81 2.81zM12 15c-1.66 0-3-1.34-3-3 0-.35.07-.69.18-1l3.82 3.82c-.31.11-.65.18-1 .18z"/></svg>
+  <!-- BARRE DE RECHERCHE -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Nadi..." autocomplete="off">
+    <button type="button" aria-label="Rechercher">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
     </button>
   </div>
 
-  <button id="loginBtn">Kcem</button>
-
-  <p id="error"></p>
+  <nav>
+    <button id="messengerTopBtn">Aɣ-d tasarut</button>
+  </nav>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+<div class="content">
+  <h2>Umuɣ n yisura</h2>
 
-/* 🔥 Firebase config */
+  <div class="movie-grid">
+    <!-- Gratuit -->
+    <div class="movie-item"><a href="film1.html" class="movie-link" data-access="free"><img src="Sans titre2.jpg" alt="Sirta"><h3>Sirta</h3></a></div>
+    
+    <!-- Gratuit -->
+    <div class="movie-item"><a href="film2.html" class="movie-link" data-access="free"><img src="Sans titre.jpg" alt="Amezruy n tmurt"><h3>Amezruy n tmurt</h3></a></div>
+    
+    <!-- VIP (3 wa3li ak d tzizwit) -->
+    <div class="movie-item">
+      <a href="film3.html" class="movie-link" data-access="vip">
+        <span class="badge-vip">VIP</span>
+        <img src="Sans titre3.jpg" alt="Tamacahut n Wakli">
+        <h3>Tamacahut n Wakli</h3>
+      </a>
+    </div>
+
+    <!-- Gratuit -->
+    <div class="movie-item"><a href="film8.html" class="movie-link" data-access="free"><img src="ikerri.jpg" alt="Ikerri izimer"><h3>Ikerri izimer</h3></a></div>
+    
+    <!-- Gratuit -->
+    <div class="movie-item"><a href="film9.html" class="movie-link" data-access="IMG_1264.jpeg"><img src="IMG_1264.jpeg" alt="Targit"><h3>Targit</h3></a></div>
+    
+    <!-- VIP (10 Hmimi d lyes) -->
+    <div class="movie-item">
+      <a href="film10.html" class="movie-link" data-access="vip">
+        <span class="badge-vip">VIP</span>
+        <img src="hmimi.jpg" alt="Ḥmimi d Lyes">
+        <h3>Ḥmimi d Lyes</h3>
+      </a>
+    </div>
+
+    <!-- VIP (12 Amghar aneghrum) -->
+    <div class="movie-item">
+      <a href="amghar-aneghrum.html" class="movie-link" data-access="vip">
+        <span class="badge-vip">VIP</span>
+        <img src="photo.jpg" alt="Amɣar aneɣrum">
+        <h3>Amɣar aneɣrum</h3>
+      </a>
+    </div>
+
+    <!-- VIP (13 Berhuc d Salas) -->
+    <div class="movie-item">
+      <a href="bds.html" class="movie-link" data-access="vip">
+        <span class="badge-vip">VIP</span>
+        <img src="bdsa.jpg" alt="Berhuc d Salas">
+        <h3>Berhuc d Salas</h3>
+      </a>
+    </div>
+
+    <!-- VIP (15 Imčeqlal) -->
+    <div class="movie-item">
+      <a href="imčeqlal.html" class="movie-link" data-access="vip">
+        <span class="badge-vip">VIP</span>
+        <img src="B2I.jpg" alt="Imčeqlal">
+        <h3>Imčeqlal</h3>
+      </a>
+    </div>
+
+    <!-- VIP (16 Kulla) -->
+    <div class="movie-item">
+      <a href="kulla.html" class="movie-link" data-access="vip">
+        <span class="badge-vip">VIP</span>
+        <img src="kl.jpg" alt="Kulla">
+        <h3>Kulla</h3>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>© Asekles</footer>
+
+<!-- 🔐 MODAL DE CONNEXION -->
+<div id="loginModal">
+  <div class="modal-content">
+    <span class="close-btn" id="closeModal">&times;</span>
+    <h3>Kcem s tsarut</h3>
+    
+    <input id="email" type="email" placeholder="Isem n umiḍan">
+    
+    <div class="password-container" id="pwdContainer">
+      <input id="password" type="password" placeholder="Tasarut">
+      <button type="button" id="togglePassword" title="Ẓer tasarut">
+        <svg class="eye-open" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+        <svg class="eye-closed" viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2.81 2.81L1.39 4.22l3.65 3.65C3.4 9.03 2.15 10.42 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l4.42 4.42 1.41-1.41L2.81 2.81zM12 15c-1.66 0-3-1.34-3-3 0-.35.07-.69.18-1l3.82 3.82c-.31.11-.65.18-1 .18z"/></svg>
+      </button>
+    </div>
+
+    <button id="modalLoginBtn">Kcem</button>
+    <p id="error"></p>
+  </div>
+</div>
+
+<!-- 🔥 FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
   authDomain: "test-2fdd3.firebaseapp.com",
@@ -237,8 +556,16 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getDatabase(app);
 
-/* 👁️ Bascule affichage mot de passe avec SVG */
+var loginModal = document.getElementById("loginModal");
+var closeModal = document.getElementById("closeModal");
+var modalLoginBtn = document.getElementById("modalLoginBtn");
+var errorEl = document.getElementById("error");
+
+var pendingMovieUrl = null;
+
+// 👁️ Affichage mot de passe
 const passwordInput = document.getElementById("password");
 const togglePasswordBtn = document.getElementById("togglePassword");
 const pwdContainer = document.getElementById("pwdContainer");
@@ -253,40 +580,102 @@ togglePasswordBtn.onclick = () => {
   }
 };
 
-/* 📩 Messenger */
+// 📩 Messenger
+const messengerBtn = document.getElementById("messengerTopBtn");
 messengerBtn.onclick = () => {
-  const msg = `Azul 👋`;
-
-  window.open(
-    "https://m.me/kherzi.abdessah.7?text=" + encodeURIComponent(msg),
-    "_blank"
-  );
+  const msg = "Azul 👋";
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  if (/android|iphone|ipad|ipod/i.test(userAgent)) {
+    window.location.href = "fb-messenger://user-thread/kherzi.abdessah.7";
+    setTimeout(() => {
+      window.open("https://m.me/kherzi.abdessah.7?text=" + encodeURIComponent(msg), "_blank");
+    }, 500);
+  } else {
+    window.open("https://m.me/kherzi.abdessah.7?text=" + encodeURIComponent(msg), "_blank");
+  }
 };
 
-/* 🔑 Fonction de connexion partagée */
+// Interception des clics sur les films
+document.querySelectorAll('.movie-link').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    const accessType = this.getAttribute('data-access');
+    
+    if (accessType === 'vip') {
+      e.preventDefault();
+      pendingMovieUrl = this.href;
+      loginModal.style.display = "flex";
+    }
+    // Si c'est 'free', le lien s'ouvre normalement vers la page du film.
+  });
+});
+
+closeModal.onclick = function() {
+  loginModal.style.display = "none";
+  pendingMovieUrl = null;
+}
+
+// Connexion et vérification VIP dans la base de données
 async function handleLogin() {
+  const emailVal = document.getElementById("email").value;
+  const passwordVal = document.getElementById("password").value;
+
+  if(!emailVal || !passwordVal) {
+    errorEl.innerText = "Ssekcem isem n umiḍan d tsarut.";
+    return;
+  }
+
   try {
-    await signInWithEmailAndPassword(auth, email.value, password.value);
-    window.location.href = "index.html";
-  } catch {
-    error.innerText = "Tuccḍa deg tsarut !";
+    const userCredential = await signInWithEmailAndPassword(auth, emailVal, passwordVal);
+    const user = userCredential.user;
+
+    // Vérifier si le compte est VIP dans Firebase Database
+    const snapshot = await get(ref(db, "users/" + user.uid));
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      const today = new Date().toISOString().split("T")[0];
+
+      if (data.expiresAt < today) {
+        errorEl.innerText = "Amiḍan yekfa (Compte expiré).";
+        auth.signOut();
+        return;
+      }
+
+      if (data.isVIP === true) {
+        // Redirection vers le film VIP demandé
+        window.location.href = pendingMovieUrl || "index.html";
+      } else {
+        errorEl.innerText = "Amiḍan-a mačči d VIP.";
+      }
+    } else {
+      errorEl.innerText = "Yir talɣut n umiḍan.";
+    }
+  } catch (err) {
+    errorEl.innerText = "Tuccḍa deg tsarut neɣ deg umiḍan !";
   }
 }
 
-/* Clic sur le bouton de connexion */
-loginBtn.onclick = handleLogin;
+modalLoginBtn.onclick = handleLogin;
 
-/* ⌨️ Raccourci clavier "Entrée" sur les champs de saisie */
-email.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    handleLogin();
-  }
+document.getElementById("email").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") handleLogin();
+});
+document.getElementById("password").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") handleLogin();
 });
 
-password.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    handleLogin();
-  }
+// Recherche dynamique
+document.getElementById('searchInput').addEventListener('input', function(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  const movies = document.querySelectorAll('.movie-item');
+
+  movies.forEach(movie => {
+    const title = movie.querySelector('h3').textContent.toLowerCase();
+    if (title.includes(searchTerm)) {
+      movie.style.display = 'block';
+    } else {
+      movie.style.display = 'none';
+    }
+  });
 });
 </script>
 
