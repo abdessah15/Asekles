@@ -222,10 +222,11 @@ button:hover {
   <p id="error"></p>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js";
+<!-- 🔥 Scripts Firebase Version 8 -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
+<script>
 /* 🔥 Firebase config */
 const firebaseConfig = {
   apiKey: "AIzaSyAX7amyQdzfssmwjIaaFl1qn0Ts5af1DCM",
@@ -235,8 +236,9 @@ const firebaseConfig = {
   appId: "1:244317844373:web:3a4e5b77c649f54d7fbc9c"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+// Initialisation Firebase v8
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
 /* 👁️ Bascule affichage mot de passe avec SVG */
 const passwordInput = document.getElementById("password");
@@ -259,10 +261,8 @@ messengerBtn.onclick = () => {
   const msg = "Azul 👋";
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
   
-  // Détection mobile pour basculer sur l'application Messenger si possible
   if (/android|iphone|ipad|ipod/i.test(userAgent)) {
     window.location.href = "fb-messenger://user-thread/kherzi.abdessah.7";
-    // Fallback web si l'app n'est pas installée
     setTimeout(() => {
       window.open("https://m.me/kherzi.abdessah.7?text=" + encodeURIComponent(msg), "_blank");
     }, 500);
@@ -278,7 +278,7 @@ async function handleLogin() {
   const passwordVal = document.getElementById("password").value;
 
   try {
-    await signInWithEmailAndPassword(auth, emailVal, passwordVal);
+    await auth.signInWithEmailAndPassword(emailVal, passwordVal);
     window.location.href = "index.html";
   } catch (err) {
     errorEl.innerText = "Tuccḍa deg tsarut neɣ deg umiḍan !";
