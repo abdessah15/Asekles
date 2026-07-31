@@ -1,54 +1,81 @@
 <!DOCTYPE html>
-<html lang="ber">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Asekles - Berhuc d Salas</title>
   <link rel="icon" href="Asekles.png" type="image/png">
+  
+  <!-- Nouvelle police moderne -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --primary: #ff0066;
+      --primary-hover: #ff3385;
+      --secondary: #6600ff;
+      --bg-color: #0a0a0f;
+      --surface-color: rgba(255, 255, 255, 0.05);
+      --surface-border: rgba(255, 255, 255, 0.1);
+      --text-main: #f8f9fa;
+      --text-muted: #a0a0a0;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #000;
-      color: #f1f1f1;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      overflow-x: hidden;
     }
 
-    /* ===== HEADER ===== */
-    header {
-      background: linear-gradient(45deg, #ff0066, #6600ff);
-      padding: 15px;
-      text-align: center;
+    /* ===== HEADER & NAV COMBINED (GLASSMORPHISM) ===== */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 5%;
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--surface-border);
     }
 
-    header h1 {
+    .top-bar h1 {
       margin: 0;
-      font-size: 2em;
-      color: #fff;
+      font-size: 1.5em;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
     }
 
-    /* ===== NAV ===== */
     nav {
       display: flex;
-      justify-content: center;
+      gap: 30px;
       align-items: center;
-      gap: 20px;
-      padding: 10px;
-      background: #111;
-      flex-wrap: wrap;
     }
 
-    nav a,
-    #amidanBtn {
-      color: #fff;
+    nav a, #amidanBtn {
+      color: var(--text-main);
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 0.95em;
       cursor: pointer;
+      transition: color 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    nav a:hover,
-    #amidanBtn:hover {
-      color: #ff0066;
+    nav a:hover, #amidanBtn:hover {
+      color: var(--primary);
+      text-shadow: 0 0 10px rgba(255, 0, 102, 0.4);
     }
 
     /* ===== AMIDAN ===== */
@@ -59,25 +86,40 @@
     #accountBox {
       display: none;
       position: absolute;
-      top: 32px;
+      top: 45px;
       right: 0;
-      background: #111;
-      border: 2px solid #ff0066;
-      padding: 15px;
-      border-radius: 10px;
-      min-width: 220px;
+      background: rgba(20, 20, 25, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--surface-border);
+      padding: 20px;
+      border-radius: 12px;
+      min-width: 240px;
       z-index: 999;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    
+    #userEmail {
+      margin-top: 0;
+      font-size: 0.9em;
+      color: var(--text-muted);
+      word-break: break-all;
     }
 
     #logoutBtn {
-      background: #ff0066;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
       color: #fff;
       border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
+      padding: 10px 15px;
+      border-radius: 8px;
       cursor: pointer;
       width: 100%;
-      font-weight: bold;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    #logoutBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 0, 102, 0.4);
     }
 
     /* ===== CONTENT ===== */
@@ -85,19 +127,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 25px;
-      padding: 20px;
-      padding-bottom: 120px;
+      gap: 40px;
+      padding: 40px 20px 120px;
     }
 
     .video-container {
       width: 100%;
-      max-width: 900px;
+      max-width: 1000px;
       position: relative;
       background: #000;
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 0 1px var(--surface-border);
     }
 
     /* PLEIN ÉCRAN MOBILE & DESKTOP */
@@ -125,33 +166,40 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      transition: transform 0.5s ease;
+    }
+    
+    .video-thumb:hover img {
+      transform: scale(1.02);
     }
 
     .play-btn {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80px;
-      height: 80px;
-      background: rgba(255, 0, 102, 0.85);
+      transform: translate(-50%,-50%);
+      width: 70px;
+      height: 70px;
+      background: rgba(255, 0, 102, 0.9);
       border-radius: 50%;
-      transition: transform 0.3s ease;
+      transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       z-index: 2;
+      box-shadow: 0 0 20px rgba(255, 0, 102, 0.5);
     }
 
     .play-btn::after {
       content: "";
       position: absolute;
-      left: 32px;
+      left: 28px;
       top: 22px;
       border-style: solid;
-      border-width: 18px 0 18px 30px;
+      border-width: 14px 0 14px 22px;
       border-color: transparent transparent transparent white;
     }
 
     .video-thumb:hover .play-btn {
       transform: translate(-50%, -50%) scale(1.15);
+      box-shadow: 0 0 30px rgba(255, 0, 102, 0.8);
     }
 
     /* ===== LECTEUR VIDEO SUR MESURE ===== */
@@ -183,12 +231,12 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      border: 4px solid rgba(255,255,255,0.2);
-      border-top: 4px solid #ff0066;
+      border: 4px solid rgba(255,255,255,0.1);
+      border-top: 4px solid var(--primary);
       border-radius: 50%;
       width: 50px;
       height: 50px;
-      animation: spin 0.8s linear infinite;
+      animation: spin 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) infinite;
       z-index: 10;
       pointer-events: none;
     }
@@ -204,26 +252,24 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(transparent, rgba(0, 0, 0, 0.95));
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.95) 90%);
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
+      gap: 12px;
+      padding: 20px 20px 15px;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease;
       z-index: 99999;
       pointer-events: none;
       box-sizing: border-box;
       width: 100%;
     }
 
-    /* MARGES DE SÉCURITÉ PLEIN ÉCRAN / ROTATION */
     .video-container:fullscreen .custom-controls,
     .video-container:-webkit-full-screen .custom-controls {
-      padding-bottom: max(12px, env(safe-area-inset-bottom));
-      padding-left: max(16px, env(safe-area-inset-left));
-      padding-right: max(16px, env(safe-area-inset-right));
-      padding-top: 10px;
+      padding-bottom: max(20px, env(safe-area-inset-bottom));
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
     }
 
     .custom-player:hover .custom-controls,
@@ -242,28 +288,34 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 4px;
+      border-radius: 6px;
       flex-shrink: 0;
+      transition: background 0.2s;
       -webkit-tap-highlight-color: transparent;
     }
 
+    .ctrl-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
     .ctrl-btn svg {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       fill: #ffffff;
       transition: fill 0.2s;
     }
 
     .ctrl-btn:hover svg {
-      fill: #ff0066;
+      fill: var(--primary);
     }
 
     .time-display {
-      font-size: 0.78em;
-      color: #ccc;
+      font-size: 0.85em;
+      color: #ddd;
       white-space: nowrap;
-      font-family: monospace;
+      font-weight: 600;
       flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
     }
 
     /* BARRE DE PROGRESSION FLUIDE */
@@ -272,86 +324,55 @@
       min-width: 30px;
       -webkit-appearance: none;
       appearance: none;
-      height: 5px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 3px;
+      height: 6px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
       outline: none;
       cursor: pointer;
+      transition: height 0.2s;
+    }
+    
+    .progress-bar:hover {
+      height: 8px;
     }
 
     .progress-bar::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 15px;
-      height: 15px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: #ff0066;
+      background: var(--primary);
       cursor: pointer;
+      box-shadow: 0 0 10px rgba(255,0,102,0.6);
+      transition: transform 0.2s;
+    }
+    
+    .progress-bar::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
     }
 
     .progress-bar::-moz-range-thumb {
-      width: 15px;
-      height: 15px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: #ff0066;
+      background: var(--primary);
       cursor: pointer;
       border: none;
+      box-shadow: 0 0 10px rgba(255,0,102,0.6);
     }
 
-    /* MENU VITESSE COMPACT */
     .speed-select {
       background: rgba(20, 20, 20, 0.8);
       color: #fff;
-      border: 1px solid #444;
-      border-radius: 4px;
-      padding: 3px 4px;
-      font-size: 0.75em;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      font-weight: 600;
       cursor: pointer;
       outline: none;
       flex-shrink: 0;
-    }
-
-    /* ADAPTATION MOBILE ET PAYSAGE */
-    @media screen and (max-width: 600px) {
-      .custom-controls {
-        gap: 4px;
-        padding: 6px 8px;
-      }
-      .ctrl-btn {
-        padding: 2px;
-      }
-      .ctrl-btn svg {
-        width: 18px;
-        height: 18px;
-      }
-      .time-display {
-        font-size: 0.65em;
-      }
-      .speed-select {
-        font-size: 0.65em;
-        padding: 2px;
-      }
-    }
-
-    @media screen and (max-height: 500px) and (orientation: landscape) {
-      .custom-controls {
-        padding: 6px 10px;
-        gap: 6px;
-      }
-      .ctrl-btn {
-        padding: 4px;
-      }
-      .ctrl-btn svg {
-        width: 19px;
-        height: 19px;
-      }
-      .time-display {
-        font-size: 0.7em;
-      }
-      .speed-select {
-        padding: 2px 3px;
-        font-size: 0.7em;
-      }
     }
 
     /* ===== PERSONNAGES ===== */
@@ -360,16 +381,16 @@
       display: flex;
       align-items: center;
       width: 100%;
-      max-width: 900px;
-      margin: 20px auto 0;
+      max-width: 1000px;
+      margin-top: 10px;
     }
 
     .characters {
       display: flex;
-      gap: 20px;
+      gap: 25px;
       overflow-x: auto;
       scroll-behavior: smooth;
-      padding: 10px 5px;
+      padding: 20px 5px;
       width: 100%;
     }
 
@@ -381,156 +402,199 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0,0,0,0.8);
-      color: #ff0066;
-      border: 1px solid #ff0066;
+      background: rgba(20, 20, 25, 0.8);
+      backdrop-filter: blur(5px);
+      color: var(--text-main);
+      border: 1px solid var(--surface-border);
       font-size: 1.5em;
       cursor: pointer;
-      width: 40px;
-      height: 40px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s, color 0.2s;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
+
+    .scroll-btn.left { left: -20px; }
+    .scroll-btn.right { right: -20px; }
 
     .scroll-btn:hover {
-      background: #ff0066;
+      background: var(--primary);
       color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(255,0,102,0.5);
     }
-
-    .scroll-btn.left { left: 5px; }
-    .scroll-btn.right { right: 5px; }
 
     .character {
       text-align: center;
       cursor: pointer;
       flex: 0 0 auto;
-      width: 110px;
-      outline: none;
+      width: 120px;
+      transition: transform 0.3s ease;
+    }
+
+    .character:hover {
+      transform: translateY(-5px);
     }
 
     .character img {
-      width: 95px;
-      height: 95px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #ff0066;
-      box-shadow: 0 0 15px rgba(255,0,102,.5);
-      transition: transform .3s;
+      border: 3px solid transparent;
+      background: linear-gradient(var(--bg-color), var(--bg-color)) padding-box,
+                  linear-gradient(45deg, var(--primary), var(--secondary)) border-box;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      transition: 0.3s ease;
     }
 
-    .character:hover img,
-    .character:focus img {
-      transform: scale(1.1);
+    .character:hover img {
+      box-shadow: 0 0 25px rgba(255,0,102,0.6);
+      transform: scale(1.05);
     }
 
     .character .name {
-      margin-top: 8px;
-      font-weight: bold;
-      font-size: 0.85em;
+      margin-top: 12px;
+      font-weight: 800;
+      font-size: 0.9em;
+      color: var(--text-main);
     }
 
     .character .role {
-      font-size: .75em;
-      color: #bbb;
+      font-size: 0.75em;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 600;
     }
 
     /* ===== FILM INFO ===== */
     .film-info {
-      background-color: #1a1a1a;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 900px;
-      line-height: 1.6;
+      background: var(--surface-color);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--surface-border);
+      padding: 30px;
+      border-radius: 16px;
+      max-width: 1000px;
+      line-height: 1.8;
       width: 100%;
       box-sizing: border-box;
-      border: 1px solid #333;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
     }
 
     .film-info h2 {
-      color: #ff0066;
+      font-size: 2em;
+      background: linear-gradient(90deg, var(--primary), #ffa3c2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin-top: 0;
+      margin-bottom: 20px;
+    }
+    
+    .film-info strong {
+      color: #fff;
     }
 
     /* ===== MODAL DESCRIPTION ===== */
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.85);
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(5px);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
-      padding: 15px;
+      z-index: 1000;
+      padding: 20px;
     }
 
     .modal-content {
-      background: #1a1a1a;
-      padding: 25px;
-      border-radius: 12px;
+      background: #111116;
+      padding: 30px;
+      border-radius: 16px;
       max-width: 450px;
-      width: 100%;
       text-align: center;
-      border: 1px solid #ff0066;
-      box-shadow: 0 0 20px rgba(255, 0, 102, 0.4);
+      border: 1px solid rgba(255, 0, 102, 0.3);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      animation: modalFadeIn 0.3s ease;
+    }
+    
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .modal-content h3 {
-      color: #ff0066;
+      color: #fff;
+      font-size: 1.4em;
       margin-top: 0;
     }
-
+    
     .modal-content p {
-      line-height: 1.5;
-      color: #ddd;
-      font-size: 0.95em;
+      color: var(--text-muted);
+      line-height: 1.6;
     }
 
     .close {
-      margin-top: 15px;
-      padding: 8px 20px;
-      background: #ff0066;
+      margin-top: 25px;
+      padding: 10px 25px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-hover));
       border: none;
       color: #fff;
+      font-weight: 800;
       cursor: pointer;
-      border-radius: 6px;
-      font-weight: bold;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    
+    .close:hover {
+      box-shadow: 0 5px 15px rgba(255,0,102,0.4);
+      transform: translateY(-2px);
     }
 
-    @supports not (aspect-ratio: 16/9) {
-      .video-thumb, .custom-player {
-        height: calc(100vw * 9 / 16);
-      }
+    /* RESPONSIVE AJUSTEMENTS */
+    @media screen and (max-width: 768px) {
+      .top-bar { flex-direction: column; gap: 15px; padding: 15px; }
+      .scroll-btn { display: none; } /* Cache les boutons sur mobile pour laisser le swipe */
+      .characters-wrapper { padding: 0 10px; }
+      .film-info { padding: 20px; }
+    }
+    
+    @media screen and (max-width: 600px) {
+      .custom-controls { gap: 6px; padding: 10px 12px; }
+      .ctrl-btn { padding: 4px; }
+      .ctrl-btn svg { width: 20px; height: 20px; }
+      .time-display, .speed-select { font-size: 0.75em; }
     }
   </style>
 </head>
 
 <body>
 
-<header>
+<div class="top-bar">
   <h1>Berhuc d Salas - ⴱⴻⵔⵀⵓⵛ ⴷ ⵙⴰⵍⴰⵙ</h1>
-</header>
+  <nav>
+    <a href="index.html">Axxam</a>
+    <a href="isura.html">Isura</a>
+    <a href="tizrarin.html">Tizrarin</a>
 
-<nav>
-  <a href="index.html">Axxam</a>
-  <a href="isura.html">Isura</a>
-  <a href="tizrarin.html">Tizrarin</a>
-
-  <div class="account-wrapper">
-    <span id="amidanBtn" style="display:none;">Amiḍan</span>
-    <div id="accountBox">
-      <p id="userEmail"></p>
-      <button id="logoutBtn">Effeɣ</button>
+    <div class="account-wrapper">
+      <span id="amidanBtn" style="display:none;">Amiḍan</span>
+      <div id="accountBox">
+        <p id="userEmail"></p>
+        <button id="logoutBtn">Effeɣ</button>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</div>
 
 <div class="container">
 
-  <!-- LECTEUR VIDEO SUR MESURE -->
+  <!-- LECTEUR SUR MESURE ADAPTÉ MOBILE ET ROBUSTE -->
   <div class="video-container" id="videoContainer">
     <div class="video-thumb" id="thumb">
       <img src="bads.jpg" alt="cover vidéo">
@@ -551,7 +615,7 @@
           <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
         </button>
 
-        <span class="time-display" id="timeDisplay">00:00:00 / 00:00:00</span>
+        <span class="time-display" id="timeDisplay">00:00 / 00:00</span>
         
         <!-- Barre de progression -->
         <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1">
@@ -572,9 +636,9 @@
         </select>
 
         <!-- Plein Écran -->
-        <button class="ctrl-btn" id="fullscreenBtn" title="Agdil aɣezfan">
-          <svg id="fsEnterIcon" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-          <svg id="fsExitIcon" viewBox="0 0 24 24" style="display:none;"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
+        <button class="ctrl-btn" id="fullBtn" title="Agdil aɣezfan">
+          <svg id="fullscreenIcon" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          <svg id="exitFullscreenIcon" viewBox="0 0 24 24" style="display:none;"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
         </button>
       </div>
     </div>
@@ -629,12 +693,12 @@
     <p><strong>Tawsit :</strong> Inig, Amuggan, Arrac</p>
     <p><strong>Azemz n usufeɣ :</strong> 2026</p>
     <p><strong>Aglam n usaru :</strong><br>
-    Deg tlemmast n ṭṭrad agreɣlan wis sin, deg yidurar n Fransa, imezdaɣ n yiwet n taddart tamecṭuḥt, ideg d-tlul tayri gar uydi d umdan amecṭuḥ, aydi-nni i ɛezlen wat taddart imi ɛudden d netta i ittetten lmal-nni i ttaǧǧan deg uddaynin, maca yiwen n wass tbeddel tmuɣli, ufan-t d netta i yellan yesseḥbibir fell-asen seg wuccanen.
+    Deg tlemmast n ṭṭrad agreɣlan wis sin, deg yidurar n Fransa, imezdaɣ n yiwet n taddart tamecṭuḥt, ideg i d-tlul tayri gar uydi d umdan amecṭuḥ, aydi-nni i ɛezlen wat taddart imi ɛudden d netta i ittetten lmal-nni i ttaǧǧan deg uddaynin, maca yiwen n wass tbeddel tmuɣli, ufan-t d netta i yellan yesseḥbibir fell-asen seg wuccanen.
     </p>
-  </div>
-
+  </div> 
+  
 </div>
-
+  
 <!-- MODAL DESCRIPTION -->
 <div class="modal" id="modal">
   <div class="modal-content">
@@ -644,48 +708,75 @@
   </div>
 </div>
 
-<!-- LOGIQUE DU LECTEUR VIDÉO SUR MESURE -->
 <script>
-  const videoContainer = document.getElementById("videoContainer");
+  // Elements DOM
   const thumb = document.getElementById("thumb");
   const playerWrapper = document.getElementById("playerWrapper");
+  const videoContainer = document.getElementById("videoContainer");
   const video = document.getElementById("myVideo");
   const videoLoader = document.getElementById("videoLoader");
-
+  const customControls = document.getElementById("customControls");
+  
   const playBtn = document.getElementById("playBtn");
   const playIcon = document.getElementById("playIcon");
   const pauseIcon = document.getElementById("pauseIcon");
-
-  const timeDisplay = document.getElementById("timeDisplay");
-  const progressBar = document.getElementById("progressBar");
-
+  
   const muteBtn = document.getElementById("muteBtn");
   const volumeIcon = document.getElementById("volumeIcon");
   const muteIcon = document.getElementById("muteIcon");
-
+  
+  const timeDisplay = document.getElementById("timeDisplay");
+  const progressBar = document.getElementById("progressBar");
   const speedSelect = document.getElementById("speedSelect");
-  const fullscreenBtn = document.getElementById("fullscreenBtn");
-  const fsEnterIcon = document.getElementById("fsEnterIcon");
-  const fsExitIcon = document.getElementById("fsExitIcon");
+  
+  const fullBtn = document.getElementById("fullBtn");
+  const fullscreenIcon = document.getElementById("fullscreenIcon");
+  const exitFullscreenIcon = document.getElementById("exitFullscreenIcon");
 
-  // Démarrage de la vidéo lors du clic sur la miniature
+  let controlsTimer;
+
+  // Clic miniature -> Lancement vidéo
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
     playerWrapper.style.display = "block";
     video.play();
+    showControlsTemporarily();
   });
 
-  // Toggle Lecture / Pause
+  // Tap Tactile Mobile
+  video.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (playerWrapper.classList.contains("show-controls")) {
+      playerWrapper.classList.remove("show-controls");
+    } else {
+      showControlsTemporarily();
+    }
+  });
+
+  function showControlsTemporarily() {
+    playerWrapper.classList.add("show-controls");
+    clearTimeout(controlsTimer);
+    if (!video.paused) {
+      controlsTimer = setTimeout(() => {
+        playerWrapper.classList.remove("show-controls");
+      }, 3000);
+    }
+  }
+
+  // Lecture / Pause
   function togglePlay() {
-    if (video.paused || video.ended) {
+    if (video.paused) {
       video.play();
     } else {
       video.pause();
     }
+    showControlsTemporarily();
   }
 
-  playBtn.addEventListener("click", togglePlay);
-  video.addEventListener("click", togglePlay);
+  playBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    togglePlay();
+  });
 
   video.addEventListener("play", () => {
     playIcon.style.display = "none";
@@ -697,37 +788,41 @@
     playIcon.style.display = "block";
     pauseIcon.style.display = "none";
     playerWrapper.classList.add("paused");
+    playerWrapper.classList.add("show-controls");
   });
 
-  // Formater le temps (00:00:00)
+  // Temps (format court MM:SS si - d'1h)
   function formatTime(seconds) {
-    if (isNaN(seconds) || seconds === Infinity) return "00:00:00";
-    const h = Math.floor(seconds / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
-    const s = Math.floor(seconds % 60);
+    if (isNaN(seconds)) return "00:00";
+    const hrs = Math.floor(seconds / 3600);
+    const min = Math.floor((seconds % 3600) / 60);
+    const sec = Math.floor(seconds % 60);
     const pad = (num) => String(num).padStart(2, '0');
-    return `${pad(h)}:${pad(m)}:${pad(s)}`;
+    if (hrs > 0) return `${pad(hrs)}:${pad(min)}:${pad(sec)}`;
+    return `${pad(min)}:${pad(sec)}`;
   }
 
-  // Mise à jour de la barre de progression et du temps
+  // Progression
   video.addEventListener("timeupdate", () => {
-    if (!isNaN(video.duration) && video.duration > 0) {
-      const pct = (video.currentTime / video.duration) * 100;
-      progressBar.value = pct;
-      timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+    if (!isNaN(video.duration)) {
+      const current = formatTime(video.currentTime);
+      const total = formatTime(video.duration);
+      timeDisplay.textContent = `${current} / ${total}`;
+      progressBar.value = (video.currentTime / video.duration) * 100;
     }
   });
 
-  // Navigation dans la vidéo via le curseur
-  progressBar.addEventListener("input", () => {
-    if (!isNaN(video.duration) && video.duration > 0) {
-      const seekTime = (progressBar.value / 100) * video.duration;
-      video.currentTime = seekTime;
+  progressBar.addEventListener("input", (e) => {
+    e.stopPropagation();
+    if (!isNaN(video.duration)) {
+      video.currentTime = (progressBar.value / 100) * video.duration;
     }
+    showControlsTemporarily();
   });
 
-  // Activer / Désactiver le son
-  muteBtn.addEventListener("click", () => {
+  // Son / Muet
+  muteBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
     video.muted = !video.muted;
     if (video.muted) {
       volumeIcon.style.display = "none";
@@ -736,70 +831,69 @@
       volumeIcon.style.display = "block";
       muteIcon.style.display = "none";
     }
+    showControlsTemporarily();
   });
 
-  // Vitesse de lecture
+  // Vitesse
   speedSelect.addEventListener("change", (e) => {
+    e.stopPropagation();
     video.playbackRate = parseFloat(e.target.value);
+    showControlsTemporarily();
   });
 
-  // Gestion du plein écran
+  // Plein Écran
   function toggleFullscreen() {
-    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
       if (videoContainer.requestFullscreen) {
         videoContainer.requestFullscreen();
       } else if (videoContainer.webkitRequestFullscreen) {
         videoContainer.webkitRequestFullscreen();
+      } else if (videoContainer.msRequestFullscreen) {
+        videoContainer.msRequestFullscreen();
+      } else if (video.webkitEnterFullscreen) {
+        video.webkitEnterFullscreen();
       }
     } else {
       if (document.exitFullscreen) {
         document.exitFullscreen();
       } else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
       }
     }
+    showControlsTemporarily();
   }
 
-  fullscreenBtn.addEventListener("click", toggleFullscreen);
+  fullBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleFullscreen();
+  });
 
-  const updateFsIcons = () => {
-    const isFS = document.fullscreenElement || document.webkitFullscreenElement;
+  function onFullscreenChange() {
+    const isFS = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
     if (isFS) {
-      fsEnterIcon.style.display = "none";
-      fsExitIcon.style.display = "block";
+      fullscreenIcon.style.display = "none";
+      exitFullscreenIcon.style.display = "block";
     } else {
-      fsEnterIcon.style.display = "block";
-      fsExitIcon.style.display = "none";
+      fullscreenIcon.style.display = "block";
+      exitFullscreenIcon.style.display = "none";
     }
-  };
-
-  document.addEventListener("fullscreenchange", updateFsIcons);
-  document.addEventListener("webkitfullscreenchange", updateFsIcons);
-
-  // Spinner de chargement
-  video.addEventListener("waiting", () => { videoLoader.style.display = "block"; });
-  video.addEventListener("playing", () => { videoLoader.style.display = "none"; });
-  video.addEventListener("canplay", () => { videoLoader.style.display = "none"; });
-
-  // Masquage automatique des contrôles en cours de lecture
-  let hideControlsTimeout;
-  function showControls() {
-    playerWrapper.classList.add("show-controls");
-    clearTimeout(hideControlsTimeout);
-    hideControlsTimeout = setTimeout(() => {
-      if (!video.paused) {
-        playerWrapper.classList.remove("show-controls");
-      }
-    }, 3000);
   }
 
-  playerWrapper.addEventListener("mousemove", showControls);
-  playerWrapper.addEventListener("touchstart", showControls);
+  document.addEventListener("fullscreenchange", onFullscreenChange);
+  document.addEventListener("webkitfullscreenchange", onFullscreenChange);
+  document.addEventListener("msfullscreenchange", onFullscreenChange);
 
-  // Empêcher le clic droit sur le lecteur
-  playerWrapper.addEventListener("contextmenu", (e) => e.preventDefault());
+  // Spinner State
+  video.addEventListener("waiting", () => videoLoader.style.display = "block");
+  video.addEventListener("playing", () => videoLoader.style.display = "none");
+  video.addEventListener("canplay", () => videoLoader.style.display = "none");
 
-  // Modal Personnages
+  // Anti-clic droit sur la vidéo
+  videoContainer.addEventListener("contextmenu", (e) => e.preventDefault());
+
+  // Modale Personnages
   function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalText").innerText = text;
@@ -810,34 +904,22 @@
     document.getElementById("modal").style.display = "none";
   }
 
-  document.querySelectorAll('.character').forEach(card => {
-    const handleOpen = () => {
-      const title = card.getAttribute('data-title');
-      const desc = card.getAttribute('data-desc');
-      showDesc(title, desc);
-    };
-
-    card.addEventListener('click', handleOpen);
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        handleOpen();
-      }
-    });
-  });
-
-  window.addEventListener("click", (e) => {
-    const modal = document.getElementById("modal");
-    if (e.target === modal) {
-      closeModal();
-    }
-  });
-
-  // Défilement carrousel personnages
+  // Scroll Carrousel
   const charContainer = document.getElementById("characters");
-  const leftBtn = document.getElementById("scrollLeft");
-  const rightBtn = document.getElementById("scrollRight");
-  const scrollAmount = 260;
+  const leftBtn = document.querySelector('.scroll-btn.left');
+  const rightBtn = document.querySelector('.scroll-btn.right');
+  const scrollAmount = 300;
+
+  function updateButtons() {
+    leftBtn.disabled = charContainer.scrollLeft <= 2;
+    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth - 2;
+    
+    // Style visuel du bouton désactivé
+    leftBtn.style.opacity = leftBtn.disabled ? '0.3' : '1';
+    rightBtn.style.opacity = rightBtn.disabled ? '0.3' : '1';
+    leftBtn.style.cursor = leftBtn.disabled ? 'default' : 'pointer';
+    rightBtn.style.cursor = rightBtn.disabled ? 'default' : 'pointer';
+  }
 
   leftBtn.addEventListener('click', () => {
     charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
@@ -846,6 +928,10 @@
   rightBtn.addEventListener('click', () => {
     charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   });
+
+  charContainer.addEventListener('scroll', updateButtons);
+  window.addEventListener('resize', updateButtons);
+  setTimeout(updateButtons, 500);
 </script>
 
 <!-- FIREBASE AUTHENTICATION -->
