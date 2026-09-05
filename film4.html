@@ -1,60 +1,81 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ber">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asekles - Waɛli ak tzizwit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Asekles - Waɛli ak tzizwit </title>
   <link rel="icon" href="Asekles.png" type="image/png">
-
-  <!-- CSS Plyr -->
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
+  
+  <!-- Polices modernes & Tifinagh -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    :root { 
-      --plyr-color-main: #ff0066; 
+    :root {
+      --primary: #ff0066;
+      --primary-hover: #ff3385;
+      --secondary: #6600ff;
+      --bg-color: #0a0a0f;
+      --surface-color: rgba(255, 255, 255, 0.05);
+      --surface-border: rgba(255, 255, 255, 0.1);
+      --text-main: #f8f9fa;
+      --text-muted: #a0a0a0;
     }
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #000;
-      color: #f1f1f1;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      overflow-x: hidden;
     }
 
-    /* ===== HEADER ===== */
-    header {
-      background: linear-gradient(45deg, #ff0066, #6600ff);
-      padding: 15px;
-      text-align: center;
+    /* ===== HEADER & NAV COMBINED (GLASSMORPHISM) ===== */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 5%;
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--surface-border);
     }
 
-    header h1 {
+    .top-bar h1 {
       margin: 0;
-      font-size: 2em;
-      color: #fff;
+      font-size: 1.5em;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
     }
 
-    /* ===== NAV ===== */
     nav {
       display: flex;
-      justify-content: center;
-      padding: 10px;
-      background-color: #111;
-      gap: 20px;
-      flex-wrap: wrap;
+      gap: 30px;
+      align-items: center;
     }
 
-    nav a,
-    #amidanBtn {
-      color: #fff;
+    nav a, #amidanBtn {
+      color: var(--text-main);
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 0.95em;
       cursor: pointer;
+      transition: color 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    nav a:hover,
-    #amidanBtn:hover {
-      color: #ff0066;
+    nav a:hover, #amidanBtn:hover {
+      color: var(--primary);
+      text-shadow: 0 0 10px rgba(255, 0, 102, 0.4);
     }
 
     /* ===== AMIDAN ===== */
@@ -65,24 +86,40 @@
     #accountBox {
       display: none;
       position: absolute;
-      top: 32px;
+      top: 45px;
       right: 0;
-      background: #111;
-      border: 2px solid #ff0066;
-      padding: 15px;
-      border-radius: 10px;
-      min-width: 220px;
+      background: rgba(20, 20, 25, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--surface-border);
+      padding: 20px;
+      border-radius: 12px;
+      min-width: 240px;
       z-index: 999;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    
+    #userEmail {
+      margin-top: 0;
+      font-size: 0.9em;
+      color: var(--text-muted);
+      word-break: break-all;
     }
 
     #logoutBtn {
-      background: #ff0066;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
       color: #fff;
       border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
+      padding: 10px 15px;
+      border-radius: 8px;
       cursor: pointer;
       width: 100%;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    #logoutBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 0, 102, 0.4);
     }
 
     /* ===== CONTENT ===== */
@@ -90,77 +127,284 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 25px;
-      padding: 20px;
-      padding-bottom: 120px;
+      gap: 30px;
+      padding: 40px 20px 120px;
+    }
+
+    /* ===== SÉLECTEUR D'ÉPISODES HORS LECTEUR ===== */
+    .episodes-bar {
+      display: flex;
+      gap: 15px;
+      width: 100%;
+      max-width: 1000px;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .ep-btn {
+      background: var(--surface-color);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .ep-btn:hover {
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .ep-btn.active {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 0 15px rgba(255, 0, 102, 0.4);
     }
 
     .video-container {
       width: 100%;
-      max-width: 900px;
+      max-width: 1000px;
       position: relative;
       background: #000;
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 0 1px var(--surface-border);
+    }
+
+    /* PLEIN ÉCRAN MOBILE & DESKTOP */
+    .video-container:fullscreen,
+    .video-container:-webkit-full-screen {
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: none !important;
+      border-radius: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: #000 !important;
     }
 
     .video-thumb {
+      position: relative;
       width: 100%;
       aspect-ratio: 16/9;
-      background: url("wali.png") center/cover no-repeat;
       cursor: pointer;
-      position: relative;
+    }
+
+    .video-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .play-btn {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80px;
-      height: 80px;
-      background: rgba(255,0,102,0.85);
+      transform: translate(-50%,-50%);
+      width: 70px;
+      height: 70px;
+      background: rgba(255, 0, 102, 0.9);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.3s;
+      transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       z-index: 2;
+      box-shadow: 0 0 20px rgba(255, 0, 102, 0.5);
     }
 
     .play-btn::after {
       content: "";
       position: absolute;
-      left: 32px;
+      left: 28px;
       top: 22px;
       border-style: solid;
-      border-width: 18px 0 18px 30px;
+      border-width: 14px 0 14px 22px;
       border-color: transparent transparent transparent white;
     }
 
     .video-thumb:hover .play-btn {
-      transform: translate(-50%, -50%) scale(1.1);
+      transform: translate(-50%, -50%) scale(1.15);
+      box-shadow: 0 0 30px rgba(255, 0, 102, 0.8);
     }
 
-    /* Conteneur pour Plyr */
-    .plyr-box {
+    /* ===== LECTEUR VIDEO SUR MESURE ===== */
+    .custom-player {
+      display: none;
+      position: relative;
       width: 100%;
+      height: 100%;
       aspect-ratio: 16/9;
+      background: #000;
+    }
+
+    .video-container:fullscreen .custom-player,
+    .video-container:-webkit-full-screen .custom-player {
+      aspect-ratio: unset !important;
+    }
+
+    .custom-player video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
       display: none;
     }
 
-    #episodeSelect {
+    /* SPINNER DE CHARGEMENT AMÉLIORÉ */
+    .video-loader {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 4px solid rgba(255,255,255,0.1);
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) infinite;
+      z-index: 20;
+      pointer-events: none;
+      box-shadow: 0 0 20px rgba(255,0,102,0.4);
+    }
+
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* BARRE DE CONTRÔLES DYNAMIQUE */
+    .custom-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.95) 90%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px 20px 15px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 10;
+      pointer-events: none;
+      box-sizing: border-box;
       width: 100%;
-      max-width: 900px;
-      padding: 12px;
-      background: #111;
+    }
+
+    .video-container:fullscreen .custom-controls,
+    .video-container:-webkit-full-screen .custom-controls {
+      padding-bottom: max(20px, env(safe-area-inset-bottom));
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
+    }
+
+    .custom-player:hover .custom-controls,
+    .custom-player.paused .custom-controls,
+    .custom-player.show-controls .custom-controls {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .ctrl-btn {
+      background: none;
+      border: none;
       color: #fff;
-      border: 1px solid #ff0066;
-      border-radius: 8px;
-      font-weight: bold;
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      flex-shrink: 0;
+      transition: background 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .ctrl-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .ctrl-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: #ffffff;
+      transition: fill 0.2s;
+    }
+
+    .ctrl-btn:hover svg {
+      fill: var(--primary);
+    }
+
+    .time-display {
+      font-size: 0.85em;
+      color: #ddd;
+      white-space: nowrap;
+      font-weight: 600;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* BARRE DE PROGRESSION FLUIDE */
+    .progress-bar {
+      flex: 1;
+      min-width: 30px;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
       outline: none;
       cursor: pointer;
+      transition: height 0.2s;
+    }
+    
+    .progress-bar:hover {
+      height: 8px;
+    }
+
+    .progress-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255,0,102,0.6);
+      transition: transform 0.2s;
+    }
+    
+    .progress-bar::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    .progress-bar::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 0 10px rgba(255,0,102,0.6);
+    }
+
+    .speed-select {
+      background: rgba(20, 20, 20, 0.8);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.85em;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      flex-shrink: 0;
     }
 
     /* ===== PERSONNAGES ===== */
@@ -169,16 +413,16 @@
       display: flex;
       align-items: center;
       width: 100%;
-      max-width: 900px;
-      margin: 20px auto 0;
+      max-width: 1000px;
+      margin-top: 10px;
     }
 
     .characters {
       display: flex;
-      gap: 20px;
+      gap: 25px;
       overflow-x: auto;
       scroll-behavior: smooth;
-      padding: 10px 0;
+      padding: 20px 5px;
       width: 100%;
     }
 
@@ -190,206 +434,339 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      color: #ff0066;
-      border: none;
-      font-size: 2em;
+      background: rgba(20, 20, 25, 0.8);
+      backdrop-filter: blur(5px);
+      color: var(--text-main);
+      border: 1px solid var(--surface-border);
+      font-size: 1.5em;
       cursor: pointer;
-      padding: 5px 10px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
 
-    .scroll-btn.left { left: -10px; }
-    .scroll-btn.right { right: -10px; }
+    .scroll-btn.left { left: -20px; }
+    .scroll-btn.right { right: -20px; }
 
     .scroll-btn:hover {
-      background: rgba(0,0,0,0.8);
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(255,0,102,0.5);
     }
 
     .character {
       text-align: center;
       cursor: pointer;
       flex: 0 0 auto;
-      width: 110px;
+      width: 120px;
+      transition: transform 0.3s ease;
+    }
+
+    .character:hover {
+      transform: translateY(-5px);
     }
 
     .character img {
-      width: 95px;
-      height: 95px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #ff0066;
-      box-shadow: 0 0 18px rgba(255,0,102,.6);
-      transition: .3s;
+      border: 3px solid transparent;
+      background: linear-gradient(var(--bg-color), var(--bg-color)) padding-box,
+                  linear-gradient(45deg, var(--primary), var(--secondary)) border-box;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      transition: 0.3s ease;
     }
 
     .character:hover img {
-      transform: scale(1.15);
-      box-shadow: 0 0 28px rgba(255,0,102,1);
+      box-shadow: 0 0 25px rgba(255,0,102,0.6);
+      transform: scale(1.05);
     }
 
     .character .name {
-      margin-top: 8px;
-      font-weight: bold;
+      margin-top: 12px;
+      font-weight: 800;
       font-size: 0.9em;
+      color: var(--text-main);
     }
 
     .character .role {
-      font-size: .8em;
-      color: #bbb;
+      font-size: 0.75em;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 600;
     }
 
+    /* ===== FILM INFO ===== */
     .film-info {
-      background-color: #1a1a1a;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 900px;
-      line-height: 1.6;
+      background: var(--surface-color);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--surface-border);
+      padding: 30px;
+      border-radius: 16px;
+      max-width: 1000px;
+      line-height: 1.8;
       width: 100%;
       box-sizing: border-box;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
     }
 
     .film-info h2 {
-      color: #ff0066;
+      font-size: 2em;
+      background: linear-gradient(90deg, var(--primary), #ffa3c2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin-top: 0;
+      margin-bottom: 20px;
+    }
+    
+    .film-info strong {
+      color: #fff;
     }
 
     /* ===== MODAL DESCRIPTION ===== */
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.85);
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(5px);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 999;
+      z-index: 100000;
+      padding: 20px;
     }
 
     .modal-content {
-      background: #1a1a1a;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 400px;
+      background: #111116;
+      padding: 30px;
+      border-radius: 16px;
+      max-width: 450px;
       text-align: center;
-      border: 1px solid #ff0066;
+      border: 1px solid rgba(255, 0, 102, 0.3);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      animation: modalFadeIn 0.3s ease;
+    }
+    
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .modal-content h3 {
-      color: #ff0066;
+      color: #fff;
+      font-size: 1.4em;
+      margin-top: 0;
+    }
+    
+    .modal-content p {
+      color: var(--text-muted);
+      line-height: 1.6;
     }
 
     .close {
-      margin-top: 15px;
-      padding: 8px 15px;
-      background: #ff0066;
+      margin-top: 25px;
+      padding: 10px 25px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-hover));
       border: none;
       color: #fff;
+      font-weight: 800;
       cursor: pointer;
-      border-radius: 6px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    
+    .close:hover {
+      box-shadow: 0 5px 15px rgba(255,0,102,0.4);
+      transform: translateY(-2px);
     }
 
-    /* ===== FOOTER ===== */
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #111;
-      text-align: center;
-      padding: 8px;
-      font-size: .9em;
+    /* RESPONSIVE AJUSTEMENTS */
+    @media screen and (max-width: 768px) {
+      .top-bar { flex-direction: column; gap: 15px; padding: 15px; }
+      .scroll-btn { display: none; }
+      .characters-wrapper { padding: 0 10px; }
+      .film-info { padding: 20px; }
     }
-
-    @supports not (aspect-ratio: 16/9) {
-      .video-thumb, .plyr-box {
-        height: calc(100vw * 9 / 16);
-      }
+    
+    @media screen and (max-width: 600px) {
+      .custom-controls { gap: 6px; padding: 10px 12px; }
+      .ctrl-btn { padding: 4px; }
+      .ctrl-btn svg { width: 20px; height: 20px; }
+      .time-display, .speed-select { font-size: 0.75em; }
+      .ep-btn { padding: 8px 15px; font-size: 0.85em; }
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Waɛli ak tzizwit - ⵡⴰⵄⵍⵉ ⴰⴽ ⵜⵣⵉⵣⵡⵉⵜ</h1>
-</header>
+<div class="top-bar">
+  <h1>Waɛli ak tzizwit - ⵡⴰⵄⵍⵉ ⴰⴽ ⵜⵣⵉⵣⵡⵉⵜ
+</h1>
+  <nav>
+    <a href="index.html">Axxam</a>
+    <a href="isura.html">Isura</a>
+    <a href="tizrarin.html">Tizrarin</a>
 
-<nav>
-  <a href="index.html">Axxam</a>
-  <a href="isura.html">Isura</a>
-  <a href="tizrarin.html">Tizrarin</a>
-
-  <div class="account-wrapper">
-    <span id="amidanBtn" style="display:none;">Amiḍan</span>
-
-    <div id="accountBox">
-      <p id="userEmail"></p>
-      <button id="logoutBtn">Effeɣ</button>
+    <div class="account-wrapper">
+      <span id="amidanBtn" style="display:none;">Amiḍan</span>
+      <div id="accountBox">
+        <p id="userEmail"></p>
+        <button id="logoutBtn">Effeɣ</button>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</div>
 
 <div class="container">
 
-  <div class="video-container">
+  <!-- SÉLECTEUR D'ÉPISODES HORS LECTEUR -->
+  <div class="episodes-bar">
+    <button class="ep-btn active" id="btnEp1" onclick="switchEpisode('Ep1')">Aḥric 1</button>
+    <button class="ep-btn" id="btnEp2" onclick="switchEpisode('Ep2')">Aḥric 2</button>
+    <button class="ep-btn" id="btnEp3" onclick="switchEpisode('Ep3')">Aḥric 3</button>
+    <button class="ep-btn" id="btnEp4" onclick="switchEpisode('Ep4')">Aḥric 4</button>
+    <button class="ep-btn" id="btnEp5" onclick="switchEpisode('Ep5')">Aḥric 5</button>
+    <button class="ep-btn" id="btnEp6" onclick="switchEpisode('Ep6')">Aḥric 6</button>
+    <button class="ep-btn" id="btnEp7" onclick="switchEpisode('Ep7')">Aḥric 7</button>
+    <button class="ep-btn" id="btnEp8" onclick="switchEpisode('Ep8')">Aḥric 8</button>
+    <button class="ep-btn" id="btnEp9" onclick="switchEpisode('Ep9')">Aḥric 9</button>
+  </div>
+
+  <!-- LECTEUR SUR MESURE ADAPTÉ MOBILE ET ROBUSTE -->
+  <div class="video-container" id="videoContainer">
     <div class="video-thumb" id="thumb">
+      <img src="https://wallpaperaccess.com/full/13150414.jpg" alt="cover vidéo">
       <div class="play-btn"></div>
     </div>
-    
-    <!-- Wrapper Plyr dédié -->
-    <div class="plyr-box" id="playerWrapper">
-      <video id="player" controls playsinline></video>
+
+    <div class="custom-player" id="playerWrapper">
+      <div class="video-loader" id="videoLoader"></div>
+      
+      <!-- Épisodes 1 à 9 -->
+      <video id="Ep1" playsinline preload="auto">
+        <source src="https://ia800706.us.archive.org/22/items/1-1_20260730/1%20%281%29.mp4" type="video/mp4">
+      </video>
+      <video id="Ep2" playsinline preload="auto">
+        <source src="https://ia801903.us.archive.org/11/items/1-2_20260730/1%20%282%29.mp4" type="video/mp4">
+      </video>
+      <video id="Ep3" playsinline preload="auto">
+        <source src="
+https://ia800404.us.archive.org/31/items/1-3_20260730/1%20%283%29.mp4" type="video/mp4">
+      </video>
+      <video id="Ep4" playsinline preload="auto">
+        <source src="https://ia601404.us.archive.org/28/items/1-4_20260730/1%20%284%29.mp4" type="video/mp4">
+      </video>
+      <video id="Ep5" playsinline preload="auto">
+        <source src="https://ia600404.us.archive.org/26/items/1-5_20260730/1%20%285%29.mp4" type="video/mp4">
+      </video>
+      <video id="Ep6" playsinline preload="auto">
+        <source src="https://ia601601.us.archive.org/16/items/1-6_20260809/1%20%286%29.mp4" type="video/mp4">
+      </video>
+      <video id="Ep7" playsinline preload="auto">
+        <source src="https://ia800403.us.archive.org/14/items/1-7_20260809/1%20%287%29.mp4" type="video/mp4">
+      </video>
+      <video id="Ep8" playsinline preload="auto">
+        <source src="https://ia903109.us.archive.org/14/items/1-8_20260809_202608/1%20%288%29.mp4" type="video/mp4">
+      </video>
+      <video id="Ep9" playsinline preload="auto">
+        <source src="https://ia600809.us.archive.org/8/items/1-9_20260809/1%20%289%29.mp4" type="video/mp4">
+      </video>
+
+      <div class="custom-controls" id="customControls">
+        <!-- Jouer / Pause -->
+        <button class="ctrl-btn" id="playBtn" title="Seddu / Ḥbes">
+          <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+
+        <span class="time-display" id="timeDisplay">00:00:00 / 00:00:00</span>
+        
+        <!-- Barre de progression -->
+        <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1">
+        
+        <!-- Muet / Son -->
+        <button class="ctrl-btn" id="muteBtn" title="Ṣṣut">
+          <svg id="volumeIcon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+          <svg id="muteIcon" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+        </button>
+
+        <!-- Vitesse -->
+        <select class="speed-select" id="speedSelect" title="Tazzla">
+          <option value="0.5">0.5x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2x</option>
+        </select>
+
+        <!-- Plein Écran -->
+        <button class="ctrl-btn" id="fullscreenBtn" title="Agdil aɣezfan">
+          <svg id="fsEnterIcon" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          <svg id="fsExitIcon" viewBox="0 0 24 24" style="display:none;"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
+        </button>
+      </div>
     </div>
   </div>
-  
-  <select id="episodeSelect">
-    <option value="0">Aḥric 1</option>
-    <option value="1">Aḥric 2</option>
-    <option value="2">Aḥric 3</option>
-    <option value="3">Aḥric 4</option>
-    <option value="4">Aḥric 5</option>
-    <option value="5">Aḥric 6</option>
-    <option value="6">Aḥric 7</option>
-    <option value="7">Aḥric 8</option>
-    <option value="8">Aḥric 9</option>
-  </select>
 
   <!-- PERSONNAGES AVEC SCROLL -->
   <div class="characters-wrapper">
-    <button class="scroll-btn left">&#10094;</button>
+    <button class="scroll-btn left" id="scrollLeft" aria-label="Scroll left">&#10094;</button>
+    
     <div class="characters" id="characters">
-      <div class="character" onclick="showDesc('XERZI Ɛabdelqader - ⵅⴻⵔⵣＩ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ','d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay.')">
-        <img src="Abdelkader.jpg" alt="XERZI Ɛabdelqader">
-        <div class="name">XERZI Ɛabdelqader</div>
-        <div class="role">d asegbar</div>
-      </div>
-      <div class="character" onclick="showDesc('XERZI Ɛabdessaḥ - ⵅⴻⵔⵣＩ ⵄⴰⴱⴷⴻⵙⵙⴰⵃ','d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.')">
+    
+      <div class="character" tabindex="0" role="button" 
+           data-title="XERZI Ɛabdessaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵙⵙⴰⵃ" 
+           data-desc="d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt."
+           onclick="showDesc(this.dataset.title, this.dataset.desc)">
         <img src="Abdessah.jpg" alt="XERZI Ɛabdessaḥ">
         <div class="name">XERZI Ɛabdessaḥ</div>
         <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
       </div>
-      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣＩ ⴰⵎⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
+
+      <div class="character" tabindex="0" role="button" 
+           data-title="XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ" 
+           data-desc="d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura"
+           onclick="showDesc(this.dataset.title, this.dataset.desc)">
         <img src="amazigh.jpg" alt="XERZI Amaziɣ">
         <div class="name">XERZI Amaziɣ</div>
         <div class="role">d asegbar</div>
       </div>
+
+           <div class="character" tabindex="0" role="button" 
+           data-title="XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ" 
+           data-desc="d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay."
+           onclick="showDesc(this.dataset.title, this.dataset.desc)">
+        <img src="Abdelkader.jpg" alt="XERZI Ɛabdelqader">
+        <div class="name">XERZI Ɛabdelqader</div>
+        <div class="role">d asegbar</div>
+      </div>
+      
     </div>
-    <button class="scroll-btn right">&#10095;</button>
+    
+    <button class="scroll-btn right" id="scrollRight" aria-label="Scroll right">&#10095;</button>
   </div>
 
+  <!-- DETAILS DU FILM -->
   <div class="film-info">
-    <h2>Waɛli ak tzizwit - ⵡⴰⵄⵍⵉ ⴰⴽ ⵜⵣⵉⵣⵡⵉⵜ</h2>
-    <p><strong>Tawsit :</strong> Taḍṣa, Arrac</p>
+    <h2>Waɛli ak tzizwit</h2>
+    <p><strong>Tawsit :</strong>Taḍṣa, Arrac, Iwessaren</p>
     <p><strong>Azemz n usufeɣ :</strong> 2023</p>
     <p><strong>Aglam n usaru :</strong><br>
-      Yiwen n wegaz isemis Waɛli yettnadi ɣef uxeddim , Ddant-d tmucuha n tmeḥqranit mi yettɛerriḍ ad iḥareb ɣef wexxam mi teḍfer-it yiwet n tzizwit.
+    Yiwen n wegaz isemis Waɛli yettnadi ɣef uxeddim , Ddant-d tmucuha n tmeḥqranit mi yettɛerriḍ ad iḥareb ɣef wexxam mi teḍfer-it yiwet n tzizwit.
     </p>
-  </div>
-
+  </div>  
 </div>
 
-<!-- MODAL -->
+<!-- MODAL DESCRIPTION -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <h3 id="modalTitle"></h3>
@@ -397,71 +774,257 @@
     <button class="close" onclick="closeModal()">Mdel</button>
   </div>
 </div>
-<!-- JS Plyr -->
-<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+
 <script>
+  // Elements DOM
   const thumb = document.getElementById("thumb");
   const playerWrapper = document.getElementById("playerWrapper");
-  const videoElement = document.getElementById("player");
-  const episodeSelect = document.getElementById("episodeSelect");
-  let player;
+  const videoContainer = document.getElementById("videoContainer");
+  
+  // Configuration du nombre total d'épisodes (MIS À JOUR À 9)
+  const TOTAL_EPISODES = 9;
+  
+  // Variable pour pointer vers la vidéo active et retenir l'état du son
+  let video = document.getElementById("Ep1");
+  let isGlobalMuted = false;
 
-  // URLs d'épisodes de Waɛli ak tzizwit
-  const episodes = [
-    { title: "Aḥric 1", url: "https://player.odycdn.com/v6/streams/1baa5140063e283bdea30c3bace7bdd6e64fa725/0182a0.mp4" },
-    { title: "Aḥric 2", url: "https://player.odycdn.com/v6/streams/f2dbd370d913f6b1e92fa4dbe3442e95bcc65664/6aca3e.mp4" },
-    { title: "Aḥric 3", url: "https://player.odycdn.com/v6/streams/314850ae4c2aa09b9b071f871e49e5c432a6a69a/1cdcd2.mp4" },
-    { title: "Aḥric 4", url: "https://player.odycdn.com/v6/streams/bf45d6a1a573942f9bf460a5d687f90381a319fc/fbdc50.mp4" },
-    { title: "Aḥric 5", url: "https://player.odycdn.com/v6/streams/16d5a982a1336d27af6b809705d716b7c4d22495/ba3179.mp4" },
-    { title: "Aḥric 6", url: "https://player.odycdn.com/v6/streams/ab9128315967e5d0a98a8e5e5ad42113b1b4d147/0da0cd.mp4" },
-    { title: "Aḥric 7", url: "https://player.odycdn.com/v6/streams/91376f258699032d0832484c55f7c9237ccb9d74/794df6.mp4" },
-    { title: "Aḥric 8", url: "https://player.odycdn.com/v6/streams/9f71cff165d1cfc41c119189cbf2cb75bc980026/1a649c.mp4" },
-    { title: "Aḥric 9", url: "https://player.odycdn.com/v6/streams/607357726163b516e106b9076fee764aeedbf253/accd94.mp4" }
-  ];
+  const videoLoader = document.getElementById("videoLoader");
+  const customControls = document.getElementById("customControls");
+  
+  const playBtn = document.getElementById("playBtn");
+  const playIcon = document.getElementById("playIcon");
+  const pauseIcon = document.getElementById("pauseIcon");
+  
+  const muteBtn = document.getElementById("muteBtn");
+  const volumeIcon = document.getElementById("volumeIcon");
+  const muteIcon = document.getElementById("muteIcon");
+  
+  const timeDisplay = document.getElementById("timeDisplay");
+  const progressBar = document.getElementById("progressBar");
+  const speedSelect = document.getElementById("speedSelect");
+  
+  const fullscreenBtn = document.getElementById("fullscreenBtn");
+  const fsEnterIcon = document.getElementById("fsEnterIcon");
+  const fsExitIcon = document.getElementById("fsExitIcon");
 
-  function loadVideo(url) {
-    if (!player) {
-      player = new Plyr('#player', {
-        controls: ['play-large', 'play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'fullscreen'],
-        ratio: '16:9'
-      });
-    }
-    player.source = {
-      type: 'video',
-      sources: [{ src: url, type: 'video/mp4' }]
-    };
+  let controlsTimer;
+
+  // Fonction pour attacher les écouteurs d'événements à une vidéo
+  function setupVideoEvents(activeVideo) {
+    activeVideo.addEventListener("timeupdate", updateProgress);
+    activeVideo.addEventListener("play", onPlay);
+    activeVideo.addEventListener("pause", onPause);
+    activeVideo.addEventListener("waiting", showLoader);
+    activeVideo.addEventListener("seeking", showLoader);
+    activeVideo.addEventListener("playing", hideLoader);
+    activeVideo.addEventListener("canplay", hideLoader);
+    activeVideo.addEventListener("loadeddata", hideLoader);
   }
 
-  // Clic initial sur la miniature de couverture
+  function updateProgress() {
+    if (!isNaN(video.duration) && video.duration > 0) {
+      const current = formatTime(video.currentTime);
+      const total = formatTime(video.duration);
+      timeDisplay.textContent = `${current} / ${total}`;
+      progressBar.value = (video.currentTime / video.duration) * 100;
+    }
+  }
+
+  function onPlay() {
+    playIcon.style.display = "none";
+    pauseIcon.style.display = "block";
+    playerWrapper.classList.remove("paused");
+  }
+
+  function onPause() {
+    playIcon.style.display = "block";
+    pauseIcon.style.display = "none";
+    playerWrapper.classList.add("paused");
+    playerWrapper.classList.add("show-controls");
+  }
+
+  function showLoader() { videoLoader.style.display = "block"; }
+  function hideLoader() { videoLoader.style.display = "none"; }
+
+  // Initialisation automatique des événements sur TOUS les épisodes
+  for (let i = 1; i <= TOTAL_EPISODES; i++) {
+    let v = document.getElementById("Ep" + i);
+    if (v) setupVideoEvents(v);
+  }
+
+  // Fonction globale pour changer d'épisode via les boutons extérieurs
+  function switchEpisode(epId) {
+    let targetVideo = document.getElementById(epId);
+    let targetBtn = document.getElementById("btn" + epId);
+
+    // Si la vidéo cliquée est déjà celle en cours, ou n'existe pas, ne rien faire
+    if (!targetVideo || video === targetVideo) return;
+
+    // Mettre en pause et masquer l'ancienne vidéo active
+    video.pause();
+    video.currentTime = 0;
+    video.style.display = "none";
+
+    // Retirer l'état actif de tous les boutons
+    for (let i = 1; i <= TOTAL_EPISODES; i++) {
+        let b = document.getElementById("btnEp" + i);
+        if (b) b.classList.remove("active");
+    }
+    // Ajouter l'état actif au bouton cliqué
+    targetBtn.classList.add("active");
+
+    // Basculer la référence
+    video = targetVideo;
+
+    // Si le lecteur était déjà ouvert (hors miniature), lancer la nouvelle vidéo
+    if (playerWrapper.style.display === "block") {
+      video.style.display = "block";
+      video.playbackRate = parseFloat(speedSelect.value);
+      video.muted = isGlobalMuted; // Conserver l'état du son global
+      video.play();
+      showControlsTemporarily();
+    }
+  }
+
+  // Clic miniature -> Lancement vidéo
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
     playerWrapper.style.display = "block";
-    
-    const currentIndex = episodeSelect.value;
-    loadVideo(episodes[currentIndex].url);
-    
-    player.once('ready', () => {
-      player.play();
-    });
+    videoLoader.style.display = "block";
+    video.style.display = "block";
+    video.muted = isGlobalMuted;
+    video.play();
+    showControlsTemporarily();
   });
 
-  // Changement d'épisode via le menu déroulant
-  episodeSelect.addEventListener("change", () => {
-    const selectedIndex = episodeSelect.value;
+  // Tap Tactile Mobile
+  playerWrapper.addEventListener("click", (e) => {
+    if (e.target.tagName === 'VIDEO' || e.target === playerWrapper) {
+      if (playerWrapper.classList.contains("show-controls")) {
+        playerWrapper.classList.remove("show-controls");
+      } else {
+        showControlsTemporarily();
+      }
+    }
+  });
+
+  function showControlsTemporarily() {
+    playerWrapper.classList.add("show-controls");
+    clearTimeout(controlsTimer);
+    if (!video.paused) {
+      controlsTimer = setTimeout(() => {
+        playerWrapper.classList.remove("show-controls");
+      }, 3000);
+    }
+  }
+
+  // Lecture / Pause
+  function togglePlay() {
+    if (video.paused || video.ended) {
+      video.play();
+    } else {
+      video.pause();
+    }
+    showControlsTemporarily();
+  }
+
+  playBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    togglePlay();
+  });
+
+  // Formater le temps (00:00:00)
+  function formatTime(seconds) {
+    if (isNaN(seconds) || seconds === Infinity) return "00:00:00";
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+    const pad = (num) => String(num).padStart(2, '0');
+    return `${pad(h)}:${pad(m)}:${pad(s)}`;
+  }
+
+  progressBar.addEventListener("input", (e) => {
+    e.stopPropagation();
+    if (!isNaN(video.duration) && video.duration > 0) {
+      video.currentTime = (progressBar.value / 100) * video.duration;
+    }
+    showControlsTemporarily();
+  });
+
+  // Son / Muet (synchronisé sur TOUTES les vidéos)
+  muteBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    isGlobalMuted = !isGlobalMuted;
     
-    if (thumb.style.display !== "none") {
-      thumb.style.display = "none";
-      playerWrapper.style.display = "block";
+    for (let i = 1; i <= TOTAL_EPISODES; i++) {
+      let v = document.getElementById("Ep" + i);
+      if (v) v.muted = isGlobalMuted;
+    }
+
+    if (isGlobalMuted) {
+      volumeIcon.style.display = "none";
+      muteIcon.style.display = "block";
+    } else {
+      volumeIcon.style.display = "block";
+      muteIcon.style.display = "none";
+    }
+    showControlsTemporarily();
+  });
+
+  // Vitesse (synchronisée sur TOUTES les vidéos)
+  speedSelect.addEventListener("change", (e) => {
+    e.stopPropagation();
+    const rate = parseFloat(e.target.value);
+    
+    for (let i = 1; i <= TOTAL_EPISODES; i++) {
+      let v = document.getElementById("Ep" + i);
+      if (v) v.playbackRate = rate;
     }
     
-    loadVideo(episodes[selectedIndex].url);
-    
-    player.once('ready', () => {
-      player.play();
-    });
+    showControlsTemporarily();
   });
 
-  // Gestion de la modale
+  // Plein Écran
+  function toggleFullscreen() {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+      if (videoContainer.requestFullscreen) {
+        videoContainer.requestFullscreen();
+      } else if (videoContainer.webkitRequestFullscreen) {
+        videoContainer.webkitRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    }
+    showControlsTemporarily();
+  }
+
+  fullscreenBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleFullscreen();
+  });
+
+  const updateFsIcons = () => {
+    const isFS = document.fullscreenElement || document.webkitFullscreenElement;
+    if (isFS) {
+      fsEnterIcon.style.display = "none";
+      fsExitIcon.style.display = "block";
+    } else {
+      fsEnterIcon.style.display = "block";
+      fsExitIcon.style.display = "none";
+    }
+  };
+
+  document.addEventListener("fullscreenchange", updateFsIcons);
+  document.addEventListener("webkitfullscreenchange", updateFsIcons);
+
+  // Anti-clic droit sur la vidéo
+  videoContainer.addEventListener("contextmenu", (e) => e.preventDefault());
+
+  // Modale Personnages
   function showDesc(title, text) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalText").innerText = text;
@@ -472,16 +1035,18 @@
     document.getElementById("modal").style.display = "none";
   }
 
-  // Défilement de la liste des personnages
-  const charContainer = document.getElementById("characters");
-  const leftBtn = document.querySelector('.scroll-btn.left');
-  const rightBtn = document.querySelector('.scroll-btn.right');
-  const scrollAmount = 250;
+  window.addEventListener("click", (e) => {
+    const modal = document.getElementById("modal");
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
 
-  function updateButtons() {
-    leftBtn.disabled = charContainer.scrollLeft <= 2;
-    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth - 2;
-  }
+  // Scroll Carrousel
+  const charContainer = document.getElementById("characters");
+  const leftBtn = document.getElementById("scrollLeft");
+  const rightBtn = document.getElementById("scrollRight");
+  const scrollAmount = 260;
 
   leftBtn.addEventListener('click', () => {
     charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
@@ -489,15 +1054,6 @@
 
   rightBtn.addEventListener('click', () => {
     charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-  });
-
-  charContainer.addEventListener('scroll', updateButtons);
-  window.addEventListener('resize', updateButtons);
-  setTimeout(updateButtons, 500);
-
-  // Bloquer le menu contextuel du clic droit sur le lecteur
-  videoElement.addEventListener("contextmenu", function(e) {
-    e.preventDefault();
   });
 </script>
 <script type="module">
