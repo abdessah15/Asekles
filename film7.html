@@ -609,8 +609,7 @@
 <body>
 
 <div class="top-bar">
-  <h1>Ṭum ak d Jerry - ⵜⵓⵎ ⴰⴽ ⴷ ⵊⴻⵔⵔⵉ
-</h1>
+  <h1>Ṭum ak d Jerry - ⵜⵓⵎ ⴰⴽ ⴷ ⵊⴻⵔⵔⵉ</h1>
   <nav>
     <a href="index.html">Axxam</a>
     <a href="isura.html">Isura</a>
@@ -653,8 +652,7 @@
       
       <!-- Épisodes 1 à 9 -->
       <video id="Ep1" playsinline preload="auto">
-        <source src="
-https://ia803103.us.archive.org/15/items/TMEP1/tom%20ak%20d%20jerry%20EP%20%281%29.mp4" type="video/mp4">
+        <source src="https://ia803103.us.archive.org/15/items/TMEP1/tom%20ak%20d%20jerry%20EP%20%281%29.mp4" type="video/mp4">
       </video>
       <video id="Ep2" playsinline preload="auto">
         <source src="https://ia601604.us.archive.org/31/items/tmep2/tom%20ak%20d%20jerry%20EP%20%282%29.mp4" type="video/mp4">
@@ -975,20 +973,25 @@ https://ia803103.us.archive.org/15/items/TMEP1/tom%20ak%20d%20jerry%20EP%20%281%
     showControlsTemporarily();
   });
 
-  // Plein Écran
+  // Plein Écran (avec le fallback pour iPhone / iOS Safari)
   function toggleFullscreen() {
-    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-      if (videoContainer.requestFullscreen) {
-        videoContainer.requestFullscreen();
-      } else if (videoContainer.webkitRequestFullscreen) {
-        videoContainer.webkitRequestFullscreen();
+    if (videoContainer.requestFullscreen || videoContainer.webkitRequestFullscreen) {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (videoContainer.requestFullscreen) {
+          videoContainer.requestFullscreen();
+        } else if (videoContainer.webkitRequestFullscreen) {
+          videoContainer.webkitRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
       }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      }
+    } else if (video && video.webkitEnterFullscreen) {
+      // Fallback exclusif pour l'iPhone (iOS Safari)
+      video.webkitEnterFullscreen();
     }
     showControlsTemporarily();
   }
