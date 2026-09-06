@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ber">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Asekles - IMČEQLAL</title>
+  <title>Asekles - Imuḥucen</title>
   <link rel="icon" href="Asekles.png" type="image/png">
   
-  <!-- Nouvelle police moderne -->
+  <!-- Polices modernes & Tifinagh -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
@@ -127,8 +127,44 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 40px;
+      gap: 30px;
       padding: 40px 20px 120px;
+    }
+
+    /* ===== SÉLECTEUR D'ÉPISODES HORS LECTEUR ===== */
+    .episodes-bar {
+      display: flex;
+      gap: 15px;
+      width: 100%;
+      max-width: 1000px;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .ep-btn {
+      background: var(--surface-color);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .ep-btn:hover {
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .ep-btn.active {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 0 15px rgba(255, 0, 102, 0.4);
     }
 
     .video-container {
@@ -166,11 +202,6 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.5s ease;
-    }
-    
-    .video-thumb:hover img {
-      transform: scale(1.02);
     }
 
     .play-btn {
@@ -221,10 +252,10 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      display: block;
+      display: none;
     }
 
-    /* SPINNER DE CHARGEMENT */
+    /* SPINNER DE CHARGEMENT AMÉLIORÉ */
     .video-loader {
       display: none;
       position: absolute;
@@ -234,11 +265,12 @@
       border: 4px solid rgba(255,255,255,0.1);
       border-top: 4px solid var(--primary);
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       animation: spin 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) infinite;
-      z-index: 10;
+      z-index: 20;
       pointer-events: none;
+      box-shadow: 0 0 20px rgba(255,0,102,0.4);
     }
 
     @keyframes spin {
@@ -259,7 +291,7 @@
       padding: 20px 20px 15px;
       opacity: 0;
       transition: opacity 0.4s ease;
-      z-index: 99999;
+      z-index: 10;
       pointer-events: none;
       box-sizing: border-box;
       width: 100%;
@@ -499,6 +531,7 @@
       color: #fff;
     }
 
+    /* ===== MODAL DESCRIPTION ===== */
     .modal {
       position: fixed;
       inset: 0;
@@ -507,7 +540,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 100000; /* Assure que la modale est toujours au-dessus du lecteur et de ses contrôles */
+      z-index: 100000;
       padding: 20px;
     }
 
@@ -558,7 +591,7 @@
     /* RESPONSIVE AJUSTEMENTS */
     @media screen and (max-width: 768px) {
       .top-bar { flex-direction: column; gap: 15px; padding: 15px; }
-      .scroll-btn { display: none; } /* Cache les boutons sur mobile pour laisser le swipe */
+      .scroll-btn { display: none; }
       .characters-wrapper { padding: 0 10px; }
       .film-info { padding: 20px; }
     }
@@ -568,6 +601,7 @@
       .ctrl-btn { padding: 4px; }
       .ctrl-btn svg { width: 20px; height: 20px; }
       .time-display, .speed-select { font-size: 0.75em; }
+      .ep-btn { padding: 8px 15px; font-size: 0.85em; }
     }
   </style>
 </head>
@@ -575,7 +609,7 @@
 <body>
 
 <div class="top-bar">
-  <h1>IMČEQLAL - ⵉⵎⵞⴻⵇⵍⴰⵍ</h1>
+  <h1>Imuḥucen - ⵉⵎⵓⵃⵓⵛⴻⵏ</h1>
   <nav>
     <a href="index.html">Axxam</a>
     <a href="isura.html">Isura</a>
@@ -593,20 +627,54 @@
 
 <div class="container">
 
+  <!-- SÉLECTEUR D'ÉPISODES HORS LECTEUR -->
+  <div class="episodes-bar">
+    <button class="ep-btn active" id="btnEp1" onclick="switchEpisode('Ep1')">Aḥric 1</button>
+    <button class="ep-btn" id="btnEp2" onclick="switchEpisode('Ep2')">Aḥric 2</button>
+    <button class="ep-btn" id="btnEp3" onclick="switchEpisode('Ep3')">Aḥric 3</button>
+    <button class="ep-btn" id="btnEp4" onclick="switchEpisode('Ep4')">Aḥric 4</button>
+    <button class="ep-btn" id="btnEp5" onclick="switchEpisode('Ep5')">Aḥric 5</button>
+    <button class="ep-btn" id="btnEp6" onclick="switchEpisode('Ep6')">Aḥric 6</button>
+    <button class="ep-btn" id="btnEp7" onclick="switchEpisode('Ep7')">Aḥric 7</button>
+    <button class="ep-btn" id="btnEp8" onclick="switchEpisode('Ep8')">Aḥric 8</button>
+  </div>
+
   <!-- LECTEUR SUR MESURE ADAPTÉ MOBILE ET ROBUSTE -->
   <div class="video-container" id="videoContainer">
     <div class="video-thumb" id="thumb">
-      <img src="imčqll.jpg" alt="cover vidéo">
+      <img src="https://static.wikia.nocookie.net/luckyluke/images/d/d2/Dalton.jpg/revision/latest/scale-to-width-down/1200?cb=20190227081443&path-prefix=fr" alt="cover vidéo">
       <div class="play-btn"></div>
     </div>
 
     <div class="custom-player" id="playerWrapper">
       <div class="video-loader" id="videoLoader"></div>
       
-      <video id="myVideo" playsinline preload="auto">
-        <source src="https://archive.org/download/15-26-262626/Asaru%20n%20im%C4%8Deqlal%20%281%29.mp4" type="video/mp4">
+      <!-- Épisodes 1 à 8 -->
+      <video id="Ep1" playsinline preload="auto">
+        <source src="https://ia903109.us.archive.org/6/items/1im_20260906/EP1%20%20Yewhec%20lfil%20yernad%20gma%20s.mp4" type="video/mp4">
       </video>
-
+      <video id="Ep2" playsinline preload="auto">
+        <source src="https://ia600602.us.archive.org/28/items/2im_20260906/EP2%20%20Tamuffirt.mp4" type="video/mp4">
+      </video>
+      <video id="Ep3" playsinline preload="auto">
+        <source src="https://ia600107.us.archive.org/31/items/3im_20260906/EP3%20%20Ilat%20anect%20ilat.mp4" type="video/mp4">
+      </video>
+      <video id="Ep4" playsinline preload="auto">
+        <source src="https://ia903103.us.archive.org/7/items/4im_20260906/EP4%20%20Nuli%20s%20aggur.mp4" type="video/mp4">
+      </video>
+      <video id="Ep5" playsinline preload="auto">
+        <source src="https://ia601609.us.archive.org/21/items/5im_20260906/EP5%20%20Timesrifegt.mp4" type="video/mp4">
+      </video>
+      <video id="Ep6" playsinline preload="auto">
+        <source src="
+https://ia601903.us.archive.org/29/items/6muh_20260906/EP6-%20Taxnanast%20n%20wekbal_compressed.mp4" type="video/mp4">
+      </video>
+      <video id="Ep7" playsinline preload="auto">
+        <source src="https://ia601500.us.archive.org/16/items/7muh_20260906/EP7-%20Belqasem%20n%203li%20ca3ban%20%28%20lmahfud%20%29_compressed%20%281%29.mp4" type="video/mp4">
+      </video>
+      <video id="Ep8" playsinline preload="auto">
+        <source src="https://ia601605.us.archive.org/6/items/8muh_20260906/EP8-%20Nura_compressed.mp4" type="video/mp4">
+      </video>
       <div class="custom-controls" id="customControls">
         <!-- Jouer / Pause -->
         <button class="ctrl-btn" id="playBtn" title="Seddu / Ḥbes">
@@ -614,7 +682,7 @@
           <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
         </button>
 
-        <span class="time-display" id="timeDisplay">00:00 / 00:00</span>
+        <span class="time-display" id="timeDisplay">00:00:00 / 00:00:00</span>
         
         <!-- Barre de progression -->
         <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1">
@@ -624,7 +692,7 @@
           <svg id="volumeIcon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
           <svg id="muteIcon" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
         </button>
-        
+
         <!-- Vitesse -->
         <select class="speed-select" id="speedSelect" title="Tazzla">
           <option value="0.5">0.5x</option>
@@ -635,9 +703,9 @@
         </select>
 
         <!-- Plein Écran -->
-        <button class="ctrl-btn" id="fullBtn" title="Agdil aɣezfan">
-          <svg id="fullscreenIcon" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-          <svg id="exitFullscreenIcon" viewBox="0 0 24 24" style="display:none;"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
+        <button class="ctrl-btn" id="fullscreenBtn" title="Agdil aɣezfan">
+          <svg id="fsEnterIcon" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          <svg id="fsExitIcon" viewBox="0 0 24 24" style="display:none;"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
         </button>
       </div>
     </div>
@@ -645,84 +713,32 @@
 
   <!-- PERSONNAGES AVEC SCROLL -->
   <div class="characters-wrapper">
-    <button class="scroll-btn left">&#10094;</button>
+    <button class="scroll-btn left" id="scrollLeft" aria-label="Scroll left">&#10094;</button>
+    
     <div class="characters" id="characters">
-      <div class="character" onclick="showDesc('XERZI Ɛabdeṣṣaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵚⵚⴰⵃ','d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt.')">
-        <img src="Abdessah.jpg">
-        <div class="name">XERZI Ɛabdeṣṣaḥ</div>
-        <div class="role">Anemhal anaẓuṛan n usisleg</div>
-      </div>
-      <div class="character" onclick="showDesc('BEǦǦA Ṭawes - ⴱⴻⴵⴵⴰ ⵝⴰⵡⴻⵙ ','tamekfaḍut d tamedyazt d tamarut, d yelli-s n tɣiwant it Muḥli, tlul deg useggas n 2001 deg waɣir n it Wertilan agezdu n Ṣṭif. Tewwi-d agerdas n master deg taɣult n Tesnalmudt deg tutlayt d yidles Amaziɣ.')">
-        <img src="femme.png">
-        <div class="name">BEǦǦA Ṭawes</div>
-        <div class="role">d tasegbart</div>
-      </div>
-      <div class="character" onclick="showDesc('MESƐUDI Ḥanan - ⵎⴻⵙⵄⵓⴷⵉ ⵃⴰⵏⴰⵏ ','D tilemẓit, tlul ass n 4 yennayer 2001 deg Amiẓur, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
-        <img src="femme.png">
-        <div class="name">MESƐUDI Ḥanan</div>
-        <div class="role">d tasegbart</div>
-      </div>
-      <div class="character" onclick="showDesc('BEṬṬAC Haniya - ⴱⴻⵟⵟⴰⵛ ⵀⴰⵏⵉⵢⴰ ','D tilemẓit, tlul ass n 13 Furar 2007 deg Sidi Ɛic, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
-        <img src="femme.png">
-        <div class="name">BEṬṬAC Haniya</div>
-        <div class="role">d tasegbart</div>
-      </div>
-      <div class="character" onclick="showDesc('MESƐUDI Nawal - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D tilemẓit, d tamekfaḍut deg tfaskiwin, tlul ass n 12 mayu 1998 deg Leqṣer, di bgayet, i tikkelt tamezwarut ideg tetteka yid-neɣ deg usaru imčeqlal s taɣect-is')">
-        <img src="femme.png">
-        <div class="name">MESƐUDI Nawal</div>
-        <div class="role">d tasegbart</div>
-      </div>
-      <div class="character" onclick="showDesc('MESƐUDI Mahdi - ⵎⴻⵙⵄⵓⴷⵉ ⵏⴰⵡⴰⵍ ','D ilemẓi, ilul ass n 8 Ctember 2005 deg Leqser, di bgayet, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is.')">
-        <img src="MahdiMes.jpg">
-        <div class="name">MESƐUDI Mahdi</div>
-        <div class="role">d asegbar</div>
-      </div>
-      <div class="character" onclick="showDesc('XERZI Amaziɣ - ⵅⴻⵔⵣⵉ ⴰⵎⴰⵣⵉⵖ ','d anaẓuṛ, ilul ass 19 tuber 2013, ixeddem deg usisleg n isura d ccna, yufrar-d s usisleg n isura')">
-        <img src="amazigh.jpg">
-        <div class="name">XERZI Amaziɣ</div>
-        <div class="role">d asegbar</div>
-      </div>
-      <div class="character" onclick="showDesc('MADI Ḥamza - ⵎⴰⴷⵉ ⵃⴰⵎⵣⴰ ','D ilemẓi anaẓuṛ, ilul ass 12 wanber 2006, ittcewwiq icewwiqen icennu, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
-        <img src="Hamzamadi.jpg">
-        <div class="name">MADI Ḥamza</div>
-        <div class="role">d asegbar</div>
-      </div>
-      <div class="character" onclick="showDesc('Mariya ASIL ḤARRUS - ⵎⴰⵔⵉⵢⴰ ⴰⵙⵉⵍ ⵃⴰⵔⵔⵓⵙ ','d tagrudt n sin iseggasen, tlul ass 8 ctember 2023, deg ɛin lbenyan di ldzayer tamanaɣt, i tikkelt tamezwarut ideg itekka yid-neɣ deg usaru imčeqlal s taɣect-is')">
-        <img src="maria.jpg">
-        <div class="name">Mariya ASIL ḤARRUS</div>
-        <div class="role">d tasegbart</div>
-      </div>
-      <div class="character" onclick="showDesc('BENNUṚ Amina - ⴱⴻⵏⵏⵓⵕ ⴰⵎⵉⵏⴰ ','D taqcict, tlul 3 tuber 2016 deg Targa uzemmur Bgayet, D yellis n Ɛumar Bennuṛ, D tanelmadt deg uswir wis ukkuẓ deg uɣerbaz amenzu, d taɛeggalt deg ugraw ASIREM n tdukla tadelsant IZUMAL n taddart n Tici')">
-        <img src="femme.png">
-        <div class="name">BENNUṚ Amina</div>
-        <div class="role">d tasegbart</div>
-      </div>
-      <div class="character" onclick="showDesc('XERZI Ɛabdelqader - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵍⵇⴰⴷⴻⵔ','d amɣar azemni, d anaẓur, d amedyaz, d agrawliw, d acennay.')">
-        <img src="Abdelkader.jpg">
-        <div class="name">XERZI Ɛabdelqader</div>
-        <div class="role">d asegbar</div>
-      </div>
-      <div class="character" onclick="showDesc('TUMERT Ǧilali - ⵊⵉⵍⴰⵍⵉ ⵜⵓⵎⴻⵔⵜ','D anaẓur n asegber d acennay, yexdem aṭas n tezrarin d yisura s teqbaylit gar-asen-tt Tinifift, Rbiḥa, Tayri txidas d wiyaḍ nniḍen, ilul ass n 4 yulyu 1989 deg ugezdu n tizi wezzu, n Buɣni n taddart At ɛebdelmumen, yetteka yid-neɣ deg usaru n IMČEQLAL s snat n tezlatin n uḍebsi-ines 2020.')">
-        <img src="toumertdjilali.jpg">
-        <div class="name">TUMERT Ǧilali</div>
-        <div class="role">d acennay</div>
-      </div> 
-      <div class="character" onclick="showDesc('YUSFI Sadeq - ⵢⵓⵙⴼⵉ ⵙⴰⴷⴻⵇ','D anaẓur n umezgun, sinima akked ccna d uẓawan, yugmed yufrar-d seg yidles Amaziɣ. Yezuzzured leqdic-is deg YouTube, itekka d waṭas n temsufeɣ gar-asen-tt asaru n IMČEQLAL yid-neɣ s ccbaḥa n tezlatin-is.')">
-        <img src="sadekyousfi.jpg">
-        <div class="name">YUSFI Sadeq</div>
-        <div class="role">d acennay</div>
+    
+      <div class="character" tabindex="0" role="button" 
+           data-title="XERZI Ɛabdessaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵙⵙⴰⵃ" 
+           data-desc="d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt."
+           onclick="showDesc(this.dataset.title, this.dataset.desc)">
+        <img src="Abdessah.jpg" alt="XERZI Ɛabdessaḥ">
+        <div class="name">XERZI Ɛabdessaḥ</div>
+        <div class="role">Anemhal anaẓuṛan n usisleg, asegbar</div>
       </div>
     </div>
-    <button class="scroll-btn right">&#10095;</button>
+    
+    <button class="scroll-btn right" id="scrollRight" aria-label="Scroll right">&#10095;</button>
   </div>
-  
+
+  <!-- DETAILS DU FILM -->
   <div class="film-info">
-    <h2>IMČEQLAL</h2>
-    <p><strong>Tawsit :</strong> Inig, Taḍṣa, Arrac</p>
-    <p><strong>Azemz n usufeɣ :</strong> 2026</p>
+    <h2>IMUḤUCEN</h2>
+    <p><strong>Tawsit :</strong>Taḍṣa, Igerdan</p>
+    <p><strong>Azemz n usufeɣ :</strong> 2025</p>
     <p><strong>Aglam n usaru :</strong><br>
-    Asaru-agi ad ak-nyawi ɣer umaḍal n yinig d teḍṣa, Čaqlala d awtul yeččuren d tabɣest d twuɣa, maca ur d-kkin-tt kan akk-a, d aseḥbiber ɣef tudert-is d tin n twacult-is iɣef yettḥebbir, deg tmazirt n Muḥend Ukufi ideg tebda tmacahut, win umi semman awaɣzen, maca tella Tamila i yellan ḥninet ɣer-sen, s yis-s i d-selken acḥal d abrid, maca yiwet n tikkelt yemmut uwaɣzen, iwertit mmis n gmas, dɣa da i yebda yinig...</p>
-  </div>
+    Reda, Ɛisa, Ɛliluc, Ḥmimuc d imuḥucen, d iɛlaḍ. Yal tikkelt ara binen sewjaden taxnanast iwakken ad rewlen seg lḥebs. Deg lḥebs yella ccambiṭ Muḥend Waɛli akked Haniya, war asṭuqqet n wawal, atan ihi tezrart-a ar ɣur-nwen.
+    </p>
+  </div>  
 </div>
 
 <!-- MODAL DESCRIPTION -->
@@ -739,7 +755,14 @@
   const thumb = document.getElementById("thumb");
   const playerWrapper = document.getElementById("playerWrapper");
   const videoContainer = document.getElementById("videoContainer");
-  const video = document.getElementById("myVideo");
+  
+  // Configuration du nombre total d'épisodes (MIS À JOUR À 9)
+  const TOTAL_EPISODES = 9;
+  
+  // Variable pour pointer vers la vidéo active et retenir l'état du son
+  let video = document.getElementById("Ep1");
+  let isGlobalMuted = false;
+
   const videoLoader = document.getElementById("videoLoader");
   const customControls = document.getElementById("customControls");
   
@@ -755,27 +778,108 @@
   const progressBar = document.getElementById("progressBar");
   const speedSelect = document.getElementById("speedSelect");
   
-  const fullBtn = document.getElementById("fullBtn");
-  const fullscreenIcon = document.getElementById("fullscreenIcon");
-  const exitFullscreenIcon = document.getElementById("exitFullscreenIcon");
+  const fullscreenBtn = document.getElementById("fullscreenBtn");
+  const fsEnterIcon = document.getElementById("fsEnterIcon");
+  const fsExitIcon = document.getElementById("fsExitIcon");
 
   let controlsTimer;
+
+  // Fonction pour attacher les écouteurs d'événements à une vidéo
+  function setupVideoEvents(activeVideo) {
+    activeVideo.addEventListener("timeupdate", updateProgress);
+    activeVideo.addEventListener("play", onPlay);
+    activeVideo.addEventListener("pause", onPause);
+    activeVideo.addEventListener("waiting", showLoader);
+    activeVideo.addEventListener("seeking", showLoader);
+    activeVideo.addEventListener("playing", hideLoader);
+    activeVideo.addEventListener("canplay", hideLoader);
+    activeVideo.addEventListener("loadeddata", hideLoader);
+  }
+
+  function updateProgress() {
+    if (!isNaN(video.duration) && video.duration > 0) {
+      const current = formatTime(video.currentTime);
+      const total = formatTime(video.duration);
+      timeDisplay.textContent = `${current} / ${total}`;
+      progressBar.value = (video.currentTime / video.duration) * 100;
+    }
+  }
+
+  function onPlay() {
+    playIcon.style.display = "none";
+    pauseIcon.style.display = "block";
+    playerWrapper.classList.remove("paused");
+  }
+
+  function onPause() {
+    playIcon.style.display = "block";
+    pauseIcon.style.display = "none";
+    playerWrapper.classList.add("paused");
+    playerWrapper.classList.add("show-controls");
+  }
+
+  function showLoader() { videoLoader.style.display = "block"; }
+  function hideLoader() { videoLoader.style.display = "none"; }
+
+  // Initialisation automatique des événements sur TOUS les épisodes
+  for (let i = 1; i <= TOTAL_EPISODES; i++) {
+    let v = document.getElementById("Ep" + i);
+    if (v) setupVideoEvents(v);
+  }
+
+  // Fonction globale pour changer d'épisode via les boutons extérieurs
+  function switchEpisode(epId) {
+    let targetVideo = document.getElementById(epId);
+    let targetBtn = document.getElementById("btn" + epId);
+
+    // Si la vidéo cliquée est déjà celle en cours, ou n'existe pas, ne rien faire
+    if (!targetVideo || video === targetVideo) return;
+
+    // Mettre en pause et masquer l'ancienne vidéo active
+    video.pause();
+    video.currentTime = 0;
+    video.style.display = "none";
+
+    // Retirer l'état actif de tous les boutons
+    for (let i = 1; i <= TOTAL_EPISODES; i++) {
+        let b = document.getElementById("btnEp" + i);
+        if (b) b.classList.remove("active");
+    }
+    // Ajouter l'état actif au bouton cliqué
+    targetBtn.classList.add("active");
+
+    // Basculer la référence
+    video = targetVideo;
+
+    // Si le lecteur était déjà ouvert (hors miniature), lancer la nouvelle vidéo
+    if (playerWrapper.style.display === "block") {
+      video.style.display = "block";
+      video.playbackRate = parseFloat(speedSelect.value);
+      video.muted = isGlobalMuted; // Conserver l'état du son global
+      video.play();
+      showControlsTemporarily();
+    }
+  }
 
   // Clic miniature -> Lancement vidéo
   thumb.addEventListener("click", () => {
     thumb.style.display = "none";
     playerWrapper.style.display = "block";
+    videoLoader.style.display = "block";
+    video.style.display = "block";
+    video.muted = isGlobalMuted;
     video.play();
     showControlsTemporarily();
   });
 
   // Tap Tactile Mobile
-  video.addEventListener("click", (e) => {
-    e.stopPropagation();
-    if (playerWrapper.classList.contains("show-controls")) {
-      playerWrapper.classList.remove("show-controls");
-    } else {
-      showControlsTemporarily();
+  playerWrapper.addEventListener("click", (e) => {
+    if (e.target.tagName === 'VIDEO' || e.target === playerWrapper) {
+      if (playerWrapper.classList.contains("show-controls")) {
+        playerWrapper.classList.remove("show-controls");
+      } else {
+        showControlsTemporarily();
+      }
     }
   });
 
@@ -791,7 +895,7 @@
 
   // Lecture / Pause
   function togglePlay() {
-    if (video.paused) {
+    if (video.paused || video.ended) {
       video.play();
     } else {
       video.pause();
@@ -804,53 +908,35 @@
     togglePlay();
   });
 
-  video.addEventListener("play", () => {
-    playIcon.style.display = "none";
-    pauseIcon.style.display = "block";
-    playerWrapper.classList.remove("paused");
-  });
-
-  video.addEventListener("pause", () => {
-    playIcon.style.display = "block";
-    pauseIcon.style.display = "none";
-    playerWrapper.classList.add("paused");
-    playerWrapper.classList.add("show-controls");
-  });
-
-  // Temps (format court MM:SS si - d'1h)
+  // Formater le temps (00:00:00)
   function formatTime(seconds) {
-    if (isNaN(seconds)) return "00:00";
-    const hrs = Math.floor(seconds / 3600);
-    const min = Math.floor((seconds % 3600) / 60);
-    const sec = Math.floor(seconds % 60);
+    if (isNaN(seconds) || seconds === Infinity) return "00:00:00";
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
     const pad = (num) => String(num).padStart(2, '0');
-    if (hrs > 0) return `${pad(hrs)}:${pad(min)}:${pad(sec)}`;
-    return `${pad(min)}:${pad(sec)}`;
+    return `${pad(h)}:${pad(m)}:${pad(s)}`;
   }
-
-  // Progression
-  video.addEventListener("timeupdate", () => {
-    if (!isNaN(video.duration)) {
-      const current = formatTime(video.currentTime);
-      const total = formatTime(video.duration);
-      timeDisplay.textContent = `${current} / ${total}`;
-      progressBar.value = (video.currentTime / video.duration) * 100;
-    }
-  });
 
   progressBar.addEventListener("input", (e) => {
     e.stopPropagation();
-    if (!isNaN(video.duration)) {
+    if (!isNaN(video.duration) && video.duration > 0) {
       video.currentTime = (progressBar.value / 100) * video.duration;
     }
     showControlsTemporarily();
   });
 
-  // Son / Muet
+  // Son / Muet (synchronisé sur TOUTES les vidéos)
   muteBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    video.muted = !video.muted;
-    if (video.muted) {
+    isGlobalMuted = !isGlobalMuted;
+    
+    for (let i = 1; i <= TOTAL_EPISODES; i++) {
+      let v = document.getElementById("Ep" + i);
+      if (v) v.muted = isGlobalMuted;
+    }
+
+    if (isGlobalMuted) {
       volumeIcon.style.display = "none";
       muteIcon.style.display = "block";
     } else {
@@ -860,61 +946,60 @@
     showControlsTemporarily();
   });
 
-  // Vitesse
+  // Vitesse (synchronisée sur TOUTES les vidéos)
   speedSelect.addEventListener("change", (e) => {
     e.stopPropagation();
-    video.playbackRate = parseFloat(e.target.value);
+    const rate = parseFloat(e.target.value);
+    
+    for (let i = 1; i <= TOTAL_EPISODES; i++) {
+      let v = document.getElementById("Ep" + i);
+      if (v) v.playbackRate = rate;
+    }
+    
     showControlsTemporarily();
   });
 
-  // Plein Écran
+  // Plein Écran (avec le fallback pour iPhone / iOS Safari)
   function toggleFullscreen() {
-    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-      if (videoContainer.requestFullscreen) {
-        videoContainer.requestFullscreen();
-      } else if (videoContainer.webkitRequestFullscreen) {
-        videoContainer.webkitRequestFullscreen();
-      } else if (videoContainer.msRequestFullscreen) {
-        videoContainer.msRequestFullscreen();
-      } else if (video.webkitEnterFullscreen) {
-        video.webkitEnterFullscreen();
+    if (videoContainer.requestFullscreen || videoContainer.webkitRequestFullscreen) {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (videoContainer.requestFullscreen) {
+          videoContainer.requestFullscreen();
+        } else if (videoContainer.webkitRequestFullscreen) {
+          videoContainer.webkitRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
       }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-      }
+    } else if (video && video.webkitEnterFullscreen) {
+      // Fallback exclusif pour l'iPhone (iOS Safari)
+      video.webkitEnterFullscreen();
     }
     showControlsTemporarily();
   }
 
-  fullBtn.addEventListener("click", (e) => {
+  fullscreenBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     toggleFullscreen();
   });
 
-  function onFullscreenChange() {
-    const isFS = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+  const updateFsIcons = () => {
+    const isFS = document.fullscreenElement || document.webkitFullscreenElement;
     if (isFS) {
-      fullscreenIcon.style.display = "none";
-      exitFullscreenIcon.style.display = "block";
+      fsEnterIcon.style.display = "none";
+      fsExitIcon.style.display = "block";
     } else {
-      fullscreenIcon.style.display = "block";
-      exitFullscreenIcon.style.display = "none";
+      fsEnterIcon.style.display = "block";
+      fsExitIcon.style.display = "none";
     }
-  }
+  };
 
-  document.addEventListener("fullscreenchange", onFullscreenChange);
-  document.addEventListener("webkitfullscreenchange", onFullscreenChange);
-  document.addEventListener("msfullscreenchange", onFullscreenChange);
-
-  // Spinner State
-  video.addEventListener("waiting", () => videoLoader.style.display = "block");
-  video.addEventListener("playing", () => videoLoader.style.display = "none");
-  video.addEventListener("canplay", () => videoLoader.style.display = "none");
+  document.addEventListener("fullscreenchange", updateFsIcons);
+  document.addEventListener("webkitfullscreenchange", updateFsIcons);
 
   // Anti-clic droit sur la vidéo
   videoContainer.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -930,22 +1015,18 @@
     document.getElementById("modal").style.display = "none";
   }
 
+  window.addEventListener("click", (e) => {
+    const modal = document.getElementById("modal");
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
   // Scroll Carrousel
   const charContainer = document.getElementById("characters");
-  const leftBtn = document.querySelector('.scroll-btn.left');
-  const rightBtn = document.querySelector('.scroll-btn.right');
-  const scrollAmount = 300;
-
-  function updateButtons() {
-    leftBtn.disabled = charContainer.scrollLeft <= 2;
-    rightBtn.disabled = charContainer.scrollLeft + charContainer.clientWidth >= charContainer.scrollWidth - 2;
-    
-    // Style visuel du bouton désactivé
-    leftBtn.style.opacity = leftBtn.disabled ? '0.3' : '1';
-    rightBtn.style.opacity = rightBtn.disabled ? '0.3' : '1';
-    leftBtn.style.cursor = leftBtn.disabled ? 'default' : 'pointer';
-    rightBtn.style.cursor = rightBtn.disabled ? 'default' : 'pointer';
-  }
+  const leftBtn = document.getElementById("scrollLeft");
+  const rightBtn = document.getElementById("scrollRight");
+  const scrollAmount = 260;
 
   leftBtn.addEventListener('click', () => {
     charContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
@@ -954,12 +1035,7 @@
   rightBtn.addEventListener('click', () => {
     charContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   });
-
-  charContainer.addEventListener('scroll', updateButtons);
-  window.addEventListener('resize', updateButtons);
-  setTimeout(updateButtons, 500);
 </script>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
@@ -1010,6 +1086,5 @@ document.addEventListener("click", (e) => {
   }
 });
 </script>
-
 </body>
 </html>
