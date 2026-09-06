@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Asekles - Waɛli ak tzizwit </title>
   <link rel="icon" href="Asekles.png" type="image/png">
-  
+
   <!-- Polices modernes & Tifinagh -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,7 +97,7 @@
       z-index: 999;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    
+
     #userEmail {
       margin-top: 0;
       font-size: 0.9em;
@@ -363,7 +363,7 @@
       cursor: pointer;
       transition: height 0.2s;
     }
-    
+
     .progress-bar:hover {
       height: 8px;
     }
@@ -379,7 +379,7 @@
       box-shadow: 0 0 10px rgba(255,0,102,0.6);
       transition: transform 0.2s;
     }
-    
+
     .progress-bar::-webkit-slider-thumb:hover {
       transform: scale(1.2);
     }
@@ -526,7 +526,7 @@
       margin-top: 0;
       margin-bottom: 20px;
     }
-    
+
     .film-info strong {
       color: #fff;
     }
@@ -554,7 +554,7 @@
       box-shadow: 0 20px 50px rgba(0,0,0,0.8);
       animation: modalFadeIn 0.3s ease;
     }
-    
+
     @keyframes modalFadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -565,7 +565,7 @@
       font-size: 1.4em;
       margin-top: 0;
     }
-    
+
     .modal-content p {
       color: var(--text-muted);
       line-height: 1.6;
@@ -582,7 +582,7 @@
       border-radius: 8px;
       transition: 0.3s;
     }
-    
+
     .close:hover {
       box-shadow: 0 5px 15px rgba(255,0,102,0.4);
       transform: translateY(-2px);
@@ -595,7 +595,7 @@
       .characters-wrapper { padding: 0 10px; }
       .film-info { padding: 20px; }
     }
-    
+
     @media screen and (max-width: 600px) {
       .custom-controls { gap: 6px; padding: 10px 12px; }
       .ctrl-btn { padding: 4px; }
@@ -609,8 +609,7 @@
 <body>
 
 <div class="top-bar">
-  <h1>Waɛli ak tzizwit - ⵡⴰⵄⵍⵉ ⴰⴽ ⵜⵣⵉⵣⵡⵉⵜ
-</h1>
+  <h1>Waɛli ak tzizwit - ⵡⴰⵄⵍⵉ ⴰⴽ ⵜⵣⵉⵣⵡⵉⵜ</h1>
   <nav>
     <a href="index.html">Axxam</a>
     <a href="isura.html">Isura</a>
@@ -650,7 +649,7 @@
 
     <div class="custom-player" id="playerWrapper">
       <div class="video-loader" id="videoLoader"></div>
-      
+
       <!-- Épisodes 1 à 9 -->
       <video id="Ep1" playsinline preload="auto">
         <source src="https://ia800706.us.archive.org/22/items/1-1_20260730/1%20%281%29.mp4" type="video/mp4">
@@ -659,8 +658,7 @@
         <source src="https://ia801903.us.archive.org/11/items/1-2_20260730/1%20%282%29.mp4" type="video/mp4">
       </video>
       <video id="Ep3" playsinline preload="auto">
-        <source src="
-https://ia800404.us.archive.org/31/items/1-3_20260730/1%20%283%29.mp4" type="video/mp4">
+        <source src="https://ia800404.us.archive.org/31/items/1-3_20260730/1%20%283%29.mp4" type="video/mp4">
       </video>
       <video id="Ep4" playsinline preload="auto">
         <source src="https://ia601404.us.archive.org/28/items/1-4_20260730/1%20%284%29.mp4" type="video/mp4">
@@ -689,10 +687,10 @@ https://ia800404.us.archive.org/31/items/1-3_20260730/1%20%283%29.mp4" type="vid
         </button>
 
         <span class="time-display" id="timeDisplay">00:00:00 / 00:00:00</span>
-        
+
         <!-- Barre de progression -->
         <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1">
-        
+
         <!-- Muet / Son -->
         <button class="ctrl-btn" id="muteBtn" title="Ṣṣut">
           <svg id="volumeIcon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
@@ -720,9 +718,9 @@ https://ia800404.us.archive.org/31/items/1-3_20260730/1%20%283%29.mp4" type="vid
   <!-- PERSONNAGES AVEC SCROLL -->
   <div class="characters-wrapper">
     <button class="scroll-btn left" id="scrollLeft" aria-label="Scroll left">&#10094;</button>
-    
+
     <div class="characters" id="characters">
-    
+
       <div class="character" tabindex="0" role="button" 
            data-title="XERZI Ɛabdessaḥ - ⵅⴻⵔⵣⵉ ⵄⴰⴱⴷⴻⵙⵙⴰⵃ" 
            data-desc="d ilemẓi anaẓuṛ, ilul ass 21 duǧember 2006 deg Tizi wezzu, n taddart icerdiwen ufella, taɣiwant nat dwala, ixeddem deg tmedyazt d usisleg n isura d ccna, yufrar-d s usisleg n isura, d ameslal n tɣeṛɣeṛt Asekles, yeẓwaṛ deg umahil n tsenselkimt."
@@ -749,9 +747,9 @@ https://ia800404.us.archive.org/31/items/1-3_20260730/1%20%283%29.mp4" type="vid
         <div class="name">XERZI Ɛabdelqader</div>
         <div class="role">d asegbar</div>
       </div>
-      
+
     </div>
-    
+
     <button class="scroll-btn right" id="scrollRight" aria-label="Scroll right">&#10095;</button>
   </div>
 
@@ -780,29 +778,29 @@ https://ia800404.us.archive.org/31/items/1-3_20260730/1%20%283%29.mp4" type="vid
   const thumb = document.getElementById("thumb");
   const playerWrapper = document.getElementById("playerWrapper");
   const videoContainer = document.getElementById("videoContainer");
-  
+
   // Configuration du nombre total d'épisodes (MIS À JOUR À 9)
   const TOTAL_EPISODES = 9;
-  
+
   // Variable pour pointer vers la vidéo active et retenir l'état du son
   let video = document.getElementById("Ep1");
   let isGlobalMuted = false;
 
   const videoLoader = document.getElementById("videoLoader");
   const customControls = document.getElementById("customControls");
-  
+
   const playBtn = document.getElementById("playBtn");
   const playIcon = document.getElementById("playIcon");
   const pauseIcon = document.getElementById("pauseIcon");
-  
+
   const muteBtn = document.getElementById("muteBtn");
   const volumeIcon = document.getElementById("volumeIcon");
   const muteIcon = document.getElementById("muteIcon");
-  
+
   const timeDisplay = document.getElementById("timeDisplay");
   const progressBar = document.getElementById("progressBar");
   const speedSelect = document.getElementById("speedSelect");
-  
+
   const fullscreenBtn = document.getElementById("fullscreenBtn");
   const fsEnterIcon = document.getElementById("fsEnterIcon");
   const fsExitIcon = document.getElementById("fsExitIcon");
@@ -955,7 +953,7 @@ https://ia800404.us.archive.org/31/items/1-3_20260730/1%20%283%29.mp4" type="vid
   muteBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     isGlobalMuted = !isGlobalMuted;
-    
+
     for (let i = 1; i <= TOTAL_EPISODES; i++) {
       let v = document.getElementById("Ep" + i);
       if (v) v.muted = isGlobalMuted;
@@ -975,29 +973,34 @@ https://ia800404.us.archive.org/31/items/1-3_20260730/1%20%283%29.mp4" type="vid
   speedSelect.addEventListener("change", (e) => {
     e.stopPropagation();
     const rate = parseFloat(e.target.value);
-    
+
     for (let i = 1; i <= TOTAL_EPISODES; i++) {
       let v = document.getElementById("Ep" + i);
       if (v) v.playbackRate = rate;
     }
-    
+
     showControlsTemporarily();
   });
 
-  // Plein Écran
+  // Plein Écran (Modifié pour inclure le support iPhone iOS)
   function toggleFullscreen() {
-    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-      if (videoContainer.requestFullscreen) {
-        videoContainer.requestFullscreen();
-      } else if (videoContainer.webkitRequestFullscreen) {
-        videoContainer.webkitRequestFullscreen();
+    if (videoContainer.requestFullscreen || videoContainer.webkitRequestFullscreen) {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (videoContainer.requestFullscreen) {
+          videoContainer.requestFullscreen();
+        } else if (videoContainer.webkitRequestFullscreen) {
+          videoContainer.webkitRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
       }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      }
+    } else if (video && video.webkitEnterFullscreen) {
+      // Fallback exclusif pour l'iPhone (iOS Safari)
+      video.webkitEnterFullscreen();
     }
     showControlsTemporarily();
   }
