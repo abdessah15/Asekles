@@ -654,16 +654,13 @@
         <source src="https://ia800604.us.archive.org/18/items/M2-255/maca%20ak%20d%20micka%20EP%20%282%29.ia.mp4" type="video/mp4">
       </video>
       <video id="Ep3" playsinline preload="auto">
-        <source src="
-https://ia600704.us.archive.org/26/items/M3-255/maca%20ak%20d%20micka%20EP%20%283%29.ia.mp4" type="video/mp4">
+        <source src="https://ia600704.us.archive.org/26/items/M3-255/maca%20ak%20d%20micka%20EP%20%283%29.ia.mp4" type="video/mp4">
       </video>
       <video id="Ep4" playsinline preload="auto">
-        <source src="
-https://ia800402.us.archive.org/15/items/M4-255/maca%20ak%20d%20micka%20EP%20%284%29.ia.mp4" type="video/mp4">
+        <source src="https://ia800402.us.archive.org/15/items/M4-255/maca%20ak%20d%20micka%20EP%20%284%29.ia.mp4" type="video/mp4">
       </video>
       <video id="Ep5" playsinline preload="auto">
-        <source src="
-https://ia801903.us.archive.org/23/items/M5-255/maca%20ak%20d%20micka%20EP%20%285%29.ia.mp4" type="video/mp4">
+        <source src="https://ia801903.us.archive.org/23/items/M5-255/maca%20ak%20d%20micka%20EP%20%285%29.ia.mp4" type="video/mp4">
       </video>
 
       <div class="custom-controls" id="customControls">
@@ -960,20 +957,25 @@ https://ia801903.us.archive.org/23/items/M5-255/maca%20ak%20d%20micka%20EP%20%28
     showControlsTemporarily();
   });
 
-  // Plein Écran
+  // Plein Écran (CORRIGÉ POUR SUPPORTER IPHONE/IOS)
   function toggleFullscreen() {
-    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-      if (videoContainer.requestFullscreen) {
-        videoContainer.requestFullscreen();
-      } else if (videoContainer.webkitRequestFullscreen) {
-        videoContainer.webkitRequestFullscreen();
+    if (videoContainer.requestFullscreen || videoContainer.webkitRequestFullscreen) {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (videoContainer.requestFullscreen) {
+          videoContainer.requestFullscreen();
+        } else if (videoContainer.webkitRequestFullscreen) {
+          videoContainer.webkitRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
       }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      }
+    } else if (video && video.webkitEnterFullscreen) {
+      // Fallback exclusif pour l'iPhone (iOS Safari)
+      video.webkitEnterFullscreen();
     }
     showControlsTemporarily();
   }
